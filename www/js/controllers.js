@@ -2,12 +2,12 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('PatientsCtrl', function($scope, $webSql, Patients) {
+.controller('PatientsCtrl', function($scope, $webSql, DB_CONFIG, Patients) {
   $scope.patients = Patients.all();
     
     $scope.addReport = function(){
-      $scope.db = $webSql.openDatabase('mydb', '1.0', 'Test DB', 2 * 1024 * 1024);
-      $scope.db.insert('user', {"username": 'pc', "password": '1234', 'age': 22}).then(function(results) {
+      $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+      $scope.db.insert('report', {"username": 'pc', "password": '1234', 'age': 22}).then(function(results) {
         console.log(results.insertId);
       });
     };
