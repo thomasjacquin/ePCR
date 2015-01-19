@@ -5,12 +5,15 @@
       <button class="button button-clear icon-left ion-person-add" ng-click="addReport()">
          Add report
       </button>
+      <button class="button button-clear icon-left ion-close-circled" ng-click="deleteDatabase()">
+         Clear Database
+      </button>
     </ion-nav-buttons>
   <ion-content>
     <ion-list>
       <ion-item class="item-avatar" ng-repeat="patient in patients" type="item-text-wrap" href="#/tab/patient/{{patient.id}}">
 <!--        <img ng-src="{{patient.face}}">-->
-        <h2>{{patient.username}}</h2>
+        <h2>New Report {{patient.created}}</h2>
 <!--        <h4>{{patient.dateOfBirth}}</h4>-->
       </ion-item>
     </ion-list>
