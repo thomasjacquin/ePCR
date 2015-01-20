@@ -2,40 +2,39 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', function($scope) {})
 
-.controller('PatientsCtrl', function($scope, $webSql, DB_CONFIG, Patients) {
+.controller('ReportsCtrl', function($scope, $webSql, DB_CONFIG, Reports) {
   
-  $scope.patients = Patients.all();
+  $scope.reports = Reports.all();
     
   $scope.addReport = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.insert('report', {"name": 'new report'}).then(function(results) {
-      console.log(results.insertId);
-      $scope.db.insert('patient_info', {"report_id": results.insertId, "first_name": "First", "last_name": "Last", "date_of_birth": "15-04-1983"}).then(function(){
-        window.location = '#/tab/patient/' + results.insertId;
-      });
-      $scope.db.insert('neuro', {"report_id": results.insertId});
-      $scope.db.insert('chief_complaint', {"report_id": results.insertId});
-      $scope.db.insert('abc', {"report_id": results.insertId});
-      $scope.db.insert('trauma', {"report_id": results.insertId});
-      $scope.db.insert('trauma_penetrating', {"report_id": results.insertId});
-      $scope.db.insert('trauma_blunt', {"report_id": results.insertId});
-      $scope.db.insert('trauma_fall', {"report_id": results.insertId});
-      $scope.db.insert('trauma_burn', {"report_id": results.insertId});
-      $scope.db.insert('gi_gu', {"report_id": results.insertId});
-      $scope.db.insert('field_delivery', {"report_id": results.insertId});
-      $scope.db.insert('apgar', {"report_id": results.insertId});
-      $scope.db.insert('muscular_skeletal', {"report_id": results.insertId});
-      $scope.db.insert('invasive_airway', {"report_id": results.insertId});
-      $scope.db.insert('c_spine', {"report_id": results.insertId});
-      $scope.db.insert('signatures', {"report_id": results.insertId});
-      $scope.db.insert('call_info', {"report_id": results.insertId});
-      $scope.db.insert('no_transport', {"report_id": results.insertId});
+    $scope.db.insert('report', {"first_name": "First", "last_name": "Last", "date_of_birth": "1983-04-15"}).then(function(results) {
+        console.log(results.insertId);
+        window.location = '#/tab/report/' + results.insertId;
     });
-  };
+//      $scope.db.insert('neuro', {"report_id": results.insertId});
+//      $scope.db.insert('chief_complaint', {"report_id": results.insertId});
+//      $scope.db.insert('abc', {"report_id": results.insertId});
+//      $scope.db.insert('trauma', {"report_id": results.insertId});
+//      $scope.db.insert('trauma_penetrating', {"report_id": results.insertId});
+//      $scope.db.insert('trauma_blunt', {"report_id": results.insertId});
+//      $scope.db.insert('trauma_fall', {"report_id": results.insertId});
+//      $scope.db.insert('trauma_burn', {"report_id": results.insertId});
+//      $scope.db.insert('gi_gu', {"report_id": results.insertId});
+//      $scope.db.insert('field_delivery', {"report_id": results.insertId});
+//      $scope.db.insert('apgar', {"report_id": results.insertId});
+//      $scope.db.insert('muscular_skeletal', {"report_id": results.insertId});
+//      $scope.db.insert('invasive_airway', {"report_id": results.insertId});
+//      $scope.db.insert('c_spine', {"report_id": results.insertId});
+//      $scope.db.insert('signatures', {"report_id": results.insertId});
+//      $scope.db.insert('call_info', {"report_id": results.insertId});
+//      $scope.db.insert('no_transport', {"report_id": results.insertId});
+}
+
 
 $scope.deleteDatabase = function(){
       $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-      $scope.db.dropTable('patients');				
+      $scope.db.dropTable('report');				
       $scope.db.dropTable('vitals');	
       $scope.db.dropTable('chief_complaint');		
       $scope.db.dropTable('patient_hx');				
@@ -70,12 +69,20 @@ $scope.deleteDatabase = function(){
   }
 })
 
-.controller('PatientDetailCtrl', function($scope, $stateParams, Patients) {
-  $scope.patient = Patients.get($stateParams.patientId);
+.controller('ReportDetailCtrl', function($scope, $stateParams, Reports) {
+  $scope.report = Reports.get($stateParams.reportId);
 })
 
-.controller('PatientInfoCtrl', function($scope, $stateParams, Patients) {
-  $scope.patient = Patients.get($stateParams.patientId);
+.controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, Reports) {
+  $scope.report = Reports.get($stateParams.reportId);
+  
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", {"first_name": 'paulo', "last_name": 'caldeira'}, {
+      'id': $stateParams.reportId
+    });
+}
+
 })
 
 .controller('AccountCtrl', function($scope) {

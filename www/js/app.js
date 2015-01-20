@@ -51,30 +51,30 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
 
-  .state('tab.patients', {
-      url: '/patients',
+  .state('tab.reports', {
+      url: '/reports',
       views: {
-        'tab-patients': {
-          templateUrl: 'templates/tab-patients.html',
-          controller: 'PatientsCtrl'
+        'tab-reports': {
+          templateUrl: 'templates/tab-reports.html',
+          controller: 'ReportsCtrl'
         }
       }
     })
-    .state('tab.patient-detail', {
-      url: '/patient/:patientId',
+    .state('tab.report-detail', {
+      url: '/report/:reportId',
       views: {
-        'tab-patients': {
-          templateUrl: 'templates/patient-detail.html',
-          controller: 'PatientDetailCtrl'
+        'tab-reports': {
+          templateUrl: 'templates/report-detail.html',
+          controller: 'ReportDetailCtrl'
         }
       }
     })
-  .state('tab.patient-info', {
-      url: '/patient/:patientId/info',
+  .state('tab.personal-info', {
+      url: '/report/:reportId/info',
       views: {
-        'tab-patients': {
-          templateUrl: 'templates/patient-info.html',
-          controller: 'PatientInfoCtrl'
+        'tab-reports': {
+          templateUrl: 'templates/personal-info.html',
+          controller: 'PersonalInfoCtrl'
         }
       }
     })
