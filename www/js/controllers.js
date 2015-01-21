@@ -12,23 +12,6 @@ angular.module('starter.controllers', [])
         console.log(results.insertId);
         window.location = '#/tab/report/' + results.insertId;
     });
-//      $scope.db.insert('neuro', {"report_id": results.insertId});
-//      $scope.db.insert('chief_complaint', {"report_id": results.insertId});
-//      $scope.db.insert('abc', {"report_id": results.insertId});
-//      $scope.db.insert('trauma', {"report_id": results.insertId});
-//      $scope.db.insert('trauma_penetrating', {"report_id": results.insertId});
-//      $scope.db.insert('trauma_blunt', {"report_id": results.insertId});
-//      $scope.db.insert('trauma_fall', {"report_id": results.insertId});
-//      $scope.db.insert('trauma_burn', {"report_id": results.insertId});
-//      $scope.db.insert('gi_gu', {"report_id": results.insertId});
-//      $scope.db.insert('field_delivery', {"report_id": results.insertId});
-//      $scope.db.insert('apgar', {"report_id": results.insertId});
-//      $scope.db.insert('muscular_skeletal', {"report_id": results.insertId});
-//      $scope.db.insert('invasive_airway', {"report_id": results.insertId});
-//      $scope.db.insert('c_spine', {"report_id": results.insertId});
-//      $scope.db.insert('signatures', {"report_id": results.insertId});
-//      $scope.db.insert('call_info', {"report_id": results.insertId});
-//      $scope.db.insert('no_transport', {"report_id": results.insertId});
 }
 
 
@@ -71,15 +54,23 @@ $scope.deleteDatabase = function(){
 
 .controller('ReportDetailCtrl', function($scope, $stateParams, Reports) {
   $scope.report = Reports.get($stateParams.reportId);
+  console.log("Details");
 })
 
-.controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, Reports) {
+.controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, Reports) {
   $scope.report = Reports.get($stateParams.reportId);
+  console.log(new Date($scope.report.date_of_birth));
+
+  $scope.personal = {"first_name": $scope.report.first_name, "last_name": $scope.report.last_name, "date_of_birth": new Date($scope.report.date_of_birth), "gender": $scope.report.gender, "weight": $scope.report.weight};
+    console.log($scope.personal);
   
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"first_name": 'paulo', "last_name": 'caldeira'}, {
+    $scope.db.update("report", $scope.personal, {
       'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report");
+      $window.history.back();
     });
 }
 

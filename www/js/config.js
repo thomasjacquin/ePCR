@@ -24,7 +24,7 @@ angular.module('ePCR.config', [])
             "null":"NOT NULL"
          },
          "date_of_birth":{
-            "type":"DATE"
+            "type":"TEXT"
          },
          "gender":{
             "type":"BOOLEAN"
