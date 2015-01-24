@@ -16,12 +16,10 @@ angular.module('ePCR.config', [])
             "auto_increment":true
          },
          "last_name":{
-            "type":"TEXT",
-            "null":"NOT NULL"
+            "type":"TEXT"
          },
          "first_name":{
-            "type":"TEXT",
-            "null":"NOT NULL"
+            "type":"TEXT"
          },
          "date_of_birth":{
             "type":"TEXT"
@@ -33,6 +31,9 @@ angular.module('ePCR.config', [])
             "type":"FLOAT"
          },
          "weight_unit":{
+            "type":"TEXT"
+         },
+         "profile_picture":{
             "type":"TEXT"
          },
          "address_street":{
@@ -64,6 +65,51 @@ angular.module('ePCR.config', [])
          },
          "next_of_kin_phone":{
             "type":"TEXT"
+         },
+         "primary_complaint":{
+            "type":"TEXT"
+         },
+         "primary_complaint_other":{
+            "type":"TEXT"
+         },
+         "secondary_complaint":{
+            "type":"TEXT"
+         },
+         "difficulty_breathing":{
+            "type":"BOOLEAN"
+         },
+         "chest_pain":{
+            "type":"BOOLEAN"
+         },
+         "nausea":{
+            "type":"BOOLEAN"
+         },
+         "vomiting":{
+            "type":"BOOLEAN"
+         },
+         "diarrhea":{
+            "type":"BOOLEAN"
+         },
+         "dizziness":{
+            "type":"BOOLEAN"
+         },
+         "headache":{
+            "type":"BOOLEAN"
+         },
+         "loss_of_c":{
+            "type":"BOOLEAN"
+         },
+         "numb_tingling":{
+            "type":"BOOLEAN"
+         },
+         "general_weakness":{
+            "type":"BOOLEAN"
+         },
+         "lethargy":{
+            "type":"BOOLEAN"
+         },
+         "neck_pain":{
+            "type":"BOOLEAN"
          },
          "created":{
             "type":"TIMESTAMP",

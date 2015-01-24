@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-websql', 'database', 'ePCR.config'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-websql', 'database', 'ePCR.config', 'ngRoute'])
 
 .run(function($ionicPlatform, database) {
   $ionicPlatform.ready(function() {
@@ -24,8 +24,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
 
+  $ionicConfigProvider.views.maxCache(0);
+  
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -56,7 +58,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       views: {
         'tab-reports': {
           templateUrl: 'templates/tab-reports.html',
-          controller: 'ReportsCtrl'
+          controller: 'ReportsCtrl',
+          resolve: {
+            reports: function(Reports) {
+              return Reports.all();
+            }
+          }
         }
       }
     })
@@ -65,16 +72,71 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       views: {
         'tab-reports': {
           templateUrl: 'templates/report-detail.html',
-          controller: 'ReportDetailCtrl'
+          controller: 'ReportDetailCtrl',
+          resolve: {
+              report: function($stateParams, Reports) {
+                return Reports.get($stateParams.reportId)
+              }
+          }
         }
       }
     })
-  .state('tab.personal-info', {
-      url: '/report/:reportId/info',
+    .state('tab.personal-info', {
+        url: '/report/:reportId/info',
+        views: {
+          'tab-reports': {
+            templateUrl: 'templates/personal-info.html',
+            controller: 'PersonalInfoCtrl',
+            resolve: {
+                report: function($stateParams, Reports) {
+                  return Reports.get($stateParams.reportId)
+                }
+            }
+          }
+        }
+      })
+  
+      .state('tab.chief-complaint', {
+      url: '/report/:reportId/chiefComplaint',
       views: {
         'tab-reports': {
-          templateUrl: 'templates/personal-info.html',
-          controller: 'PersonalInfoCtrl'
+          templateUrl: 'templates/chief-complaint.html',
+          controller: 'ChiefComplaintCtrl',
+          resolve: {
+              report: function($stateParams, Reports) {
+                return Reports.get($stateParams.reportId)
+              }
+          }
+        }
+      }
+    })
+  
+    .state('tab.vitals-list', {
+      url: '/report/:reportId/vitals',
+      views: {
+        'tab-reports': {
+          templateUrl: 'templates/vitals-list.html',
+          controller: 'VitalsListCtrl',
+          resolve: {
+              vitalsList: function($stateParams, Vitals) {
+                return Vitals.all($stateParams.reportId)
+              }
+          }
+        }
+      }
+    })
+  
+    .state('tab.vitals', {
+      url: '/report/:reportId/vitals/:vitalsId',
+      views: {
+        'tab-reports': {
+          templateUrl: 'templates/vitals.html',
+          controller: 'VitalsCtrl',
+          resolve: {
+              vitals: function($stateParams, Vitals) {
+                return Vitals.get($stateParams.vitalsId)
+              }
+          }
         }
       }
     })
