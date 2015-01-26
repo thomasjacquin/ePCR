@@ -97,7 +97,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       })
   
       .state('tab.chief-complaint', {
-      url: '/report/:reportId/chiefComplaint',
+      url: '/report/:reportId/chief-complaint',
       views: {
         'tab-reports': {
           templateUrl: 'templates/chief-complaint.html',
@@ -140,6 +140,66 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
+  
+  .state('tab.patient-history', {
+    url: '/report/:reportId/patient-history',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/patient-history.html',
+        controller: 'PatientHistoryCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+ .state('tab.allergies', {
+    url: '/report/:reportId/allergies',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/allergies.html',
+        controller: 'AllergiesCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+.state('tab.home-medications', {
+    url: '/report/:reportId/home-medications',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/home-medications.html',
+        controller: 'HomeMedicationsCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.conditions', {
+    url: '/report/:reportId/conditions',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/conditions.html',
+        controller: 'ConditionsCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',

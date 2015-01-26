@@ -25,8 +25,11 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Vitals) {
   $scope.report = report;
+//  $scope.vitalsNumber = Vitals.size($stateParams.reportId);
+  $scope.vitalsNumber = 3;
+  console.log($scope.vitalsNumber);
 })
 
 .controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
@@ -81,7 +84,23 @@ angular.module('starter.controllers', [])
   $scope.vitalsEntry = vitals;
 
   $scope.vitals = {
-    "hr" : $scope.vitalsEntry.hr
+    "hr" : $scope.vitalsEntry.hr,
+    "sys" : $scope.vitalsEntry.sys,
+    "dia" : $scope.vitalsEntry.dia,
+    "fio2" : $scope.vitalsEntry.fio2,
+    "spo2" : $scope.vitalsEntry.spo2,
+    "resp" : $scope.vitalsEntry.resp,
+    "level_of_c" : $scope.vitalsEntry.level_of_c,
+    "perrl" : $scope.vitalsEntry.perrl == 'true',
+    "left_eye" : $scope.vitalsEntry.left_eye,
+    "right_eye" : $scope.vitalsEntry.right_eye,
+    "eyes_responsive" : $scope.vitalsEntry.eyes_responsive == 'true',
+    "bgl" : $scope.vitalsEntry.bgl,
+    "bgl_unit" : $scope.vitalsEntry.bgl_unit,
+    "temp" : $scope.vitalsEntry.temp,
+    "temp_unit" : $scope.vitalsEntry.temp_unit,
+    "etco2" : $scope.vitalsEntry.etco2,
+    "pain" : $scope.vitalsEntry.pain,
   };
   
   console.log($scope.vitals);
@@ -90,7 +109,7 @@ angular.module('starter.controllers', [])
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.db.update("vitals", $scope.vitals, {
-      'report_id': $stateParams.reportId
+      'id': $stateParams.vitalsId
     }).then(function(){
       console.log("Updated vitals");
       $window.history.back();
@@ -131,6 +150,138 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('PatientHistoryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+  
+  $scope.patientHistory = { 
+    "hx_allergies": JSON.parse($scope.report.hx_allergies), 
+    "hx_conditions": JSON.parse($scope.report.hx_conditions), 
+    "hx_medications": JSON.parse($scope.report.hx_medications), 
+  };
+  console.log($scope.patientHistory);
+  
+  $scope.goto = function(state){
+    window.location = '#/tab/report/' + $stateParams.reportId + '/' + state;
+  }
+    
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", $scope.patientHistory, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report: Patient History");
+    });
+  }
+})
+
+.controller('AllergiesCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, allergies) {
+  $scope.report = report;
+  $scope.allergiesList = [];
+  
+  var existingAllergies = $scope.report.hx_allergies;
+
+  allergies.list.forEach(function(allergy){
+    var checked = existingAllergies != null ? existingAllergies.indexOf(allergy) != -1 : false;
+    $scope.allergiesList.push({"text": allergy, "checked": checked})
+  });
+  
+  $scope.add = function(){
+    var selected = [];
+    $scope.allergiesList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", {"hx_allergies": JSON.stringify(selected)}, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report: Patient Allergies");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('HomeMedicationsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, homeMedications) {
+  $scope.report = report;
+  $scope.medicationsList = [];
+  
+  var existingMedications = $scope.report.hx_medications;
+
+  homeMedications.generic.forEach(function(medication){
+    var checked = existingMedications != null ? existingMedications.indexOf(medication) != -1 : false;
+    $scope.medicationsList.push({"text": medication, "checked": checked})
+  });
+  
+  $scope.add = function(){
+    var selected = [];
+    $scope.medicationsList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", {"hx_medications": JSON.stringify(selected)}, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report: Patient Home Medications");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('ConditionsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, medicalConditions) {
+  $scope.report = report;
+  var existingConditions = $scope.report.hx_conditions;
+  var conditionsList = [];
+  
+  $scope.categories = [];
+  var keys = Object.keys(medicalConditions);
+  keys.forEach(function(category, index) {
+    var items = [];
+      medicalConditions[category].forEach(function(condition){
+    var checked = existingConditions != null ? existingConditions.indexOf(condition) != -1 : false;
+    items.push({"text": condition, "checked": checked})
+  });
+    
+    $scope.categories[index] = {
+      name: category,
+      items: items
+    };
+  });
+  
+  $scope.toggleGroup = function(categories) {
+    if ($scope.isGroupShown(categories)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = categories;
+    }
+  };
+  $scope.isGroupShown = function(categories) {
+    return $scope.shownGroup === categories;
+  };
+  
+  $scope.add = function(){
+    var selected = [];
+    $scope.categories.forEach(function(category, index){
+      category.items.forEach(function(value, index){
+        if (value.checked){
+          selected.push(value.text);
+        }
+      });
+    });
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", {"hx_conditions": JSON.stringify(selected)}, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report: Patient Home Conditions");
+      $window.history.back();
+    });
+  }
+});
 
 function deleteDatebase($webSql, DB_CONFIG){
       $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
@@ -167,3 +318,4 @@ function deleteDatebase($webSql, DB_CONFIG){
       $scope.db.dropTable('narrative');
       $scope.db.dropTable('code');
 }
+

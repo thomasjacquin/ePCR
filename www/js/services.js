@@ -46,7 +46,7 @@ angular.module('starter.services', [])
       var dfd = $q.defer()
       this.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
       this.db.select("vitals",{
-        "id": reportId
+        "report_id": reportId
       }).then(function(results) {
           for(var i=0; i < results.rows.length; i++){
               vitals[results.rows.item(i).id] = results.rows.item(i);
@@ -68,6 +68,17 @@ angular.module('starter.services', [])
       }).then(function(results) {
         dfd.resolve(results.rows.item(0));
       })
+      return dfd.promise;
+    },
+    
+    size: function(reportId){
+      var dfd = $q.defer()
+      this.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+      this.db.select("vitals",{
+        "report_id": reportId
+      }).then(function(results) {
+          dfd.resolve(results.rows.length);
+        });
       return dfd.promise;
     }
 
