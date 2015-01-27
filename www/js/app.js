@@ -200,6 +200,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  .state('tab.exam', {
+    url: '/report/:reportId/exam',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam.html',
+        controller: 'ExamCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',

@@ -117,31 +117,36 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ChiefComplaintCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+.controller('ChiefComplaintCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, chiefComplaint) {
   $scope.report = report;
+  $scope.pertinentList = [];
+  $scope.primaryComplaint = chiefComplaint.primary;
   
-  $scope.chiefComplaint = { 
+  $scope.binding = { 
     "primary_complaint": $scope.report.primary_complaint, 
     "primary_complaint_other": $scope.report.primary_complaint_other, 
     "secondary_complaint": $scope.report.secondary_complaint, 
-    "difficulty_breathing": $scope.report.difficulty_breathing == 'true',
-    "chest_pain": $scope.report.chest_pain == 'true',
-    "nausea": $scope.report.nausea == 'true',
-    "vomiting": $scope.report.vomiting == 'true',
-    "diarrhea": $scope.report.diarrhea == 'true',
-    "dizziness": $scope.report.dizziness == 'true',
-    "headache": $scope.report.headache == 'true',
-    "loss_of_c": $scope.report.loss_of_c == 'true',
-    "numb_tingling": $scope.report.numb_tingling == 'true',
-    "general_weakness": $scope.report.general_weakness == 'true',
-    "lethargy": $scope.report.lethargy == 'true',
-    "neck_pain": $scope.report.neck_pain == 'true'
+    "pertinent": JSON.parse($scope.report.pertinent)
   };
-  console.log($scope.chiefComplaint);
+  
+  var existingPertinent = $scope.binding.pertinent;
+
+  chiefComplaint.pertinent.forEach(function(complaint){
+    var checked = existingPertinent != null ? existingPertinent.indexOf(complaint) != -1 : false;
+    $scope.pertinentList.push({"text": complaint, "checked": checked})
+  });
   
   $scope.save = function(){
+    var selected = [];
+    $scope.pertinentList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.binding.pertinent = JSON.stringify(selected);
+      
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.chiefComplaint, {
+    $scope.db.update("report", $scope.binding, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Chief Complaint");
@@ -162,6 +167,14 @@ angular.module('starter.controllers', [])
   
   $scope.goto = function(state){
     window.location = '#/tab/report/' + $stateParams.reportId + '/' + state;
+  }
+  
+  $scope.delete = function(item){
+    var list = $scope.patientHistory.hx_allergies;      
+    list.splice(list.indexOf(item),1);
+    console.log(list);
+    $scope.patientHistory.hx_allergies = list;
+    $scope.save();
   }
     
   $scope.save = function(){
@@ -205,21 +218,42 @@ angular.module('starter.controllers', [])
 
 .controller('HomeMedicationsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, homeMedications) {
   $scope.report = report;
-  $scope.medicationsList = [];
-  
   var existingMedications = $scope.report.hx_medications;
-
-  homeMedications.generic.forEach(function(medication){
+  var medicationsList = [];
+  
+  $scope.categories = [];
+  var keys = Object.keys(homeMedications);
+  keys.forEach(function(category, index) {
+    var items = [];
+      homeMedications[category].list.forEach(function(medication){
     var checked = existingMedications != null ? existingMedications.indexOf(medication) != -1 : false;
-    $scope.medicationsList.push({"text": medication, "checked": checked})
+    items.push({"text": medication, "checked": checked})
   });
+    $scope.categories[index] = {
+      name: homeMedications[category].name,
+      items: items
+    };
+  });
+  
+  $scope.toggleGroup = function(categories) {
+    if ($scope.isGroupShown(categories)) {
+      $scope.shownGroup = null;
+    } else {
+      $scope.shownGroup = categories;
+    }
+  };
+  $scope.isGroupShown = function(categories) {
+    return $scope.shownGroup === categories;
+  };
   
   $scope.add = function(){
     var selected = [];
-    $scope.medicationsList.forEach(function(value, index){
-      if (value.checked){
-        selected.push(value.text);
-      }
+    $scope.categories.forEach(function(category, index){
+      category.items.forEach(function(value, index){
+        if (value.checked){
+          selected.push(value.text);
+        }
+      });
     });
     
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
@@ -241,13 +275,13 @@ angular.module('starter.controllers', [])
   var keys = Object.keys(medicalConditions);
   keys.forEach(function(category, index) {
     var items = [];
-      medicalConditions[category].forEach(function(condition){
+      medicalConditions[category].list.forEach(function(condition){
     var checked = existingConditions != null ? existingConditions.indexOf(condition) != -1 : false;
     items.push({"text": condition, "checked": checked})
   });
     
     $scope.categories[index] = {
-      name: category,
+      name: medicalConditions[category].name,
       items: items
     };
   });
@@ -281,7 +315,11 @@ angular.module('starter.controllers', [])
       $window.history.back();
     });
   }
-});
+})
+
+.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report) {
+  $scope.report = report;
+})
 
 function deleteDatebase($webSql, DB_CONFIG){
       $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
