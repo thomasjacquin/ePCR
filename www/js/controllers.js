@@ -25,10 +25,9 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Vitals) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals) {
   $scope.report = report;
-//  $scope.vitalsNumber = Vitals.size($stateParams.reportId);
-  $scope.vitalsNumber = 3;
+  $scope.vitalsNumber = Object.size(vitals);
   console.log($scope.vitalsNumber);
 })
 
@@ -58,6 +57,7 @@ angular.module('starter.controllers', [])
   
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.personal.patient_info_assessed = true;
     $scope.db.update("report", $scope.personal, {
       'id': $stateParams.reportId
     }).then(function(){
@@ -70,6 +70,19 @@ angular.module('starter.controllers', [])
 .controller('VitalsListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, vitalsList) {
   $scope.vitalsList = vitalsList;
   $scope.reportId = $stateParams.reportId;
+  $scope.showDelete = false;
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
+  
+  $scope.deleteVitals = function(vitalsId){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.del("vitals", {"id": vitalsId})
+    .then(function(){
+      delete $scope.vitalsList[vitalsId];
+     });
+  }
     
   $scope.addVitals = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
@@ -146,6 +159,7 @@ angular.module('starter.controllers', [])
     $scope.binding.pertinent = JSON.stringify(selected);
       
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.binding.chief_complaint_assessed = true;
     $scope.db.update("report", $scope.binding, {
       'id': $stateParams.reportId
     }).then(function(){
@@ -157,11 +171,12 @@ angular.module('starter.controllers', [])
 
 .controller('PatientHistoryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
   $scope.report = report;
+  $scope.showDelete = false;
   
   $scope.patientHistory = { 
-    "hx_allergies": JSON.parse($scope.report.hx_allergies), 
-    "hx_conditions": JSON.parse($scope.report.hx_conditions), 
-    "hx_medications": JSON.parse($scope.report.hx_medications), 
+    "hx_allergies": $scope.report.hx_allergies ? $scope.report.hx_allergies.split(','):[], 
+    "hx_conditions": $scope.report.hx_conditions ? $scope.report.hx_conditions.split(','):[], 
+    "hx_medications": $scope.report.hx_medications ? $scope.report.hx_medications.split(','):[], 
   };
   console.log($scope.patientHistory);
   
@@ -169,15 +184,36 @@ angular.module('starter.controllers', [])
     window.location = '#/tab/report/' + $stateParams.reportId + '/' + state;
   }
   
-  $scope.delete = function(item){
+  $scope.deleteAllergy = function(item){
     var list = $scope.patientHistory.hx_allergies;      
     list.splice(list.indexOf(item),1);
     console.log(list);
     $scope.patientHistory.hx_allergies = list;
     $scope.save();
   }
+  
+  $scope.deleteCondition = function(item){
+    var list = $scope.patientHistory.hx_conditions;      
+    list.splice(list.indexOf(item),1);
+    console.log(list);
+    $scope.patientHistory.hx_conditions = list;
+    $scope.save();
+  }
+    
+  $scope.deleteMedication = function(item){
+    var list = $scope.patientHistory.hx_medications;      
+    list.splice(list.indexOf(item),1);
+    console.log(list);
+    $scope.patientHistory.hx_medications = list;
+    $scope.save();
+  }
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
     
   $scope.save = function(){
+    console.log($scope.patientHistory);
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.db.update("report", $scope.patientHistory, {
       'id': $stateParams.reportId
@@ -207,7 +243,7 @@ angular.module('starter.controllers', [])
     });
     
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_allergies": JSON.stringify(selected)}, {
+    $scope.db.update("report", {"hx_allergies": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Allergies");
@@ -257,7 +293,7 @@ angular.module('starter.controllers', [])
     });
     
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_medications": JSON.stringify(selected)}, {
+    $scope.db.update("report", {"hx_medications": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Home Medications");
@@ -308,7 +344,7 @@ angular.module('starter.controllers', [])
     });
     
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_conditions": JSON.stringify(selected)}, {
+    $scope.db.update("report", {"hx_conditions": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Home Conditions");
@@ -357,3 +393,10 @@ function deleteDatebase($webSql, DB_CONFIG){
       $scope.db.dropTable('code');
 }
 
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+}

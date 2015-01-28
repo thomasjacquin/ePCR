@@ -76,6 +76,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           resolve: {
               report: function($stateParams, Reports) {
                 return Reports.get($stateParams.reportId)
+              },
+              vitals: function($stateParams, Vitals) {
+                return Vitals.all($stateParams.reportId)
               }
           }
         }

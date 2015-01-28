@@ -15,6 +15,9 @@ angular.module('ePCR.config', [])
             "primary":true,
             "auto_increment":true
          },
+         "patient_info_assessed":{
+          "type":"BOOLEAN"
+         },
          "last_name":{
             "type":"TEXT"
          },
@@ -65,6 +68,9 @@ angular.module('ePCR.config', [])
          },
          "next_of_kin_phone":{
             "type":"TEXT"
+         }, 
+         "chief_complaint_assessed":{
+          "type":"BOOLEAN"
          },
          "primary_complaint":{
             "type":"TEXT"
@@ -77,6 +83,9 @@ angular.module('ePCR.config', [])
          },
          "pertinent":{
             "type":"TEXT"
+         },
+         "patient_hx_assessed":{
+          "type":"BOOLEAN"
          },
          "hx_allergies":{
             "type":"TEXT"
