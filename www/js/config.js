@@ -2429,7 +2429,7 @@ angular.module('ePCR.config', [])
     ]
   },
   endocrine: {
-    name: "Brand",
+    name: "Endocrine",
     list:[
       "Acromegaly / Gigantism",
       "Addison's disease",
@@ -2484,7 +2484,7 @@ angular.module('ePCR.config', [])
     ]
   },
   psych: {
-    name: "Brand",
+    name: "Psychological",
     list:[
       "Acute stress disorder",
       "Adjustment disorder",

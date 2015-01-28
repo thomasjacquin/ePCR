@@ -8,9 +8,10 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ReportsCtrl', function($scope, $webSql, DB_CONFIG, reports) {
+.controller('ReportsCtrl', function($scope, $q, $webSql, DB_CONFIG, reports) {
   
   $scope.reports = reports;
+  $scope.showDelete = false;
     
   $scope.addReport = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
@@ -19,7 +20,23 @@ angular.module('starter.controllers', [])
         window.location = '#/tab/report/' + results.insertId;
     });
   }
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
 
+  $scope.deleteReport = function(reportId){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    var promises = [];
+    promises.push($scope.db.del("report", {"id": reportId}));
+    promises.push($scope.db.del("vitals", {"report_id": reportId}));
+    $q.all(promises)
+    .then(function(){
+      console.log("Report deleted successfully");
+      delete $scope.reports[reportId];
+    })
+  }
+  
   $scope.deleteDatabase = function(){
     deleteDatabase($webSql, DB_CONFIG);
   }
@@ -37,7 +54,7 @@ angular.module('starter.controllers', [])
   $scope.personal = {
     "first_name": $scope.report.first_name, 
     "last_name": $scope.report.last_name, 
-    "date_of_birth": new Date($scope.report.date_of_birth), 
+    "date_of_birth": $scope.report.date_of_birth ? new Date($scope.report.date_of_birth) : "", 
     "gender": $scope.report.gender, 
     "weight": $scope.report.weight,
     "weight_unit": $scope.report.weight_unit,
