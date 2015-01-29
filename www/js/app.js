@@ -77,8 +77,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               report: function($stateParams, Reports) {
                 return Reports.get($stateParams.reportId)
               },
-              vitals: function($stateParams, Vitals) {
-                return Vitals.all($stateParams.reportId)
+              vitals: function($stateParams, Records) {
+                return Records.all('vitals', $stateParams.reportId)
               }
           }
         }
@@ -119,11 +119,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       views: {
         'tab-reports': {
           templateUrl: 'templates/vitals-list.html',
-          controller: 'VitalsListCtrl',
+          controller: 'ListCtrl',
           resolve: {
-              vitalsList: function($stateParams, Vitals) {
-                return Vitals.all($stateParams.reportId)
-              }
+            list: function($stateParams, Records) {
+              return Records.all('vitals', $stateParams.reportId)
+            },
+            tableName: function() {
+              return 'vitals'
+            },
+            redirection: function($stateParams) {
+              return '#/tab/report/' + $stateParams.reportId + '/vitals/'
+            }
           }
         }
       }
@@ -136,8 +142,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           templateUrl: 'templates/vitals.html',
           controller: 'VitalsCtrl',
           resolve: {
-              vitals: function($stateParams, Vitals) {
-                return Vitals.get($stateParams.vitalsId)
+              vitals: function($stateParams, Records) {
+                return Records.get('vitals', $stateParams.vitalsId)
               }
           }
         }
@@ -213,7 +219,31 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
             report: function($stateParams, Reports) {
               return Reports.get($stateParams.reportId)
+            },
+            neuroList: function($stateParams, Records) {
+              return Records.all('neuro', $stateParams.reportId)
             }
+        }
+      }
+    }
+  })
+  
+  .state('tab.neuro-list', {
+    url: '/report/:reportId/exam/neuro-list',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/neuro-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('neuro', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'neuro'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/neuro/'
+          }
         }
       }
     }

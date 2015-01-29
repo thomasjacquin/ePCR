@@ -37,48 +37,37 @@ angular.module('starter.services', [])
   }
 })
 
-.service('Vitals', function($q, $webSql, DB_CONFIG) {
-  var vitals = {};
+.service('Records', function($q, $webSql, DB_CONFIG) {
+  var list = {};
   return {
     
-    all: function(reportId) {
-      vitals = {};
+    all: function(tableName, itemId) {
+      list = {};
       var dfd = $q.defer()
       this.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-      this.db.select("vitals",{
-        "report_id": reportId
+      this.db.select(tableName,{
+        "report_id": itemId
       }).then(function(results) {
           for(var i=0; i < results.rows.length; i++){
-              vitals[results.rows.item(i).id] = results.rows.item(i);
+              list[results.rows.item(i).id] = results.rows.item(i);
           }
-          console.dir(vitals);
-          dfd.resolve(vitals);
+          console.dir(list);
+          dfd.resolve(list);
         });
       return dfd.promise;
     },
     
-    get: function(vitalsId) {
+    get: function(tableName, itemId) {
       var dfd = $q.defer()
       this.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
 
-      this.db.select("vitals", {
+      this.db.select(tableName, {
         "id": {
-          "value":vitalsId
+          "value":itemId
         },
       }).then(function(results) {
         dfd.resolve(results.rows.item(0));
       })
-      return dfd.promise;
-    },
-    
-    size: function(reportId){
-      var dfd = $q.defer()
-      this.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-      this.db.select("vitals",{
-        "report_id": reportId
-      }).then(function(results) {
-          dfd.resolve(results.rows.length);
-        });
       return dfd.promise;
     }
 

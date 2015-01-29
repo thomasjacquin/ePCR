@@ -374,6 +374,58 @@ angular.module('starter.controllers', [])
   $scope.report = report;
 })
 
+.controller('NeuroListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, neuroList) {
+  $scope.neuroList = neuroList;
+  $scope.reportId = $stateParams.reportId;
+  $scope.showDelete = false;
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
+  
+  $scope.deleteNeuro = function(neuroId){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.del("neuro", {"id": neuroId})
+    .then(function(){
+      delete $scope.neuroList[neuroId];
+     });
+  }
+    
+  $scope.addVitals = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.insert('vitals', {"report_id": $stateParams.reportId}).then(function(results) {
+        console.log(results.insertId);
+        window.location = '#/tab/report/' + $stateParams.reportId + '/vitals/' + results.insertId;
+    });
+  }
+})
+
+.controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
+  $scope.list = list;
+  $scope.reportId = $stateParams.reportId;
+  $scope.showDelete = false;
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
+  
+  $scope.deleteItem = function(itemId){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.del(tableName, {"id": itemId})
+    .then(function(){
+      delete $scope.list[itemId];
+     });
+  }
+    
+  $scope.addItem = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.insert(tableName, {"report_id": $stateParams.reportId}).then(function(results) {
+        console.log(results.insertId);
+        window.location = redirection + results.insertId;
+    });
+  }
+})
+
 function deleteDatebase($webSql, DB_CONFIG){
       $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
       $scope.db.dropTable('report');				
