@@ -84,32 +84,6 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('VitalsListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, vitalsList) {
-  $scope.vitalsList = vitalsList;
-  $scope.reportId = $stateParams.reportId;
-  $scope.showDelete = false;
-  
-  $scope.toggleDelete = function(){
-    $scope.showDelete = !$scope.showDelete;
-  }
-  
-  $scope.deleteVitals = function(vitalsId){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.del("vitals", {"id": vitalsId})
-    .then(function(){
-      delete $scope.vitalsList[vitalsId];
-     });
-  }
-    
-  $scope.addVitals = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.insert('vitals', {"report_id": $stateParams.reportId}).then(function(results) {
-        console.log(results.insertId);
-        window.location = '#/tab/report/' + $stateParams.reportId + '/vitals/' + results.insertId;
-    });
-  }
-})
-
 .controller('VitalsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
   $scope.vitalsEntry = vitals;
 
@@ -374,28 +348,82 @@ angular.module('starter.controllers', [])
   $scope.report = report;
 })
 
-.controller('NeuroListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, neuroList) {
-  $scope.neuroList = neuroList;
-  $scope.reportId = $stateParams.reportId;
-  $scope.showDelete = false;
+.controller('NeuroCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, neuro) {
+  $scope.neuroEntry = neuro;
+
+  $scope.neuro = {
+    "avpu" : $scope.neuroEntry.avpu,
+    "gcs" : $scope.neuroEntry.gcs == 'true',
+    "gcs_eyes" : Number($scope.neuroEntry.gcs_eyes),
+    "gcs_verbal" : Number($scope.neuroEntry.gcs_verbal),
+    "gcs_motor" : Number($scope.neuroEntry.gcs_motor),
+    "luxr" : $scope.neuroEntry.luxr == 'true',
+    "ruxr" : $scope.neuroEntry.ruxr == 'true',
+    "llxr" : $scope.neuroEntry.llxr == 'true',
+    "rlxr" : $scope.neuroEntry.rlxr == 'true',
+    "suspect_stroke" : $scope.neuroEntry.suspect_stroke == 'true',
+    "facial_droop" : $scope.neuroEntry.facial_droop == 'true',
+    "facial_droop_side" : $scope.neuroEntry.facial_droop_side == 'true',
+    "arm_drift" : $scope.neuroEntry.arm_drift == 'true',
+    "arm_drift_side" : $scope.neuroEntry.arm_drift_side == 'true',
+    "speech" : $scope.neuroEntry.speech
+  };
+  console.log($scope.neuro);
   
-  $scope.toggleDelete = function(){
-    $scope.showDelete = !$scope.showDelete;
+  $scope.calculateGCS = function(){
+    $scope.gcs_total = Number($scope.neuro.gcs_eyes) + Number($scope.neuro.gcs_verbal) + Number($scope.neuro.gcs_motor);
   }
   
-  $scope.deleteNeuro = function(neuroId){
+  $scope.calculateGCS();
+  
+  $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.del("neuro", {"id": neuroId})
-    .then(function(){
-      delete $scope.neuroList[neuroId];
-     });
+    neuro.assessed = true;
+    $scope.db.update("neuro", $scope.neuro, {
+      'id': $stateParams.neuroId
+    }).then(function(){
+      console.log("Updated neuro");
+      $window.history.back();
+    });
   }
-    
-  $scope.addVitals = function(){
+})
+
+.controller('AbcCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+  $scope.activeButton = 1;
+
+  $scope.abc = {
+    "open_patent" : $scope.report.open_patent == 'true',
+    "tracheal_deviation" : $scope.report.tracheal_deviation == 'true',
+    "tracheal_deviation_side" : $scope.report.tracheal_deviation_side == 'true',
+    "interventions" : $scope.report.interventions == 'true',
+    "breathing_type" : $scope.report.breathing_type == 'true',
+    "breathing_effective" : $scope.report.breathing_effective == 'true',
+    "accessory_muscle" : $scope.report.accessory_muscle == 'true',
+    "nasal_flare" : $scope.report.nasal_flare == 'true',
+    "cough" : $scope.report.cough == 'true',
+    "cough_productive" : $scope.report.cough_productive == 'true',
+    "subcutaneous_emphysema" : $scope.report.subcutaneous_emphysema == 'true',
+    "flailed_chest" : $scope.report.flailed_chest == 'true',
+    "flailed_chest_side" : $scope.report.flailed_chest_side == 'true',
+    "suspect_pneumothorax" : $scope.report.suspect_pneumothorax == 'true',
+    "suspect_hemothorax" : $scope.report.suspect_hemothorax == 'true',
+    "ctax4" : $scope.report.ctax4 == 'true',
+  };
+  console.log($scope.abc);
+  
+  $scope.switchTab = function(tab){
+    $scope.activeButton = tab;
+  }
+  
+  $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.insert('vitals', {"report_id": $stateParams.reportId}).then(function(results) {
-        console.log(results.insertId);
-        window.location = '#/tab/report/' + $stateParams.reportId + '/vitals/' + results.insertId;
+    $scope.abc.abc_assessed = true;
+    $scope.db.update("report", $scope.abc, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated abc");
+      $window.history.back();
     });
   }
 })

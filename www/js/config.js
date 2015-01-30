@@ -96,6 +96,111 @@ angular.module('ePCR.config', [])
          "hx_medications":{
             "type":"TEXT"
          },
+         "abc_assessed":{
+            "type":"BOOLEAN"
+         },
+         "open_patent":{
+            "type":"BOOLEAN"
+         },
+         "tracheal_deviation":{
+            "type":"BOOLEAN"
+         },
+         "tracheal_deviation_side":{
+            "type":"TEXT"
+         },
+         "interventions":{
+            "type":"BOOLEAN"
+         },
+         "breathing_type":{
+            "type":"TEXT"
+         },
+         "breathing_laboured":{
+            "type":"BOOLEAN"
+         },
+         "breathing_effective":{
+            "type":"BOOLEAN"
+         },
+         "accessory_muscle":{
+            "type":"BOOLEAN"
+         },
+         "nasal_flare":{
+            "type":"BOOLEAN"
+         },
+         "cough":{
+            "type":"BOOLEAN"
+         },
+         "cough_productive":{
+            "type":"BOOLEAN"
+         },
+         "subcutaneous_emphysema":{
+            "type":"BOOLEAN"
+         },
+         "flailed_chest":{
+            "type":"BOOLEAN"
+         },
+         "flailed_chest_side":{
+            "type":"BOOLEAN"
+         },
+         "suspect_pneumothorax":{
+            "type":"BOOLEAN"
+         },
+         "suspect_hemothorax":{
+            "type":"BOOLEAN"
+         },
+         "ctax4":{
+            "type":"BOOLEAN"
+         },
+         "ul_sound":{
+            "type":"TEXT"
+         },
+         "ur_sound":{
+            "type":"TEXT"
+         },
+         "ll_sound":{
+            "type":"TEXT"
+         },
+         "lr_sound":{
+            "type":"TEXT"
+         },
+         "pulse_location":{
+            "type":"TEXT"
+         },
+         "pulse_regular":{
+            "type":"BOOLEAN"
+         },
+         "pulse_quality":{
+            "type":"TEXT"
+         },
+         "jvd":{
+            "type":"BOOLEAN"
+         },
+         "cap_refill":{
+            "type":"TEXT"
+         },
+         "skin_color":{
+            "type":"TEXT"
+         },
+         "skin_temperature":{
+            "type":"TEXT"
+         },
+         "skin_condition":{
+            "type":"TEXT"
+         },
+         "heart_tones":{
+            "type":"TEXT"
+         },
+         "heart_tones_quality":{
+            "type":"TEXT"
+         },
+         "peripheral_edema":{
+            "type":"BOOLEAN"
+         },
+         "peripheral_edema_location":{
+            "type":"TEXT"
+         },
+         "edema_severity":{
+            "type":"TEXT"
+         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
@@ -199,26 +304,26 @@ angular.module('ePCR.config', [])
          "gcs":{
             "type":"BOOLEAN"
          },
-         "eyes":{
+         "gcs_eyes":{
             "type":"INTEGER"
          },
-         "verbal":{
+         "gcs_verbal":{
             "type":"INTEGER"
          },
-         "motor":{
+         "gcs_motor":{
             "type":"INTEGER"
          },
          "luxr":{
-            "type":"BOOLEAN"
+            "type":"TEXT"
          },
          "ruxr":{
-            "type":"BOOLEAN"
+            "type":"TEXT"
          },
          "llxr":{
-            "type":"BOOLEAN"
+            "type":"TEXT"
          },
          "rlxr":{
-            "type":"BOOLEAN"
+            "type":"TEXT"
          },
          "suspect_stroke":{
             "type":"BOOLEAN"
@@ -258,7 +363,7 @@ angular.module('ePCR.config', [])
 //            "type":"INTEGER",
 //            "null":"NOT NULL"
 //         },
-//         "assessed":{
+//         "abc_assessed":{
 //            "type":"BOOLEAN"
 //         },
 //         "open_patent":{
@@ -268,7 +373,7 @@ angular.module('ePCR.config', [])
 //            "type":"BOOLEAN"
 //         },
 //         "tracheal_deviation_side":{
-//            "type":"BOOLEAN"
+//            "type":"TEXT"
 //         },
 //         "interventions":{
 //            "type":"BOOLEAN"
@@ -294,7 +399,7 @@ angular.module('ePCR.config', [])
 //         "productive":{
 //            "type":"BOOLEAN"
 //         },
-//         "subcut_emph":{
+//         "subcut_emphysema":{
 //            "type":"BOOLEAN"
 //         },
 //         "flailed_chest":{
@@ -303,10 +408,10 @@ angular.module('ePCR.config', [])
 //         "flailed_chest_side":{
 //            "type":"BOOLEAN"
 //         },
-//         "suspect_pneu":{
+//         "suspect_pneumothorax":{
 //            "type":"BOOLEAN"
 //         },
-//         "suspect_hemo":{
+//         "suspect_hemothorax":{
 //            "type":"BOOLEAN"
 //         },
 //         "ctax4":{
@@ -327,7 +432,7 @@ angular.module('ePCR.config', [])
 //         "pulse_location":{
 //            "type":"TEXT"
 //         },
-//         "pulse_regularity":{
+//         "pulse_regular":{
 //            "type":"BOOLEAN"
 //         },
 //         "pulse_quality":{
@@ -337,16 +442,16 @@ angular.module('ePCR.config', [])
 //            "type":"BOOLEAN"
 //         },
 //         "cap_refill":{
-//            "type":"BOOLEAN"
+//            "type":"TEXT"
 //         },
 //         "skin":{
 //            "type":"TEXT"
 //         },
-//         "abctemp":{
+//         "skin_temperature":{
 //            "type":"TEXT"
 //         },
-//         "dry":{
-//            "type":"BOOLEAN"
+//         "skin_condition":{
+//            "type":"TEXT"
 //         },
 //         "heart_tones":{
 //            "type":"TEXT"
