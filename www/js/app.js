@@ -278,6 +278,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  .state('tab.trauma', {
+    url: '/report/:reportId/exam/trauma',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/trauma.html',
+        controller: 'TraumaCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',

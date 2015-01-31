@@ -409,6 +409,23 @@ angular.module('starter.controllers', [])
     "suspect_pneumothorax" : $scope.report.suspect_pneumothorax == 'true',
     "suspect_hemothorax" : $scope.report.suspect_hemothorax == 'true',
     "ctax4" : $scope.report.ctax4 == 'true',
+    "lung_ul_sound" : $scope.report.lung_ul_sound,
+    "lung_ur_sound" : $scope.report.lung_ur_sound,
+    "lung_ll_sound" : $scope.report.lung_ll_sound,
+    "lung_lr_sound" : $scope.report.lung_lr_sound,
+    "pulse_location" : $scope.report.pulse_location,
+    "pulse_quality" : $scope.report.pulse_quality,
+    "pulse_regular" : $scope.report.pulse_regular == 'true',
+    "jvd" : $scope.report.jvd == 'true',
+    "cap_refill" : $scope.report.cap_refill,
+    "skin_color" : $scope.report.skin_color,
+    "skin_temperature" : $scope.report.skin_temperature,
+    "skin_condition" : $scope.report.skin_condition,
+    "heart_tones" : $scope.report.heart_tones,
+    "heart_tones_quality" : $scope.report.heart_tones_quality,
+    "peripheral_edema" : $scope.report.peripheral_edema == 'true',
+    "peripheral_edema_location" : $scope.report.peripheral_edema_location,
+    "peripheral_edema_severity" : $scope.report.peripheral_edema_severity,
   };
   console.log($scope.abc);
   
@@ -424,6 +441,24 @@ angular.module('starter.controllers', [])
     }).then(function(){
       console.log("Updated abc");
       $window.history.back();
+    });
+  }
+})
+
+.controller('TraumaCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
+  $scope.report = report;
+  $scope.trauma = {
+    "has_trauma": $scope.report.has_trauma
+  };
+  
+  $scope.toggle = function(){
+    $scope.has_trauma = ! $scope.has_trauma;
+    // Save on toggle
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", $scope.trauma, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma");
     });
   }
 })

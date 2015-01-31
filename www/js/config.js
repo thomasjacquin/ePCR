@@ -150,26 +150,26 @@ angular.module('ePCR.config', [])
          "ctax4":{
             "type":"BOOLEAN"
          },
-         "ul_sound":{
+         "lung_ul_sound":{
             "type":"TEXT"
          },
-         "ur_sound":{
+         "lung_ur_sound":{
             "type":"TEXT"
          },
-         "ll_sound":{
+         "lung_ll_sound":{
             "type":"TEXT"
          },
-         "lr_sound":{
+         "lung_lr_sound":{
             "type":"TEXT"
          },
          "pulse_location":{
             "type":"TEXT"
          },
-         "pulse_regular":{
-            "type":"BOOLEAN"
-         },
          "pulse_quality":{
             "type":"TEXT"
+         },
+         "pulse_regular":{
+            "type":"BOOLEAN"
          },
          "jvd":{
             "type":"BOOLEAN"
@@ -198,8 +198,11 @@ angular.module('ePCR.config', [])
          "peripheral_edema_location":{
             "type":"TEXT"
          },
-         "edema_severity":{
+         "peripheral_edema_severity":{
             "type":"TEXT"
+         },
+         "has_trauma":{
+            "type":"BOOLEAN"
          },
          "created":{
             "type":"TIMESTAMP",
@@ -350,131 +353,7 @@ angular.module('ePCR.config', [])
          }
       }
    },
-//   {
-//      "name":"abc",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "abc_assessed":{
-//            "type":"BOOLEAN"
-//         },
-//         "open_patent":{
-//            "type":"BOOLEAN"
-//         },
-//         "tracheal_deviation":{
-//            "type":"BOOLEAN"
-//         },
-//         "tracheal_deviation_side":{
-//            "type":"TEXT"
-//         },
-//         "interventions":{
-//            "type":"BOOLEAN"
-//         },
-//         "breathing_type":{
-//            "type":"TEXT"
-//         },
-//         "laboured":{
-//            "type":"BOOLEAN"
-//         },
-//         "effective":{
-//            "type":"BOOLEAN"
-//         },
-//         "accessory_muscle":{
-//            "type":"BOOLEAN"
-//         },
-//         "nasal_flare":{
-//            "type":"BOOLEAN"
-//         },
-//         "cough":{
-//            "type":"BOOLEAN"
-//         },
-//         "productive":{
-//            "type":"BOOLEAN"
-//         },
-//         "subcut_emphysema":{
-//            "type":"BOOLEAN"
-//         },
-//         "flailed_chest":{
-//            "type":"BOOLEAN"
-//         },
-//         "flailed_chest_side":{
-//            "type":"BOOLEAN"
-//         },
-//         "suspect_pneumothorax":{
-//            "type":"BOOLEAN"
-//         },
-//         "suspect_hemothorax":{
-//            "type":"BOOLEAN"
-//         },
-//         "ctax4":{
-//            "type":"BOOLEAN"
-//         },
-//         "ul_sound":{
-//            "type":"TEXT"
-//         },
-//         "ur_sound":{
-//            "type":"TEXT"
-//         },
-//         "ll_sound":{
-//            "type":"TEXT"
-//         },
-//         "lr_sound":{
-//            "type":"TEXT"
-//         },
-//         "pulse_location":{
-//            "type":"TEXT"
-//         },
-//         "pulse_regular":{
-//            "type":"BOOLEAN"
-//         },
-//         "pulse_quality":{
-//            "type":"TEXT"
-//         },
-//         "jvd":{
-//            "type":"BOOLEAN"
-//         },
-//         "cap_refill":{
-//            "type":"TEXT"
-//         },
-//         "skin":{
-//            "type":"TEXT"
-//         },
-//         "skin_temperature":{
-//            "type":"TEXT"
-//         },
-//         "skin_condition":{
-//            "type":"TEXT"
-//         },
-//         "heart_tones":{
-//            "type":"TEXT"
-//         },
-//         "heart_tones_quality":{
-//            "type":"TEXT"
-//         },
-//         "peripheral_edema":{
-//            "type":"BOOLEAN"
-//         },
-//         "peripheral_edema_location":{
-//            "type":"TEXT"
-//         },
-//         "edema_severity":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
+//  
 //   {
 //      "name":"trauma",
 //      "columns":{
