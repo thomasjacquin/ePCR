@@ -45,7 +45,6 @@ angular.module('starter.controllers', [])
 .controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals) {
   $scope.report = report;
   $scope.vitalsNumber = Object.size(vitals);
-  console.log($scope.vitalsNumber);
 })
 
 .controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
@@ -344,8 +343,9 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report) {
+.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report, neuroList) {
   $scope.report = report;
+  $scope.neuroNumber = Object.size(neuroList);
 })
 
 .controller('NeuroCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, neuro) {
@@ -712,7 +712,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('GynCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+.controller('GynCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
   $scope.report = report;
 
   $scope.gyn = {
@@ -745,6 +745,7 @@ angular.module('starter.controllers', [])
   console.log($scope.gyn);
   
   $scope.fieldDelivery = function(){
+    $scope.save();
     $window.location = '#/tab/report/' + $stateParams.reportId + '/exam/gyn/field-delivery';
   }
 
@@ -796,7 +797,7 @@ angular.module('starter.controllers', [])
   $scope.categories = [];
   var groupsShown = [];
   
-  var existingInjuries = $scope.report.muscular_complaint!= 'undefined' ? JSON.parse($scope.report.muscular_complaint) : "";
+  var existingInjuries = JSON.parse($scope.report.muscular_complaint);
   
   $scope.muscular = {
     "muscular_has_complaint": $scope.report.muscular_has_complaint == 'true',
@@ -806,10 +807,12 @@ angular.module('starter.controllers', [])
   bodyParts.list.forEach(function(bodyPart, index) {
     var injuries = [];
     muscularInjuries.list.forEach(function(injury){
-      var checked = existingInjuries[bodyPart] != null ? existingInjuries[bodyPart].indexOf(injury) != -1 : false;
-      injuries.push({"text": injury, "checked": checked})
-      if (checked && groupsShown.indexOf(bodyPart) == -1) {
-        groupsShown.push(bodyPart);
+      if (existingInjuries){
+        var checked = existingInjuries[bodyPart] != null ? existingInjuries[bodyPart].indexOf(injury) != -1 : false;
+        injuries.push({"text": injury, "checked": checked})
+        if (checked && groupsShown.indexOf(bodyPart) == -1) {
+          groupsShown.push(bodyPart);
+        }
       }
     });
     
