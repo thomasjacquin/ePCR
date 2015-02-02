@@ -428,6 +428,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  .state('tab.muscular', {
+    url: '/report/:reportId/exam/muscular',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/muscular.html',
+        controller: 'MuscularCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',

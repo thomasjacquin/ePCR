@@ -791,6 +791,75 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('MuscularCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, bodyParts, muscularInjuries) {
+  $scope.report = report;
+  $scope.categories = [];
+  var groupsShown = [];
+  
+  var existingInjuries = $scope.report.muscular_complaint!= 'undefined' ? JSON.parse($scope.report.muscular_complaint) : "";
+  
+  $scope.muscular = {
+    "muscular_has_complaint": $scope.report.muscular_has_complaint == 'true',
+    "muscular_complaint": existingInjuries,
+  };
+  
+  bodyParts.list.forEach(function(bodyPart, index) {
+    var injuries = [];
+    muscularInjuries.list.forEach(function(injury){
+      var checked = existingInjuries[bodyPart] != null ? existingInjuries[bodyPart].indexOf(injury) != -1 : false;
+      injuries.push({"text": injury, "checked": checked})
+      if (checked && groupsShown.indexOf(bodyPart) == -1) {
+        groupsShown.push(bodyPart);
+      }
+    });
+    
+    $scope.categories[index] = {
+      name: bodyPart,
+      injuries: injuries
+    };
+  });
+  
+  $scope.toggleGroup = function(bodyPart) {
+    if (groupsShown.indexOf(bodyPart) == -1){
+      groupsShown.push(bodyPart);
+    } else {
+      groupsShown.splice(groupsShown.indexOf(bodyPart), 1);
+    }
+  };
+  $scope.isGroupShown = function(bodyPart) {
+    return groupsShown.indexOf(bodyPart) != -1;
+  };
+  
+  $scope.save = function(){
+    var selected = {};
+    $scope.categories.forEach(function(bodyPart, index){
+      var listForBodyPart = []
+      bodyPart.injuries.forEach(function(value, index){
+        if (value.checked){
+          listForBodyPart.push(value.text);
+        }
+      });
+      if (listForBodyPart.length != 0){
+        selected[bodyPart.name] = listForBodyPart;
+      }
+    });
+    
+    $scope.muscular.muscular_complaint = JSON.stringify(selected);
+    $scope.muscular.muscular_assessed = true;
+    
+//    console.log(JSON.stringify(selected));
+     
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", $scope.muscular, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated report: Muscular/Skeletal");
+      $window.history.back();
+    });
+  }
+})
+
+
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;

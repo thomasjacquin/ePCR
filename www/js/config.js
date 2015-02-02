@@ -501,6 +501,15 @@ angular.module('ePCR.config', [])
          "field_delivery_placenta_intact":{
             "type":"BOOLEAN"
          },
+         "muscular_assessed":{
+            "type":"BOOLEAN"
+         },
+         "muscular_has_complaint":{
+            "type":"BOOLEAN"
+         },
+         "muscular_complaint":{
+            "type":"TEXT"
+         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
@@ -724,15 +733,7 @@ angular.module('ePCR.config', [])
 //            "type":"INTEGER",
 //            "null":"NOT NULL"
 //         },
-//         "assessed":{
-//            "type":"BOOLEAN"
-//         },
-//         "nocomplaint":{
-//            "type":"BOOLEAN"
-//         },
-//         "muscular":{
-//            "type":"TEXT"
-//         },
+
 //         "created":{
 //            "type":"TIMESTAMP",
 //            "null":"NOT NULL",
@@ -2242,4 +2243,20 @@ angular.module('ePCR.config', [])
       "Right leg",
       "Back"
     ]
+})
+
+ .constant('muscularInjuries', {
+      list: [
+        "Deformities",
+        "Contusion",
+        "Abrasion",
+        "Puncture",
+        "Penetration",
+        "Burn",
+        "Tenderness",
+        "Laceration",
+        "Swelling",
+        "Crepitus",
+        "Step-off"
+      ]
 });
