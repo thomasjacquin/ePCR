@@ -378,7 +378,7 @@ angular.module('starter.controllers', [])
   
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    neuro.assessed = true;
+//    $scope.neuro.assessed = true;
     $scope.db.update("neuro", $scope.neuro, {
       'id': $stateParams.neuroId
     }).then(function(){
@@ -448,17 +448,345 @@ angular.module('starter.controllers', [])
 .controller('TraumaCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
   $scope.report = report;
   $scope.trauma = {
-    "has_trauma": $scope.report.has_trauma
-  };
+    "has_trauma": $scope.report.has_trauma == 'true'
+  }
   
   $scope.toggle = function(){
-    $scope.has_trauma = ! $scope.has_trauma;
-    // Save on toggle
+//    $scope.has_trauma = !$scope.has_trauma;
+    $scope.save();
+  }
+  
+  $scope.save = function(){
+    console.log($scope.trauma);
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.db.update("report", $scope.trauma, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma");
+    });
+  }
+})
+
+.controller('TraumaAutoCtrl', function($scope, $stateParams, $window, $webSql, DB_CONFIG, report) {
+  $scope.report = report;
+  $scope.auto = {
+    "trauma_auto_vehicle": $scope.report.trauma_auto_vehicle,
+    "trauma_auto_seat": $scope.report.trauma_auto_seat,
+    "trauma_auto_seatbelt": $scope.report.trauma_auto_seatbelt == 'true',
+    "trauma_auto_airbag": $scope.report.trauma_auto_airbag == 'true',
+    "trauma_auto_helmet": $scope.report.trauma_auto_helmet == 'true',
+    "trauma_auto_leathers": $scope.report.trauma_auto_leathers == 'true',
+    "trauma_auto_nb_occupants": $scope.report.trauma_auto_nb_occupants,
+    "trauma_auto_vehicle_speed": $scope.report.trauma_auto_vehicle_speed,
+    "trauma_auto_speed_unit": $scope.report.trauma_auto_speed_unit,
+    "trauma_auto_removed_by": $scope.report.trauma_auto_removed_by,
+    "trauma_auto_details_per": $scope.report.trauma_auto_details_per,
+    "trauma_auto_photo": $scope.report.trauma_auto_photo,
+  };
+  
+  $scope.toggleSeat = function(seat){
+    $scope.auto.trauma_auto_seat = seat;
+    console.log(seat);
+  }
+  
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.auto.trauma_auto_assessed = true;
+    $scope.db.update("report", $scope.auto, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma auto");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('TraumaPenetratingCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+  $scope.report = report;
+  $scope.bodyPartsList = [];
+  $scope.penetrating = {
+    "trauma_penetrating_assault": $scope.report.trauma_penetrating_assault == 'true',
+    "trauma_penetrating_moi": $scope.report.trauma_penetrating_moi,
+    "trauma_penetrating_velocity": $scope.report.trauma_penetrating_velocity,
+    "trauma_penetrating_bleeding": $scope.report.trauma_penetrating_bleeding == 'true',
+    "trauma_penetrating_controlled": $scope.report.trauma_penetrating_controlled == 'true',
+    "trauma_penetrating_body_parts": JSON.parse($scope.report.trauma_penetrating_body_parts)
+  };
+  
+  var bodyPartsInvolved = $scope.penetrating.trauma_penetrating_body_parts;
+  
+  bodyParts.list.forEach(function(part){
+    var checked = bodyPartsInvolved != null ? bodyPartsInvolved.indexOf(part) != -1 : false;
+    $scope.bodyPartsList.push({"text": part, "checked": checked})
+  });
+  
+  $scope.save = function(){
+    var selected = [];
+    $scope.bodyPartsList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.penetrating.trauma_penetrating_body_parts = JSON.stringify(selected);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.penetrating.trauma_penetrating_assessed = true;
+    $scope.db.update("report", $scope.penetrating, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma penetrating");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('TraumaBluntCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+  $scope.report = report;
+  $scope.bodyPartsList = [];
+  $scope.blunt = {
+    "trauma_blunt_assault": $scope.report.trauma_blunt_assault == 'true',
+    "trauma_blunt_moi": $scope.report.trauma_blunt_moi,
+    "trauma_blunt_bleeding": $scope.report.trauma_blunt_bleeding == 'true',
+    "trauma_blunt_controlled": $scope.report.trauma_blunt_controlled == 'true',
+    "trauma_blunt_body_parts": JSON.parse($scope.report.trauma_blunt_body_parts),
+    "trauma_blunt_photo": $scope.report.trauma_blunt_photo
+  };
+  
+  var bodyPartsInvolved = $scope.blunt.trauma_blunt_body_parts;
+  
+  bodyParts.list.forEach(function(part){
+    var checked = bodyPartsInvolved != null ? bodyPartsInvolved.indexOf(part) != -1 : false;
+    $scope.bodyPartsList.push({"text": part, "checked": checked})
+  });
+  
+  $scope.save = function(){
+    var selected = [];
+    $scope.bodyPartsList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.blunt.trauma_blunt_body_parts = JSON.stringify(selected);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.blunt.trauma_blunt_assessed = true;
+    $scope.db.update("report", $scope.blunt, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma blunt");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('TraumaFallCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+  $scope.report = report;
+  $scope.bodyPartsList = [];
+  $scope.fall = {
+    "trauma_fall_assault": $scope.report.trauma_fall_assault == 'true',
+    "trauma_fall_distance": $scope.report.trauma_fall_distance,
+    "trauma_fall_distance_unit": $scope.report.trauma_fall_distance_unit,
+    "trauma_fall_surface": $scope.report.trauma_fall_surface,
+    "trauma_fall_loss_of_c": $scope.report.trauma_fall_loss_of_c == 'true',
+    "trauma_fall_loss_of_c_time": $scope.report.trauma_fall_loss_of_c_time,
+    "trauma_fall_bleeding": $scope.report.trauma_fall_bleeding == 'true',
+    "trauma_fall_controlled": $scope.report.trauma_fall_controlled == 'true',
+    "trauma_fall_body_parts": JSON.parse($scope.report.trauma_fall_body_parts),
+    "trauma_fall_photo": $scope.report.trauma_fall_photo
+  };
+  
+  var bodyPartsInvolved = $scope.fall.trauma_fall_body_parts;
+  
+  bodyParts.list.forEach(function(part){
+    var checked = bodyPartsInvolved != null ? bodyPartsInvolved.indexOf(part) != -1 : false;
+    $scope.bodyPartsList.push({"text": part, "checked": checked})
+  });
+  
+  $scope.save = function(){
+    var selected = [];
+    $scope.bodyPartsList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.fall.trauma_fall_body_parts = JSON.stringify(selected);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.fall.trauma_fall_assessed = true;
+    $scope.db.update("report", $scope.fall, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma fall");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('TraumaBurnCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+  $scope.report = report;
+  $scope.bodyPartsList = [];
+  $scope.burn = {
+    "trauma_burn_total_surface": $scope.report.trauma_burn_total_surface,
+    "trauma_burn_body_type": $scope.report.trauma_burn_body_type,
+    "trauma_burn_body_parts": JSON.parse($scope.report.trauma_burn_areas),
+    "trauma_burn_body_photo": $scope.report.trauma_burn_body_photo
+  };
+  
+  var bodyPartsInvolved = $scope.burn.trauma_burn_body_parts;
+  
+  bodyParts.list.forEach(function(part){
+    var checked = bodyPartsInvolved != null ? bodyPartsInvolved.indexOf(part) != -1 : false;
+    $scope.bodyPartsList.push({"text": part, "checked": checked})
+  });
+  
+  $scope.save = function(){
+    var selected = [];
+    $scope.bodyPartsList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.burn.trauma_burn_body_parts = JSON.stringify(selected);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.burn.trauma_burn_assessed = true;
+    $scope.db.update("report", $scope.burn, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated trauma burn");
+    });
+  }
+})
+
+.controller('GiCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.gi = {
+    "gi_soft" : $scope.report.gi_soft == 'true',
+    "gi_flat" : $scope.report.gi_flat == 'true',
+    "gi_non_distended" : $scope.report.gi_non_distended == 'true',
+    "gi_non_tender" : $scope.report.gi_non_tender == 'true',
+    "gi_rebound" : $scope.report.gi_rebound == 'true',
+    "gi_obese" : $scope.report.gi_obese == 'true',
+    "gi_last_bm" : $scope.report.gi_last_bm,
+    "gi_loi" : $scope.report.gi_loi,
+  };
+  console.log($scope.gi);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.gi.gi_assessed = true;
+    $scope.db.update("report", $scope.gi, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated GI");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('GuCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.gu = {
+    "gu_pain" : $scope.report.gu_pain == 'true',
+    "gu_frequency" : $scope.report.gu_frequency == 'true',
+    "gu_pain" : $scope.report.gu_pain == 'true',
+    "gu_hematuria" : $scope.report.gu_hematuria == 'true',
+    "gu_incontinence" : $scope.report.gu_incontinence == 'true',
+    "gu_bladder_distention" : $scope.report.gu_bladder_distention == 'true',
+    "gu_urinary_urgency" : $scope.report.gu_urinary_urgency == 'true',
+    "gu_last_void" : $scope.report.gu_last_void,
+  };
+  console.log($scope.gu);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.gu.gu_assessed = true;
+    $scope.db.update("report", $scope.gu, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated GU");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('GynCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.gyn = {
+    "gyn_gravid" : $scope.report.gyn_gravid,
+    "gyn_term" : $scope.report.gyn_term,
+    "gyn_para" : $scope.report.gyn_para,
+    "gyn_abortia" : $scope.report.gyn_abortia,
+    "gyn_live" : $scope.report.gyn_live,
+    "gyn_last_menstruation" : $scope.report.gyn_last_menstruation,
+    "gyn_discharge" : $scope.report.gyn_discharge == 'true',
+    "gyn_substance" : $scope.report.gyn_substance,
+    "gyn_pregnant" : $scope.report.gyn_pregnant,
+    "gyn_edc" : $scope.report.gyn_edc,
+    "gyn_gestation_known" : $scope.report.gyn_gestation_known == 'true',
+    "gyn_gest_weeks" : $scope.report.gyn_gest_weeks,
+    "peripheral_edema" : $scope.report.peripheral_edema == 'true',
+    "peripheral_edema_location" : $scope.report.peripheral_edema_location,
+    "peripheral_edema_severity" : $scope.report.peripheral_edema_severity,
+    "gyn_membrane_intact" : $scope.report.gyn_membrane_intact == 'true',
+    "gyn_time_ruptured" : $scope.report.gyn_time_ruptured,
+    "gyn_fluid" : $scope.report.gyn_fluid,
+    "gyn_expected_babies" : $scope.report.gyn_expected_babies,
+    "gyn_fetal_mvmt" : $scope.report.gyn_fetal_mvmt == 'true',
+    "gyn_last_mvmt" : $scope.report.gyn_last_mvmt,
+    "gyn_mvmt_per_hr" : $scope.report.gyn_mvmt_per_hr,
+    "gyn_contractions" : $scope.report.gyn_contractions == 'true',
+    "gyn_contraction_duration" : $scope.report.gyn_contraction_duration,
+    "gyn_contraction_separation" : $scope.report.gyn_contraction_separation,
+  };
+  console.log($scope.gyn);
+  
+  $scope.fieldDelivery = function(){
+    $window.location = '#/tab/report/' + $stateParams.reportId + '/exam/gyn/field-delivery';
+  }
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.gyn.gyn_assessed = true;
+    $scope.db.update("report", $scope.gyn, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Gyn");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.field = {
+    "field_delivery_presentation" : $scope.report.field_delivery_presentation,
+    "field_delivery_time" : $scope.report.field_delivery_time,
+    "field_delivery_meconium" : $scope.report.field_delivery_meconium,
+    "field_delivery_cord_cut_length" : $scope.report.field_delivery_cord_cut_length,
+    "field_delivery_apgar1" : $scope.report.field_delivery_apgar1,
+    "field_delivery_apgar5" : $scope.report.field_delivery_apgar5,
+    "field_delivery_stimulation" : $scope.report.field_delivery_stimulation == 'true',
+    "field_delivery_stimulation_type" : $scope.report.field_delivery_stimulation_type,
+    "field_delivery_placenta" : $scope.report.field_delivery_placenta == 'true',
+    "field_delivery_placenta_time" : $scope.report.field_delivery_placenta_time,
+    "gyn_gestation_known" : $scope.report.gyn_gestation_known == 'true',
+    "field_delivery_placenta_intact" : $scope.report.field_delivery_placenta_intact == 'true'
+  };
+  console.log($scope.field);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.field.field_delivery_assessed = true;
+    $scope.db.update("report", $scope.field, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Field Delivery");
+      $window.history.back();
     });
   }
 })
@@ -499,8 +827,8 @@ function deleteDatebase($webSql, DB_CONFIG){
       $scope.db.dropTable('abc');			
       $scope.db.dropTable('trauma');				
       $scope.db.dropTable('trauma_auto');				
+      $scope.db.dropTable('trauma_fall');				
       $scope.db.dropTable('trauma_blunt');				
-      $scope.db.dropTable('trauma_penetrating');				
       $scope.db.dropTable('trauma_fall');
       $scope.db.dropTable('trauma_burn');
       $scope.db.dropTable('gi_gu');

@@ -293,6 +293,141 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  .state('tab.auto', {
+    url: '/report/:reportId/exam/trauma/auto',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/auto.html',
+        controller: 'TraumaAutoCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.penetrating', {
+    url: '/report/:reportId/exam/trauma/penetrating',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/penetrating.html',
+        controller: 'TraumaPenetratingCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.blunt', {
+    url: '/report/:reportId/exam/trauma/blunt',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/blunt.html',
+        controller: 'TraumaBluntCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.fall', {
+    url: '/report/:reportId/exam/trauma/fall',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/fall.html',
+        controller: 'TraumaFallCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.burn', {
+    url: '/report/:reportId/exam/trauma/burn',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/burn.html',
+        controller: 'TraumaBurnCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+ .state('tab.gu', {
+    url: '/report/:reportId/exam/gu',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/gu.html',
+        controller: 'GuCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.gi', {
+    url: '/report/:reportId/exam/gi',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/gi.html',
+        controller: 'GiCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.gyn', {
+    url: '/report/:reportId/exam/gyn',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/gyn.html',
+        controller: 'GynCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.field-delivery', {
+    url: '/report/:reportId/exam/gyn/field-delivery',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/exam/field-delivery.html',
+        controller: 'FieldDeliveryCtrl',
+        resolve: {
+            report: function($stateParams, Reports) {
+              return Reports.get($stateParams.reportId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
