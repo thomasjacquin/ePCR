@@ -922,6 +922,15 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report, ivIoList, splintingList, medicationList, inOutList, ecgList) {
+  $scope.report = report;
+  $scope.ivIoNumber = Object.size(ivIoList);
+  $scope.splintingNumber = Object.size(splintingList);
+  $scope.medicationNumber = Object.size(medicationList);
+  $scope.inOutNumber = Object.size(inOutList);
+  $scope.ecgNumber = Object.size(ecgList);
+})
+
 
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;

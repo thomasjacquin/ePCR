@@ -458,6 +458,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+  .state('tab.procedures', {
+    url: '/report/:reportId/procedure',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/procedures.html',
+        controller: 'ProceduresCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          },
+          ivIoist: function($stateParams, Records) {
+            return Records.all('iv_io', $stateParams.reportId)
+          },
+          splintingList: function($stateParams, Records) {
+            return Records.all('splinting', $stateParams.reportId)
+          },
+          medicationList: function($stateParams, Records) {
+            return Records.all('medication', $stateParams.reportId)
+          },
+          inOutList: function($stateParams, Records) {
+            return Records.all('in_out', $stateParams.reportId)
+          },
+          ecgList: function($stateParams, Records) {
+            return Records.all('ecg', $stateParams.reportId)
+          },
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',
