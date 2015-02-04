@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'angular-websql', 'database', 'ePCR.config', 'ngRoute'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'customDirectives', 'angular-websql', 'database', 'ePCR.config', 'ngRoute', 'angles'])
 
 .run(function($ionicPlatform, database) {
   $ionicPlatform.ready(function() {
@@ -130,6 +130,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             redirection: function($stateParams) {
               return '#/tab/report/' + $stateParams.reportId + '/vitals/'
             }
+          }
+        }
+      }
+    })
+  
+    .state('tab.vitals-charts', {
+      url: '/report/:reportId/vitals/charts',
+      views: {
+        'tab-reports': {
+          templateUrl: 'templates/vitals/vitals-chart.html',
+          controller: 'VitalsChartCtrl',
+          resolve: {
+              vitals: function($stateParams, Records) {
+                return Records.all('vitals', $stateParams.reportId)
+              }
           }
         }
       }

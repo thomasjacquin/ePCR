@@ -83,6 +83,66 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('VitalsChartCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
+  
+  var xAxis = [],
+      data = {};
+  
+  $scope.vitalSelected = {
+    serie: "hr"
+  };
+  
+  $scope.vitalsSeries = [
+    {code: "hr", name: "Heart Rate"}, 
+    {code: "sys", name: "Systole"},
+    {code: "dia", name: "Diastole"},
+    {code: "fio2", name: "FiO2"},
+    {code: "spo2", name: "SpO2"},
+    {code: "resp", name: "Respiration"},
+    {code: "level_of_c", name: "Consciousness"},
+    {code: "left_eye", name: "Left Eye Diameter"},
+    {code: "left_eye", name: "Right Eye Diameter"},
+    {code: "bgl", name: "Blood Glucose"},
+    {code: "temp", name: "Temperature"},
+    {code: "etco2", name: "EtCO2"},
+    {code: "pain", name: "Pain"},
+  ];
+  
+  for(index in vitals) {  
+    xAxis.push(vitals[index].created);
+    $scope.vitalsSeries.forEach(function(serie){
+      if (!data[serie.code])
+        data[serie.code] = [];
+      data[serie.code].push(vitals[index][serie.code]);
+    });
+//    data["hr"].push(vitals[index].hr);
+//    data["sys"].push(vitals[index].sys);
+//    data["dia"].push(vitals[index].dia);
+  }
+//  
+//  series["hr"] = hr;
+//  series["sys"] = sys;
+//  series["dia"] = dia;
+  
+  $scope.chart = {
+      labels : xAxis,
+      datasets : [
+          {
+              fillColor : "rgba(151,187,205,0)",
+              strokeColor : "#e67e22",
+              pointColor : "rgba(151,187,205,0)",
+              pointStrokeColor : "#e67e22",
+              data : data[$scope.vitalSelected.serie]
+          }
+      ], 
+  };
+  
+  $scope.changeVital = function(){
+    $scope.chart.datasets[0].data = data[$scope.vitalSelected.serie];
+  }
+  
+})
+
 .controller('VitalsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
   $scope.vitalsEntry = vitals;
 
@@ -452,7 +512,6 @@ angular.module('starter.controllers', [])
   }
   
   $scope.toggle = function(){
-//    $scope.has_trauma = !$scope.has_trauma;
     $scope.save();
   }
   
@@ -797,7 +856,8 @@ angular.module('starter.controllers', [])
   $scope.categories = [];
   var groupsShown = [];
   
-  var existingInjuries = JSON.parse($scope.report.muscular_complaint);
+  var existingInjuries = JSON.parse($scope.report.muscular_complaint) || {};
+  console.log(existingInjuries);
   
   $scope.muscular = {
     "muscular_has_complaint": $scope.report.muscular_has_complaint == 'true',
