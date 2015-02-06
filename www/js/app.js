@@ -566,6 +566,42 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+    .state('tab.ventilator-list', {
+    url: '/report/:reportId/procedures/airway/ventilator',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/ventilator-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('airway_ventilator', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'airway_ventilator'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/airway/ventilator/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.ventilator', {
+    url: '/report/:reportId/procedures/airway/ventilator/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/ventilator.html',
+        controller: 'VentilatorCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('airway_ventilator', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
 
   .state('tab.account', {
     url: '/account',

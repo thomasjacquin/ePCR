@@ -990,6 +990,42 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('VentilatorCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.ventilator = {
+    "control" : $scope.procedureEntry.control,
+    "mode" : $scope.procedureEntry.mode,
+    "rate" : $scope.procedureEntry.rate,
+    "tidal_volume" : $scope.procedureEntry.tidal_volume,
+    "inspiration_time" : $scope.procedureEntry.inspiration_time,
+    "inspiration_ratio" : $scope.procedureEntry.inspiration_ratio,
+    "expiration_ratio" : $scope.procedureEntry.expiration_ratio,
+    "fiO2" : $scope.procedureEntry.fiO2,
+    "peep" : $scope.procedureEntry.peep,
+    "sensitivity" : $scope.procedureEntry.sensitivity,
+    "expiration_pressure" : $scope.procedureEntry.expiration_pressure,
+    "expiration_tidal_volume" : $scope.procedureEntry.expiration_tidal_volume,
+    "max_inspiration_pressure" : $scope.procedureEntry.max_inspiration_pressure,
+    "plateau_pressure" : $scope.procedureEntry.plateau_pressure,
+    "pressure_support" : $scope.procedureEntry.pressure_support,
+    "high_pressure_limit" : $scope.procedureEntry.high_pressure_limit,
+    "low_pressure_limit" : $scope.procedureEntry.low_pressure_limit,
+    "low_min_volume" : $scope.procedureEntry.low_min_volume
+  };
+  console.log($scope.ventilator);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("airway_ventilator", $scope.ventilator, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated Ventilator");
+      $window.history.back();
+    });
+  }
+})
+
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;
