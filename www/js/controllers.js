@@ -183,7 +183,12 @@ angular.module('starter.controllers', [])
 .controller('ChiefComplaintCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, chiefComplaint) {
   $scope.report = report;
   $scope.pertinentList = [];
-  $scope.primaryComplaint = chiefComplaint.primary;
+  $scope.primaryComplaintUnordered = chiefComplaint.primary;
+  
+  $scope.primaryComplaint = [];
+  $scope.primaryComplaintUnordered.forEach(function(complaint, index){
+    $scope.primaryComplaint.push({"value": index, "complaint":complaint});
+  });
   
   $scope.binding = { 
     "primary_complaint": $scope.report.primary_complaint, 
