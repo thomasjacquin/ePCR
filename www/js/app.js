@@ -460,7 +460,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
   
   .state('tab.procedures', {
-    url: '/report/:reportId/procedure',
+    url: '/report/:reportId/procedures',
     views: {
       'tab-reports': {
         templateUrl: 'templates/procedures/procedures.html',
@@ -469,7 +469,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
           },
-          ivIoist: function($stateParams, Records) {
+          ivIoList: function($stateParams, Records) {
             return Records.all('iv_io', $stateParams.reportId)
           },
           splintingList: function($stateParams, Records) {
@@ -484,6 +484,84 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           ecgList: function($stateParams, Records) {
             return Records.all('ecg', $stateParams.reportId)
           },
+        }
+      }
+    }
+  })
+  
+  .state('tab.airway', {
+    url: '/report/:reportId/procedures/airway',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/airway.html',
+        controller: 'AirwayCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          },
+          basicAirwayList: function($stateParams, Records) {
+            return Records.all('airway_basic', $stateParams.reportId)
+          },
+          ventilatorList: function($stateParams, Records) {
+            return Records.all('airway_ventilator', $stateParams.reportId)
+          },
+          cpapBipapList: function($stateParams, Records) {
+            return Records.all('airway_cpap_bipap', $stateParams.reportId)
+          },
+          suctionList: function($stateParams, Records) {
+            return Records.all('airway_suction', $stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.basic-airway-list', {
+    url: '/report/:reportId/procedures/airway/basic',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/basic-airway-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('airway_basic', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'airway_basic'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/airway/basic/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.basic-airway', {
+    url: '/report/:reportId/procedures/airway/basic/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/basic-airway.html',
+        controller: 'BasicAirwayCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('airway_basic', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.invasive-airway', {
+    url: '/report/:reportId/procedures/airway/invasive',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/invasive-airway.html',
+        controller: 'InvasiveAirwayCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
         }
       }
     }

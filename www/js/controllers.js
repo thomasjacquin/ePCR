@@ -922,7 +922,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report, ivIoList, splintingList, medicationList, inOutList, ecgList) {
+.controller('ProceduresCtrl', function($scope, $webSql, DB_CONFIG, report, ivIoList, splintingList, medicationList, inOutList, ecgList) {
   $scope.report = report;
   $scope.ivIoNumber = Object.size(ivIoList);
   $scope.splintingNumber = Object.size(splintingList);
@@ -931,6 +931,64 @@ angular.module('starter.controllers', [])
   $scope.ecgNumber = Object.size(ecgList);
 })
 
+.controller('AirwayCtrl', function($scope, $webSql, DB_CONFIG, report, basicAirwayList, ventilatorList, cpapBipapList, suctionList) {
+  $scope.report = report;
+  $scope.basicAirwayNumber = Object.size(basicAirwayList);
+  $scope.ventilatorNumber = Object.size(ventilatorList);
+  $scope.cpapBipapNumber = Object.size(cpapBipapList);
+  $scope.suctionNumber = Object.size(suctionList);
+})
+
+.controller('BasicAirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.basic = {
+    "oxygen_volume" : $scope.procedureEntry.oxygen_volume,
+    "basic_maneuvers" : $scope.procedureEntry.basic_maneuvers,
+    "opa" : $scope.procedureEntry.opa,
+    "npa" : $scope.procedureEntry.npa,
+    "bvm" : $scope.procedureEntry.bvm == 'true',
+    "airway_rate" : $scope.procedureEntry.airway_rate
+  };
+  console.log($scope.basic);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("airway_basic", $scope.basic, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated Basic Airway");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('InvasiveAirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.invasive = {
+    "invasive_airway_secured" : $scope.report.invasive_airway_secured == 'true',
+    "invasive_airway_device" : $scope.report.invasive_airway_device,
+    "invasive_airway_size" : $scope.report.invasive_airway_size,
+    "invasive_airway_cuffed" : $scope.report.invasive_airway_cuffed == 'true',
+    "invasive_airway_inflation" : $scope.report.invasive_airway_inflation,
+    "invasive_airway_technique" : $scope.report.invasive_airway_technique,
+    "invasive_airway_distance" : $scope.report.invasive_airway_distance,
+    "invasive_airway_attempts" : $scope.report.invasive_airway_attempts
+  };
+  console.log($scope.invasive);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.invasive.invasive_airway_assessed = true;
+    $scope.db.update("report", $scope.invasive, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Invasive Airway");
+      $window.history.back();
+    });
+  }
+})
 
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
