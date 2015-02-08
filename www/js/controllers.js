@@ -1028,6 +1028,76 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('CpapBipapCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.cpap = {
+    "device" : $scope.procedureEntry.device,
+    "size" : $scope.procedureEntry.size,
+    "fiO2" : $scope.procedureEntry.fiO2,
+    "peep" : $scope.procedureEntry.peep,
+    "pressure" : $scope.procedureEntry.pressure,
+  };
+  console.log($scope.cpap);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("airway_cpap_bipap", $scope.cpap, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated CPAP/BiPAP");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('SuctionCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.suction = {
+    "duration" : $scope.procedureEntry.duration,
+    "amount" : $scope.procedureEntry.amount,
+    "tip" : $scope.procedureEntry.tip,
+    "size" : $scope.procedureEntry.size,
+  };
+  console.log($scope.suction);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("airway_suction", $scope.suction, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated Suction");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('IvIoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.ivio = {
+    "site" : $scope.procedureEntry.site,
+    "side" : $scope.procedureEntry.side,
+    "gauge" : $scope.procedureEntry.gauge,
+    "attempts" : $scope.procedureEntry.attemps,
+    "successful" : $scope.procedureEntry.successful == true,
+    "fluid" : $scope.procedureEntry.fluid,
+    "fluid_other" : $scope.procedureEntry.fluid_other
+  };
+  console.log($scope.suction);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("iv_io", $scope.ivio, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated IV/IO");
+      $window.history.back();
+    });
+  }
+})
+
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;

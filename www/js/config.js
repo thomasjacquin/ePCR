@@ -1439,6 +1439,7 @@ angular.module('ePCR.config', [])
 
 .constant('chiefComplaint',{
       primary:[
+        {"value":0,"complaint":"Other"},
         {"value":1,"complaint":"Abdominal Pain"},
         {"value":2,"complaint":"Angina"},
         {"value":3,"complaint":"Angina (Unstable)"},
