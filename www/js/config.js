@@ -555,7 +555,7 @@ angular.module('ePCR.config', [])
          "spinal_transferred_by":{
             "type":"TEXT"
          },
-         "spinal_secured_by":{
+         "spinal_secured_with":{
             "type":"TEXT"
          },
          "created":{
@@ -1090,13 +1090,16 @@ angular.module('ePCR.config', [])
          "st_changes":{
             "type":"BOOLEAN"
          },
-         "st_changes_list":{
+         "st_elevation_list":{
             "type":"TEXT"
          },
-         "ecg_pacs":{
+         "st_depression_list":{
+            "type":"TEXT"
+         },
+         "pacs":{
             "type":"BOOLEAN"
          },
-         "ecg_pvcs":{
+         "pvcs":{
             "type":"BOOLEAN"
          },
          "created":{

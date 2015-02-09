@@ -710,7 +710,166 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  
+.state('tab.splinting-list', {
+    url: '/report/:reportId/procedures/splinting',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/splinting-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('splinting', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'splinting'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/splinting/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.splinting', {
+    url: '/report/:reportId/procedures/splinting/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/splinting.html',
+        controller: 'SplintingCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('splinting', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.medication-list', {
+    url: '/report/:reportId/procedures/medication',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/medication-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('medication', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'medication'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/medication/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.medication', {
+    url: '/report/:reportId/procedures/medication/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/medication.html',
+        controller: 'MedicationCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('medication', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
+  
+  .state('tab.spinal', {
+    url: '/report/:reportId/procedures/spinal',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/spinal-motion-restriction.html',
+        controller: 'SpinalCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.in-out-list', {
+    url: '/report/:reportId/procedures/in-out',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/in-out-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('in_out', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'in_out'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/in-out/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.in-out', {
+    url: '/report/:reportId/procedures/in-out/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/in-out.html',
+        controller: 'InOutCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('in_out', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
 
+.state('tab.ecg-list', {
+    url: '/report/:reportId/procedures/ecg',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/ecg-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('ecg', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'ecg'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/procedures/ecg/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.ecg', {
+    url: '/report/:reportId/procedures/ecg/:procedureId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/procedures/ecg.html',
+        controller: 'EcgCtrl',
+        resolve: {
+            procedure: function($stateParams, Records) {
+              return Records.get('ecg', $stateParams.procedureId)
+            }
+        }
+      }
+    }
+  })
+  
   .state('tab.account', {
     url: '/account',
     views: {

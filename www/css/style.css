@@ -24,3 +24,12 @@ body {
 .item .badge {
   right: 15px;
 }
+
+.ecg_buttons>div{
+  float:left;
+  width: 25%;
+}
+
+.ecg_buttons>div button{
+  width: 100%;
+}

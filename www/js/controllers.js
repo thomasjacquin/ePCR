@@ -926,11 +926,16 @@ angular.module('starter.controllers', [])
 
 .controller('ProceduresCtrl', function($scope, $webSql, DB_CONFIG, report, ivIoList, splintingList, medicationList, inOutList, ecgList) {
   $scope.report = report;
-  $scope.ivIoNumber = Object.size(ivIoList);
+  $scope
   $scope.splintingNumber = Object.size(splintingList);
   $scope.medicationNumber = Object.size(medicationList);
   $scope.inOutNumber = Object.size(inOutList);
   $scope.ecgNumber = Object.size(ecgList);
+  $scope.procedures = {
+    "spinal_assessed" : report.spinal_assessed == 'true',
+    "ivIoNumber" :  Object.size(ivIoList),
+    "medicationNumber" :  Object.size(medicationList),
+  };
 })
 
 .controller('AirwayCtrl', function($scope, $webSql, DB_CONFIG, report, basicAirwayList, ventilatorList, cpapBipapList, suctionList) {
@@ -1093,6 +1098,146 @@ angular.module('starter.controllers', [])
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated IV/IO");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('SplintingCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.splinting = {
+    "location" : $scope.procedureEntry.location,
+    "side" : $scope.procedureEntry.side,
+    "sensation_prior" : $scope.procedureEntry.sensation_prior == 'true',
+    "sensation_post" : $scope.procedureEntry.sensation_post == 'true',
+    "traction_applied" : $scope.procedureEntry.traction_applied == 'true',
+    "splinting_type" : $scope.procedureEntry.splinting_type,
+    "splinting_type_other" : $scope.procedureEntry.splinting_type_other,
+    "position_found" : $scope.procedureEntry.position_found,
+    "position_found_other" : $scope.procedureEntry.position_found_other
+  };
+  console.log($scope.splinting);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("splinting", $scope.splinting, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated Splinting");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('MedicationCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.medication = {
+    "location" : $scope.procedureEntry.location,
+  };
+  console.log($scope.medication);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("medication", $scope.medication, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated Medication");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('SpinalCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.spinal = {
+    "spinal_manual" : $scope.report.spinal_manual == 'true',
+    "spinal_c_collar" : $scope.report.spinal_c_collar == 'true',
+    "spinal_collar_size" : $scope.report.spinal_collar_size,
+    "spinal_backboard" : $scope.report.spinal_backboard,
+    "spinal_transferred_by" : $scope.report.spinal_transferred_by,
+    "spinal_secured_with" : $scope.report.spinal_secured_with,
+  };
+  console.log($scope.spinal);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.spinal.spinal_assessed = true;
+    $scope.db.update("report", $scope.spinal, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Medication");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('InOutCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.inOut = {
+    "direction" : $scope.procedureEntry.direction,
+    "volume" : $scope.procedureEntry.volume,
+    "substance" : $scope.procedureEntry.substance,
+    "other" : $scope.procedureEntry.other,
+  };
+  console.log($scope.inOut);
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("in_out", $scope.inOut, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated In/Out");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('EcgCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+  $scope.procedureEntry = procedure;
+
+  $scope.ecg = {
+    "leads_nb" : $scope.procedureEntry.leads_nb,
+    "rhythm" : $scope.procedureEntry.rhythm,
+    "regular" : $scope.procedureEntry.regular == 'true',
+    "bbb" : $scope.procedureEntry.bbb == 'true',
+    "bbb_side" : $scope.procedureEntry.bbb_side,
+    "st_changes" : $scope.procedureEntry.st_changes == 'true',
+    "st_elevation_list" : $scope.procedureEntry.st_elevation_list ? JSON.parse($scope.procedureEntry.st_elevation_list) : [],
+    "st_depression_list" : $scope.procedureEntry.st_depression_list ? JSON.parse($scope.procedureEntry.st_depression_list) : [],
+    "pacs" : $scope.procedureEntry.pacs == 'true',
+    "pvcs" : $scope.procedureEntry.pvcs == 'true',
+  };
+  console.log($scope.ecg);
+  
+  $scope.elevation = $scope.ecg.st_elevation_list;
+  $scope.depression = $scope.ecg.st_depression_list;
+  
+  $scope.toggle = function(item){
+    if (($scope.elevation.indexOf(item) == -1) && ($scope.depression.indexOf(item) == -1)){
+      $scope.elevation.push(item);
+    } else if ($scope.elevation.indexOf(item) != -1){
+      $scope.elevation.splice($scope.elevation.indexOf(item), 1);
+      $scope.depression.push(item);
+    } else if ($scope.depression.indexOf(item) != -1){
+      $scope.depression.splice($scope.elevation.indexOf(item), 1);
+    }
+    console.dir($scope.elevation);
+    console.dir($scope.depression);
+  };
+
+  $scope.save = function(){
+    $scope.ecg.st_elevation_list = JSON.stringify($scope.elevation);
+    $scope.ecg.st_depression_list = JSON.stringify($scope.depression);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("ecg", $scope.ecg, {
+      'id': $stateParams.procedureId
+    }).then(function(){
+      console.log("Updated ECG");
       $window.history.back();
     });
   }
