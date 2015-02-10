@@ -1,0 +1,164 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Neurological">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <label class="item item-input item-select">
+          <span class="input-label">AVPU</span>
+          <select ng-model="neuro.avpu">
+              <option value="1">Alert and Oriented x4</option>
+              <option value="2">Alert and Oriented x3</option>
+              <option value="3">Alert and Oriented x2</option>
+              <option value="4">Alert and Oriented x1</option>
+              <option value="5">Alert and Confused</option>
+              <option value="6">Responds to Verbal Stimuli</option>
+              <option value="7">Responds to Painful Stimuli</option>
+              <option value="8">Unresponsive</option>
+          </select>
+        </label>
+        <ion-item class="item-toggle">
+          Glasgow Coma Scale<span ng-show="neuro.gcs">: {{gcs_total}}</span>
+           <label class="toggle">
+             <input type="checkbox" ng-model="neuro.gcs">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <label class="item item-input item-select" ng-show="neuro.gcs">
+          <span class="input-label">Eyes</span>
+          <select ng-model="neuro.gcs_eyes" ng-change="calculateGCS()" >
+              <option value="4">4 Spontaneous</option>
+              <option value="3">3 To Command</option>
+              <option value="2">2 To Pain</option>
+              <option value="1">1 None</option>
+          </select>
+        </label>
+        <label class="item item-input item-select" ng-show="neuro.gcs">
+          <span class="input-label">Verbal</span>
+          <select ng-model="neuro.gcs_verbal" ng-change="calculateGCS()">
+              <option value="5">5 Oriented</option>
+              <option value="4">4 Confused</option>
+              <option value="3">3 Inappropriate</option>
+              <option value="2">2 Incomprehensive</option>
+              <option value="1">1 None</option>
+          </select>
+        </label>
+        <label class="item item-input item-select" ng-show="neuro.gcs">
+          <span class="input-label">Motor</span>
+          <select ng-model="neuro.gcs_motor" ng-change="calculateGCS()">>
+              <option value="6">6 Obeys</option>
+              <option value="5">5 Localizes Pain</option>
+              <option value="4">4 Withdraws</option>
+              <option value="3">3 Flexion</option>
+              <option value="2">2 Extension</option>
+              <option value="1">1 none</option>
+          </select>
+        </label>
+        <div class="item item-divider">
+          Pulse Sensation Movement
+        </div>
+        <label class="item item-input item-select">
+          <span class="input-label">Left Arm Reflex</span>
+          <select ng-model="neuro.luxr">
+              <option value="0">0 Absent</option>
+              <option value="1">1+ Trace</option>
+              <option value="2">2+ Normal</option>
+              <option value="3">3+ Brisk</option>
+              <option value="4">4+ Nonsustained clonus</option>
+              <option value="5">5+ Sustained clonus</option>
+          </select>
+          </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Right Arm Reflex</span>
+          <select ng-model="neuro.ruxr">
+              <option value="0">0 Absent</option>
+              <option value="1">1+ Trace</option>
+              <option value="2">2+ Normal</option>
+              <option value="3">3+ Brisk</option>
+              <option value="4">4+ Nonsustained clonus</option>
+              <option value="5">5+ Sustained clonus</option>
+          </select>
+          </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Left leg Reflex</span>
+          <select ng-model="neuro.llxr">
+              <option value="0">0 Absent</option>
+              <option value="1">1+ Trace</option>
+              <option value="2">2+ Normal</option>
+              <option value="3">3+ Brisk</option>
+              <option value="4">4+ Nonsustained clonus</option>
+              <option value="5">5+ Sustained clonus</option>
+          </select>
+          </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Right Leg Reflex</span>
+          <select ng-model="neuro.rlxr">
+              <option value="0">0 Absent</option>
+              <option value="1">1+ Trace</option>
+              <option value="2">2+ Normal</option>
+              <option value="3">3+ Brisk</option>
+              <option value="4">4+ Nonsustained clonus</option>
+              <option value="5">5+ Sustained clonus</option>
+          </select>
+        </label>
+        <ion-item class="item-toggle">
+          Suspect Stroke
+           <label class="toggle">
+             <input type="checkbox" ng-model="neuro.suspect_stroke">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Facial Droop
+           <label class="toggle">
+             <input type="checkbox" ng-model="neuro.facial_droop">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select" ng-show="neuro.facial_droop">
+          <span class="input-label">Facial Droop Side</span>
+          <select ng-model="neuro.facial_droop_side">
+              <option value="0">Left</option>
+              <option value="1">Right</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Arm Drift
+           <label class="toggle">
+             <input type="checkbox" ng-model="neuro.arm_drift">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select" ng-show="neuro.arm_drift">
+          <span class="input-label">Arm Drift Side</span>
+          <select ng-model="neuro.arm_drift_side">
+              <option value="0">Left</option>
+              <option value="1">Right</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Speech</span>
+          <select ng-model="neuro.speech">
+            <option value="0">Speech</option>
+            <option value="1">Normal</option>
+            <option value="2">Dysphasic</option>
+            <option value="3">Aphasic</option>
+            <option value="4">Dysarthria</option>
+            <option value="5">Slurred</option>
+          </select>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

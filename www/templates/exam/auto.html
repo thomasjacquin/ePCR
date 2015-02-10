@@ -1,0 +1,125 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Auto">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+       Save
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+    <ion-item class="item-input item-select">
+      <span class="input-label">Vehicle</span>
+      <select ng-model="auto.trauma_auto_vehicle">
+        <option value="0">Car</option>
+        <option value="1">Truck</option>
+        <option value="2">Motorcycle</option>
+        <option value="3">Sidecar</option>
+      </select>
+    </ion-item>
+    <ion-item ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+      <span class="label left">Seat where patient was seated</span>
+      <div id="car_outline" style="display: block;">
+        <div class="car_front_wheels"></div>
+        <div class="car_rear_wheels"></div>
+        <div class="car_hood"></div>
+        <div class="car_left_light"></div>
+        <div class="car_right_light"></div>
+        <div id="car_seats">
+            <div class="car1" ng-class="{'active': 'car1' == auto.trauma_auto_seat}" ng-click="toggleSeat('car1')"></div>
+            <div class="car2" ng-class="{'active': 'car2' == auto.trauma_auto_seat}" ng-click="toggleSeat('car2')"ng-click="toggleSeat('car2')"></div>
+            <div class="car3" ng-class="{'active': 'car3' == auto.trauma_auto_seat}" ng-click="toggleSeat('car3')"ng-click="toggleSeat('car3')"></div>
+            <div class="car4" ng-class="{'active': 'car4' == auto.trauma_auto_seat}" ng-click="toggleSeat('car4')"ng-click="toggleSeat('car4')"></div>
+            <div class="car5" ng-class="{'active': 'car5' == auto.trauma_auto_seat}" ng-click="toggleSeat('car5')"ng-click="toggleSeat('car5')"></div>
+            <div class="car6" ng-class="{'active': 'car6' == auto.trauma_auto_seat}" ng-click="toggleSeat('car6')"ng-click="toggleSeat('car6')"></div>
+        </div>
+        <div class="car_steering_wheel" id="car_steering_wheel"></div>
+      </div>
+    </ion-item>
+     <ion-item ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+      <span class="label left">Seat where patient was seated</span>
+      <div id="motorcycle_outline" style="display: block;">
+        <div class="moto_side_wheel_axe"></div>
+        <div class="moto_wheels"></div>
+        <div class="moto_body"></div>
+        <div class="moto_light"></div>
+        <div class="moto_cache_light"></div>
+        <div class="moto_handle"></div>
+        <div class="moto_side_wheel"></div>
+        <div class="moto_side"></div>
+        <div id="motorcycle_seats">
+            <div class="motorcycle1" ng-class="{'active': 'motorcycle1' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle1')"></div>
+            <div class="motorcycle2" ng-class="{'active': 'motorcycle2' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle2')"></div>
+            <div class="motorcycle3" ng-class="{'active': 'motorcycle3' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle3')"></div>
+        </div>
+      </div>
+     </ion-item>
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+      Seatbelt
+       <label class="toggle">
+         <input type="checkbox" ng-model="auto.trauma_auto_seatbelt">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+      </label>
+    </ion-item>
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+      Airbag Deployed
+       <label class="toggle">
+         <input type="checkbox" ng-model="auto.trauma_auto_airbag">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+      </label>
+    </ion-item>
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+     Helmet
+       <label class="toggle">
+         <input type="checkbox" ng-model="auto.trauma_auto_helmet">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+      </label>
+    </ion-item>
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+      Leathers
+       <label class="toggle">
+         <input type="checkbox" ng-model="auto.trauma_auto_leathers">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+      </label>
+    </ion-item>
+    <ion-item class="item-input">
+      <span class="input-label">Nb of Occupants</span>
+      <input type="number" ng-model="auto.trauma_auto_nb_occupants" placeholder="# of Occupants">
+    </ion-item>
+    <ion-item class="item-input item-select">
+      <span class="input-label">Speed</span>
+      <input type="number" ng-model="auto.trauma_auto_vehicle_speed" placeholder="# of Occupants">
+      <select ng-model="auto.trauma_auto_speed_unit">
+        <option value="0">kph</option>
+        <option value="1">mph</option>
+      </select>
+    </ion-item>
+    <ion-item class="item-input item-select">
+      <span class="input-label">Patient removed by</span>
+      <select ng-model="auto.trauma_auto_removed_by">
+        <option value="0">Driver</option>
+        <option value="1">Passenger</option>
+        <option value="2">Bystander</option>
+        <option value="3">Police</option>
+      </select>
+    </ion-item>
+    <ion-item class="item-input item-select">
+      <span class="input-label">Details given by</span>
+      <select ng-model="auto.trauma_auto_details_per">
+        <option value="0">Driver</option>
+        <option value="1">Passenger</option>
+        <option value="2">Bystander</option>
+        <option value="3">Police</option>
+      </select>
+    </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

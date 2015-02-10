@@ -1,0 +1,119 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="ECG">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+       <ion-item class="item-input item-select">
+          <span class="input-label">Test</span>
+          <select ng-model="ecg.leads_nb">
+              <option value="0">3 Leads</option>
+              <option value="1">12 Leads</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Rhythm</span>
+          <select ng-model="ecg.rhythm">
+            <option value="0">Sinus</option>
+            <option value="1">Sinus Tachycardia</option>
+            <option value="2">Sinus Bradycardia</option>
+            <option value="3">Sinus Arrhythmia</option>
+            <option value="4">Atrial Tachycardia</option>
+            <option value="5">A-Fib</option>
+            <option value="6">A-Fib w/ SVR</option>
+            <option value="7">A-Fib w/ RVR</option>
+            <option value="8">A-Flutter</option>
+            <option value="9">A-Flutter w/ variable block</option>
+            <option value="10">SVT</option>
+            <option value="11">Junctional</option>
+            <option value="12">Accelerated Junctional</option>
+            <option value="13">Junctional Tachycardia</option>
+            <option value="14">1st Degree Block</option>
+            <option value="15">2nd Degree Block type 1</option>
+            <option value="16">2nd Degree Block type 2</option>
+            <option value="17">3rd Degree Block</option>
+            <option value="18">Ventricular</option>
+            <option value="19">Accelerated Ventricular</option>
+            <option value="20">V-Tach</option>
+            <option value="21">V-Fib</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Regular
+          <label class="toggle">
+             <input type="checkbox" ng-model="ecg.regular">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+          BBB
+          <label class="toggle">
+             <input type="checkbox" ng-model="ecg.bbb">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select" ng-show="ecg.bbb">
+          <span class="input-label">BBB side</span>
+          <select ng-model="ecg.bbb_side">
+              <option value="0">Left</option>
+              <option value="1">Right</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-toggle">
+          ST changes
+          <label class="toggle">
+             <input type="checkbox" ng-model="ecg.st_changes">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <div class="item" ng-show="ecg.st_changes">
+          <div class="ecg_buttons">
+            <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('I') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('I') != -1}"  ng-click="toggle('I')">I</button></div>
+            <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('aVR') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('aVR') != -1}"  ng-click="toggle('aVR')">aVR</button></div>
+            <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V1') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V1') != -1}"  ng-click="toggle('V1')">V1</button></div>
+            <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V4') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V4') != -1}"  ng-click="toggle('V4')">V4</button></div>
+        </div>
+        <div class="ecg_buttons">
+            <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('II') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('II') != -1}"  ng-click="toggle('II')">II</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('aVL') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('aVL') != -1}"  ng-click="toggle('aVL')">aVL</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V2') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V2') != -1}"  ng-click="toggle('V2')">V2</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V5') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V5') != -1}"  ng-click="toggle('V5')">V5</button></div>
+        </div>
+        <div class="ecg_buttons">
+          <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('III') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('III') != -1}"  ng-click="toggle('III')">III</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('aVF') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('aVF') != -1}"  ng-click="toggle('aVF')">aVF</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V3') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V3') != -1}"  ng-click="toggle('V3')">V3</button></div>
+              <div class="col"><button class="button button-stable icon-left" ng-class="{'button-balanced ion-arrow-up-c': elevation.indexOf('V6') != -1, 'button-assertive ion-arrow-down-c': depression.indexOf('V6') != -1}"  ng-click="toggle('V6')">V6</button></div>
+          </div>
+        </div>
+        <ion-item class="item-toggle">
+          PAC's
+          <label class="toggle">
+             <input type="checkbox" ng-model="ecg.pacs">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+          PVC's
+          <label class="toggle">
+             <input type="checkbox" ng-model="ecg.pvcs">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,74 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Fall">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-toggle">
+         Assault
+         <label class="toggle">
+           <input type="checkbox" ng-model="fall.trauma_fall_assault">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input item-select">
+      <span class="input-label">Distance</span>
+      <input type="number" ng-model="fall.trauma_fall_distance" placeholder="Distance">
+        <select ng-model="fall.trauma_fall_distance_unit">
+          <option value="0">m</option>
+          <option value="1">ft</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Surface</span>
+        <input type="text" ng-model="fall.trauma_fall_surface" placeholder="Surface">
+      </ion-item>
+      <ion-item class="item-toggle">
+         Loss of consciousness
+         <label class="toggle">
+           <input type="checkbox" ng-model="fall.trauma_fall_loss_of_c">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input" ng-show="fall.trauma_fall_loss_of_c">
+        <span class="input-label">Time in minutes</span>
+        <input type="text" ng-model="fall.trauma_fall_loss_of_c_time" placeholder="Duration">
+      </ion-item>
+      <ion-item class="item-toggle">
+         Bleeding
+         <label class="toggle">
+           <input type="checkbox" ng-model="fall.trauma_fall_bleeding">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle" ng-show="fall.trauma_fall_bleeding">
+         Controlled
+         <label class="toggle">
+           <input type="checkbox" ng-model="fall.trauma_fall_controlled">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+     <ion-item class="item-divider">
+       Systems involved
+     </ion-item>
+      <ion-checkbox ng-repeat="part in bodyPartsList" ng-model="part.checked" ng-checked="part.checked">
+          {{part.text}}
+       </ion-checkbox>
+    </ion-list>
+  </ion-content>
+</ion-view>

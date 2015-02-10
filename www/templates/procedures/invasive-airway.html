@@ -1,0 +1,60 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Invasive Airway">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+       <ion-item class="item-toggle">
+          Airway secured
+          <label class="toggle">
+             <input type="checkbox" ng-model="invasive.invasive_airway_secured">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Device</span>
+          <select ng-model="basic.invasive_airway_device">
+            <option value="0">King Airway</option>
+            <option value="1">Combitube</option>
+            <option value="2">Endotracheal Tube</option>
+            <option value="3">LMA</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Size</span>
+          <input type="text" ng-model="invasive.invasive_airway_size" placeholder="Size">
+        </ion-item>
+        <ion-item class="item-toggle">
+          Cuffed
+          <label class="toggle">
+             <input type="checkbox" ng-model="invasive.invasive_airway_cuffed">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Technique</span>
+          <select ng-model="invasive.invasive_airway_technique">
+            <option value="0">BVM</option>
+            <option value="1">Vented</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Distance</span>
+          <input type="text" ng-model="invasive.invasive_airway_distance" placeholder="Distance">
+          <span class="input-label">cm</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Attempts</span>
+          <input type="number" ng-model="invasive.invasive_airway_attempts" placeholder="Attempts">
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

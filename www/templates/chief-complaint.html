@@ -1,0 +1,34 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Chief Complaint">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <div class="list">
+        <label class="item item-input item-select">
+          <span class="input-label">Primary Chief Complaint</span>
+          <select ng-options="item.value as item.complaint for item in primaryComplaint" ng-model="binding.primary_complaint">
+            </select>
+        </label>
+        <label class="item item-input" ng-show="binding.primary_complaint == '0'">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="binding.primary_complaint_other">
+        </label>
+         <label class="item item-input">
+          <span class="input-label">Secondary Chief Complaint</span>
+          <input type="text" ng-model="binding.secondary_complaint">
+        </label>
+      </div>
+      <ul class="list">
+        <li class="item item-divider">
+          Pertinent +/-
+        </li>
+        <ion-checkbox ng-repeat="pertinent in pertinentList" ng-model="pertinent.checked" ng-checked="pertinent.checked">
+          {{pertinent.text}}
+       </ion-checkbox>
+     </ul>
+  </ion-content>
+</ion-view>

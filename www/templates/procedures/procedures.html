@@ -1,0 +1,41 @@
+<ion-view view-title="Procedures">
+  <ion-content class="padding">
+    <div class="list">
+
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/airway">
+       Airway
+       <i class="icon ion-checkmark-round" style="font-size: 25px"></i>
+      </a>
+      
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/iv-io">
+        IV/IO
+        <span class="badge badge-assertive">{{procedures.ivIoNumber}}</span>
+      </a>
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/splinting">
+        Splinting/Dressing
+        <span class="badge badge-assertive">{{procedures.medicationNumber}}</span>
+      </a>
+      
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/medication">
+        Medication
+        <span class="badge badge-assertive">{{medicationNumber}}</span>
+      </a>
+      
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/spinal">
+       Spinal Motion Restriction
+       <i class="icon ion-checkmark-round" ng-show="procedures.spinal_assessed" style="font-size: 25px"></i>
+      </a>
+      
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/in-out">
+        In/Out
+        <span class="badge badge-assertive">{{inOutNumber}}</span>
+      </a>
+      
+      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/ecg">
+        ECG
+        <span class="badge badge-assertive">{{ecgNumber}}</span>
+      </a>
+      
+    </div>
+  </ion-content>
+</ion-view>

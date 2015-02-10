@@ -1,0 +1,14 @@
+<ion-view view-title="Vitals Charts">
+  <ion-content class="padding">
+     <div class="col col-50"  style="float:left">
+        <canvas chart="Line" responsive=true options="options" legend=true data="chart"></canvas>
+     </div>
+     <div class="col col-25" style="float:left">
+       <div class="item-select">
+          <span class="input-label">Vital</span>
+          <select ng-options="vital.code as vital.name for vital in vitalsSeries" ng-model="vitalSelected.serie" ng-change="changeVital()">
+          </select>
+       </div>
+     </div>
+  </ion-content>
+</ion-view>

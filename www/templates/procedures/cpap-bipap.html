@@ -1,0 +1,36 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="CPAP/BiPAP">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Device</span>
+          <select ng-model="cpap.device">
+              <option value="0">CPAP</option>
+              <option value="1">BiPAP</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Size</span>
+          <input type="text" ng-model="cpap.size" placeholder="Size">
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">FiO<sub>2</sub></span>
+          <input type="text" ng-model="cpap.fiO2" placeholder="FiO2">
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">PEEP</span>
+          <input type="text" ng-model="cpap.peep" placeholder="PEEP">
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">Pressure</span>
+          <input type="text" ng-model="cpap.pressure" placeholder="Pressure">
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

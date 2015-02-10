@@ -1,0 +1,106 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Ventilator">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+       <ion-item class="item-input item-select">
+          <span class="input-label">Control</span>
+          <select ng-model="ventilator.control">
+              <option value="0">Pressure</option>
+              <option value="1">Volume</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Mode</span>
+          <select ng-model="ventilator.mode">
+              <option value="0">SIMV</option>
+              <option value="1">Assist/Ctrl</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Rate</span>
+          <input type="number" ng-model="ventilator.rate" placeholder="Rate">
+          <span class="input-label">/min</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Tidal volume</span>
+          <input type="number" ng-model="ventilator.tidal_volume" placeholder="Tidal volume">
+          <span class="input-label">mL</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Inspiration time</span>
+          <input type="number" ng-model="ventilator.inspiration_time" placeholder="Duration">
+          <span class="input-label">sec</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Insp/Exp ratio</span>
+          <input type="number" ng-model="ventilator.inspiration_ratio" placeholder="Inspiration">
+          <span class="input-label">:</span>
+          <input type="number" ng-model="ventilator.expiration_ratio" placeholder="Expiration">
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">FiO<sub>2</sub></span>
+          <input type="number" ng-model="ventilator.fiO2" placeholder="FiO2">
+          <span class="input-label">%</span>
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">PEEP</span>
+          <input type="number" ng-model="ventilator.peep" placeholder="PEEP">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">Sensitivity</span>
+          <input type="number" ng-model="ventilator.sensitivity" placeholder="Sensitivity">
+          <span class="input-label">/min</span>
+        </ion-item>
+         <ion-item class="item-input" ng-show="ventilator.control == 0">
+          <span class="input-label">Expiration pressure</span>
+          <input type="number" ng-model="ventilator.expiration_pressure" placeholder="Expiration pressure">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-input" ng-show="ventilator.control == 0">
+          <span class="input-label">Expiration tidal volume</span>
+          <input type="number" ng-model="ventilator.expiration_tidal_volume" placeholder="Expiration tidal volume">
+          <span class="input-label">mL</span>
+        </ion-item>
+        <ion-item class="item-input" ng-show="ventilator.control == 0">
+          <span class="input-label">Max inspiration pressure</span>
+          <input type="number" ng-model="ventilator.max_inspiration_pressure" placeholder="Max inspiration Pressure">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-input" ng-show="ventilator.mode == 0">
+          <span class="input-label">Pressure support</span>
+          <input type="number" ng-model="ventilator.pressure_support" placeholder="Pressure support">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-input" ng-show="ventilator.control == 1">
+          <span class="input-label">Plateau pressure</span>
+          <input type="number" ng-model="ventilator.plateau_pressure" placeholder="Plateau pressure">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-divider">
+          Alarms
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">High pressure limit</span>
+          <input type="number" ng-model="ventilator.high_pressure_limit" placeholder="High pressure limit">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Low pressure limit</span>
+          <input type="number" ng-model="ventilator.low_pressure_limit" placeholder="Low pressure limit">
+          <span class="input-label">cm H<sub>2</sub>O</span>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Low volume limit</span>
+          <input type="number" ng-model="ventilator.low_min_volume" placeholder="Low volume limit">
+          <span class="input-label">L</span>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

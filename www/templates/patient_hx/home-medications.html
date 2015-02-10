@@ -1,0 +1,25 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Home Medications">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left ion-checkmark-round" ng-click="add()">
+         Add
+      </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list>
+     <div ng-repeat="category in categories">
+          <ion-item class="item-stable"
+                    ng-click="toggleGroup(category)"
+                    ng-class="{active: isGroupShown(category)}">
+            <i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+            &nbsp;
+            {{category.name}}
+          </ion-item>
+           <ion-checkbox class="item-accordion" ng-repeat="item in category.items" ng-model="item.checked" ng-checked="item.checked" ng-show="isGroupShown(category)">
+              {{item.text}}
+           </ion-checkbox>
+        </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

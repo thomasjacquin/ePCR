@@ -1,0 +1,39 @@
+<ion-view view-title="Trauma">
+  <ion-content class="padding">
+    <div class="list">
+     <ion-item class="item-divider">
+       Trauma
+     </ion-item>
+      <ion-item class="item-toggle">
+        Signs/Symptoms | Complaining of
+        <label class="toggle">
+           <input type="checkbox" ng-model="trauma.has_trauma" ng-click="toggle()">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/auto">
+        <i class="icon ion-chevron-right"></i>
+        Auto/Moto
+      </a>
+      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/penetrating">
+        <i class="icon ion-chevron-right"></i>
+        Penetrating
+      </a>
+      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/blunt">
+        <i class="icon ion-chevron-right"></i>
+        Blunt
+      </a>
+      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/fall">
+        <i class="icon ion-chevron-right"></i>
+        Fall
+      </a>
+      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/burn">
+        <i class="icon ion-chevron-right"></i>
+        Burn
+      </a>
+      
+    </div>
+  </ion-content>
+</ion-view>

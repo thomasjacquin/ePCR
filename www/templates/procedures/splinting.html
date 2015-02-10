@@ -1,0 +1,86 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Splinting">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Location</span>
+          <select ng-model="splinting.location">
+              <option value="0">Head</option>
+              <option value="1">Arm</option>
+              <option value="2">Hand</option>
+              <option value="3">Leg</option>
+              <option value="4">Ankle</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Side</span>
+          <select ng-model="splinting.side">
+              <option value="0">Left</option>
+              <option value="1">Right</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Sensation Prior
+          <label class="toggle">
+             <input type="checkbox" ng-model="splinting.sensation_prior">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Sensation Post
+          <label class="toggle">
+             <input type="checkbox" ng-model="splinting.sensation_post">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+          Traction Applied
+          <label class="toggle">
+             <input type="checkbox" ng-model="splinting.traction_applied">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Splinting type</span>
+          <select ng-model="splinting.splinting_type">
+              <option value="0">Other</option>
+              <option value="1">Vacuum Splint</option>
+              <option value="2">Sam Splint</option>
+              <option value="3">Padded Board</option>
+              <option value="4">Air Splint</option>
+              <option value="5">Gauze</option>
+              <option value="6">Pressure Bandage</option>
+              <option value="7">Tourniquet</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="splinting.splinting_type == 0">
+          <span class="input-label">Splinting type other</span>
+          <input type="text" ng-model="splinting.splinting_type_other" placeholder="Splinting type other">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Position found</span>
+          <select ng-model="splinting.position_found">
+              <option value="0">Other</option>
+              <option value="1">Position of Function</option>
+              <option value="2">Anatomic</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="splinting.position_found == 0">
+          <span class="input-label">Splinting type other</span>
+          <input type="text" ng-model="splinting.position_found_other" placeholder="Position found other">
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

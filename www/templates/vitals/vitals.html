@@ -1,0 +1,110 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Vitals">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <label class="item item-input">
+          <span class="input-label">HR</span>
+          <input type="number" ng-model="vitals.hr" placeholder="HR">
+          <span class="input-label">bpm</span>
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Sys</span>
+          <input type="number" ng-model="vitals.sys" placeholder="Sys">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Dia</span>
+          <input type="number" ng-model="vitals.dia" placeholder="Dia">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">FiO<sub>2</sub></span>
+          <input type="number" ng-model="vitals.fio2" placeholder="FiO2">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">SpO<sub>2</sub></span>
+          <input type="number" ng-model="vitals.spo2" placeholder="SpO2">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Respirations</span>
+          <input type="number" ng-model="vitals.resp" placeholder="Respirations">
+          <span class="input-label">/min</span>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Level of Consciousness</span>
+          <select ng-model="vitals.level_of_c">
+              <option value="1">Alert and Oriented x4</option>
+              <option value="2">Alert and Oriented x3</option>
+              <option value="3">Alert and Oriented x2</option>
+              <option value="4">Alert and Oriented x1</option>
+              <option value="5">Alert and Confused</option>
+              <option value="6">Responds to Verbal Stimuli</option>
+              <option value="7">Responds to Painful Stimuli</option>
+              <option value="8">Unresponsive</option>
+          </select>
+        </label>
+        <ion-item class="item-toggle">
+          PERRL
+           <label class="toggle">
+             <input type="checkbox" ng-model="vitals.perrl">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <label class="item item-input" ng-show="!vitals.perrl">
+          <span class="input-label">Left Eye Diameter</span>
+          <input type="number" ng-model="vitals.left_eye" placeholder="Left Eye Diameter">
+          <span class="input-label">mm</span>
+        </label>
+        <label class="item item-input" ng-show="!vitals.perrl">
+          <span class="input-label">Right Eye Diameter</span>
+          <input type="number" ng-model="vitals.right_eye" placeholder="Right Eye Diameter">
+          <span class="input-label">mm</span>
+        </label>
+        <ion-item class="item-toggle" ng-show="!vitals.perrl">
+           Eyes Responsive
+           <label class="toggle">
+             <input type="checkbox" ng-model="vitals.eyes_responsive">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <label class="item item-input item-select">
+          <span class="input-label">BGL</span>
+          <input type="number" ng-model="vitals.bgl" placeholder="BGL">
+          <select ng-model="vitals.bgl_unit">
+              <option value="0">mmol/L</option>
+              <option value="1">mg/dL</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">ETCO2</span>
+          <input type="number" ng-model="vitals.etco2" placeholder="ETCO2">
+          <select ng-model="vitals.etco2_unit">
+              <option value="0">%</option>
+              <option value="1">mmHg</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Temperature</span>
+          <input type="number" ng-model="vitals.temp" placeholder="Temperature">
+          <select ng-model="vitals.temp_unit">
+              <option value="0">Celsius</option>
+              <option value="1">Farenheit</option>
+          </select>
+        </label>
+        <div class="item range range-assertive">
+          <span class="input-label">Pain {{vitals.pain}}</span>
+          <i class="icon ion-happy-outline"></i>
+          <input type="range" name="pain" min="0" max="10" value="0" ng-model="vitals.pain">
+          <i class="icon ion-sad-outline"></i>
+        </div>
+    </ion-list>
+  </ion-content>
+</ion-view>

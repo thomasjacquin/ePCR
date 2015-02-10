@@ -1,0 +1,53 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Blunt">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-toggle">
+         Assault
+         <label class="toggle">
+           <input type="checkbox" ng-model="blunt.trauma_blunt_assault">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Mechanism of injury</span>
+        <input type="text" ng-model="blunt.trauma_blunt_moi" placeholder="Mechanism of injury">
+      </ion-item>
+      <ion-item class="item-toggle">
+         Bleeding
+         <label class="toggle">
+           <input type="checkbox" ng-model="blunt.trauma_blunt_bleeding">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle" ng-show="blunt.trauma_blunt_bleeding">
+         Controlled
+         <label class="toggle">
+           <input type="checkbox" ng-model="blunt.trauma_blunt_controlled">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+     <ion-item class="item-divider">
+       Systems involved
+     </ion-item>
+      <ion-checkbox ng-repeat="part in bodyPartsList" ng-model="part.checked" ng-checked="part.checked">
+          {{part.text}}
+       </ion-checkbox>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,34 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Suction">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-input">
+          <span class="input-label">Suction duration</span>
+          <input type="text" ng-model="suction.duration" placeholder="Size">
+          <span class="input-label">sec</span>
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">Amount suctioned</span>
+          <input type="text" ng-model="suction.amount" placeholder="FiO2">
+          <span class="input-label">mL</span>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Tip used</span>
+          <select ng-model="suction.tip">
+              <option value="0">Yaunker</option>
+              <option value="1">French</option>
+          </select>
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">Tip size</span>
+          <input type="text" ng-model="suction.size" placeholder="PEEP">
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

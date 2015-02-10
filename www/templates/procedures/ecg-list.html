@@ -1,0 +1,20 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="ECG Procedures">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-assertive" ng-click="toggleDelete()">Edit List</button>
+      <button class="button button-balanced icon-left ion-plus-round" ng-click="addItem()">
+         Add Procedure
+      </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+      <ion-item ng-repeat="procedure in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/procedures/ecg/{{procedure.id}}">
+        <h2>{{procedure.created}}</h2>
+<!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
+        <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(procedure.id)">
+       </ion-delete-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

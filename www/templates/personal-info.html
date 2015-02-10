@@ -1,0 +1,98 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Personal Info">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <form novalidate class="simple-form">
+    <img ng-src="{{report.profile_picture}}" style="width: 64px; height: 64px">
+    <div class="list">
+         <div class="item item-divider">
+            Patient Info
+        </div>
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" ng-model="personal.first_name">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" ng-model="personal.last_name">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Date of Birth</span>
+          <input type="date" ng-model="personal.date_of_birth">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Gender</span>
+          <select ng-model="personal.gender">
+              <option selected>Male</option>
+              <option>Female</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Weight</span>
+          <input type="number" ng-model="personal.weight" style="width:50px">
+          <select ng-model="personal.weight_unit">
+              <option selected>kg</option>
+              <option>lb</option>
+            </select>
+        </label>
+        <div class="item item-divider">
+          Address
+        </div>
+        <label class="item item-input">
+          <span class="input-label">Street</span>
+          <input type="text" ng-model="personal.address_street">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">City</span>
+          <input type="text" ng-model="personal.address_city">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Province</span>
+          <input type="text" ng-model="personal.address_province">
+        </label>
+        <div class="item item-divider">
+          Telephone
+        </div>
+        <label class="item item-input">
+          <span class="input-label">Home</span>
+          <input type="tel" ng-model="personal.phone_home">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Work</span>
+          <input type="tel" ng-model="personal.phone_work">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Cell</span>
+          <input type="tel" ng-model="personal.phone_cell">
+        </label>
+        <div class="item item-divider">
+          Identification
+        </div>
+        <label class="item item-input">
+          <span class="input-label">Insurance</span>
+          <input type="text" ng-model="personal.insurance">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">MRN</span>
+          <input type="text" ng-model="personal.mrn">
+        </label>
+        <div class="item item-divider">
+          Other
+        </div>
+        <label class="item item-input">
+          <span class="input-label">Next of kin</span>
+          <input type="text" ng-model="personal.next_of_kin">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Next of kin Phone</span>
+          <input type="tel" ng-model="personal.next_of_kin_phone">
+        </label>
+      </div>
+    </form>
+  </ion-content>
+</ion-view>

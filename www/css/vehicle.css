@@ -1,0 +1,215 @@
+/* Drawing a car */
+#car_outline, #motorcycle_outline{
+	display: block;
+	margin-top: 100px;
+	height: 200px;
+}
+
+.car_front_wheels, .car_rear_wheels{
+	position:absolute;
+	left: 76px;
+	top: 90px;
+	width: 128px;
+	height: 40px;
+	background: black;
+	-webkit-border-radius: 4px;
+	border: 3px solid #000;
+}
+
+.car_rear_wheels{
+	top: 245px;
+}
+
+.car_left_light, .car_right_light{
+	position:absolute;
+	left: 90px;
+	top: 57px;
+	width: 20px;
+	height: 5px;
+	background: yellow;
+	-webkit-border-radius: 4px;
+	border: 3px solid #333333;
+}
+
+.car_right_light{
+	left: 170px;
+}
+
+.car_steering_wheel{
+	position:absolute;
+	left: 105px;
+	top: 125px;
+	width: 15px;
+	height: 10px;
+	background: transparent;
+	border: 3px solid #000;
+	-webkit-border-radius: 15px;
+}
+
+.car_hood{
+	position:absolute;
+	left: 80px;
+	top: 60px;
+	width: 120px;
+	height: 250px;
+	background: grey;
+	-webkit-border-radius: 10px;
+	border: 3px solid #333333;
+}
+.car1, .car2, .car3, .car4, .car5, .car6{
+	position:absolute;
+	width: 52px;
+	height: 50px;
+	background: white;
+	left: 86px;
+	top: 120px;
+	border: 3px solid #333333;
+}
+.car1{
+	-webkit-border-top-left-radius: 10px;
+}
+.car2{
+	left: 142px;
+	-webkit-border-top-right-radius: 10px;
+}
+.car3, .car4{
+	top: 170px;
+}
+.car4{
+	left: 142px;
+}
+.car5{
+	top: 220px;
+	-webkit-border-bottom-left-radius: 10px;
+}
+.car6{
+	top: 220px;
+	left: 142px;
+	-webkit-border-bottom-right-radius: 10px;
+}
+
+.moto_wheels{
+	position:absolute;
+	left: 84px;
+	top: 50px;
+	width: 20px;
+	height: 255px;
+	background: black;
+	-webkit-border-radius: 12px;
+	border: 3px solid #000;
+}
+.moto_body{
+	position:absolute;
+	left: 64px;
+	top: 100px;
+	width: 60px;
+	height: 190px;
+	background: grey;
+	-webkit-border-radius: 25px;
+	border: 3px solid #333333;
+}
+.moto_handle{
+	position:absolute;
+	left: 54px;
+	top: 110px;
+	width: 80px;
+	height: 4px;
+	background: #555;
+	-webkit-border-radius: 3px;
+	border: 3px solid #333333;
+}
+.moto_light{
+	position:absolute;
+	left: 80px;
+	top: 89px;
+	width: 28px;
+	height: 16px;
+	background: yellow;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 14px;
+	-webkit-border-bottom-right-radius: 14px;
+	border: 3px solid #333333;
+}
+.moto_cache_light{
+	position:absolute;
+	left: 80px;
+	top: 95px;
+	width: 28px;
+	height: 10px;
+	background: #555;
+	-webkit-border-top-left-radius: 3px;
+	-webkit-border-top-right-radius: 3px;
+	-webkit-border-bottom-left-radius: 14px;
+	-webkit-border-bottom-right-radius: 14px;
+	border: 3px solid #333333;
+}
+.moto_side{
+	position:absolute;
+	left: 133px;
+	top: 185px;
+	width: 73px;
+	height: 100px;
+	background: grey;
+	-webkit-border-radius: 15px;
+	border: 3px solid #333333;
+}
+.moto_side_wheel{
+	position:absolute;
+	left: 215px;
+	top: 205px;
+	width: 15px;
+	height: 74px;
+	background: black;
+	-webkit-border-radius: 10px;
+	border: 3px solid #000;
+}
+.moto_side_wheel_axe{
+	position:absolute;
+	left: 124px;
+	top: 235px;
+	width: 95px;
+	height: 10px;
+	background: grey;
+	border: 3px solid #333333;
+}
+.motorcycle1{
+	position:absolute;
+	left: 70px;
+	top: 142px;
+	width: 48px;
+	height: 60px;
+	background: white;
+	-webkit-border-top-left-radius: 10px;
+	-webkit-border-top-right-radius: 10px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border: 3px solid #333333;
+}
+.motorcycle2{
+	position:absolute;
+	left: 70px;
+	top: 212px;
+	width: 48px;
+	height: 60px;
+	background: white;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	border: 3px solid #333333;
+}
+.motorcycle3{
+	position:absolute;
+	left: 139px;
+	top: 191px;
+	width: 61px;
+	height: 88px;
+	background: white;
+	-webkit-border-radius: 13px;
+	border: 3px solid #333333;
+}
+
+#car_outline .active, #motorcycle_outline .active{
+  background-color: green;
+}

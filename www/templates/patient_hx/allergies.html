@@ -1,0 +1,16 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Allergies">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left ion-checkmark-round" ng-click="add()">
+         Add
+      </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <div class="list">
+           <ion-checkbox ng-repeat="allergy in allergiesList" ng-model="allergy.checked" ng-checked="allergy.checked">
+              {{allergy.text}}
+           </ion-checkbox>
+    </div>
+  </ion-content>
+</ion-view>

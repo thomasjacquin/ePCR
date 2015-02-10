@@ -1,0 +1,386 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="ABC">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <div class="button-bar bar-assertive">
+      <a class="button" ng-class="{'active' : activeButton == 1}" ng-click="switchTab(1)">Airway</a>
+      <a class="button" ng-class="{'active' : activeButton == 2}" ng-click="switchTab(2)">Breathing</a>
+      <a class="button" ng-class="{'active' : activeButton == 3}" ng-click="switchTab(3)">Circulation</a>
+    </div>
+    <br>
+    <ion-list ng-show="activeButton == 1">
+     <ion-item class="item-divider">
+       Airway
+     </ion-item>
+      <ion-item class="item-toggle">
+        Open and Patent
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.open_patent">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Tracheal Deviation
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.tracheal_deviation">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="abc.tracheal_deviation">
+        <div class="input-label">Tracheal Deviation Side</div>
+          <select ng-model="abc.tracheal_deviation_side">
+            <option value="0">Left</option>
+            <option value="1">Right</option>
+          </select>
+      </ion-item>
+      <ion-item class="item-toggle" >
+        Interventions
+         <label class="toggle">
+           <input type="checkbox" ng-model="abc.interventions">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+    </ion-list>
+    
+    <ion-list ng-show="activeButton == 2">
+     <ion-item class="item-divider">
+       Breathing
+     </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Breathing Type</div>
+        <select ng-model="abc.breathing_type">
+          <option value="0">Regular</option>
+          <option value="1">Irregular</option>
+          <option value="2">Kussmaul</option>
+          <option value="3">Cheyne-Stokes</option>
+          <option value="4">Biot's</option>
+          <option value="5">Absent</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Laboured
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.breathing_laboured">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Effective
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.breathing_effective">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Accessory Muscle
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.accessory_muscle">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Nasal Flare
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.nasal_flare">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Cough
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.cough">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle" ng-show="abc.cough">
+        Productive
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.cough_productive">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Subcut. Emphysema
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.subcutaneous_emphysema">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Flailed Chest
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.flailed_chest">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+       <ion-item class="item item-input item-select" ng-show="abc.flailed_chest">
+        <div class="input-label">Flailed Chest Side</div>
+        <select ng-model="abc.flailed_chest_side">
+          <option value="0">Left</option>
+          <option value="1">Right</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Suspect Pneumothorax
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.suspect_pneumothorax">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Suspect Hemothorax
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.suspect_hemothorax">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        CTA x4
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.ctax4">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="!abc.ctax4">
+        <div class="input-label">Upper Left</div>
+        <select ng-model="abc.lung_ul_sound">
+          <option value="0">Clear</option>
+          <option value="1">Rales</option>
+          <option value="2">Rhonchi</option>
+          <option value="3">Wheezing</option>
+          <option value="4">Stridor</option>
+          <option value="5">Diminshed</option>
+          <option value="6">Absent</option>
+          <option value="7">Bronchial Breath Sounds</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="!abc.ctax4">
+        <div class="input-label">Upper Right</div>
+        <select ng-model="abc.lung_ur_sound">
+          <option value="0">Clear</option>
+          <option value="1">Rales</option>
+          <option value="2">Rhonchi</option>
+          <option value="3">Wheezing</option>
+          <option value="4">Stridor</option>
+          <option value="5">Diminshed</option>
+          <option value="6">Absent</option>
+          <option value="7">Bronchial Breath Sounds</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="!abc.ctax4">
+        <div class="input-label">Lower Left</div>
+        <select ng-model="abc.lung_ll_sound">
+          <option value="0">Clear</option>
+          <option value="1">Rales</option>
+          <option value="2">Rhonchi</option>
+          <option value="3">Wheezing</option>
+          <option value="4">Stridor</option>
+          <option value="5">Diminshed</option>
+          <option value="6">Absent</option>
+          <option value="7">Bronchial Breath Sounds</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="!abc.ctax4">
+        <div class="input-label">Lower Right</div>
+        <select ng-model="abc.lung_lr_sound">
+          <option value="0">Clear</option>
+          <option value="1">Rales</option>
+          <option value="2">Rhonchi</option>
+          <option value="3">Wheezing</option>
+          <option value="4">Stridor</option>
+          <option value="5">Diminshed</option>
+          <option value="6">Absent</option>
+          <option value="7">Bronchial Breath Sounds</option>
+        </select>
+      </ion-item>
+    </ion-list>
+    <div ng-show="activeButton == 3">
+    <ion-list>
+     <ion-item class="item-divider">
+       Circulation
+     </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Pulse Location</div>
+        <select ng-model="abc.pulse_location">
+          <option value="0">Radial</option>
+          <option value="1">Brachial</option>
+          <option value="2">Carotid</option>
+          <option value="3">Femoral</option>
+          <option value="4">Pedal</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Pulse Quality</div>
+        <select ng-model="abc.pulse_quality">
+          <option value="0">Strong</option>
+          <option value="1">Weak</option>
+          <option value="2">Bounding</option>
+          <option value="3">Thready</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Pulse is regular
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.pulse_regular">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        JVD
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.jvd">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Capillary Refill</div>
+        <select ng-model="abc.cap_refill">
+          <option value="0">Brisk</option>
+          <option value="1">Delayed</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Skin Color</div>
+        <select ng-model="abc.skin_color">
+          <option value="0">Normal</option>
+          <option value="1">Pale</option>
+          <option value="2">Flushed</option>
+          <option value="3">Jaundice</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Skin Temperature</div>
+        <select ng-model="abc.skin_temperature">
+          <option value="0">Warm</option>
+          <option value="1">Hot</option>
+          <option value="2">Cool</option>
+          <option value="3">Cold</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Skin Condition</div>
+        <select ng-model="abc.skin_condition">
+          <option value="0">Dry</option>
+          <option value="1">Diaphoretic</option>
+        </select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+       <ion-item class="item-divider">
+         Heart
+       </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Heart Tones</div>
+        <select ng-model="abc.heart_tones">
+          <option value="0">Normal</option>
+          <option value="1">S3</option>
+          <option value="2">S4</option>
+          <option value="3">Murmur</option>
+          <option value="4">Rub</option>
+          <option value="5">Gallop</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select">
+        <div class="input-label">Heart Tones Quality</div>
+        <select ng-model="abc.heart_tones_quality">
+          <option value="0">Clear</option>
+          <option value="1">Muffled</option>
+        </select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+       <ion-item class="item-divider">
+         Edema
+       </ion-item>
+       <ion-item class="item-toggle">
+        Peripheral Edema
+        <label class="toggle">
+           <input type="checkbox" ng-model="abc.peripheral_edema">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="abc.peripheral_edema">
+        <div class="input-label">Edema Location</div>
+        <select ng-model="abc.peripheral_edema_location">
+          <optgroup label="Lower Extremities"> 
+              <option value="ankle">Ankle</option>
+              <option value="midcalf">Mid Calf</option>
+              <option value="knee">Knee</option>
+          </optgroup><optgroup label="Upper Extremities"> 
+              <option value="fingers">Fingers</option>
+              <option value="hand">Hand</option>
+              <option value="wrist">Wrist</option>
+              <option value="midforearm">Mid Forearm</option>
+              <option value="elbow">Elbow</option>
+          </optgroup><optgroup label="Pulmonary"> 
+              <option value="bases">Bases</option>
+              <option value="lowerlobes">Lower Lobes</option>
+              <option value="midway">Midway</option>
+              <option value="upperlobes">Upper Lobes</option>
+              <option value="apex">Apex</option>
+          </optgroup><optgroup label="Facial"> 
+              <option value="face">Face</option>
+              <option value="eyes">Eyes</option>
+              <option value="mouth">Mouth</option>
+              <option value="throat">Throat</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="abc.peripheral_edema">
+        <div class="input-label">Edema Severity</div>
+        <select ng-model="abc.peripheral_edema_severity">
+          <option value="0">Non Pitting</option>
+          <option value="1">+1</option>
+          <option value="2">+2</option>
+          <option value="3">+3</option>
+          <option value="4">+4</option>
+        </select>
+      </ion-item>
+    </ion-list>
+    </div>
+    
+    <button class="button button-block button-positive" ng-show="activeButton == 1 && abc.interventions">
+      Airway Procedures
+    </button>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,92 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Medication">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+         <ion-item class="item-input item-select">
+          <span class="input-label">Medication name</span>
+          <select ng-model="medication.medication_type">
+              <option value="0">Brand</option>
+              <option value="1">Generic</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Medication</span>
+          <select ng-model="medication.medication">
+              <option value="0">Other</option>
+              <option value="1">Arm</option>
+              <option value="2">Hand</option>
+              <option value="3">Leg</option>
+              <option value="4">Ankle</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="medication.medication == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="medication.medication_other" placeholder="Medication other">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Dose</span>
+          <input type="text" ng-model="medication.dose" placeholder="Dose">
+          <select ng-model="medication.dose_unit">
+              <option value="0">mg</option>
+              <option value="1">mcg</option>
+              <option value="2">G</option>
+              <option value="3">units</option>
+              <option value="4">L</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Route</span>
+          <select ng-model="medication.route">
+              <option value="0">Other</option>
+              <option value="1">SIVP</option>
+              <option value="2">IVP</option> 
+              <option value="3">RIVP</option> 
+              <option value="4">IM</option> 
+              <option value="5">SQ</option> 
+              <option value="6">SL</option> 
+              <option value="7">PO</option> 
+              <option value="8">Buccal</option> 
+              <option value="9">Rectal</option> 
+              <option value="10">Neb</option> 
+              <option value="11">Ocular</option> 
+              <option value="12">Nasal</option> 
+              <option value="13">Intra</option> 	
+              <option value="14">Lingual</option> 
+              <option value="15">Percutanious</option> 
+              <option value="16">Transdermal</option> 
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="medication.route == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="medication.route_other" placeholder="Route other">
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Indication</span>
+          <input type="text" ng-model="medication.indication" placeholder="Indication">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Administrated</span>
+          <select ng-model="medication.administrated">
+              <option value="0">Other</option>
+              <option value="1">Self</option>
+              <option value="2">Partner</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="medication.administrated == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="medication.administrated_other" placeholder="Indication">
+        </ion-item>
+         <ion-item class="item-input">
+          <span class="input-label">Same dose</span>
+          <input type="text" ng-model="medication.same_dose" placeholder="Same dose">
+          <span class="input-label">Times</span>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

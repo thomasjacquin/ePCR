@@ -1,0 +1,26 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Reports">
+    <ion-nav-buttons side="primary">
+      <button class="button button-clear icon-left ion-person-add" ng-click="addReport()">
+         Add report
+      </button>
+      <button class="button button-clear icon-left ion-close-circled" ng-click="deleteDatabase()">
+         Clear Database
+      </button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="secondary">
+      <button class="button button-assertive" ng-click="toggleDelete()">Edit List</button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+      <ion-item class="item-avatar" ng-repeat="report in reports" type="item-text-wrap" href="#/tab/report/{{report.id}}">
+        <img ng-src="{{report.profile_picture}}">
+        <h2>{{report.first_name}} {{report.last_name}}</h2>
+        <h4>Created on {{report.created}}</h4>
+        <ion-delete-button class="ion-minus-circled" ng-click="deleteReport(report.id)">
+       </ion-delete-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

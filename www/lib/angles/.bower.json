@@ -1,0 +1,31 @@
+{
+  "name": "angles",
+  "authors": [
+    "Lindsay Silver",
+    "Jesus Torres"
+  ],
+  "main": "angles.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "libs/angular",
+    "libs/chartjs",
+    "libs/Chart.js"
+  ],
+  "dependencies": {
+    "chartjs": "1.0.1-beta.3"
+  },
+  "homepage": "https://github.com/lgsilver/angles",
+  "_release": "d9b20f55c1",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "d9b20f55c128f89d293282e20030ce1c7119c742"
+  },
+  "_source": "git://github.com/lgsilver/angles.git",
+  "_target": "*",
+  "_originalSource": "angles"
+}

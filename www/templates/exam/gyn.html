@@ -1,0 +1,192 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Gyn/Obs">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-dark" ng-click="fieldDelivery()" ng-show="gyn.gyn_pregnant">
+         Field-delivery
+      </button>
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class=item-input>
+          <div class="row">
+            <div class="col">
+              <input type="number" ng-model="gyn.gyn_gravid" placeholder="Gravid">
+            </div>
+            <div class="col">
+              <input type="number" ng-model="gyn.gyn_term" placeholder="Term">
+            </div>
+            <div class="col">
+              <input type="number" ng-model="gyn.gyn_para" placeholder="Para">
+            </div>
+            <div class="col">
+              <input type="number" ng-model="gyn.gyn_abortia" placeholder="Abortia">
+            </div>
+            <div class="col">
+              <input type="number" ng-model="gyn.gyn_live" placeholder="Live">
+            </div>
+          </div>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Last menstruation</span>
+          <input type="date" ng-model="gyn.gyn_last_menstruation">
+        </ion-item>
+        <ion-item class="item-toggle">
+          Vaginal discharge
+           <label class="toggle">
+             <input type="checkbox" ng-model="gyn.gyn_discharge">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input" ng-show="gyn.gyn_discharge">
+          <span class="input-label">Substance</span>
+          <input type="text" ng-model="gyn.gyn_substance">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Pregnant</span>
+          <select ng-model="gyn.gyn_pregnant">
+            <option value="0">Yes</option>
+            <option value="1">No</option>
+            <option value="2">Possibly</option>
+            <option value="3">Unknown</option>
+          </select>
+        </ion-item>
+      </ion-list>
+      
+      <ion-list ng-show="gyn.gyn_pregnant == 0">
+       <br>
+        <ion-item class="item-divider">
+          Pregnancy
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">EDC</span>
+          <input type="date" ng-model="gyn.gyn_edc">
+        </ion-item>
+        <ion-item class="item-toggle">
+          Gestation is known
+           <label class="toggle">
+             <input type="checkbox" ng-model="gyn.gyn_gestation_known">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input" ng-show="gyn.gyn_gestation_known">
+          <span class="input-label">Number of weeks</span>
+          <input type="number" ng-model="gyn.gyn_gest_weeks">
+        </ion-item>
+        <ion-item class="item-toggle">
+          Membranes intact
+         <label class="toggle">
+           <input type="checkbox" ng-model="gyn.gyn_membrane_intact">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input" ng-show="!gyn.gyn_membrane_intact">
+        <span class="input-label">Rupture time</span>
+        <input type="time" ng-model="gyn.gyn_time_ruptured">
+      </ion-item>
+      <ion-item class="item-input" ng-show="!gyn.gyn_membrane_intact">
+        <span class="input-label">Fluid</span>
+        <input type="text" ng-model="gyn.gyn_fluid" placeholder="Color/type of fluid">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Nb of babies expected</span>
+        <input type="number" ng-model="gyn.gyn_expected_babies" placeholder="Nb of babies">
+      </ion-item>
+      <ion-item class="item-toggle">
+        Fetal movement
+         <label class="toggle">
+           <input type="checkbox" ng-model="gyn.gyn_fetal_mvmt">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input" ng-show="gyn.gyn_fetal_mvmt">
+        <span class="input-label">Last movement</span>
+        <input type="time" ng-model="gyn.gyn_last_mvmt">
+      </ion-item>
+      <ion-item class="item-input" ng-show="gyn.gyn_fetal_mvmt">
+        <span class="input-label">Movements per hour</span>
+        <input type="number" ng-model="gyn.gyn_mvmt_per_hr" placeholder="Mvt per hr">
+      </ion-item>
+      <ion-item class="item-toggle">
+         Contractions
+         <label class="toggle">
+           <input type="checkbox" ng-model="gyn.gyn_contractions">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input" ng-show="gyn.gyn_contractions">
+        <span class="input-label">Duration</span>
+        <input type="text" ng-model="gyn.gyn_contraction_duration">
+        <span class="input-label">seconds</span>
+      </ion-item>
+      <ion-item class="item-input" ng-show="gyn.gyn_contractions">
+        <span class="input-label">Separation</span>
+        <input type="text" ng-model="gyn.gyn_contraction_separation">
+        <span class="input-label">seconds</span>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        Edema
+      </ion-item>
+      <ion-item class="item-toggle">
+          Edema
+         <label class="toggle">
+           <input type="checkbox" ng-model="gyn.peripheral_edema">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="gyn.peripheral_edema">
+        <div class="input-label">Edema Location</div>
+        <select ng-model="gyn.peripheral_edema_location">
+          <optgroup label="Lower Extremities"> 
+              <option value="ankle">Ankle</option>
+              <option value="midcalf">Mid Calf</option>
+              <option value="knee">Knee</option>
+          </optgroup><optgroup label="Upper Extremities"> 
+              <option value="fingers">Fingers</option>
+              <option value="hand">Hand</option>
+              <option value="wrist">Wrist</option>
+              <option value="midforearm">Mid Forearm</option>
+              <option value="elbow">Elbow</option>
+          </optgroup><optgroup label="Pulmonary"> 
+              <option value="bases">Bases</option>
+              <option value="lowerlobes">Lower Lobes</option>
+              <option value="midway">Midway</option>
+              <option value="upperlobes">Upper Lobes</option>
+              <option value="apex">Apex</option>
+          </optgroup><optgroup label="Facial"> 
+              <option value="face">Face</option>
+              <option value="eyes">Eyes</option>
+              <option value="mouth">Mouth</option>
+              <option value="throat">Throat</option>
+        </select>
+      </ion-item>
+      <ion-item class="item item-input item-select" ng-show="gyn.peripheral_edema">
+        <div class="input-label">Edema Severity</div>
+        <select ng-model="gyn.peripheral_edema_severity">
+          <option value="0">Non Pitting</option>
+          <option value="1">+1</option>
+          <option value="2">+2</option>
+          <option value="3">+3</option>
+          <option value="4">+4</option>
+        </select>
+      </ion-item>
+  </ion-content>
+</ion-view>

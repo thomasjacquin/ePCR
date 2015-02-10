@@ -1,0 +1,37 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Muscular/Skeletal">
+   <ion-nav-buttons side="secondary">
+    <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+       Save
+    </button>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-list>
+     <ion-item class="item-divider">
+       Muscular/Skeletal
+     </ion-item>
+      <ion-item class="item-toggle">
+        Complaints
+        <label class="toggle">
+           <input type="checkbox" ng-model="muscular.muscular_has_complaint" ng-click="toggle()">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+        </label>
+      </ion-item>
+      <div ng-show="muscular.muscular_has_complaint" ng-repeat="category in categories">
+        <ion-item class="item-stable"
+                  ng-click="toggleGroup(category.name)"
+                  ng-class="{active: isGroupShown(category.name)}">
+          <i class="icon" ng-class="isGroupShown(category.name) ? 'ion-minus' : 'ion-plus'"></i>
+          &nbsp;
+          {{category.name}}
+        </ion-item>
+         <ion-checkbox class="item-accordion" ng-repeat="injury in category.injuries" ng-model="injury.checked" ng-checked="injury.checked" ng-show="isGroupShown(category.name)">
+            {{injury.text}}
+         </ion-checkbox>
+      </div>      
+    </ion-list>
+  </ion-content>
+</ion-view>

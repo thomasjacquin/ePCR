@@ -1,0 +1,48 @@
+<ion-nav-bar>
+</ion-nav-bar>
+ <ion-view view-title="Patient History">
+   <ion-nav-buttons side="secondary">
+    <button class="button button-assertive" ng-click="toggleDelete()">Edit List</button>
+  </ion-nav-buttons>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+      <ion-item class="item item-divider item-button-right" style="line-height: 34px;">
+        Allergies
+        <button class="button button-positive" ng-click="goto('allergies')">
+          <i class="icon ion-plus-round"></i>
+        </button>
+      </ion-item>
+      <ion-item ng-repeat="allergy in patientHistory.hx_allergies">
+       <ion-delete-button class="ion-minus-circled" ng-click="deleteAllergy(allergy)">
+       </ion-delete-button>
+        {{allergy}}
+      </ion-item>
+    </ion-list>
+    <ion-list show-delete="showDelete">
+      <ion-item class="item-divider item-button-right" style="line-height: 34px;">
+        Home Medications
+        <button class="button button-positive" ng-click="goto('home-medications')">
+          <i class="icon ion-plus-round"></i>
+        </button>
+      </ion-item>
+      <ion-item ng-repeat="medication in patientHistory.hx_medications">
+       <ion-delete-button class="ion-minus-circled" ng-click="deleteMedication(medication)">
+       </ion-delete-button>
+        {{medication}}
+      </ion-item>
+    </ion-list>
+    <ion-list show-delete="showDelete">
+      <ion-item class="item-divider item-button-right" style="line-height: 34px;">
+        Medical Conditions/Procedures
+        <button class="button button-positive" ng-click="goto('conditions')">
+          <i class="icon ion-plus-round"></i>
+        </button>
+      </ion-item>
+      <ion-item ng-repeat="condition in patientHistory.hx_conditions">
+       <ion-delete-button class="ion-minus-circled" ng-click="deleteCondition(condition)">
+       </ion-delete-button>
+        {{condition}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

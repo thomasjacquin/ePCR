@@ -1,0 +1,62 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Basic Airway">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+   <ion-list>
+        <ion-item class="item-input">
+          <span class="input-label">Volume</span>
+          <input type="text" ng-model="basic.oxygen_volume" placeholder="Volume">
+          <span class="input-label">lpm</span>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Basic maneuvers</span>
+          <select ng-model="basic.basic_maneuvers">
+              <option value="0">Head tilt/Chin lift</option>
+              <option value="1">Jaw thrust</option>
+              <option value="2">Modified Jaw thrust</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">OPA</span>
+          <select ng-model="basic.opa">
+              <option value="0">Size 50</option>
+              <option value="1">Size 60</option>
+              <option value="2">Size 70</option>
+              <option value="3">Size 80</option>
+              <option value="4">Size 90</option>
+              <option value="5">Size 100</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">NPA</span>
+          <select ng-model="basic.npa">
+              <option value="0">Size 50</option>
+              <option value="1">Size 60</option>
+              <option value="2">Size 70</option>
+              <option value="3">Size 80</option>
+              <option value="4">Size 90</option>
+              <option value="5">Size 100</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-toggle">
+          BVM
+          <label class="toggle">
+             <input type="checkbox" ng-model="basic.bvm">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </ion-item>
+        <ion-item class="item-input" ng-show="basic.bvm">
+          <span class="input-label">Airway rate</span>
+          <input type="text" ng-model="basic.airway_rate" placeholder="Rate">
+          <span class="input-label">/min</span>
+        </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
