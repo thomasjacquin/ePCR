@@ -822,7 +822,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+.controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
   $scope.report = report;
 
   $scope.field = {
@@ -830,7 +830,7 @@ angular.module('starter.controllers', [])
     "field_delivery_time" : $scope.report.field_delivery_time,
     "field_delivery_meconium" : $scope.report.field_delivery_meconium,
     "field_delivery_cord_cut_length" : $scope.report.field_delivery_cord_cut_length,
-    "field_delivery_apgar1" : $scope.report.field_delivery_apgar1,
+    "field_delivery_apgar1" : $scope.report.field_delivery_apgar1 || {},
     "field_delivery_apgar5" : $scope.report.field_delivery_apgar5,
     "field_delivery_stimulation" : $scope.report.field_delivery_stimulation == 'true',
     "field_delivery_stimulation_type" : $scope.report.field_delivery_stimulation_type,
@@ -839,7 +839,42 @@ angular.module('starter.controllers', [])
     "gyn_gestation_known" : $scope.report.gyn_gestation_known == 'true',
     "field_delivery_placenta_intact" : $scope.report.field_delivery_placenta_intact == 'true'
   };
+  
+  $scope.apgar = {
+    "appearance" : $scope.field.field_delivery_apgar1['appearance'],
+    "pulse" : $scope.field.field_delivery_apgar1['pulse'],
+    "grimace" : $scope.field.field_delivery_apgar1['grimace'],
+    "activity" : $scope.field.field_delivery_apgar1['activity'],
+    "respiration" : $scope.field.field_delivery_apgar1['respiration']
+  };
+  
+  $scope.apgarTotals = {
+    "apgar1": $scope.apgar.appearance,
+    "apgar5": 7
+  };
+  
+
   console.log($scope.field);
+  
+  $ionicModal.fromTemplateUrl('apgar.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal
+  })  
+  
+  $scope.openModal = function(time) {
+    $scope.modal.show()
+  }
+
+  $scope.closeModal = function() {
+    $scope.field.field_delivery_apgar1 = {"appearance": 2}
+    $scope.modal.hide();
+  };
+
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
 
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
