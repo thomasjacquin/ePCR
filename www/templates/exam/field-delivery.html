@@ -33,15 +33,15 @@
           <input type="number" ng-model="field.field_delivery_cord_cut_length" placeholder="#">
           <span class="input-label"> inches from baby</span>
         </ion-item>
-        <ion-item class="item-input">
+        <ion-item class="item-input item-button-right">
           <span class="input-label">APGAR 1 min</span>
           <label>{{apgarTotals.apgar1}}</label>
-          <button class="button button-balanced" style="float:right" ng-show="field.field_delivery_apgar1 != undefined" ng-click="openModal(1)">Assess</button>
+          <button class="button button-balanced" style="float:right" ng-show="field.field_delivery_apgar1 != {}" ng-click="openModal(1)">Assess</button>
         </ion-item>
-        <ion-item class="item-input">
+        <ion-item class="item-input item-button-right">
           <span class="input-label">APGAR 5 min</span>
           <label>{{apgarTotals.apgar5}}</label>
-          <button class="button button-balanced" style="float:right" ng-show="field.field_delivery_apgar5 == undefined" ng-click="openModal(5)">Assess</button>
+          <button class="button button-balanced" style="float:right" ng-show="field.field_delivery_apgar5 != {}" ng-click="openModal(5)">Assess</button>
         </ion-item>
         <ion-item class="item-toggle">
             Stimulation required

@@ -824,15 +824,17 @@ angular.module('starter.controllers', [])
 
 .controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
   $scope.report = report;
+  
+  var apgar1 = typeof(JSON.parse($scope.report.field_delivery_apgar1)) == 'object' ? JSON.parse($scope.report.field_delivery_apgar1) : {};
+  var apgar5 = typeof(JSON.parse($scope.report.field_delivery_apgar5)) == 'object' ? JSON.parse($scope.report.field_delivery_apgar5) : {};
 
   $scope.field = {
     "field_delivery_presentation" : $scope.report.field_delivery_presentation,
     "field_delivery_time" : $scope.report.field_delivery_time,
     "field_delivery_meconium" : $scope.report.field_delivery_meconium,
     "field_delivery_cord_cut_length" : $scope.report.field_delivery_cord_cut_length,
-    "field_delivery_apgar1" : $scope.report.field_delivery_apgar1 || {},
-    "field_delivery_apgar5" : $scope.report.field_delivery_apgar5,
-    "field_delivery_stimulation" : $scope.report.field_delivery_stimulation == 'true',
+    "field_delivery_apgar1" : apgar1,
+    "field_delivery_apgar5" : apgar5,
     "field_delivery_stimulation_type" : $scope.report.field_delivery_stimulation_type,
     "field_delivery_placenta" : $scope.report.field_delivery_placenta == 'true',
     "field_delivery_placenta_time" : $scope.report.field_delivery_placenta_time,
@@ -840,21 +842,10 @@ angular.module('starter.controllers', [])
     "field_delivery_placenta_intact" : $scope.report.field_delivery_placenta_intact == 'true'
   };
   
-  $scope.apgar = {
-    "appearance" : $scope.field.field_delivery_apgar1['appearance'],
-    "pulse" : $scope.field.field_delivery_apgar1['pulse'],
-    "grimace" : $scope.field.field_delivery_apgar1['grimace'],
-    "activity" : $scope.field.field_delivery_apgar1['activity'],
-    "respiration" : $scope.field.field_delivery_apgar1['respiration']
-  };
-  
   $scope.apgarTotals = {
-    "apgar1": $scope.apgar.appearance,
-    "apgar5": 7
+    "apgar1": apgarSum(apgar1),
+    "apgar5": apgarSum(apgar5)
   };
-  
-
-  console.log($scope.field);
   
   $ionicModal.fromTemplateUrl('apgar.html', {
     scope: $scope,
@@ -864,11 +855,19 @@ angular.module('starter.controllers', [])
   })  
   
   $scope.openModal = function(time) {
+    $scope.activeModal = time;
+    $scope.apgar = time == 1 ? $scope.field.field_delivery_apgar1 : $scope.field.field_delivery_apgar5;
     $scope.modal.show()
   }
 
   $scope.closeModal = function() {
-    $scope.field.field_delivery_apgar1 = {"appearance": 2}
+    if ($scope.activeModal == 1){
+      apgar1 = $scope.apgar;
+      $scope.apgarTotals.apgar1 = apgarSum($scope.apgar);
+    } else {
+      apgar5 = $scope.apgar;
+      $scope.apgarTotals.apgar5 = apgarSum($scope.apgar);
+    }
     $scope.modal.hide();
   };
 
@@ -877,6 +876,9 @@ angular.module('starter.controllers', [])
   });
 
   $scope.save = function(){
+     $scope.field.field_delivery_apgar1 = JSON.stringify(apgar1);
+     $scope.field.field_delivery_apgar5 = JSON.stringify(apgar5);
+    
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.field.field_delivery_assessed = true;
     $scope.db.update("report", $scope.field, {
@@ -1346,4 +1348,12 @@ Object.size = function(obj) {
         if (obj.hasOwnProperty(key)) size++;
     }
     return size;
+}
+
+apgarSum = function(obj){
+  var sum = 0;
+  for (key in obj) {
+    sum += parseInt(obj[key]);
+  };
+  return sum;
 }
