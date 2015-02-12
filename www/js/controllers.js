@@ -186,13 +186,11 @@ angular.module('starter.controllers', [])
   $scope.primaryComplaint = chiefComplaint.primary;
   
   $scope.binding = { 
-    "primary_complaint": parseInt($scope.report.primary_complaint), 
+    "primary_complaint": $scope.report.primary_complaint, 
     "primary_complaint_other": $scope.report.primary_complaint_other, 
     "secondary_complaint": $scope.report.secondary_complaint, 
     "pertinent": JSON.parse($scope.report.pertinent)
   };
-  
-  console.dir($scope.primaryComplaint);
   
   var existingPertinent = $scope.binding.pertinent;
 
@@ -1167,13 +1165,37 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('MedicationCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+.controller('MedicationCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure, homeMedications) {
   $scope.procedureEntry = procedure;
+  $scope.medication_list = $scope.procedureEntry.medication_type == '0' ?  homeMedications.generic.list : homeMedications.brand.list;
+  if ($scope.medication_list[0] != "Other")
+    $scope.medication_list.unshift("Other");
 
   $scope.medication = {
-    "location" : $scope.procedureEntry.location,
+    "medication_type" : $scope.procedureEntry.medication_type,
+    "medication" : $scope.procedureEntry.medication,
+    "medication_other" : $scope.procedureEntry.medication_other,
+    "dose" : $scope.procedureEntry.dose,
+    "dose_unit" : $scope.procedureEntry.dose_unit,
+    "route" : $scope.procedureEntry.route,
+    "route_other" : $scope.procedureEntry.route_other,
+    "indication" : $scope.procedureEntry.indication,
+    "administrated" : $scope.procedureEntry.administrated,
+    "administrated_other" : $scope.procedureEntry.administrated_other,
+    "same_dose" : $scope.procedureEntry.same_dose,
   };
   console.log($scope.medication);
+  
+  $scope.updateMedicationList = function(){
+      if ($scope.medication.medication_type == '0') {
+          $scope.medication_list = homeMedications.generic.list;
+      } else {
+          $scope.medication_list = homeMedications.brand.list;
+      }
+      $scope.medication.medication = '';
+      if ($scope.medication_list[0] != "Other")
+        $scope.medication_list.unshift("Other");
+  }
 
   $scope.save = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
@@ -1275,6 +1297,98 @@ angular.module('starter.controllers', [])
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated ECG");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('SignaturesCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+  $scope.activeButton = 1;
+  
+
+  var signaturePads = [];
+  var storedSignatures = [];
+  
+  function wireCanvas(){
+    var tab = $scope.activeButton;
+    switch (tab){
+      case 1:
+        wrapper = document.getElementById("signature-pad-practitioner");
+        break;
+      case 2:
+        wrapper = document.getElementById("signature-pad-patient");
+        break;
+      case 3:
+        wrapper = document.getElementById("signature-pad-hospital");
+        break;
+      case 4:
+        wrapper = document.getElementById("signature-pad-witness");
+        break;
+      default:
+        break;
+    }
+    clearButton = wrapper.querySelector("[data-action=clear]");
+    canvas = wrapper.querySelector("canvas");
+    
+    signaturePad = signaturePads[tab] || new SignaturePad(canvas, {
+      penColor: "rgb(66, 133, 244)",
+    });
+    signaturePads[tab] = signaturePad;
+    signaturePad.fromDataURL(storedSignatures[tab] || "");
+
+    clearButton.addEventListener("click", function (event) {
+      signaturePad.clear();
+    });
+
+  }
+  
+   // Load Signatures
+  storedSignatures[1] = $scope.report.signature_practitioner;
+  storedSignatures[2] = $scope.report.signature_patient;
+  storedSignatures[3] = $scope.report.signature_hospital;
+  storedSignatures[4] = $scope.report.signature_witness;
+  
+  wireCanvas();
+  
+  function resizeCanvas() {
+    var ratio =  window.devicePixelRatio || 1;
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+  }
+
+  window.onresize = resizeCanvas;
+  resizeCanvas();
+
+  $scope.signatures = {
+    "signature_practitioner_name" : $scope.report.signature_practitioner_name,
+    "signature_patient_name" : $scope.report.signature_patient_name,
+    "signature_hospital_name" : $scope.report.signature_hospital_name,
+    "signature_witness_name" : $scope.report.signature_witness_name,
+    "no_signature" : $scope.report.no_signature == 'true',
+    "no_signature_reason" : $scope.report.no_signature_reason
+  };
+  
+  console.log($scope.signatures);
+  
+  $scope.switchTab = function(tab){
+    $scope.activeButton = tab;
+    wireCanvas();
+  }
+
+  $scope.save = function(){
+    $scope.signatures.signature_practitioner = signaturePads[1] ? signaturePads[1].toDataURL() : "";
+    $scope.signatures.signature_patient = signaturePads[2] ? signaturePads[2].toDataURL() : "";
+    $scope.signatures.signature_hospital = signaturePads[3] ? signaturePads[3].toDataURL() : "";
+    $scope.signatures.signature_witness = signaturePads[4] ? signaturePads[4].toDataURL() : "";
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.signatures.signature_assessed = true;
+    $scope.db.update("report", $scope.signatures, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Signatures");
       $window.history.back();
     });
   }

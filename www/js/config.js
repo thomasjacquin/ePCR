@@ -558,6 +558,39 @@ angular.module('ePCR.config', [])
          "spinal_secured_with":{
             "type":"TEXT"
          },
+         "signature_assessed":{
+            "type":"BOOLEAN"
+         },
+         "signature_practitioner_name":{
+            "type":"TEXT"
+         },
+         "signature_practitioner":{
+            "type":"TEXT"
+         },
+         "signature_patient_name":{
+            "type":"TEXT"
+         },
+         "signature_patient":{
+            "type":"TEXT"
+         },
+         "signature_hospital_name":{
+            "type":"TEXT"
+         },
+         "signature_hospital":{
+            "type":"TEXT"
+         },
+         "signature_witness_name":{
+            "type":"TEXT"
+         },
+         "signature_witness":{
+            "type":"TEXT"
+         },
+         "no_signature":{
+            "type":"BOOLEAN"
+         },
+         "no_signature_reason":{
+            "type":"TEXT"
+         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
@@ -1109,119 +1142,8 @@ angular.module('ePCR.config', [])
          }
       }
    },
-//   {
-//      "name":"apgar",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "appearance1":{
-//            "type":"TEXT"
-//         },
-//         "pulse1":{
-//            "type":"TEXT"
-//         },
-//         "grimace1":{
-//            "type":"TEXT"
-//         },
-//         "activity1":{
-//            "type":"TEXT"
-//         },
-//         "respirations1":{
-//            "type":"TEXT"
-//         },
-//         "total1":{
-//            "type":"INTEGER"
-//         },
-//         "time1":{
-//            "type":"TEXT"
-//         },
-//         "appearance5":{
-//            "type":"TEXT"
-//         },
-//         "pulse5":{
-//            "type":"TEXT"
-//         },
-//         "grimace5":{
-//            "type":"TEXT"
-//         },
-//         "activity5":{
-//            "type":"TEXT"
-//         },
-//         "respirations5":{
-//            "type":"TEXT"
-//         },
-//         "total5":{
-//            "type":"INTEGER"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
 
-//   {
-//      "name":"signatures",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "assessed":{
-//            "type":"BOOLEAN"
-//         },
-//         "sigPractitionerText":{
-//            "type":"TEXT"
-//         },
-//         "sigPatientText":{
-//            "type":"TEXT"
-//         },
-//         "noSign":{
-//            "type":"BOOLEAN"
-//         },
-//         "reason":{
-//            "type":"TEXT"
-//         },
-//         "sigHospReprText":{
-//            "type":"TEXT"
-//         },
-//         "sigWitnessText":{
-//            "type":"TEXT"
-//         },
-//         "sigPractitioner":{
-//            "type":"TEXT"
-//         },
-//         "sigPatient":{
-//            "type":"TEXT"
-//         },
-//         "sigHospRepr":{
-//            "type":"TEXT"
-//         },
-//         "sigWitness":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
+
 //   {
 //      "name":"call_info",
 //      "columns":{
@@ -1442,64 +1364,64 @@ angular.module('ePCR.config', [])
 
 .constant('chiefComplaint',{
       primary:[
-        {"value":0,"complaint":"Other"},
-        {"value":1,"complaint":"Abdominal Pain"},
-        {"value":2,"complaint":"Angina"},
-        {"value":3,"complaint":"Angina (Unstable)"},
-        {"value":4,"complaint":"Angina (Stable)"},
-        {"value":5,"complaint":"Alcohol With-drawl"},
-        {"value":6,"complaint":"Allergic Reaction"},
-        {"value":7,"complaint":"Altered mental Status"},
-        {"value":8,"complaint":"Anaphylaxis"},
-        {"value":9,"complaint":"Bradycardia"},
-        {"value":10,"complaint":"Burn"},
-        {"value":11,"complaint":"Cardiac Arrest"},
-        {"value":12,"complaint":"Cerebrovascular Accident (CVA)"},
-        {"value":13,"complaint":"Chest Pain (Cardiac)"},
-        {"value":14,"complaint":"Chest Pain (Non-Cardiac)"},
-        {"value":15,"complaint":"Chest Pain Not Yet Diagnosed"},
-        {"value":16,"complaint":"Child Delivery"},
-        {"value":17,"complaint":"Croup"},
-        {"value":18,"complaint":"Death"},
-        {"value":19,"complaint":"Dehydration"},
-        {"value":20,"complaint":"Ectopic Pregnancy"},
-        {"value":21,"complaint":"Epidural Bleed"},
-        {"value":22,"complaint":"Epiglottitis"},
-        {"value":23,"complaint":"Food Poisoning"},
-        {"value":24,"complaint":"Hypertensive Crisis"},
-        {"value":25,"complaint":"Hypertensive Emergency"},
-        {"value":26,"complaint":"Hyperthermia"},
-        {"value":27,"complaint":"Hypoglycemia"},
-        {"value":28,"complaint":"Hypotension"},
-        {"value":29,"complaint":"Hypothermia"},
-        {"value":30,"complaint":"Labor"},
-        {"value":31,"complaint":"Major Trauma"},
-        {"value":32,"complaint":"Musculoskeletal Trauma"},
-        {"value":33,"complaint":"Nausea"},
-        {"value":34,"complaint":"Near Drowning"},
-        {"value":35,"complaint":"Obstructed Airway"},
-        {"value":36,"complaint":"Overdose"},
-        {"value":37,"complaint":"Palpitations"},
-        {"value":38,"complaint":"Pelvic Pain"},
-        {"value":39,"complaint":"Poisoning"},
-        {"value":40,"complaint":"Pregnancy Complications"},
-        {"value":41,"complaint":"Psychiatric Emergency"},
-        {"value":42,"complaint":"Rape"},
-        {"value":43,"complaint":"Respiratory Arrest"},
-        {"value":44,"complaint":"Seizure"},
-        {"value":45,"complaint":"Sexual Abuse"},
-        {"value":46,"complaint":"Shock"},
-        {"value":47,"complaint":"Sickle Cell Crisis"},
-        {"value":48,"complaint":"SIDS"},
-        {"value":49,"complaint":"Smoke Inhalation"},
-        {"value":50,"complaint":"Spinal Cord Injury"},
-        {"value":51,"complaint":"Subdural Bleed"},
-        {"value":52,"complaint":"Syncope"},
-        {"value":53,"complaint":"Tachycardia"},
-        {"value":54,"complaint":"Transient Ischemic Attacks (TIA)"},
-        {"value":55,"complaint":"Unconscious/Unknown"},
-        {"value":56,"complaint":"Vaginal Bleeding"},
-        {"value":57,"complaint":"Vomiting"}
+        "Other",
+        "Abdominal Pain",
+        "Angina",
+        "Angina (Unstable)",
+        "Angina (Stable)",
+        "Alcohol With-drawl",
+        "Allergic Reaction",
+        "Altered mental Status",
+        "Anaphylaxis",
+        "Bradycardia",
+        "Burn",
+        "Cardiac Arrest",
+        "Cerebrovascular Accident (CVA)",
+        "Chest Pain (Cardiac)",
+        "Chest Pain (Non-Cardiac)",
+        "Chest Pain Not Yet Diagnosed",
+        "Child Delivery",
+        "Croup",
+        "Death",
+        "Dehydration",
+        "Ectopic Pregnancy",
+        "Epidural Bleed",
+        "Epiglottitis",
+        "Food Poisoning",
+        "Hypertensive Crisis",
+        "Hypertensive Emergency",
+        "Hyperthermia",
+        "Hypoglycemia",
+        "Hypotension",
+        "Hypothermia",
+        "Labor",
+        "Major Trauma",
+        "Musculoskeletal Trauma",
+        "Nausea",
+        "Near Drowning",
+        "Obstructed Airway",
+        "Overdose",
+        "Palpitations",
+        "Pelvic Pain",
+        "Poisoning",
+        "Pregnancy Complications",
+        "Psychiatric Emergency",
+        "Rape",
+        "Respiratory Arrest",
+        "Seizure",
+        "Sexual Abuse",
+        "Shock",
+        "Sickle Cell Crisis",
+        "SIDS",
+        "Smoke Inhalation",
+        "Spinal Cord Injury",
+        "Subdural Bleed",
+        "Syncope",
+        "Tachycardia",
+        "Transient Ischemic Attacks (TIA)",
+        "Unconscious/Unknown",
+        "Vaginal Bleeding",
+        "Vomiting"
               ],
       pertinent: [
         "Difficulty Breathing",

@@ -10,22 +10,17 @@
    <ion-list>
          <ion-item class="item-input item-select">
           <span class="input-label">Medication name</span>
-          <select ng-model="medication.medication_type">
-              <option value="0">Brand</option>
-              <option value="1">Generic</option>
+          <select ng-model="medication.medication_type" ng-change="updateMedicationList()">
+              <option value="0">Generic</option>
+              <option value="1">Brand</option>
           </select>
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Medication</span>
-          <select ng-model="medication.medication">
-              <option value="0">Other</option>
-              <option value="1">Arm</option>
-              <option value="2">Hand</option>
-              <option value="3">Leg</option>
-              <option value="4">Ankle</option>
+          <select ng-options="item for item in medication_list" ng-model="medication.medication">
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="medication.medication == 0">
+        <ion-item class="item-input" ng-show="medication.medication == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="medication.medication_other" placeholder="Medication other">
         </ion-item>

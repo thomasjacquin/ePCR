@@ -10,10 +10,10 @@
     <div class="list">
         <label class="item item-input item-select">
           <span class="input-label">Primary Chief Complaint</span>
-          <select ng-options="item.value as item.complaint for item in primaryComplaint" ng-model="binding.primary_complaint">
+          <select ng-options="item for item in primaryComplaint" ng-model="binding.primary_complaint">
             </select>
         </label>
-        <label class="item item-input" ng-show="binding.primary_complaint == '0'">
+        <label class="item item-input" ng-show="binding.primary_complaint == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="binding.primary_complaint_other">
         </label>

@@ -870,6 +870,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
   
+  .state('tab.signatures', {
+    url: '/report/:reportId/signatures',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/signatures.html',
+        controller: 'SignaturesCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
   .state('tab.account', {
     url: '/account',
     views: {
