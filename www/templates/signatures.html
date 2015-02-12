@@ -1,0 +1,107 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Signatures">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content scroll=false class="padding" style="overflow-y: scroll">
+    <div class="button-bar bar-assertive">
+      <a class="button" ng-class="{'active' : activeButton == 1}" ng-click="switchTab(1)">Practitioner</a>
+      <a class="button" ng-class="{'active' : activeButton == 2}" ng-click="switchTab(2)">Patient</a>
+      <a class="button" ng-class="{'active' : activeButton == 3}" ng-click="switchTab(3)">Hospital</a>
+      <a class="button" ng-class="{'active' : activeButton == 4}" ng-click="switchTab(4)">Witness</a>
+    </div>
+    <br>
+    <ion-list ng-show="activeButton == 1">
+     <ion-item class="item-divider">
+       Practitioner
+     </ion-item>
+     <ion-item class="item-input">
+        <span class="input-label">Name</span>
+        <input type="text" ng-model="signatures.signature_practitioner_name" placeholder="Practitioner name">
+      </ion-item>
+     <ion-item class="item-input">
+       <div id="signature-pad-practitioner" class="m-signature-pad">
+          <div class="m-signature-pad--body">
+            <canvas width="658" height="318" style="background:#EEE"></canvas>
+          </div>
+          <div class="m-signature-pad--footer">
+            <div class="description">Sign above</div>
+            <button class="button clear" data-action="clear">Clear</button>
+          </div>
+        </div>
+     </ion-item>
+     </ion-list>
+     <ion-list ng-show="activeButton == 2">
+       <ion-item class="item-divider">
+         Patient
+       </ion-item>
+       <ion-item class="item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="signatures.signature_patient_name" placeholder="Patient name">
+       </ion-item>
+       <ion-item class="item-toggle">
+          No Signature
+          <label class="toggle">
+             <input type="checkbox" ng-model="signatures.no_signature">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+       </ion-item>
+       <ion-item class="item-input" ng-show="!signatures.no_signature">
+         <div id="signature-pad-patient" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+              <canvas width="658" height="318" style="background:#EEE"></canvas>
+            </div>
+            <div class="m-signature-pad--footer">
+              <div class="description">Sign above</div>
+              <button class="button clear" data-action="clear">Clear</button>
+            </div>
+          </div>
+       </ion-item>
+    </ion-list>
+    <ion-list ng-show="activeButton == 3">
+       <ion-item class="item-divider">
+         Hospital Representative
+       </ion-item>
+       <ion-item class="item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="signatures.signature_hospital_name" placeholder="Hospital Representative name">
+       </ion-item>
+       <ion-item class="item-input">
+         <div id="signature-pad-hospital" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+              <canvas width="658" height="318" style="background:#EEE"></canvas>
+            </div>
+            <div class="m-signature-pad--footer">
+              <div class="description">Sign above</div>
+              <button class="button clear" data-action="clear">Clear</button>
+            </div>
+          </div>
+       </ion-item>
+    </ion-list>
+    <ion-list ng-show="activeButton == 4">
+       <ion-item class="item-divider">
+         Witness
+       </ion-item>
+       <ion-item class="item-input">
+          <span class="input-label">Name</span>
+          <input type="text" ng-model="signatures.signature_witness_name" placeholder="Witness name">
+       </ion-item>
+       <ion-item class="item-input">
+         <div id="signature-pad-witness" class="m-signature-pad">
+            <div class="m-signature-pad--body">
+              <canvas width="658" height="318" style="background:#EEE"></canvas>
+            </div>
+            <div class="m-signature-pad--footer">
+              <div class="description">Sign above</div>
+              <button class="button clear" data-action="clear">Clear</button>
+            </div>
+          </div>
+       </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>
