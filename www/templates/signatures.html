@@ -51,6 +51,10 @@
              </div>
           </label>
        </ion-item>
+       <ion-item class="item-input"  ng-show="signatures.no_signature">
+          <span class="input-label">Reason</span>
+          <input type="text" ng-model="signatures.no_signature_reason" placeholder="Reason">
+       </ion-item>
        <ion-item class="item-input" ng-show="!signatures.no_signature">
          <div id="signature-pad-patient" class="m-signature-pad">
             <div class="m-signature-pad--body">

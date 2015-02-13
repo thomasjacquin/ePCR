@@ -1,0 +1,49 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Call Info">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-list>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Attendant 1</span>
+          <select ng-model="call.attendant1">
+              <option value='0'>Other</option>
+              <option value='1'>Nurse</option>
+              <option value='2'>Medic</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="call.attendant1 == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="form.attendant1_other" placeholder="Other">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Attendant 2</span>
+          <select ng-model="call.attendant2">
+              <option value='0'>Other</option>
+              <option value='1'>Nurse</option>
+              <option value='2'>Medic</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="call.attendant2 == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="form.attendant2_other" placeholder="Other">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Driver</span>
+          <select ng-model="call.driver">
+              <option value='0'>Other</option>
+              <option value='1'>Nurse</option>
+              <option value='2'>Medic</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="call.driver == 0">
+          <span class="input-label">Other</span>
+          <input type="text" ng-model="form.driver_other" placeholder="Other">
+        </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-view>

@@ -885,12 +885,32 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
   
-  .state('tab.account', {
-    url: '/account',
+  .state('tab.call-info', {
+    url: '/report/:reportId/call-info',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/call-info.html',
+        controller: 'CallInfoCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.settings', {
+    url: '/settings',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
+        templateUrl: 'templates/tab-settings.html',
+        controller: 'SettingsCtrl',
+        resolve: {
+          settings: function(Records) {
+              return Records.get('settings', 1)
+            }
+        }
       }
     }
   })

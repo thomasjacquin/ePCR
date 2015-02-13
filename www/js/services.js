@@ -51,8 +51,8 @@ angular.module('starter.services', [])
           for(var i=0; i < results.rows.length; i++){
               list[results.rows.item(i).id] = results.rows.item(i);
           }
-          console.log(tableName);
-          console.dir(list);
+//          console.log(tableName);
+//          console.dir(list);
           dfd.resolve(list);
         });
       return dfd.promise;
@@ -67,7 +67,7 @@ angular.module('starter.services', [])
           "value":itemId
         },
       }).then(function(results) {
-        dfd.resolve(results.rows.item(0));
+        dfd.resolve(results.rows.length > 0 ? results.rows.item(0) : {});
       })
       return dfd.promise;
     }

@@ -591,6 +591,54 @@ angular.module('ePCR.config', [])
          "no_signature_reason":{
             "type":"TEXT"
          },
+         "call_info_assessed":{
+            "type":"BOOLEAN"
+         },
+         "call_info_attendant1":{
+            "type":"TEXT"
+         },
+         "call_info_attendant1_other":{
+            "type":"TEXT"
+         },
+         "call_info_attendant2":{
+            "type":"TEXT"
+         },
+         "call_info_attendant2_other":{
+            "type":"TEXT"
+         },
+         "call_info_driver":{
+            "type":"TEXT"
+         },
+         "call_info_driver_other":{
+            "type":"TEXT"
+         },
+         "call_info_unit_nb":{
+            "type":"TEXT"
+         },
+         "call_info_run_nb":{
+            "type":"TEXT"
+         },
+         "call_info_respond_to":{
+            "type":"TEXT"
+         },
+         "call_info_milage_start":{
+            "type":"INTEGER"
+         },
+         "call_info_milage_end":{
+            "type":"INTEGER"
+         },
+         "call_info_code_en_route":{
+            "type":"TEXT"
+         },
+         "call_info_code_return":{
+            "type":"TEXT"
+         },
+         "call_info_transported_to":{
+            "type":"TEXT"
+         },
+         "call_info_transported_position":{
+            "type":"TEXT"
+         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
@@ -1142,6 +1190,36 @@ angular.module('ePCR.config', [])
          }
       }
    },
+   {
+      "name":"settings",
+      "columns":{
+         "id":{
+            "type":"INTEGER",
+            "null":"NOT NULL"
+         },
+         "first_name":{
+            "type":"TEXT"
+         },
+         "last_name":{
+            "type":"TEXT"
+         },
+         "identification":{
+            "type":"TEXT"
+         },
+         "position":{
+            "type":"TEXT"
+         },
+         "work_place":{
+            "type":"TEXT"
+         },
+         "send_report_to":{
+            "type":"TEXT"
+         },
+         "photo":{
+            "type":"TEXT"
+         }
+      }
+   },
 
 
 //   {
@@ -1157,54 +1235,8 @@ angular.module('ePCR.config', [])
 //            "type":"INTEGER",
 //            "null":"NOT NULL"
 //         },
-//         "assessed":{
-//            "type":"BOOLEAN"
-//         },
-//         "attendant1":{
-//            "type":"TEXT"
-//         },
-//         "attendant1_other":{
-//            "type":"TEXT"
-//         },
-//         "attendant2":{
-//            "type":"TEXT"
-//         },
-//         "attendant2_other":{
-//            "type":"TEXT"
-//         },
-//         "driver":{
-//            "type":"TEXT"
-//         },
-//         "driver_other":{
-//            "type":"TEXT"
-//         },
-//         "unit_nb":{
-//            "type":"TEXT"
-//         },
-//         "run_nb":{
-//            "type":"TEXT"
-//         },
-//         "respond":{
-//            "type":"TEXT"
-//         },
-//         "milage_start":{
-//            "type":"INTEGER"
-//         },
-//         "milage_end":{
-//            "type":"INTEGER"
-//         },
-//         "code_en_route":{
-//            "type":"TEXT"
-//         },
-//         "code_return":{
-//            "type":"TEXT"
-//         },
-//         "transported_to":{
-//            "type":"TEXT"
-//         },
-//         "transported_position":{
-//            "type":"TEXT"
-//         },
+
+//         
 //         "time_notified":{
 //            "type":"TEXT"
 //         },

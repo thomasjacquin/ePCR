@@ -1,0 +1,47 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Settings">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <img ng-src="{{settings.photo}}" style="width: 64px; height: 64px">
+      <ion-list>
+        <ion-item class="item-divider">
+            User Info
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">First Name</span>
+          <input type="text" ng-model="form.first_name">
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text" ng-model="form.last_name">
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Identification</span>
+          <input type="text" ng-model="form.identification">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Position</span>
+          <select ng-model="form.position">
+              <option value='0'>Paramedic</option>
+              <option value='1'>Nurse</option>
+              <option value='2'>Medic</option>
+              <option value='3'>EMT</option>
+              <option value='4'>Firefighter</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Work Place</span>
+          <input type="text" ng-model="form.work_place">
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Email reports to</span>
+          <input type="email" ng-model="form.send_report_to">
+        </ion-item>
+      </ion-list>
+  </ion-content>
+</ion-view>

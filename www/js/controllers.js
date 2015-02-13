@@ -1394,6 +1394,61 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('SettingsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, settings) {
+  $scope.settings = settings;
+
+  $scope.form = {
+    "first_name" : $scope.settings.first_name,
+    "last_name" : $scope.settings.last_name,
+    "identification" : $scope.settings.identification,
+    "position" : $scope.settings.position,
+    "work_place" : $scope.settings.work_place,
+    "send_report_to" : $scope.settings.send_report_to,
+    "photo" : "http://lorempixel.com/output/people-q-c-200-200-7.jpg"
+  };
+
+  $scope.save = function(){
+    
+    console.log($scope.form);
+    
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("settings", $scope.form, {
+      'id': 1
+    }).then(function(){
+      console.log("Updated Settings");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.call = {
+    "attendant1" : $scope.report.call_info_attendant1,
+    "attendant1_other" : $scope.report.call_info_attendant1,
+    "attendant2" : $scope.report.call_info_attendant2,
+    "attendant2_other" : $scope.report.call_info_attendant2_other,
+    "driver" : $scope.report.call_info_driver,
+    "driver_other" : $scope.report.call_info_driver_other,
+    "unit_number" : $scope.report.call_info_unit_number,
+    "run_number" : $scope.report.call_info_run_number,
+    "respond_to" : $scope.report.call_info_respond_to,
+  };
+
+  $scope.save = function(){
+
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.call.call_info_assessed = true;
+    $scope.db.update("report", $scope.call, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Call Info");
+      $window.history.back();
+    });
+  }
+})
+
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;
