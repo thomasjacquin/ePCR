@@ -1425,15 +1425,25 @@ angular.module('starter.controllers', [])
   $scope.report = report;
 
   $scope.call = {
-    "attendant1" : $scope.report.call_info_attendant1,
-    "attendant1_other" : $scope.report.call_info_attendant1,
-    "attendant2" : $scope.report.call_info_attendant2,
-    "attendant2_other" : $scope.report.call_info_attendant2_other,
-    "driver" : $scope.report.call_info_driver,
-    "driver_other" : $scope.report.call_info_driver_other,
-    "unit_number" : $scope.report.call_info_unit_number,
-    "run_number" : $scope.report.call_info_run_number,
-    "respond_to" : $scope.report.call_info_respond_to,
+    "call_info_attendant1" : $scope.report.call_info_attendant1,
+    "call_info_attendant1" : $scope.report.call_info_attendant1,
+    "call_info_attendant2" : $scope.report.call_info_attendant2,
+    "call_info_attendant2_other" : $scope.report.call_info_attendant2_other,
+    "call_info_driver" : $scope.report.call_info_driver,
+    "call_info_driver_other" : $scope.report.call_info_driver_other,
+    "call_info_unit_number" : $scope.report.call_info_unit_number,
+    "call_info_run_number" : $scope.report.call_info_run_number,
+    "call_info_respond_to" : $scope.report.call_info_respond_to,
+    "call_info_milage_start" : $scope.report.call_info_milage_start,
+    "call_info_milage_end" : $scope.report.call_info_milage_end,
+    "call_info_code_en_route" : $scope.report.call_info_code_en_route,
+    "call_info_code_return" : $scope.report.call_info_code_return,
+    "call_info_transported_to" : $scope.report.call_info_transported_to,
+    "call_info_transported_position" : $scope.report.call_info_transported_position,
+    "call_info_time" : $scope.report.call_info_time ? JSON.parse($scope.report.call_info_time) : {},
+    "call_info_ppe" : $scope.report.call_info_ppe,
+    "call_info_determinant" : $scope.report.call_info_determinant ?JSON.parse($scope.report.call_info_determinant) : {},
+    "call_info_assistance" : $scope.report.call_info_assistance,
   };
 
   $scope.save = function(){

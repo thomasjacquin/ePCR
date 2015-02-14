@@ -639,6 +639,18 @@ angular.module('ePCR.config', [])
          "call_info_transported_position":{
             "type":"TEXT"
          },
+         "call_info_transported_time":{
+            "type":"TEXT"
+         },
+         "call_info_ppe":{
+            "type":"TEXT"
+         },
+         "call_info_determinant":{
+            "type":"TEXT"
+         },
+         "call_info_assistance":{
+            "type":"TEXT"
+         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
