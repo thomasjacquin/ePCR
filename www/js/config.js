@@ -639,7 +639,7 @@ angular.module('ePCR.config', [])
          "call_info_transported_position":{
             "type":"TEXT"
          },
-         "call_info_transported_time":{
+         "call_info_time":{
             "type":"TEXT"
          },
          "call_info_ppe":{
@@ -649,6 +649,39 @@ angular.module('ePCR.config', [])
             "type":"TEXT"
          },
          "call_info_assistance":{
+            "type":"TEXT"
+         },
+         "call_info_assistance_other":{
+            "type":"TEXT"
+         },
+         "no_transport_assessed":{
+            "type":"BOOLEAN"
+         },
+         "no_transport_mentally_capable":{
+            "type":"BOOLEAN"
+         },
+         "no_transport_should_transport":{
+            "type":"BOOLEAN"
+         },
+         "no_transport_risk_informed":{
+            "type":"BOOLEAN"
+         },
+         "no_transport_reason":{
+            "type":"TEXT"
+         },
+         "no_transport_reason_other":{
+            "type":"TEXT"
+         },
+         "no_transport_left_with":{
+            "type":"TEXT"
+         },
+         "no_transport_left_with_other":{
+            "type":"TEXT"
+         },
+         "no_transport_consult_with":{
+            "type":"TEXT"
+         },
+         "code":{
             "type":"TEXT"
          },
          "created":{
@@ -1232,177 +1265,29 @@ angular.module('ePCR.config', [])
          }
       }
    },
-
-
-//   {
-//      "name":"call_info",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-
-//         
-//         "time_notified":{
-//            "type":"TEXT"
-//         },
-//         "time_route":{
-//            "type":"TEXT"
-//         },
-//         "time_on_scene":{
-//            "type":"TEXT"
-//         },
-//         "time_depart":{
-//            "type":"TEXT"
-//         },
-//         "time_destination":{
-//            "type":"TEXT"
-//         },
-//         "time_transfer":{
-//            "type":"TEXT"
-//         },
-//         "time_back_service":{
-//            "type":"TEXT"
-//         },
-//         "time_patient_contact":{
-//            "type":"TEXT"
-//         },
-//         "ppe_gloves":{
-//            "type":"BOOLEAN"
-//         },
-//         "ppe_eyes":{
-//            "type":"BOOLEAN"
-//         },
-//         "ppe_reflective":{
-//            "type":"BOOLEAN"
-//         },
-//         "ppe_isolation":{
-//            "type":"BOOLEAN"
-//         },
-//         "ppe_mask":{
-//            "type":"BOOLEAN"
-//         },
-//         "det1":{
-//            "type":"TEXT"
-//         },
-//         "det2":{
-//            "type":"TEXT"
-//         },
-//         "det3":{
-//            "type":"TEXT"
-//         },
-//         "assistance":{
-//            "type":"TEXT"
-//         },
-//         "other":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
-//   {
-//      "name":"no_transport",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "assessed":{
-//            "type":"BOOLEAN"
-//         },
-//         "mentally_capable":{
-//            "type":"BOOLEAN"
-//         },
-//         "should_trans":{
-//            "type":"BOOLEAN"
-//         },
-//         "informed":{
-//            "type":"BOOLEAN"
-//         },
-//         "reason":{
-//            "type":"TEXT"
-//         },
-//         "reason_other":{
-//            "type":"TEXT"
-//         },
-//         "left_with":{
-//            "type":"TEXT"
-//         },
-//         "left_with_other":{
-//            "type":"TEXT"
-//         },
-//         "consult_with":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
-//   {
-//      "name":"narrative",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "narration":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   },
-//   {
-//      "name":"code",
-//      "columns":{
-//         "id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL",
-//            "primary":true,
-//            "auto_increment":true
-//         },
-//         "report_id":{
-//            "type":"INTEGER",
-//            "null":"NOT NULL"
-//         },
-//         "code_name":{
-//            "type":"TEXT"
-//         },
-//         "created":{
-//            "type":"TIMESTAMP",
-//            "null":"NOT NULL",
-//            "default":"CURRENT_TIMESTAMP"
-//         }
-//      }
-//   }
+   {
+      "name":"narrative",
+      "columns":{
+         "id":{
+            "type":"INTEGER",
+            "null":"NOT NULL",
+            "primary":true,
+            "auto_increment":true
+         },
+         "report_id":{
+            "type":"INTEGER",
+            "null":"NOT NULL"
+         },
+         "narration":{
+            "type":"TEXT"
+         },
+         "created":{
+            "type":"TIMESTAMP",
+            "null":"NOT NULL",
+            "default":"CURRENT_TIMESTAMP"
+         }
+      }
+   }
 ]
   })
 
@@ -2117,5 +2002,15 @@ angular.module('ePCR.config', [])
         "Swelling",
         "Crepitus",
         "Step-off"
+      ]
+})
+
+.constant('ppe', {
+      list: [
+        "Gloves",
+        "Eye protection",
+        "Reflective gear",
+        "Isolation gear",
+        "Mask"
       ]
 });

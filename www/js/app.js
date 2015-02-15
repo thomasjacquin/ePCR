@@ -79,6 +79,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               },
               vitals: function($stateParams, Records) {
                 return Records.all('vitals', $stateParams.reportId)
+              },
+              narrative: function($stateParams, Records) {
+                return Records.all('narrative', $stateParams.reportId)
               }
           }
         }
@@ -891,6 +894,72 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       'tab-reports': {
         templateUrl: 'templates/call-info.html',
         controller: 'CallInfoCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.no-transport', {
+    url: '/report/:reportId/no-transport',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/no-transport.html',
+        controller: 'NoTransportCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.narrative-list', {
+    url: '/report/:reportId/narrative',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/narrative-list.html',
+        controller: 'ListCtrl',
+        resolve: {
+          list: function($stateParams, Records) {
+            return Records.all('narrative', $stateParams.reportId)
+          },
+          tableName: function() {
+            return 'narrative'
+          },
+          redirection: function($stateParams) {
+            return '#/tab/report/' + $stateParams.reportId + '/narrative/'
+          }
+        }
+      }
+    }
+  })
+  
+.state('tab.narrative', {
+    url: '/report/:reportId/narrative/:narrativeId',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/narrative.html',
+        controller: 'NarrativeCtrl',
+        resolve: {
+            narrative: function($stateParams, Records) {
+              return Records.get('narrative', $stateParams.narrativeId)
+            }
+        }
+      }
+    }
+  })
+  
+.state('tab.code-list', {
+    url: '/report/:reportId/codeList',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/code-list.html',
+        controller: 'CodeListCtrl',
         resolve: {
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)

@@ -58,13 +58,13 @@ The Patients service returns an array of friend data
       <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/call-info">
         <i class="icon ion-ios7-telephone"></i>
         Call Info
-        <i class="icon ion-checkmark-round" style="font-size: 25px"></i>
+        <i class="icon ion-checkmark-round" ng-show="report.call_info_assessed" style="font-size: 25px"></i>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/narrative">
         <i class="icon ion-chatboxes"></i>
         Narrative
-        <i class="icon ion-checkmark-round" style="font-size: 25px"></i>
+        <span class="badge badge-assertive">{{narrativeNumber}}</span>
       </a>
       
       <a class="item item-icon-left item-icon-right" href="#">

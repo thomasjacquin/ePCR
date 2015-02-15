@@ -1,0 +1,81 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Call Info">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
+         Save
+      </button>
+    </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-list>
+      <ion-item class="item-toggle">
+         Patient mentally capable
+         <label class="toggle">
+           <input type="checkbox" ng-model="noTransport.no_transport_mentally_capable">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+       </ion-item>
+       <ion-item class="item-toggle">
+         Patient should be transported
+         <label class="toggle">
+           <input type="checkbox" ng-model="noTransport.no_transport_should_transport">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+       </ion-item>
+       <ion-item class="item-toggle">
+         Patient informed of risks of no transport
+         <label class="toggle">
+           <input type="checkbox" ng-model="noTransport.no_transport_risk_informed">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+       </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Reason for refusal</span>
+          <select ng-model="noTransport.no_transport_reason">
+              <option value="0">Other</option>
+              <option value="1">Pt arranging own transport</option>
+              <option value="2">Pt feels no transport necessary</option>
+              <option value="3">inadequate funds</option>
+              <option value="4">no treatment required</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="noTransport.no_transport_reason == 0">
+          <span class="input-label">Other reason</span>
+          <input type="text" ng-model="noTransport.no_transport_reason_other" placeholder="Other">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Patient left with</span>
+          <select ng-model="noTransport.no_transport_left_with">
+              <option value="0">Other</option>
+              <option value="1">Patient left with</option>
+              <option value="2">Family</option>
+              <option value="3">Friends</option>
+              <option value="4">Police</option>
+              <option value="5">Family for POV transported</option>
+              <option value="6">Friends for POV transport</option>
+              <option value="7">Police for transport</option>
+          </select>
+        </ion-item>
+        <ion-item class="item-input" ng-show="noTransport.no_transport_left_with == 0">
+          <span class="input-label">Other reason</span>
+          <input type="text" ng-model="noTransport.no_transport_left_with_other" placeholder="Other">
+        </ion-item>
+        <ion-item class="item-input">
+          <span class="input-label">Consult with</span>
+          <input type="text" ng-model="noTransport.no_transport_consult_with" placeholder="Consult with">
+        </ion-item>
+      </ion-list>
+    <button class="button button-block button-positive">
+      Narrative
+    </button>
+     <button class="button button-block button-positive">
+      Signatures
+    </button>
+  </ion-content>
+</ion-view>

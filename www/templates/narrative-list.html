@@ -1,0 +1,20 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Narrative List">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-assertive" ng-click="toggleDelete()">Edit List</button>
+      <button class="button button-balanced icon-left ion-plus-round" ng-click="addItem()">
+         Add Narrative
+      </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+      <ion-item ng-repeat="narrative in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/narrative/{{narrative.id}}">
+        <h2>{{narrative.created}}</h2>
+        <h4>{{narrative.narration.substr(0,40)}}...</h4>
+        <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(narrative.id)">
+       </ion-delete-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

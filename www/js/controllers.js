@@ -42,9 +42,10 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative) {
   $scope.report = report;
   $scope.vitalsNumber = Object.size(vitals);
+  $scope.narrativeNumber = Object.size(narrative);
 })
 
 .controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
@@ -1421,18 +1422,19 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+.controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, ppe) {
   $scope.report = report;
+  $scope.ppeList = [];
 
   $scope.call = {
     "call_info_attendant1" : $scope.report.call_info_attendant1,
-    "call_info_attendant1" : $scope.report.call_info_attendant1,
+    "call_info_attendant1_other" : $scope.report.call_info_attendant1_other,
     "call_info_attendant2" : $scope.report.call_info_attendant2,
     "call_info_attendant2_other" : $scope.report.call_info_attendant2_other,
     "call_info_driver" : $scope.report.call_info_driver,
     "call_info_driver_other" : $scope.report.call_info_driver_other,
-    "call_info_unit_number" : $scope.report.call_info_unit_number,
-    "call_info_run_number" : $scope.report.call_info_run_number,
+    "call_info_unit_nb" : $scope.report.call_info_unit_nb,
+    "call_info_run_nb" : $scope.report.call_info_run_nb,
     "call_info_respond_to" : $scope.report.call_info_respond_to,
     "call_info_milage_start" : $scope.report.call_info_milage_start,
     "call_info_milage_end" : $scope.report.call_info_milage_end,
@@ -1440,20 +1442,93 @@ angular.module('starter.controllers', [])
     "call_info_code_return" : $scope.report.call_info_code_return,
     "call_info_transported_to" : $scope.report.call_info_transported_to,
     "call_info_transported_position" : $scope.report.call_info_transported_position,
-    "call_info_time" : $scope.report.call_info_time ? JSON.parse($scope.report.call_info_time) : {},
-    "call_info_ppe" : $scope.report.call_info_ppe,
-    "call_info_determinant" : $scope.report.call_info_determinant ?JSON.parse($scope.report.call_info_determinant) : {},
+    "call_info_time" : $scope.report.call_info_time != '' ? JSON.parse($scope.report.call_info_time) : {},
+    "call_info_ppe" : $scope.report.call_info_ppe != undefined ?JSON.parse($scope.report.call_info_ppe) : [],
+    "call_info_determinant" : $scope.report.call_info_determinant != '' ?JSON.parse($scope.report.call_info_determinant) : {},
     "call_info_assistance" : $scope.report.call_info_assistance,
   };
+  
+  var existingPpe = $scope.call.call_info_ppe;
+
+  ppe.list.forEach(function(equpiment){
+    var checked = existingPpe != null ? existingPpe.indexOf(equpiment) != -1 : false;
+    $scope.ppeList.push({"text": equpiment, "checked": checked})
+  });
+  
+  $scope.noTransport = function(){
+    $scope.save();
+    $window.location = '#/tab/report/' + $stateParams.reportId + '/no-transport';
+  }
 
   $scope.save = function(){
 
+    // PPE
+    var selected = [];
+    $scope.ppeList.forEach(function(value, index){
+      if (value.checked){
+        selected.push(value.text);
+      }
+    });
+    $scope.call.call_info_ppe = JSON.stringify(selected);
+    
+    // Determinant
+    $scope.call.call_info_determinant = JSON.stringify($scope.call.call_info_determinant);
+    
+    // Time
+    $scope.call.call_info_time = JSON.stringify($scope.call.call_info_time);
+    
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.call.call_info_assessed = true;
     $scope.db.update("report", $scope.call, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Call Info");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('NoTransportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+
+  $scope.noTransport = {
+    "no_transport_mentally_capable" : $scope.report.no_transport_mentally_capable == 'true',
+    "no_transport_should_transport" : $scope.report.no_transport_should_transport == 'true',
+    "no_transport_risk_informed" : $scope.report.no_transport_risk_informed == 'true',
+    "no_transport_reason" : $scope.report.no_transport_reason,
+    "no_transport_reason_other" : $scope.report.no_transport_reason_other,
+    "no_transport_left_with" : $scope.report.no_transport_left_with,
+    "no_transport_left_with_other" : $scope.report.no_transport_left_with_other,
+    "no_transport_consult_with" : $scope.report.no_transport_consult_with
+  };
+
+  $scope.save = function(){
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.noTransport.no_transport_assessed = true;
+    $scope.db.update("report", $scope.noTransport, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated No Transport");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('NarrativeCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, narrative) {
+  $scope.narrativeEntry = narrative;
+
+  $scope.narrativeEntry = {
+    "narration" : $scope.narrativeEntry.narration
+  };
+  console.log($scope.narrativeEntry);
+
+  $scope.save = function(){
+    console.log($scope.narrativeEntry);
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("narrative", $scope.narrativeEntry, {
+      'id': $stateParams.narrativeId
+    }).then(function(){
+      console.log("Updated Narrative");
       $window.history.back();
     });
   }
