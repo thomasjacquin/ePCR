@@ -1,0 +1,17 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Code Summary">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-assertive" ng-click="toggleDelete()">Edit List</button>
+    </ion-nav-buttons>
+  <ion-content>
+    <ion-list show-delete="showDelete">
+      <ion-item ng-repeat="code in codeList" type="item-text-wrap">
+        <h2>{{code.time}}</h2>
+<!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
+        <ion-delete-button class="ion-minus-circled" ng-click="deleteItem($index)">
+       </ion-delete-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

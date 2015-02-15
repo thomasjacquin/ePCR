@@ -33,3 +33,13 @@ body {
 .ecg_buttons>div button{
   width: 100%;
 }
+
+#codeButtons .row,
+#codeButtons .col {
+  padding: 0px 4px;
+}
+
+#codeButtons .button {
+  margin-top: 2px;
+  margin-bo: 2px;
+}

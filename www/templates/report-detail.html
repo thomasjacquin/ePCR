@@ -1,10 +1,11 @@
-<!--
-This template loads for the 'tab.patient-detail' state (app.js)
-'patient' is a $scope variable created in the PatientsCtrl controller (controllers.js)
-The PatientsCtrl pulls data from the Patients service (service.js)
-The Patients service returns an array of friend data
--->
-<ion-view view-title="{{report.first_name}} {{report.last_name}}">
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="{{report.first_name}} {{report.last_name}}">
+  <ion-nav-buttons side="secondary">
+      <button class="button button-assertive" ng-click="code()">
+         CODE
+      </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <div class="list">
 
@@ -67,10 +68,10 @@ The Patients service returns an array of friend data
         <span class="badge badge-assertive">{{narrativeNumber}}</span>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/code-list">
         <i class="icon ion-person-stalker"></i>
         Code Summary
-        <i class="icon ion-checkmark-round" style="font-size: 25px"></i>
+        <span class="badge badge-assertive">{{codeNumber}}</span>
       </a>
       
       <a class="item item-icon-left item-icon-right" href="#">

@@ -955,11 +955,26 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   })
   
 .state('tab.code-list', {
-    url: '/report/:reportId/codeList',
+    url: '/report/:reportId/code-list',
     views: {
       'tab-reports': {
         templateUrl: 'templates/code-list.html',
         controller: 'CodeListCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.code', {
+    url: '/report/:reportId/code',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/code.html',
+        controller: 'CodeCtrl',
         resolve: {
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)

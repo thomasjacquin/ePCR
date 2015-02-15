@@ -42,10 +42,15 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative, $window) {
   $scope.report = report;
   $scope.vitalsNumber = Object.size(vitals);
   $scope.narrativeNumber = Object.size(narrative);
+  $scope.codeNumber = report.code != undefined ? JSON.parse(report.code).length : 0;
+  
+  $scope.code = function(){
+    $window.location = '#/tab/report/' + $stateParams.reportId + '/code';
+  }
 })
 
 .controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
@@ -116,15 +121,8 @@ angular.module('starter.controllers', [])
         data[serie.code] = [];
       data[serie.code].push(vitals[index][serie.code]);
     });
-//    data["hr"].push(vitals[index].hr);
-//    data["sys"].push(vitals[index].sys);
-//    data["dia"].push(vitals[index].dia);
   }
-//  
-//  series["hr"] = hr;
-//  series["sys"] = sys;
-//  series["dia"] = dia;
-  
+
   $scope.chart = {
       labels : xAxis,
       datasets : [
@@ -1530,6 +1528,45 @@ angular.module('starter.controllers', [])
     }).then(function(){
       console.log("Updated Narrative");
       $window.history.back();
+    });
+  }
+})
+
+.controller('CodeListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
+  $scope.report = report;
+  $scope.showDelete = false;
+  
+  $scope.codeList = $scope.report.code != undefined ? JSON.parse($scope.report.code) : [];
+  
+  $scope.toggleDelete = function(){
+    $scope.showDelete = !$scope.showDelete;
+  }
+  
+  $scope.deleteItem = function(itemId){
+    $scope.codeList.splice(itemId, 1);
+    $scope.codeList = JSON.stringify($scope.codeList);
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", $scope.report, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Code");
+      $window.history.back();
+    });
+  }
+})
+
+.controller('CodeCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
+  $scope.report = report;
+  
+  $scope.codeList = $scope.report.code != undefined ? JSON.parse($scope.report.code) : [];
+  
+  $scope.save = function(itemId){
+    $scope.codeList = JSON.stringify($scope.codeList);
+    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+    $scope.db.update("report", $scope.report, {
+      'id': $stateParams.reportId
+    }).then(function(){
+      console.log("Updated Code");
     });
   }
 })
