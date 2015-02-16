@@ -27,6 +27,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 .config(function($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
 
   $ionicConfigProvider.views.maxCache(0);
+  $ionicConfigProvider.tabs.position('bottom');
+  $ionicConfigProvider.tabs.style("striped");
+  $ionicConfigProvider.navBar.alignTitle("center");
+  $ionicConfigProvider.navBar.positionPrimaryButtons("left");
+  $ionicConfigProvider.navBar.positionSecondaryButtons("right");
+  $ionicConfigProvider.form.checkbox("circle");
   
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -981,7 +987,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
           codeList: function($stateParams, Records) {
             return Records.all('code', $stateParams.reportId)
-          },
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.export', {
+    url: '/report/:reportId/export',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/export-options.html',
+        controller: 'ExportCtrl',
+        resolve: {
+          report: function($stateParams, Reports) {
+            return Reports.get($stateParams.reportId)
+          }
         }
       }
     }
@@ -995,8 +1016,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         controller: 'SettingsCtrl',
         resolve: {
           settings: function(Records) {
-              return Records.get('settings', 1)
-            }
+            return Records.get('settings', 1)
+          }
         }
       }
     }

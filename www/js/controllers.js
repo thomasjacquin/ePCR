@@ -1607,6 +1607,45 @@ angular.module('starter.controllers', [])
   }
 })
 
+.controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+  $scope.report = report;
+  
+  $scope.export = {
+    "short_report": true, 
+    "patient_info": true
+  };
+  console.log($scope.export);
+  
+  $scope.export = function(){
+     var docDefinition = {
+        content: [
+          {
+            table: {
+              // headers are automatically repeated if the table spans over multiple pages
+              // you can declare how many rows should be treated as headers
+              headerRows: 1,
+              widths: [ '*', 'auto', 100, '*' ],
+
+              body: [
+                [ 'First', 'Second', 'Third', 'The last one' ],
+                [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
+                [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
+              ]
+            }
+          }
+        ]
+      };
+     // open the PDF in a new window
+     pdfMake.createPdf(docDefinition).open();
+
+     // print the PDF (temporarily Chrome-only)
+//     pdfMake.createPdf(docDefinition).print();
+
+     // download the PDF (temporarily Chrome-only)
+//     pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+  }
+})
+
 .controller('ListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, list, tableName, redirection) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;
