@@ -82,6 +82,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
               },
               narrative: function($stateParams, Records) {
                 return Records.all('narrative', $stateParams.reportId)
+              },
+              code: function($stateParams, Records) {
+                return Records.all('code', $stateParams.reportId)
               }
           }
         }

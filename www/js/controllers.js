@@ -42,11 +42,11 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative, $window) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative, code, $window) {
   $scope.report = report;
   $scope.vitalsNumber = Object.size(vitals);
   $scope.narrativeNumber = Object.size(narrative);
-  $scope.codeNumber = report.code != undefined ? JSON.parse(report.code).length : 0;
+  $scope.codeNumber = Object.size(code);
   
   $scope.code = function(){
     $window.location = '#/tab/report/' + $stateParams.reportId + '/code';
