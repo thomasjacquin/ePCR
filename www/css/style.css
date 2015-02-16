@@ -43,3 +43,8 @@ body {
   margin-top: 2px;
   margin-bo: 2px;
 }
+
+.item-divider {
+  background-color: #525EAE;
+  color: white
+}

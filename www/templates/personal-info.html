@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Personal Info">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -40,6 +40,8 @@
               <option>lb</option>
             </select>
         </label>
+     </div>
+     <div class="list">
         <div class="item item-divider">
           Address
         </div>
@@ -55,6 +57,8 @@
           <span class="input-label">Province</span>
           <input type="text" ng-model="personal.address_province">
         </label>
+     </div>
+     <div class="list">
         <div class="item item-divider">
           Telephone
         </div>
@@ -70,6 +74,8 @@
           <span class="input-label">Cell</span>
           <input type="tel" ng-model="personal.phone_cell">
         </label>
+     </div>
+     <div class="list">
         <div class="item item-divider">
           Identification
         </div>
@@ -81,6 +87,8 @@
           <span class="input-label">MRN</span>
           <input type="text" ng-model="personal.mrn">
         </label>
+     </div>
+     <div class="list">
         <div class="item item-divider">
           Other
         </div>

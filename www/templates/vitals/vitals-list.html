@@ -2,12 +2,14 @@
 </ion-nav-bar>
   <ion-view view-title="Vitals Records">
     <ion-nav-buttons side="secondary">
-     <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
-      <button class="button button-dark" go-click="tab/report/{{reportId}}/vitals/charts">
-         Charts
+     <button class="button button-clear" ng-click="toggleDelete()">
+       <i class="icon ion-ios-minus-outline"></i>
+     </button>
+      <button class="button button-clear" go-click="tab/report/{{reportId}}/vitals/charts">
+         <i class="icon ion-stats-bars positive"></i> Charts
       </button>
-      <button class="button button-balanced icon-left ion-plus-round" ng-click="addItem()">
-         Add Vitals
+      <button class="button button-clear" ng-click="addItem()">
+        <i class="icon ion-ios-plus-outline balanced"></i> Add
       </button>
     </ion-nav-buttons>
   <ion-content>

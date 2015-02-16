@@ -1617,24 +1617,25 @@ angular.module('starter.controllers', [])
   console.log($scope.export);
   
   $scope.export = function(){
-     var docDefinition = {
-        content: [
-          {
-            table: {
-              // headers are automatically repeated if the table spans over multiple pages
-              // you can declare how many rows should be treated as headers
-              headerRows: 1,
-              widths: [ '*', 'auto', 100, '*' ],
+      var docDefinition = {
+         content: [
+           { text: 'This is a header', style: 'header' },
+           'No styling here, this is a standard paragraph',
+           { text: 'Another text', style: 'anotherStyle' },
+           { text: 'Multiple styles applied', style: [ 'header', 'anotherStyle' ] }
+         ],
 
-              body: [
-                [ 'First', 'Second', 'Third', 'The last one' ],
-                [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-                [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-              ]
-            }
-          }
-        ]
-      };
+         styles: {
+           header: {
+             fontSize: 22,
+             bold: true
+           },
+           anotherStyle: {
+             italic: true,
+             alignment: 'right'
+           }
+         }
+       };
      // open the PDF in a new window
      pdfMake.createPdf(docDefinition).open();
 
