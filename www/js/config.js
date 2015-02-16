@@ -681,9 +681,6 @@ angular.module('ePCR.config', [])
          "no_transport_consult_with":{
             "type":"TEXT"
          },
-         "code":{
-            "type":"TEXT"
-         },
          "created":{
             "type":"TIMESTAMP",
             "null":"NOT NULL",
@@ -1287,7 +1284,28 @@ angular.module('ePCR.config', [])
             "default":"CURRENT_TIMESTAMP"
          }
       }
-   }
+   },
+    {
+      "name":"code",
+      "columns":{
+         "id":{
+            "type":"INTEGER",
+            "null":"NOT NULL",
+            "primary":true,
+            "auto_increment":true
+         },
+         "report_id":{
+            "type":"INTEGER",
+            "null":"NOT NULL"
+         },
+         "code":{
+            "type":"TEXT"
+         },
+         "time":{
+            "type":"TEXT"
+         }
+      }
+    }
 ]
   })
 

@@ -1,77 +1,80 @@
-<!--
 <ion-nav-bar>
 </ion-nav-bar>
--->
-  <ion-view view-title="CODE">
+    <ion-view view-title="CODE">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-clear">{{timer}} seconds</button>
+    </ion-nav-buttons>
   <ion-content id="codeButtons" class="padding">
    <div class="row">
      <div class="col">
-      <button class="button button-block button-balanced">
+      <button class="button button-block button-balanced" ng-click="start()">
         CPR Start
       </button>
      </div>
      <div class="col">
-      <button class="button button-block button-assertive">
+      <button class="button button-block button-assertive" ng-click="stop()">
         CPR Stop
       </button>
      </div>
    </div>
-   <div class="row">
+   <div ng-show="timer != 0">
+     <div class="row">
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Shock
       </button>
      </div>
    </div>
    <div class="row">
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Vasopressin
       </button>
      </div>
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Epinephrine
       </button>
      </div>
    </div>
    <div class="row">
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Lidocaine
       </button>
      </div>
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Amiodarone
       </button>
      </div>
    </div>
    <div class="row">
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Atropine
       </button>
      </div>
    </div>
    <div class="row">
      <div class="col">
-      <button class="button button-block button-positive">
+      <button class="button button-block button-positive" ng-click="tap($event)">
         Airway
       </button>
      </div>
    </div>
    <div class="row">
      <div class="col">
-      <button class="button button-block button-dark">
+      <button class="button button-block button-dark" ng-click="tapExit($event)">
         ROSC
       </button>
      </div>
      <div class="col">
-      <button class="button button-block button-dark">
+      <button class="button button-block button-dark" ng-click="tapExit($event)">
         Pronounce
       </button>
      </div>
+   </div>
    </div>
   </ion-content>
 </ion-view>

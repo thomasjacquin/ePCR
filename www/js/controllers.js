@@ -1532,40 +1532,76 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('CodeListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
-  $scope.report = report;
+.controller('CodeListCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, codeList) {
+  $scope.codeList = codeList;
   $scope.showDelete = false;
-  
-  $scope.codeList = $scope.report.code != undefined ? JSON.parse($scope.report.code) : [];
   
   $scope.toggleDelete = function(){
     $scope.showDelete = !$scope.showDelete;
   }
   
   $scope.deleteItem = function(itemId){
-    $scope.codeList.splice(itemId, 1);
-    $scope.codeList = JSON.stringify($scope.codeList);
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.report, {
-      'id': $stateParams.reportId
-    }).then(function(){
-      console.log("Updated Code");
-      $window.history.back();
-    });
+    $scope.db.del('code', {"id": itemId})
+    .then(function(){
+      delete $scope.codeList[itemId];
+     });
   }
 })
 
-.controller('CodeCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
-  $scope.report = report;
+.controller('CodeCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, codeList, $window) {
+  $scope.timer = 0;
+  $scope.timerId = 0;
   
-  $scope.codeList = $scope.report.code != undefined ? JSON.parse($scope.report.code) : [];
+  $scope.start = function(){
+    if ($scope.timer == 0){
+      $scope.timer++
+      $scope.timerId = setInterval(function(){
+        $scope.$apply(function () {
+          $scope.timer++;
+        });
+      }, 1000);
+      $scope.code = {
+        "code": "Start",
+        "time": new Date()
+      };
+      $scope.add();
+    }
+      
+  }
   
-  $scope.save = function(itemId){
-    $scope.codeList = JSON.stringify($scope.codeList);
+  $scope.stop = function(){
+    $scope.timer = 0;
+    clearInterval($scope.timerId);
+    $scope.code = {
+      "code": "Stop",
+      "time": new Date()
+    };
+    $scope.add();
+  }
+  
+  $scope.tap = function($event){
+    $scope.code = {
+      "code":$event.srcElement.innerText,
+      "time": new Date()
+    };
+    $scope.add();
+  }
+  
+  $scope.tapExit = function($event){
+    $scope.code = {
+      "code":$event.srcElement.innerText,
+      "time": new Date()
+    };
+    $scope.add();
+    $window.location = '#/tab/report/' + $stateParams.reportId + '/code-list';
+  }
+
+  $scope.add = function(){
     $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.report, {
-      'id': $stateParams.reportId
-    }).then(function(){
+    $scope.code.report_id = $stateParams.reportId;
+    $scope.db.insert("code", $scope.code)
+    .then(function(){
       console.log("Updated Code");
     });
   }

@@ -6,10 +6,10 @@
     </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
-      <ion-item ng-repeat="code in codeList" type="item-text-wrap">
-        <h2>{{code.time}}</h2>
-<!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
-        <ion-delete-button class="ion-minus-circled" ng-click="deleteItem($index)">
+      <ion-item ng-repeat="code in codeList | orderBy:code.time" type="item-text-wrap">
+        <h2>{{code.code}}</h2>
+        <h4>{{code.time}}</h4>
+        <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(code.id)">
        </ion-delete-button>
       </ion-item>
     </ion-list>

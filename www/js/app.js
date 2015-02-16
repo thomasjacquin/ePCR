@@ -961,8 +961,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/code-list.html',
         controller: 'CodeListCtrl',
         resolve: {
-          report: function($stateParams, Reports) {
-            return Reports.get($stateParams.reportId)
+          codeList: function($stateParams, Records) {
+            return Records.all('code', $stateParams.reportId)
           }
         }
       }
@@ -976,9 +976,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         templateUrl: 'templates/code.html',
         controller: 'CodeCtrl',
         resolve: {
-          report: function($stateParams, Reports) {
-            return Reports.get($stateParams.reportId)
-          }
+          codeList: function($stateParams, Records) {
+            return Records.all('code', $stateParams.reportId)
+          },
         }
       }
     }
