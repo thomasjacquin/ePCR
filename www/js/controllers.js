@@ -1614,15 +1614,45 @@ angular.module('starter.controllers', [])
   $scope.patient_info = true;
   $scope.vitals = true;
   $scope.vitals_charts = true;
-  
+  $scope.chief_complaint = true;
+  $scope.patient_hx = true;
+  $scope.exam = true;
+  $scope.procedures = true;
+  $scope.signatures = true;
+  $scope.call_info = true;
+  $scope.narrative = true;
+  $scope.code = true;
   
   $scope.export = function(){
       var docDefinition = {
          content: [
-           { text: 'This is a header', style: 'header' },
-           'No styling here, this is a standard paragraph',
-           { text: 'Another text', style: 'anotherStyle' },
-           { text: 'Multiple styles applied', style: [ 'header', 'anotherStyle' ] }
+           { text: 'Patient Care Report', style: 'header' },
+           'By Thomas Jacquin',
+           { text: 'Patient Info', style: 'section_heading' },
+           {text: 'Patient Name: ' + report.first_name + ' ' + report.last_name, style:"defaultStyle"},
+           { text: 'Patient History', style: 'section_heading' },
+           { text: 'Vitals', style: 'section_heading' },
+           	{
+                style: 'tableExample',
+                table: {
+                  headerRows: 1,
+                  body: [
+                    [{ text: 'Time', style: 'tableHeader' }, { text: 'HR', style: 'tableHeader'}, { text: 'Sys', style: 'tableHeader' }],
+                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
+                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
+                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
+                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
+                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
+                  ]
+                }
+		    },
+           { text: 'Chief Complaint', style: 'section_heading' },
+           { text: 'Exam', style: 'section_heading' },
+           { text: 'Procedures', style: 'section_heading' },
+           { text: 'Signatures', style: 'section_heading' },
+           { text: 'Call Info', style: 'section_heading' },
+           { text: 'Narrative', style: 'section_heading' },
+           { text: 'CPR', style: 'section_heading' },
          ],
 
          styles: {
@@ -1630,10 +1660,22 @@ angular.module('starter.controllers', [])
              fontSize: 22,
              bold: true
            },
-           anotherStyle: {
-             italic: true,
-             alignment: 'right'
-           }
+           section_heading: {
+             margin: [0, 20, 0, 0],
+             fontSize: 12,
+             bold: true
+           },
+           tableExample: {
+			margin: [0, 5, 0, 15]
+           },
+           tableHeader: {
+            bold: true,
+            fontSize: 13,
+            color: 'black'
+           },
+          defaultStyle: {
+            fontSize: 10
+          }
          }
        };
      // open the PDF in a new window

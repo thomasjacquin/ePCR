@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Export Options">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="export()">
-         Export
+      <button class="button button-clear" ng-click="export()">
+         <i class="icon ion-share balanced"></i> Export
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -56,7 +56,7 @@
         <ion-item class="item-toggle">
          Chief Comlpaint
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.chief_complaint">
+           <input type="checkbox" ng-model="chief_complaint">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -65,7 +65,7 @@
         <ion-item class="item-toggle">
          Patient History
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.patient_hx">
+           <input type="checkbox" ng-model="patient_hx">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -74,7 +74,7 @@
         <ion-item class="item-toggle">
          Exam
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.exam">
+           <input type="checkbox" ng-model="exam">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -83,7 +83,7 @@
         <ion-item class="item-toggle">
          Procedures
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.proedures">
+           <input type="checkbox" ng-model="procedures">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -92,7 +92,7 @@
         <ion-item class="item-toggle">
          Signatures
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.signatures">
+           <input type="checkbox" ng-model="signatures">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -101,7 +101,7 @@
         <ion-item class="item-toggle">
          Call Info
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.call_info">
+           <input type="checkbox" ng-model="call_info">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -110,7 +110,7 @@
         <ion-item class="item-toggle">
          Narrative
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.narrative">
+           <input type="checkbox" ng-model="narrative">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -119,7 +119,7 @@
         <ion-item class="item-toggle">
          Code Summary
          <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="export.code">
+           <input type="checkbox" ng-model="code">
            <div class="track">
              <div class="handle"></div>
            </div>
