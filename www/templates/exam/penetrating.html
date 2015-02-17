@@ -2,15 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Penetrating">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
    <ion-list>
       <ion-item class="item-toggle">
          Assault
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="penetrating.trauma_penetrating_assault">
            <div class="track">
              <div class="handle"></div>
@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item class="item-toggle">
          Bleeding
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="penetrating.trauma_penetrating_bleeding">
            <div class="track">
              <div class="handle"></div>
@@ -39,7 +39,7 @@
       </ion-item>
       <ion-item class="item-toggle" ng-show="penetrating.trauma_penetrating_bleeding">
          Controlled
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="penetrating.trauma_penetrating_controlled">
            <div class="track">
              <div class="handle"></div>

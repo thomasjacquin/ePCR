@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Field Delivery">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -45,7 +45,7 @@
         </ion-item>
         <ion-item class="item-toggle">
             Stimulation required
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="field.field_delivery_stimulation">
              <div class="track">
                <div class="handle"></div>
@@ -58,7 +58,7 @@
         </ion-item>
         <ion-item class="item-toggle">
             Placenta delivery
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="field.field_delivery_placenta">
              <div class="track">
                <div class="handle"></div>
@@ -71,7 +71,7 @@
         </ion-item>
         <ion-item class="item-toggle" ng-show="field.field_delivery_placenta">
            Placenta intact
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="field.field_delivery_placenta_intact">
              <div class="track">
                <div class="handle"></div>

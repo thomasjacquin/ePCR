@@ -2,16 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Neuro Records">
     <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="toggleDelete()">
-       <i class="icon ion-ios-minus-outline"></i>
-      </button>
+      <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
       <button class="button button-clear" ng-click="addItem()">
         <i class="icon ion-ios-plus-outline balanced"></i> Add
       </button>
     </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
-      <ion-item ng-repeat="neuro in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/exam/neuro/{{neuro.id}}">
+      <ion-item class="item-icon-left" ng-repeat="neuro in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/exam/neuro/{{neuro.id}}">
+        <i class="icon icon-i-neurology"></i>
         <h2>{{neuro.created}}</h2>
         <h4>AVPU:{{neuro.avpu}}</h4>
         <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(neuro.id)">

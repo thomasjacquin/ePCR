@@ -52201,7 +52201,7 @@ function($ionicGesture, $timeout) {
     template:
       '<div class="item item-toggle">' +
         '<div ng-transclude></div>' +
-        '<label class="toggle">' +
+        '<label class="toggle toggle-balanced">' +
           '<input type="checkbox">' +
           '<div class="track">' +
             '<div class="handle"></div>' +

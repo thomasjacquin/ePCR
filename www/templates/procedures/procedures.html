@@ -2,38 +2,45 @@
   <ion-content class="padding">
     <div class="list">
 
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/airway">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/airway">
+      <i class="icon icon-i-anesthesia"></i>
        Airway
-       <i class="icon ion-checkmark-round" style="font-size: 25px"></i>
+       <i class="icon ion-checkmark-round balanced" style="font-size: 25px"></i>
       </a>
       
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/iv-io">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/iv-io">
+       <i class="icon flaticon-syringe"></i>
         IV/IO
-        <span class="badge badge-assertive">{{procedures.ivIoNumber}}</span>
+        <span class="badge badge-balanced">{{procedures.ivIoNumber}}</span>
       </a>
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/splinting">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/splinting">
+       <i class="icon icon-i-outpatient"></i>
         Splinting/Dressing
-        <span class="badge badge-assertive">{{procedures.medicationNumber}}</span>
+        <span class="badge badge-balanced">{{procedures.medicationNumber}}</span>
       </a>
       
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/medication">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/medication">
+       <i class="icon flaticon-medical9"></i>
         Medication
-        <span class="badge badge-assertive">{{medicationNumber}}</span>
+        <span class="badge badge-balanced">{{medicationNumber}}</span>
       </a>
       
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/spinal">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/spinal">
+      <i class="icon flaticon-litter"></i>
        Spinal Motion Restriction
-       <i class="icon ion-checkmark-round" ng-show="procedures.spinal_assessed" style="font-size: 25px"></i>
+       <i class="icon ion-checkmark-round balanced" ng-show="procedures.spinal_assessed" style="font-size: 25px"></i>
       </a>
       
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/in-out">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/in-out">
+       <i class="icon flaticon-water12"></i>
         In/Out
-        <span class="badge badge-assertive">{{inOutNumber}}</span>
+        <span class="badge badge-balanced">{{inOutNumber}}</span>
       </a>
       
-      <a class="item item-icon-right" href="#/tab/report/{{report.id}}/procedures/ecg">
+      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures/ecg">
+       <i class="icon flaticon-electrocardiography"></i>
         ECG
-        <span class="badge badge-assertive">{{ecgNumber}}</span>
+        <span class="badge badge-balanced">{{ecgNumber}}</span>
       </a>
       
     </div>

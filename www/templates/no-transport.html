@@ -2,15 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Call Info">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list>
       <ion-item class="item-toggle">
          Patient mentally capable
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="noTransport.no_transport_mentally_capable">
            <div class="track">
              <div class="handle"></div>
@@ -19,7 +19,7 @@
        </ion-item>
        <ion-item class="item-toggle">
          Patient should be transported
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="noTransport.no_transport_should_transport">
            <div class="track">
              <div class="handle"></div>
@@ -28,7 +28,7 @@
        </ion-item>
        <ion-item class="item-toggle">
          Patient informed of risks of no transport
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="noTransport.no_transport_risk_informed">
            <div class="track">
              <div class="handle"></div>

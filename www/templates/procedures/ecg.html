@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="ECG">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -44,7 +44,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Regular
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="ecg.regular">
              <div class="track">
                <div class="handle"></div>
@@ -53,7 +53,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           BBB
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="ecg.bbb">
              <div class="track">
                <div class="handle"></div>
@@ -69,7 +69,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           ST changes
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="ecg.st_changes">
              <div class="track">
                <div class="handle"></div>
@@ -98,7 +98,7 @@
         </div>
         <ion-item class="item-toggle">
           PAC's
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="ecg.pacs">
              <div class="track">
                <div class="handle"></div>
@@ -107,7 +107,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           PVC's
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="ecg.pvcs">
              <div class="track">
                <div class="handle"></div>

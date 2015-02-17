@@ -2,15 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Genitourinary">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
    <ion-list>
       <ion-item class="item-toggle">
         Pain
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_pain">
            <div class="track">
              <div class="handle"></div>
@@ -19,7 +19,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Frequency
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_frequency">
            <div class="track">
              <div class="handle"></div>
@@ -28,7 +28,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Hematuria
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_hematuria">
            <div class="track">
              <div class="handle"></div>
@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Incontinence
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_incontinence">
            <div class="track">
              <div class="handle"></div>
@@ -46,7 +46,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Bladder distention
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_bladder_distention">
            <div class="track">
              <div class="handle"></div>
@@ -55,7 +55,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Urinary urgency
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gu.gu_urinary_urgency">
            <div class="track">
              <div class="handle"></div>

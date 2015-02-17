@@ -5,8 +5,8 @@
       <button class="button button-dark" ng-click="fieldDelivery()" ng-show="gyn.gyn_pregnant">
          Field-delivery
       </button>
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -30,7 +30,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Vaginal discharge
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gyn.gyn_discharge">
              <div class="track">
                <div class="handle"></div>
@@ -63,7 +63,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Gestation is known
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gyn.gyn_gestation_known">
              <div class="track">
                <div class="handle"></div>
@@ -76,7 +76,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Membranes intact
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gyn.gyn_membrane_intact">
            <div class="track">
              <div class="handle"></div>
@@ -97,7 +97,7 @@
       </ion-item>
       <ion-item class="item-toggle">
         Fetal movement
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gyn.gyn_fetal_mvmt">
            <div class="track">
              <div class="handle"></div>
@@ -114,7 +114,7 @@
       </ion-item>
       <ion-item class="item-toggle">
          Contractions
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gyn.gyn_contractions">
            <div class="track">
              <div class="handle"></div>
@@ -139,7 +139,7 @@
       </ion-item>
       <ion-item class="item-toggle">
           Edema
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="gyn.peripheral_edema">
            <div class="track">
              <div class="handle"></div>

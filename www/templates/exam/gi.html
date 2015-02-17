@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Gastrointestinal">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
@@ -13,7 +13,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Soft
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_soft">
              <div class="track">
                <div class="handle"></div>
@@ -22,7 +22,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Flat
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_flat">
              <div class="track">
                <div class="handle"></div>
@@ -31,7 +31,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Non Distended
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_non_distended">
              <div class="track">
                <div class="handle"></div>
@@ -40,7 +40,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Non Tender
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_non_tender">
              <div class="track">
                <div class="handle"></div>
@@ -49,7 +49,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Rebound
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_rebound">
              <div class="track">
                <div class="handle"></div>
@@ -61,7 +61,7 @@
     <ion-list>
       <ion-item class="item-toggle">
           Obese
-           <label class="toggle">
+           <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="gi.gi_obese">
              <div class="track">
                <div class="handle"></div>

@@ -2,15 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Fall">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
    <ion-list>
         <ion-item class="item-toggle">
          Assault
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="fall.trauma_fall_assault">
            <div class="track">
              <div class="handle"></div>
@@ -31,7 +31,7 @@
       </ion-item>
       <ion-item class="item-toggle">
          Loss of consciousness
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="fall.trauma_fall_loss_of_c">
            <div class="track">
              <div class="handle"></div>
@@ -44,7 +44,7 @@
       </ion-item>
       <ion-item class="item-toggle">
          Bleeding
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="fall.trauma_fall_bleeding">
            <div class="track">
              <div class="handle"></div>
@@ -53,7 +53,7 @@
       </ion-item>
       <ion-item class="item-toggle" ng-show="fall.trauma_fall_bleeding">
          Controlled
-         <label class="toggle">
+         <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="fall.trauma_fall_controlled">
            <div class="track">
              <div class="handle"></div>

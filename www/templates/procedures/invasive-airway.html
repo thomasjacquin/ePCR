@@ -2,15 +2,15 @@
 </ion-nav-bar>
   <ion-view view-title="Invasive Airway">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
    <ion-list>
        <ion-item class="item-toggle">
           Airway secured
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="invasive.invasive_airway_secured">
              <div class="track">
                <div class="handle"></div>
@@ -32,7 +32,7 @@
         </ion-item>
         <ion-item class="item-toggle">
           Cuffed
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="invasive.invasive_airway_cuffed">
              <div class="track">
                <div class="handle"></div>

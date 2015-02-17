@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Auto">
   <ion-nav-buttons side="secondary">
-    <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-       Save
+    <button class="button button-clear" ng-click="save()">
+       <i class="icon ion-ios-checkmark-outline"></i> Save
     </button>
   </ion-nav-buttons>
   <ion-content class="padding">
@@ -56,7 +56,7 @@
      </ion-item>
     <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
       Seatbelt
-       <label class="toggle">
+       <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_seatbelt">
          <div class="track">
            <div class="handle"></div>
@@ -65,7 +65,7 @@
     </ion-item>
     <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
       Airbag Deployed
-       <label class="toggle">
+       <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_airbag">
          <div class="track">
            <div class="handle"></div>
@@ -74,7 +74,7 @@
     </ion-item>
     <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
      Helmet
-       <label class="toggle">
+       <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_helmet">
          <div class="track">
            <div class="handle"></div>
@@ -83,7 +83,7 @@
     </ion-item>
     <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
       Leathers
-       <label class="toggle">
+       <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_leathers">
          <div class="track">
            <div class="handle"></div>

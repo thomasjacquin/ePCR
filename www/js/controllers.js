@@ -1610,11 +1610,11 @@ angular.module('starter.controllers', [])
 .controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
   $scope.report = report;
   
-  $scope.export = {
-    "short_report": true, 
-    "patient_info": true
-  };
-  console.log($scope.export);
+  $scope.short_report = true;
+  $scope.patient_info = true;
+  $scope.vitals = true;
+  $scope.vitals_charts = true;
+  
   
   $scope.export = function(){
       var docDefinition = {

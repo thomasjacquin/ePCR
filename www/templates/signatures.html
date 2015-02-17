@@ -2,8 +2,8 @@
 </ion-nav-bar>
   <ion-view view-title="Signatures">
   <ion-nav-buttons side="secondary">
-      <button class="button button-balanced icon-left icon ion-checkmark-round" ng-click="save()">
-         Save
+      <button class="button button-clear" ng-click="save()">
+         <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
   <ion-content scroll=false class="padding" style="overflow-y: scroll">
@@ -44,7 +44,7 @@
        </ion-item>
        <ion-item class="item-toggle">
           No Signature
-          <label class="toggle">
+          <label class="toggle toggle-balanced">
              <input type="checkbox" ng-model="signatures.no_signature">
              <div class="track">
                <div class="handle"></div>

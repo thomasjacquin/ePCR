@@ -1,13 +1,11 @@
 <ion-nav-bar>
 </ion-nav-bar>
   <ion-view view-title="Reports">
-    <ion-nav-buttons side="primary">
-      <button class="button button-clear" ng-click="addReport()">
-         <i class="icon ion-person-add"></i> New report
-      </button>
-    </ion-nav-buttons>
     <ion-nav-buttons side="secondary">
       <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
+      <button class="button button-clear button-balanced" ng-click="addReport()">
+         <i class="icon ion-ios-plus-outline"></i> New report
+      </button>
     </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
