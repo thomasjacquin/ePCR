@@ -1002,7 +1002,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
-          }
+          },
+//          vitals: function($stateParams, Records) {
+//            return Records.all('vitals', $stateParams.reportId)
+//          },
+          neuro: function($stateParams, Records) {
+            return Records.all('neuro', $stateParams.reportId)
+          },
         }
       }
     }

@@ -14,8 +14,7 @@ angular.module('starter.controllers', [])
   $scope.showDelete = false;
     
   $scope.addReport = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.insert('report', {"profile_picture": "http://lorempixel.com/output/people-q-c-200-200-7.jpg"}).then(function(results) {
+    db.insert('report', {"profile_picture": "http://lorempixel.com/output/people-q-c-200-200-7.jpg"}).then(function(results) {
         console.log(results.insertId);
         window.location = '#/tab/report/' + results.insertId;
     });
@@ -26,24 +25,21 @@ angular.module('starter.controllers', [])
   }
 
   $scope.deleteReport = function(reportId){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     var promises = [];
-    promises.push($scope.db.del("report", {"id": reportId}));
-    promises.push($scope.db.del("vitals", {"report_id": reportId}));
+    promises.push(db.del("report", {"id": reportId}));
+    promises.push(db.del("vitals", {"report_id": reportId}));
     $q.all(promises)
     .then(function(){
       console.log("Report deleted successfully");
       delete $scope.reports[reportId];
     })
   }
-  
-  $scope.deleteDatabase = function(){
-    deleteDatabase($webSql, DB_CONFIG);
-  }
 })
 
 .controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative, code, $window) {
+  
   $scope.report = report;
+  
   $scope.vitalsNumber = Object.size(vitals);
   $scope.narrativeNumber = Object.size(narrative);
   $scope.codeNumber = Object.size(code);
@@ -54,33 +50,32 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PersonalInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
   
   $scope.personal = {
-    "first_name": $scope.report.first_name, 
-    "last_name": $scope.report.last_name, 
-    "date_of_birth": $scope.report.date_of_birth ? new Date($scope.report.date_of_birth) : "", 
-    "gender": $scope.report.gender, 
-    "weight": $scope.report.weight,
-    "weight_unit": $scope.report.weight_unit,
-    "profile_picture": $scope.report.profile_picture,
-    "address_street": $scope.report.address_street,
-    "address_city": $scope.report.address_city,
-    "address_province": $scope.report.address_province,
-    "phone_home": $scope.report.phone_home,
-    "phone_work": $scope.report.phone_work,
-    "phone_cell": $scope.report.phone_cell,
-    "insurance": $scope.report.insurance,
-    "mrn": $scope.report.mrn,
-    "next_of_kin": $scope.report.next_of_kin,
-    "next_of_kin_phone": $scope.report.next_of_kin_phone,
+    "first_name": report.first_name, 
+    "last_name": report.last_name, 
+    "date_of_birth": report.date_of_birth ? new Date(report.date_of_birth) : "", 
+    "gender": report.gender, 
+    "weight": report.weight,
+    "weight_unit": report.weight_unit,
+    "profile_picture": report.profile_picture,
+    "address_street": report.address_street,
+    "address_city": report.address_city,
+    "address_province": report.address_province,
+    "phone_home": report.phone_home,
+    "phone_work": report.phone_work,
+    "phone_cell": report.phone_cell,
+    "insurance": report.insurance,
+    "mrn": report.mrn,
+    "next_of_kin": report.next_of_kin,
+    "next_of_kin_phone": report.next_of_kin_phone,
   };
   console.log($scope.personal);
   
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.personal.patient_info_assessed = true;
-    $scope.db.update("report", $scope.personal, {
+    db.update("report", $scope.personal, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report");
@@ -146,31 +141,31 @@ angular.module('starter.controllers', [])
   $scope.vitalsEntry = vitals;
 
   $scope.vitals = {
-    "hr" : $scope.vitalsEntry.hr,
-    "sys" : $scope.vitalsEntry.sys,
-    "dia" : $scope.vitalsEntry.dia,
-    "fio2" : $scope.vitalsEntry.fio2,
-    "spo2" : $scope.vitalsEntry.spo2,
-    "resp" : $scope.vitalsEntry.resp,
-    "level_of_c" : $scope.vitalsEntry.level_of_c,
-    "perrl" : $scope.vitalsEntry.perrl == 'true',
-    "left_eye" : $scope.vitalsEntry.left_eye,
-    "right_eye" : $scope.vitalsEntry.right_eye,
-    "eyes_responsive" : $scope.vitalsEntry.eyes_responsive == 'true',
-    "bgl" : $scope.vitalsEntry.bgl,
-    "bgl_unit" : $scope.vitalsEntry.bgl_unit,
-    "temp" : $scope.vitalsEntry.temp,
-    "temp_unit" : $scope.vitalsEntry.temp_unit,
-    "etco2" : $scope.vitalsEntry.etco2,
-    "pain" : $scope.vitalsEntry.pain,
+    "hr" : vitals.hr,
+    "sys" : vitals.sys,
+    "dia" : vitals.dia,
+    "fio2" : vitals.fio2,
+    "spo2" : vitals.spo2,
+    "resp" : vitals.resp,
+    "level_of_c" : vitals.level_of_c,
+    "perrl" : vitals.perrl == 'true',
+    "left_eye" : vitals.left_eye,
+    "right_eye" : vitals.right_eye,
+    "eyes_responsive" : vitals.eyes_responsive == 'true',
+    "bgl" : vitals.bgl,
+    "bgl_unit" : vitals.bgl_unit,
+    "temp" : vitals.temp,
+    "temp_unit" : vitals.temp_unit,
+    "etco2" : vitals.etco2,
+    "pain" : vitals.pain,
   };
   
   console.log($scope.vitals);
   
   
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("vitals", $scope.vitals, {
+
+    db.update("vitals", $scope.vitals, {
       'id': $stateParams.vitalsId
     }).then(function(){
       console.log("Updated vitals");
@@ -180,15 +175,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ChiefComplaintCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, chiefComplaint) {
-  $scope.report = report;
+  
   $scope.pertinentList = [];
   $scope.primaryComplaint = chiefComplaint.primary;
   
   $scope.binding = { 
-    "primary_complaint": $scope.report.primary_complaint, 
-    "primary_complaint_other": $scope.report.primary_complaint_other, 
-    "secondary_complaint": $scope.report.secondary_complaint, 
-    "pertinent": JSON.parse($scope.report.pertinent)
+    "primary_complaint": report.primary_complaint, 
+    "primary_complaint_other": report.primary_complaint_other, 
+    "secondary_complaint": report.secondary_complaint, 
+    "pertinent": JSON.parse(report.pertinent)
   };
   
   var existingPertinent = $scope.binding.pertinent;
@@ -207,9 +202,9 @@ angular.module('starter.controllers', [])
     });
     $scope.binding.pertinent = JSON.stringify(selected);
       
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.binding.chief_complaint_assessed = true;
-    $scope.db.update("report", $scope.binding, {
+    db.update("report", $scope.binding, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Chief Complaint");
@@ -219,13 +214,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PatientHistoryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+
   $scope.showDelete = false;
   
   $scope.patientHistory = { 
-    "hx_allergies": $scope.report.hx_allergies ? $scope.report.hx_allergies.split(','):[], 
-    "hx_conditions": $scope.report.hx_conditions ? $scope.report.hx_conditions.split(','):[], 
-    "hx_medications": $scope.report.hx_medications ? $scope.report.hx_medications.split(','):[], 
+    "hx_allergies": report.hx_allergies ? report.hx_allergies.split(','):[], 
+    "hx_conditions": report.hx_conditions ? report.hx_conditions.split(','):[], 
+    "hx_medications": report.hx_medications ? report.hx_medications.split(','):[], 
   };
   console.log($scope.patientHistory);
   
@@ -263,8 +258,8 @@ angular.module('starter.controllers', [])
     
   $scope.save = function(){
     console.log($scope.patientHistory);
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.patientHistory, {
+
+    db.update("report", $scope.patientHistory, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient History");
@@ -273,10 +268,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AllergiesCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, allergies) {
-  $scope.report = report;
+ 
   $scope.allergiesList = [];
   
-  var existingAllergies = $scope.report.hx_allergies;
+  var existingAllergies = report.hx_allergies;
 
   allergies.list.forEach(function(allergy){
     var checked = existingAllergies != null ? existingAllergies.indexOf(allergy) != -1 : false;
@@ -291,8 +286,8 @@ angular.module('starter.controllers', [])
       }
     });
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_allergies": selected, "patient_hx_assessed":true}, {
+
+    db.update("report", {"hx_allergies": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Allergies");
@@ -302,8 +297,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('HomeMedicationsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, homeMedications) {
-  $scope.report = report;
-  var existingMedications = $scope.report.hx_medications;
+
+  var existingMedications = report.hx_medications;
   var medicationsList = [];
   
   $scope.categories = [];
@@ -341,8 +336,8 @@ angular.module('starter.controllers', [])
       });
     });
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_medications": selected, "patient_hx_assessed":true}, {
+
+    db.update("report", {"hx_medications": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Home Medications");
@@ -352,8 +347,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ConditionsCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, medicalConditions) {
-  $scope.report = report;
-  var existingConditions = $scope.report.hx_conditions;
+
+  var existingConditions = report.hx_conditions;
   var conditionsList = [];
   
   $scope.categories = [];
@@ -392,8 +387,8 @@ angular.module('starter.controllers', [])
       });
     });
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", {"hx_conditions": selected, "patient_hx_assessed":true}, {
+
+    db.update("report", {"hx_conditions": selected, "patient_hx_assessed":true}, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Patient Home Conditions");
@@ -411,21 +406,21 @@ angular.module('starter.controllers', [])
   $scope.neuroEntry = neuro;
 
   $scope.neuro = {
-    "avpu" : $scope.neuroEntry.avpu,
-    "gcs" : $scope.neuroEntry.gcs == 'true',
-    "gcs_eyes" : Number($scope.neuroEntry.gcs_eyes),
-    "gcs_verbal" : Number($scope.neuroEntry.gcs_verbal),
-    "gcs_motor" : Number($scope.neuroEntry.gcs_motor),
-    "luxr" : $scope.neuroEntry.luxr == 'true',
-    "ruxr" : $scope.neuroEntry.ruxr == 'true',
-    "llxr" : $scope.neuroEntry.llxr == 'true',
-    "rlxr" : $scope.neuroEntry.rlxr == 'true',
-    "suspect_stroke" : $scope.neuroEntry.suspect_stroke == 'true',
-    "facial_droop" : $scope.neuroEntry.facial_droop == 'true',
-    "facial_droop_side" : $scope.neuroEntry.facial_droop_side == 'true',
-    "arm_drift" : $scope.neuroEntry.arm_drift == 'true',
-    "arm_drift_side" : $scope.neuroEntry.arm_drift_side == 'true',
-    "speech" : $scope.neuroEntry.speech
+    "avpu" : neuro.avpu,
+    "gcs" : neuro.gcs == 'true',
+    "gcs_eyes" : Number(neuro.gcs_eyes),
+    "gcs_verbal" : Number(neuro.gcs_verbal),
+    "gcs_motor" : Number(neuro.gcs_motor),
+    "luxr" : neuro.luxr == 'true',
+    "ruxr" : neuro.ruxr == 'true',
+    "llxr" : neuro.llxr == 'true',
+    "rlxr" : neuro.rlxr == 'true',
+    "suspect_stroke" : neuro.suspect_stroke == 'true',
+    "facial_droop" : neuro.facial_droop == 'true',
+    "facial_droop_side" : neuro.facial_droop_side == 'true',
+    "arm_drift" : neuro.arm_drift == 'true',
+    "arm_drift_side" : neuro.arm_drift_side == 'true',
+    "speech" : neuro.speech
   };
   console.log($scope.neuro);
   
@@ -436,9 +431,9 @@ angular.module('starter.controllers', [])
   $scope.calculateGCS();
   
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
 //    $scope.neuro.assessed = true;
-    $scope.db.update("neuro", $scope.neuro, {
+    db.update("neuro", $scope.neuro, {
       'id': $stateParams.neuroId
     }).then(function(){
       console.log("Updated neuro");
@@ -448,43 +443,43 @@ angular.module('starter.controllers', [])
 })
 
 .controller('AbcCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+  
   $scope.activeButton = 1;
 
   $scope.abc = {
-    "open_patent" : $scope.report.open_patent == 'true',
-    "tracheal_deviation" : $scope.report.tracheal_deviation == 'true',
-    "tracheal_deviation_side" : $scope.report.tracheal_deviation_side == 'true',
-    "interventions" : $scope.report.interventions == 'true',
-    "breathing_type" : $scope.report.breathing_type == 'true',
-    "breathing_effective" : $scope.report.breathing_effective == 'true',
-    "accessory_muscle" : $scope.report.accessory_muscle == 'true',
-    "nasal_flare" : $scope.report.nasal_flare == 'true',
-    "cough" : $scope.report.cough == 'true',
-    "cough_productive" : $scope.report.cough_productive == 'true',
-    "subcutaneous_emphysema" : $scope.report.subcutaneous_emphysema == 'true',
-    "flailed_chest" : $scope.report.flailed_chest == 'true',
-    "flailed_chest_side" : $scope.report.flailed_chest_side == 'true',
-    "suspect_pneumothorax" : $scope.report.suspect_pneumothorax == 'true',
-    "suspect_hemothorax" : $scope.report.suspect_hemothorax == 'true',
-    "ctax4" : $scope.report.ctax4 == 'true',
-    "lung_ul_sound" : $scope.report.lung_ul_sound,
-    "lung_ur_sound" : $scope.report.lung_ur_sound,
-    "lung_ll_sound" : $scope.report.lung_ll_sound,
-    "lung_lr_sound" : $scope.report.lung_lr_sound,
-    "pulse_location" : $scope.report.pulse_location,
-    "pulse_quality" : $scope.report.pulse_quality,
-    "pulse_regular" : $scope.report.pulse_regular == 'true',
-    "jvd" : $scope.report.jvd == 'true',
-    "cap_refill" : $scope.report.cap_refill,
-    "skin_color" : $scope.report.skin_color,
-    "skin_temperature" : $scope.report.skin_temperature,
-    "skin_condition" : $scope.report.skin_condition,
-    "heart_tones" : $scope.report.heart_tones,
-    "heart_tones_quality" : $scope.report.heart_tones_quality,
-    "peripheral_edema" : $scope.report.peripheral_edema == 'true',
-    "peripheral_edema_location" : $scope.report.peripheral_edema_location,
-    "peripheral_edema_severity" : $scope.report.peripheral_edema_severity,
+    "open_patent" : report.open_patent == 'true',
+    "tracheal_deviation" : report.tracheal_deviation == 'true',
+    "tracheal_deviation_side" : report.tracheal_deviation_side == 'true',
+    "interventions" : report.interventions == 'true',
+    "breathing_type" : report.breathing_type == 'true',
+    "breathing_effective" : report.breathing_effective == 'true',
+    "accessory_muscle" : report.accessory_muscle == 'true',
+    "nasal_flare" : report.nasal_flare == 'true',
+    "cough" : report.cough == 'true',
+    "cough_productive" : report.cough_productive == 'true',
+    "subcutaneous_emphysema" : report.subcutaneous_emphysema == 'true',
+    "flailed_chest" : report.flailed_chest == 'true',
+    "flailed_chest_side" : report.flailed_chest_side == 'true',
+    "suspect_pneumothorax" : report.suspect_pneumothorax == 'true',
+    "suspect_hemothorax" : report.suspect_hemothorax == 'true',
+    "ctax4" : report.ctax4 == 'true',
+    "lung_ul_sound" : report.lung_ul_sound,
+    "lung_ur_sound" : report.lung_ur_sound,
+    "lung_ll_sound" : report.lung_ll_sound,
+    "lung_lr_sound" : report.lung_lr_sound,
+    "pulse_location" : report.pulse_location,
+    "pulse_quality" : report.pulse_quality,
+    "pulse_regular" : report.pulse_regular == 'true',
+    "jvd" : report.jvd == 'true',
+    "cap_refill" : report.cap_refill,
+    "skin_color" : report.skin_color,
+    "skin_temperature" : report.skin_temperature,
+    "skin_condition" : report.skin_condition,
+    "heart_tones" : report.heart_tones,
+    "heart_tones_quality" : report.heart_tones_quality,
+    "peripheral_edema" : report.peripheral_edema == 'true',
+    "peripheral_edema_location" : report.peripheral_edema_location,
+    "peripheral_edema_severity" : report.peripheral_edema_severity,
   };
   console.log($scope.abc);
   
@@ -493,9 +488,9 @@ angular.module('starter.controllers', [])
   }
   
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.abc.abc_assessed = true;
-    $scope.db.update("report", $scope.abc, {
+    db.update("report", $scope.abc, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated abc");
@@ -507,7 +502,7 @@ angular.module('starter.controllers', [])
 .controller('TraumaCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
   $scope.report = report;
   $scope.trauma = {
-    "has_trauma": $scope.report.has_trauma == 'true'
+    "has_trauma": report.has_trauma == 'true'
   }
   
   $scope.toggle = function(){
@@ -516,8 +511,8 @@ angular.module('starter.controllers', [])
   
   $scope.save = function(){
     console.log($scope.trauma);
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.trauma, {
+
+    db.update("report", $scope.trauma, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma");
@@ -526,20 +521,20 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TraumaAutoCtrl', function($scope, $stateParams, $window, $webSql, DB_CONFIG, report) {
-  $scope.report = report;
+  
   $scope.auto = {
-    "trauma_auto_vehicle": $scope.report.trauma_auto_vehicle,
-    "trauma_auto_seat": $scope.report.trauma_auto_seat,
-    "trauma_auto_seatbelt": $scope.report.trauma_auto_seatbelt == 'true',
-    "trauma_auto_airbag": $scope.report.trauma_auto_airbag == 'true',
-    "trauma_auto_helmet": $scope.report.trauma_auto_helmet == 'true',
-    "trauma_auto_leathers": $scope.report.trauma_auto_leathers == 'true',
-    "trauma_auto_nb_occupants": $scope.report.trauma_auto_nb_occupants,
-    "trauma_auto_vehicle_speed": $scope.report.trauma_auto_vehicle_speed,
-    "trauma_auto_speed_unit": $scope.report.trauma_auto_speed_unit,
-    "trauma_auto_removed_by": $scope.report.trauma_auto_removed_by,
-    "trauma_auto_details_per": $scope.report.trauma_auto_details_per,
-    "trauma_auto_photo": $scope.report.trauma_auto_photo,
+    "trauma_auto_vehicle": report.trauma_auto_vehicle,
+    "trauma_auto_seat": report.trauma_auto_seat,
+    "trauma_auto_seatbelt": report.trauma_auto_seatbelt == 'true',
+    "trauma_auto_airbag": report.trauma_auto_airbag == 'true',
+    "trauma_auto_helmet": report.trauma_auto_helmet == 'true',
+    "trauma_auto_leathers": report.trauma_auto_leathers == 'true',
+    "trauma_auto_nb_occupants": report.trauma_auto_nb_occupants,
+    "trauma_auto_vehicle_speed": report.trauma_auto_vehicle_speed,
+    "trauma_auto_speed_unit": report.trauma_auto_speed_unit,
+    "trauma_auto_removed_by": report.trauma_auto_removed_by,
+    "trauma_auto_details_per": report.trauma_auto_details_per,
+    "trauma_auto_photo": report.trauma_auto_photo,
   };
   
   $scope.toggleSeat = function(seat){
@@ -548,9 +543,9 @@ angular.module('starter.controllers', [])
   }
   
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.auto.trauma_auto_assessed = true;
-    $scope.db.update("report", $scope.auto, {
+    db.update("report", $scope.auto, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma auto");
@@ -560,15 +555,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TraumaPenetratingCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
-  $scope.report = report;
+  
   $scope.bodyPartsList = [];
   $scope.penetrating = {
-    "trauma_penetrating_assault": $scope.report.trauma_penetrating_assault == 'true',
-    "trauma_penetrating_moi": $scope.report.trauma_penetrating_moi,
-    "trauma_penetrating_velocity": $scope.report.trauma_penetrating_velocity,
-    "trauma_penetrating_bleeding": $scope.report.trauma_penetrating_bleeding == 'true',
-    "trauma_penetrating_controlled": $scope.report.trauma_penetrating_controlled == 'true',
-    "trauma_penetrating_body_parts": JSON.parse($scope.report.trauma_penetrating_body_parts)
+    "trauma_penetrating_assault": report.trauma_penetrating_assault == 'true',
+    "trauma_penetrating_moi": report.trauma_penetrating_moi,
+    "trauma_penetrating_velocity": report.trauma_penetrating_velocity,
+    "trauma_penetrating_bleeding": report.trauma_penetrating_bleeding == 'true',
+    "trauma_penetrating_controlled": report.trauma_penetrating_controlled == 'true',
+    "trauma_penetrating_body_parts": JSON.parse(report.trauma_penetrating_body_parts)
   };
   
   var bodyPartsInvolved = $scope.penetrating.trauma_penetrating_body_parts;
@@ -587,9 +582,9 @@ angular.module('starter.controllers', [])
     });
     $scope.penetrating.trauma_penetrating_body_parts = JSON.stringify(selected);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.penetrating.trauma_penetrating_assessed = true;
-    $scope.db.update("report", $scope.penetrating, {
+    db.update("report", $scope.penetrating, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma penetrating");
@@ -599,15 +594,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TraumaBluntCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
-  $scope.report = report;
+  
   $scope.bodyPartsList = [];
   $scope.blunt = {
-    "trauma_blunt_assault": $scope.report.trauma_blunt_assault == 'true',
-    "trauma_blunt_moi": $scope.report.trauma_blunt_moi,
-    "trauma_blunt_bleeding": $scope.report.trauma_blunt_bleeding == 'true',
-    "trauma_blunt_controlled": $scope.report.trauma_blunt_controlled == 'true',
-    "trauma_blunt_body_parts": JSON.parse($scope.report.trauma_blunt_body_parts),
-    "trauma_blunt_photo": $scope.report.trauma_blunt_photo
+    "trauma_blunt_assault": report.trauma_blunt_assault == 'true',
+    "trauma_blunt_moi": report.trauma_blunt_moi,
+    "trauma_blunt_bleeding": report.trauma_blunt_bleeding == 'true',
+    "trauma_blunt_controlled": report.trauma_blunt_controlled == 'true',
+    "trauma_blunt_body_parts": JSON.parse(report.trauma_blunt_body_parts),
+    "trauma_blunt_photo": report.trauma_blunt_photo
   };
   
   var bodyPartsInvolved = $scope.blunt.trauma_blunt_body_parts;
@@ -626,9 +621,9 @@ angular.module('starter.controllers', [])
     });
     $scope.blunt.trauma_blunt_body_parts = JSON.stringify(selected);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.blunt.trauma_blunt_assessed = true;
-    $scope.db.update("report", $scope.blunt, {
+    db.update("report", $scope.blunt, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma blunt");
@@ -638,19 +633,19 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TraumaFallCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
-  $scope.report = report;
+  
   $scope.bodyPartsList = [];
   $scope.fall = {
-    "trauma_fall_assault": $scope.report.trauma_fall_assault == 'true',
-    "trauma_fall_distance": $scope.report.trauma_fall_distance,
-    "trauma_fall_distance_unit": $scope.report.trauma_fall_distance_unit,
-    "trauma_fall_surface": $scope.report.trauma_fall_surface,
-    "trauma_fall_loss_of_c": $scope.report.trauma_fall_loss_of_c == 'true',
-    "trauma_fall_loss_of_c_time": $scope.report.trauma_fall_loss_of_c_time,
-    "trauma_fall_bleeding": $scope.report.trauma_fall_bleeding == 'true',
-    "trauma_fall_controlled": $scope.report.trauma_fall_controlled == 'true',
-    "trauma_fall_body_parts": JSON.parse($scope.report.trauma_fall_body_parts),
-    "trauma_fall_photo": $scope.report.trauma_fall_photo
+    "trauma_fall_assault": report.trauma_fall_assault == 'true',
+    "trauma_fall_distance": report.trauma_fall_distance,
+    "trauma_fall_distance_unit": report.trauma_fall_distance_unit,
+    "trauma_fall_surface": report.trauma_fall_surface,
+    "trauma_fall_loss_of_c": report.trauma_fall_loss_of_c == 'true',
+    "trauma_fall_loss_of_c_time": report.trauma_fall_loss_of_c_time,
+    "trauma_fall_bleeding": report.trauma_fall_bleeding == 'true',
+    "trauma_fall_controlled": report.trauma_fall_controlled == 'true',
+    "trauma_fall_body_parts": JSON.parse(report.trauma_fall_body_parts),
+    "trauma_fall_photo": report.trauma_fall_photo
   };
   
   var bodyPartsInvolved = $scope.fall.trauma_fall_body_parts;
@@ -669,9 +664,9 @@ angular.module('starter.controllers', [])
     });
     $scope.fall.trauma_fall_body_parts = JSON.stringify(selected);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.fall.trauma_fall_assessed = true;
-    $scope.db.update("report", $scope.fall, {
+    db.update("report", $scope.fall, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma fall");
@@ -681,13 +676,13 @@ angular.module('starter.controllers', [])
 })
 
 .controller('TraumaBurnCtrl', function($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
-  $scope.report = report;
+  
   $scope.bodyPartsList = [];
   $scope.burn = {
-    "trauma_burn_total_surface": $scope.report.trauma_burn_total_surface,
-    "trauma_burn_body_type": $scope.report.trauma_burn_body_type,
-    "trauma_burn_body_parts": JSON.parse($scope.report.trauma_burn_areas),
-    "trauma_burn_body_photo": $scope.report.trauma_burn_body_photo
+    "trauma_burn_total_surface": report.trauma_burn_total_surface,
+    "trauma_burn_body_type": report.trauma_burn_body_type,
+    "trauma_burn_body_parts": JSON.parse(report.trauma_burn_areas),
+    "trauma_burn_body_photo": report.trauma_burn_body_photo
   };
   
   var bodyPartsInvolved = $scope.burn.trauma_burn_body_parts;
@@ -706,9 +701,9 @@ angular.module('starter.controllers', [])
     });
     $scope.burn.trauma_burn_body_parts = JSON.stringify(selected);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.burn.trauma_burn_assessed = true;
-    $scope.db.update("report", $scope.burn, {
+    db.update("report", $scope.burn, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated trauma burn");
@@ -717,24 +712,24 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GiCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+  
 
   $scope.gi = {
-    "gi_soft" : $scope.report.gi_soft == 'true',
-    "gi_flat" : $scope.report.gi_flat == 'true',
-    "gi_non_distended" : $scope.report.gi_non_distended == 'true',
-    "gi_non_tender" : $scope.report.gi_non_tender == 'true',
-    "gi_rebound" : $scope.report.gi_rebound == 'true',
-    "gi_obese" : $scope.report.gi_obese == 'true',
-    "gi_last_bm" : $scope.report.gi_last_bm,
-    "gi_loi" : $scope.report.gi_loi,
+    "gi_soft" : report.gi_soft == 'true',
+    "gi_flat" : report.gi_flat == 'true',
+    "gi_non_distended" : report.gi_non_distended == 'true',
+    "gi_non_tender" : report.gi_non_tender == 'true',
+    "gi_rebound" : report.gi_rebound == 'true',
+    "gi_obese" : report.gi_obese == 'true',
+    "gi_last_bm" : report.gi_last_bm,
+    "gi_loi" : report.gi_loi,
   };
   console.log($scope.gi);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.gi.gi_assessed = true;
-    $scope.db.update("report", $scope.gi, {
+    db.update("report", $scope.gi, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated GI");
@@ -744,24 +739,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GuCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+  
 
   $scope.gu = {
-    "gu_pain" : $scope.report.gu_pain == 'true',
-    "gu_frequency" : $scope.report.gu_frequency == 'true',
-    "gu_pain" : $scope.report.gu_pain == 'true',
-    "gu_hematuria" : $scope.report.gu_hematuria == 'true',
-    "gu_incontinence" : $scope.report.gu_incontinence == 'true',
-    "gu_bladder_distention" : $scope.report.gu_bladder_distention == 'true',
-    "gu_urinary_urgency" : $scope.report.gu_urinary_urgency == 'true',
-    "gu_last_void" : $scope.report.gu_last_void,
+    "gu_pain" : report.gu_pain == 'true',
+    "gu_frequency" : report.gu_frequency == 'true',
+    "gu_pain" : report.gu_pain == 'true',
+    "gu_hematuria" : report.gu_hematuria == 'true',
+    "gu_incontinence" : report.gu_incontinence == 'true',
+    "gu_bladder_distention" : report.gu_bladder_distention == 'true',
+    "gu_urinary_urgency" : report.gu_urinary_urgency == 'true',
+    "gu_last_void" : report.gu_last_void,
   };
   console.log($scope.gu);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.gu.gu_assessed = true;
-    $scope.db.update("report", $scope.gu, {
+    db.update("report", $scope.gu, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated GU");
@@ -771,34 +765,34 @@ angular.module('starter.controllers', [])
 })
 
 .controller('GynCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
-  $scope.report = report;
+  
 
   $scope.gyn = {
-    "gyn_gravid" : $scope.report.gyn_gravid,
-    "gyn_term" : $scope.report.gyn_term,
-    "gyn_para" : $scope.report.gyn_para,
-    "gyn_abortia" : $scope.report.gyn_abortia,
-    "gyn_live" : $scope.report.gyn_live,
-    "gyn_last_menstruation" : $scope.report.gyn_last_menstruation,
-    "gyn_discharge" : $scope.report.gyn_discharge == 'true',
-    "gyn_substance" : $scope.report.gyn_substance,
-    "gyn_pregnant" : $scope.report.gyn_pregnant,
-    "gyn_edc" : $scope.report.gyn_edc,
-    "gyn_gestation_known" : $scope.report.gyn_gestation_known == 'true',
-    "gyn_gest_weeks" : $scope.report.gyn_gest_weeks,
-    "peripheral_edema" : $scope.report.peripheral_edema == 'true',
-    "peripheral_edema_location" : $scope.report.peripheral_edema_location,
-    "peripheral_edema_severity" : $scope.report.peripheral_edema_severity,
-    "gyn_membrane_intact" : $scope.report.gyn_membrane_intact == 'true',
-    "gyn_time_ruptured" : $scope.report.gyn_time_ruptured,
-    "gyn_fluid" : $scope.report.gyn_fluid,
-    "gyn_expected_babies" : $scope.report.gyn_expected_babies,
-    "gyn_fetal_mvmt" : $scope.report.gyn_fetal_mvmt == 'true',
-    "gyn_last_mvmt" : $scope.report.gyn_last_mvmt,
-    "gyn_mvmt_per_hr" : $scope.report.gyn_mvmt_per_hr,
-    "gyn_contractions" : $scope.report.gyn_contractions == 'true',
-    "gyn_contraction_duration" : $scope.report.gyn_contraction_duration,
-    "gyn_contraction_separation" : $scope.report.gyn_contraction_separation,
+    "gyn_gravid" : report.gyn_gravid,
+    "gyn_term" : report.gyn_term,
+    "gyn_para" : report.gyn_para,
+    "gyn_abortia" : report.gyn_abortia,
+    "gyn_live" : report.gyn_live,
+    "gyn_last_menstruation" : report.gyn_last_menstruation,
+    "gyn_discharge" : report.gyn_discharge == 'true',
+    "gyn_substance" : report.gyn_substance,
+    "gyn_pregnant" : report.gyn_pregnant,
+    "gyn_edc" : report.gyn_edc,
+    "gyn_gestation_known" : report.gyn_gestation_known == 'true',
+    "gyn_gest_weeks" : report.gyn_gest_weeks,
+    "peripheral_edema" : report.peripheral_edema == 'true',
+    "peripheral_edema_location" : report.peripheral_edema_location,
+    "peripheral_edema_severity" : report.peripheral_edema_severity,
+    "gyn_membrane_intact" : report.gyn_membrane_intact == 'true',
+    "gyn_time_ruptured" : report.gyn_time_ruptured,
+    "gyn_fluid" : report.gyn_fluid,
+    "gyn_expected_babies" : report.gyn_expected_babies,
+    "gyn_fetal_mvmt" : report.gyn_fetal_mvmt == 'true',
+    "gyn_last_mvmt" : report.gyn_last_mvmt,
+    "gyn_mvmt_per_hr" : report.gyn_mvmt_per_hr,
+    "gyn_contractions" : report.gyn_contractions == 'true',
+    "gyn_contraction_duration" : report.gyn_contraction_duration,
+    "gyn_contraction_separation" : report.gyn_contraction_separation,
   };
   console.log($scope.gyn);
   
@@ -808,9 +802,8 @@ angular.module('starter.controllers', [])
   }
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.gyn.gyn_assessed = true;
-    $scope.db.update("report", $scope.gyn, {
+    db.update("report", $scope.gyn, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Gyn");
@@ -820,23 +813,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
-  $scope.report = report;
   
-  var apgar1 = typeof(JSON.parse($scope.report.field_delivery_apgar1)) == 'object' ? JSON.parse($scope.report.field_delivery_apgar1) : {};
-  var apgar5 = typeof(JSON.parse($scope.report.field_delivery_apgar5)) == 'object' ? JSON.parse($scope.report.field_delivery_apgar5) : {};
+  
+  var apgar1 = typeof(JSON.parse(report.field_delivery_apgar1)) == 'object' ? JSON.parse(report.field_delivery_apgar1) : {};
+  var apgar5 = typeof(JSON.parse(report.field_delivery_apgar5)) == 'object' ? JSON.parse(report.field_delivery_apgar5) : {};
 
   $scope.field = {
-    "field_delivery_presentation" : $scope.report.field_delivery_presentation,
-    "field_delivery_time" : $scope.report.field_delivery_time,
-    "field_delivery_meconium" : $scope.report.field_delivery_meconium,
-    "field_delivery_cord_cut_length" : $scope.report.field_delivery_cord_cut_length,
+    "field_delivery_presentation" : report.field_delivery_presentation,
+    "field_delivery_time" : report.field_delivery_time,
+    "field_delivery_meconium" : report.field_delivery_meconium,
+    "field_delivery_cord_cut_length" : report.field_delivery_cord_cut_length,
     "field_delivery_apgar1" : apgar1,
     "field_delivery_apgar5" : apgar5,
-    "field_delivery_stimulation_type" : $scope.report.field_delivery_stimulation_type,
-    "field_delivery_placenta" : $scope.report.field_delivery_placenta == 'true',
-    "field_delivery_placenta_time" : $scope.report.field_delivery_placenta_time,
-    "gyn_gestation_known" : $scope.report.gyn_gestation_known == 'true',
-    "field_delivery_placenta_intact" : $scope.report.field_delivery_placenta_intact == 'true'
+    "field_delivery_stimulation_type" : report.field_delivery_stimulation_type,
+    "field_delivery_placenta" : report.field_delivery_placenta == 'true',
+    "field_delivery_placenta_time" : report.field_delivery_placenta_time,
+    "gyn_gestation_known" : report.gyn_gestation_known == 'true',
+    "field_delivery_placenta_intact" : report.field_delivery_placenta_intact == 'true'
   };
   
   $scope.apgarTotals = {
@@ -875,10 +868,9 @@ angular.module('starter.controllers', [])
   $scope.save = function(){
      $scope.field.field_delivery_apgar1 = JSON.stringify(apgar1);
      $scope.field.field_delivery_apgar5 = JSON.stringify(apgar5);
-    
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.field.field_delivery_assessed = true;
-    $scope.db.update("report", $scope.field, {
+    db.update("report", $scope.field, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Field Delivery");
@@ -888,15 +880,15 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MuscularCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, bodyParts, muscularInjuries) {
-  $scope.report = report;
+  
   $scope.categories = [];
   var groupsShown = [];
   
-  var existingInjuries = JSON.parse($scope.report.muscular_complaint) || {};
+  var existingInjuries = JSON.parse(report.muscular_complaint) || {};
   console.log(existingInjuries);
   
   $scope.muscular = {
-    "muscular_has_complaint": $scope.report.muscular_has_complaint == 'true',
+    "muscular_has_complaint": report.muscular_has_complaint == 'true',
     "muscular_complaint": existingInjuries,
   };
   
@@ -946,10 +938,7 @@ angular.module('starter.controllers', [])
     $scope.muscular.muscular_complaint = JSON.stringify(selected);
     $scope.muscular.muscular_assessed = true;
     
-//    console.log(JSON.stringify(selected));
-     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("report", $scope.muscular, {
+    db.update("report", $scope.muscular, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated report: Muscular/Skeletal");
@@ -981,21 +970,20 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BasicAirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.basic = {
-    "oxygen_volume" : $scope.procedureEntry.oxygen_volume,
-    "basic_maneuvers" : $scope.procedureEntry.basic_maneuvers,
-    "opa" : $scope.procedureEntry.opa,
-    "npa" : $scope.procedureEntry.npa,
-    "bvm" : $scope.procedureEntry.bvm == 'true',
-    "airway_rate" : $scope.procedureEntry.airway_rate
+    "oxygen_volume" : procedure.oxygen_volume,
+    "basic_maneuvers" : procedure.basic_maneuvers,
+    "opa" : procedure.opa,
+    "npa" : procedure.npa,
+    "bvm" : procedure.bvm == 'true',
+    "airway_rate" : procedure.airway_rate
   };
   console.log($scope.basic);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("airway_basic", $scope.basic, {
+    db.update("airway_basic", $scope.basic, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated Basic Airway");
@@ -1020,9 +1008,8 @@ angular.module('starter.controllers', [])
   console.log($scope.invasive);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
     $scope.invasive.invasive_airway_assessed = true;
-    $scope.db.update("report", $scope.invasive, {
+    db.update("report", $scope.invasive, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Invasive Airway");
@@ -1032,33 +1019,33 @@ angular.module('starter.controllers', [])
 })
 
 .controller('VentilatorCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.ventilator = {
-    "control" : $scope.procedureEntry.control,
-    "mode" : $scope.procedureEntry.mode,
-    "rate" : $scope.procedureEntry.rate,
-    "tidal_volume" : $scope.procedureEntry.tidal_volume,
-    "inspiration_time" : $scope.procedureEntry.inspiration_time,
-    "inspiration_ratio" : $scope.procedureEntry.inspiration_ratio,
-    "expiration_ratio" : $scope.procedureEntry.expiration_ratio,
-    "fiO2" : $scope.procedureEntry.fiO2,
-    "peep" : $scope.procedureEntry.peep,
-    "sensitivity" : $scope.procedureEntry.sensitivity,
-    "expiration_pressure" : $scope.procedureEntry.expiration_pressure,
-    "expiration_tidal_volume" : $scope.procedureEntry.expiration_tidal_volume,
-    "max_inspiration_pressure" : $scope.procedureEntry.max_inspiration_pressure,
-    "plateau_pressure" : $scope.procedureEntry.plateau_pressure,
-    "pressure_support" : $scope.procedureEntry.pressure_support,
-    "high_pressure_limit" : $scope.procedureEntry.high_pressure_limit,
-    "low_pressure_limit" : $scope.procedureEntry.low_pressure_limit,
-    "low_min_volume" : $scope.procedureEntry.low_min_volume
+    "control" : procedure.control,
+    "mode" : procedure.mode,
+    "rate" : procedure.rate,
+    "tidal_volume" : procedure.tidal_volume,
+    "inspiration_time" : procedure.inspiration_time,
+    "inspiration_ratio" : procedure.inspiration_ratio,
+    "expiration_ratio" : procedure.expiration_ratio,
+    "fiO2" : procedure.fiO2,
+    "peep" : procedure.peep,
+    "sensitivity" : procedure.sensitivity,
+    "expiration_pressure" : procedure.expiration_pressure,
+    "expiration_tidal_volume" : procedure.expiration_tidal_volume,
+    "max_inspiration_pressure" : procedure.max_inspiration_pressure,
+    "plateau_pressure" : procedure.plateau_pressure,
+    "pressure_support" : procedure.pressure_support,
+    "high_pressure_limit" : procedure.high_pressure_limit,
+    "low_pressure_limit" : procedure.low_pressure_limit,
+    "low_min_volume" : procedure.low_min_volume
   };
   console.log($scope.ventilator);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("airway_ventilator", $scope.ventilator, {
+
+    db.update("airway_ventilator", $scope.ventilator, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated Ventilator");
@@ -1068,20 +1055,20 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CpapBipapCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.cpap = {
-    "device" : $scope.procedureEntry.device,
-    "size" : $scope.procedureEntry.size,
-    "fiO2" : $scope.procedureEntry.fiO2,
-    "peep" : $scope.procedureEntry.peep,
-    "pressure" : $scope.procedureEntry.pressure,
+    "device" : procedure.device,
+    "size" : procedure.size,
+    "fiO2" : procedure.fiO2,
+    "peep" : procedure.peep,
+    "pressure" : procedure.pressure,
   };
   console.log($scope.cpap);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("airway_cpap_bipap", $scope.cpap, {
+
+    db.update("airway_cpap_bipap", $scope.cpap, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated CPAP/BiPAP");
@@ -1091,19 +1078,19 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SuctionCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.suction = {
-    "duration" : $scope.procedureEntry.duration,
-    "amount" : $scope.procedureEntry.amount,
-    "tip" : $scope.procedureEntry.tip,
-    "size" : $scope.procedureEntry.size,
+    "duration" : procedure.duration,
+    "amount" : procedure.amount,
+    "tip" : procedure.tip,
+    "size" : procedure.size,
   };
   console.log($scope.suction);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("airway_suction", $scope.suction, {
+
+    db.update("airway_suction", $scope.suction, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated Suction");
@@ -1113,22 +1100,21 @@ angular.module('starter.controllers', [])
 })
 
 .controller('IvIoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
 
   $scope.ivio = {
-    "site" : $scope.procedureEntry.site,
-    "side" : $scope.procedureEntry.side,
-    "gauge" : $scope.procedureEntry.gauge,
-    "attempts" : $scope.procedureEntry.attemps,
-    "successful" : $scope.procedureEntry.successful == true,
-    "fluid" : $scope.procedureEntry.fluid,
-    "fluid_other" : $scope.procedureEntry.fluid_other
+    "site" : procedure.site,
+    "side" : procedure.side,
+    "gauge" : procedure.gauge,
+    "attempts" : procedure.attemps,
+    "successful" : procedure.successful == true,
+    "fluid" : procedure.fluid,
+    "fluid_other" : procedure.fluid_other
   };
-  console.log($scope.suction);
+  console.log($scope.ivio);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("iv_io", $scope.ivio, {
+
+    db.update("iv_io", $scope.ivio, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated IV/IO");
@@ -1138,24 +1124,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SplintingCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
 
   $scope.splinting = {
-    "location" : $scope.procedureEntry.location,
-    "side" : $scope.procedureEntry.side,
-    "sensation_prior" : $scope.procedureEntry.sensation_prior == 'true',
-    "sensation_post" : $scope.procedureEntry.sensation_post == 'true',
-    "traction_applied" : $scope.procedureEntry.traction_applied == 'true',
-    "splinting_type" : $scope.procedureEntry.splinting_type,
-    "splinting_type_other" : $scope.procedureEntry.splinting_type_other,
-    "position_found" : $scope.procedureEntry.position_found,
-    "position_found_other" : $scope.procedureEntry.position_found_other
+    "location" : procedure.location,
+    "side" : procedure.side,
+    "sensation_prior" : procedure.sensation_prior == 'true',
+    "sensation_post" : procedure.sensation_post == 'true',
+    "traction_applied" : procedure.traction_applied == 'true',
+    "splinting_type" : procedure.splinting_type,
+    "splinting_type_other" : procedure.splinting_type_other,
+    "position_found" : procedure.position_found,
+    "position_found_other" : procedure.position_found_other
   };
   console.log($scope.splinting);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("splinting", $scope.splinting, {
+
+    db.update("splinting", $scope.splinting, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated Splinting");
@@ -1165,23 +1150,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MedicationCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure, homeMedications) {
-  $scope.procedureEntry = procedure;
-  $scope.medication_list = $scope.procedureEntry.medication_type == '0' ?  homeMedications.generic.list : homeMedications.brand.list;
+  
+  $scope.medication_list = procedure.medication_type == '0' ?  homeMedications.generic.list : homeMedications.brand.list;
   if ($scope.medication_list[0] != "Other")
     $scope.medication_list.unshift("Other");
 
   $scope.medication = {
-    "medication_type" : $scope.procedureEntry.medication_type,
-    "medication" : $scope.procedureEntry.medication,
-    "medication_other" : $scope.procedureEntry.medication_other,
-    "dose" : $scope.procedureEntry.dose,
-    "dose_unit" : $scope.procedureEntry.dose_unit,
-    "route" : $scope.procedureEntry.route,
-    "route_other" : $scope.procedureEntry.route_other,
-    "indication" : $scope.procedureEntry.indication,
-    "administrated" : $scope.procedureEntry.administrated,
-    "administrated_other" : $scope.procedureEntry.administrated_other,
-    "same_dose" : $scope.procedureEntry.same_dose,
+    "medication_type" : procedure.medication_type,
+    "medication" : procedure.medication,
+    "medication_other" : procedure.medication_other,
+    "dose" : procedure.dose,
+    "dose_unit" : procedure.dose_unit,
+    "route" : procedure.route,
+    "route_other" : procedure.route_other,
+    "indication" : procedure.indication,
+    "administrated" : procedure.administrated,
+    "administrated_other" : procedure.administrated_other,
+    "same_dose" : procedure.same_dose,
   };
   console.log($scope.medication);
   
@@ -1197,8 +1182,8 @@ angular.module('starter.controllers', [])
   }
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("medication", $scope.medication, {
+
+    db.update("medication", $scope.medication, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated Medication");
@@ -1208,22 +1193,21 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SpinalCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
 
   $scope.spinal = {
-    "spinal_manual" : $scope.report.spinal_manual == 'true',
-    "spinal_c_collar" : $scope.report.spinal_c_collar == 'true',
-    "spinal_collar_size" : $scope.report.spinal_collar_size,
-    "spinal_backboard" : $scope.report.spinal_backboard,
-    "spinal_transferred_by" : $scope.report.spinal_transferred_by,
-    "spinal_secured_with" : $scope.report.spinal_secured_with,
+    "spinal_manual" : report.spinal_manual == 'true',
+    "spinal_c_collar" : report.spinal_c_collar == 'true',
+    "spinal_collar_size" : report.spinal_collar_size,
+    "spinal_backboard" : report.spinal_backboard,
+    "spinal_transferred_by" : report.spinal_transferred_by,
+    "spinal_secured_with" : report.spinal_secured_with,
   };
   console.log($scope.spinal);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.spinal.spinal_assessed = true;
-    $scope.db.update("report", $scope.spinal, {
+    db.update("report", $scope.spinal, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Medication");
@@ -1233,19 +1217,19 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InOutCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.inOut = {
-    "direction" : $scope.procedureEntry.direction,
-    "volume" : $scope.procedureEntry.volume,
-    "substance" : $scope.procedureEntry.substance,
-    "other" : $scope.procedureEntry.other,
+    "direction" : procedure.direction,
+    "volume" : procedure.volume,
+    "substance" : procedure.substance,
+    "other" : procedure.other,
   };
   console.log($scope.inOut);
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("in_out", $scope.inOut, {
+
+    db.update("in_out", $scope.inOut, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated In/Out");
@@ -1255,19 +1239,19 @@ angular.module('starter.controllers', [])
 })
 
 .controller('EcgCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-  $scope.procedureEntry = procedure;
+  
 
   $scope.ecg = {
-    "leads_nb" : $scope.procedureEntry.leads_nb,
-    "rhythm" : $scope.procedureEntry.rhythm,
-    "regular" : $scope.procedureEntry.regular == 'true',
-    "bbb" : $scope.procedureEntry.bbb == 'true',
-    "bbb_side" : $scope.procedureEntry.bbb_side,
-    "st_changes" : $scope.procedureEntry.st_changes == 'true',
-    "st_elevation_list" : $scope.procedureEntry.st_elevation_list ? JSON.parse($scope.procedureEntry.st_elevation_list) : [],
-    "st_depression_list" : $scope.procedureEntry.st_depression_list ? JSON.parse($scope.procedureEntry.st_depression_list) : [],
-    "pacs" : $scope.procedureEntry.pacs == 'true',
-    "pvcs" : $scope.procedureEntry.pvcs == 'true',
+    "leads_nb" : procedure.leads_nb,
+    "rhythm" : procedure.rhythm,
+    "regular" : procedure.regular == 'true',
+    "bbb" : procedure.bbb == 'true',
+    "bbb_side" : procedure.bbb_side,
+    "st_changes" : procedure.st_changes == 'true',
+    "st_elevation_list" : procedure.st_elevation_list ? JSON.parse(procedure.st_elevation_list) : [],
+    "st_depression_list" : procedure.st_depression_list ? JSON.parse(procedure.st_depression_list) : [],
+    "pacs" : procedure.pacs == 'true',
+    "pvcs" : procedure.pvcs == 'true',
   };
   console.log($scope.ecg);
   
@@ -1291,8 +1275,8 @@ angular.module('starter.controllers', [])
     $scope.ecg.st_elevation_list = JSON.stringify($scope.elevation);
     $scope.ecg.st_depression_list = JSON.stringify($scope.depression);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("ecg", $scope.ecg, {
+
+    db.update("ecg", $scope.ecg, {
       'id': $stateParams.procedureId
     }).then(function(){
       console.log("Updated ECG");
@@ -1302,7 +1286,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('SignaturesCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+  
   $scope.activeButton = 1;
   
 
@@ -1343,10 +1327,10 @@ angular.module('starter.controllers', [])
   }
   
    // Load Signatures
-  storedSignatures[1] = $scope.report.signature_practitioner;
-  storedSignatures[2] = $scope.report.signature_patient;
-  storedSignatures[3] = $scope.report.signature_hospital;
-  storedSignatures[4] = $scope.report.signature_witness;
+  storedSignatures[1] = report.signature_practitioner;
+  storedSignatures[2] = report.signature_patient;
+  storedSignatures[3] = report.signature_hospital;
+  storedSignatures[4] = report.signature_witness;
   
   wireCanvas();
   
@@ -1361,12 +1345,12 @@ angular.module('starter.controllers', [])
   resizeCanvas();
 
   $scope.signatures = {
-    "signature_practitioner_name" : $scope.report.signature_practitioner_name,
-    "signature_patient_name" : $scope.report.signature_patient_name,
-    "signature_hospital_name" : $scope.report.signature_hospital_name,
-    "signature_witness_name" : $scope.report.signature_witness_name,
-    "no_signature" : $scope.report.no_signature == 'true',
-    "no_signature_reason" : $scope.report.no_signature_reason
+    "signature_practitioner_name" : report.signature_practitioner_name,
+    "signature_patient_name" : report.signature_patient_name,
+    "signature_hospital_name" : report.signature_hospital_name,
+    "signature_witness_name" : report.signature_witness_name,
+    "no_signature" : report.no_signature == 'true',
+    "no_signature_reason" : report.no_signature_reason
   };
   
   console.log($scope.signatures);
@@ -1382,9 +1366,9 @@ angular.module('starter.controllers', [])
     $scope.signatures.signature_hospital = signaturePads[3] ? signaturePads[3].toDataURL() : "";
     $scope.signatures.signature_witness = signaturePads[4] ? signaturePads[4].toDataURL() : "";
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.signatures.signature_assessed = true;
-    $scope.db.update("report", $scope.signatures, {
+    db.update("report", $scope.signatures, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Signatures");
@@ -1410,8 +1394,8 @@ angular.module('starter.controllers', [])
     
     console.log($scope.form);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("settings", $scope.form, {
+
+    db.update("settings", $scope.form, {
       'id': 1
     }).then(function(){
       console.log("Updated Settings");
@@ -1421,29 +1405,29 @@ angular.module('starter.controllers', [])
 })
 
 .controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, ppe) {
-  $scope.report = report;
+  
   $scope.ppeList = [];
 
   $scope.call = {
-    "call_info_attendant1" : $scope.report.call_info_attendant1,
-    "call_info_attendant1_other" : $scope.report.call_info_attendant1_other,
-    "call_info_attendant2" : $scope.report.call_info_attendant2,
-    "call_info_attendant2_other" : $scope.report.call_info_attendant2_other,
-    "call_info_driver" : $scope.report.call_info_driver,
-    "call_info_driver_other" : $scope.report.call_info_driver_other,
-    "call_info_unit_nb" : $scope.report.call_info_unit_nb,
-    "call_info_run_nb" : $scope.report.call_info_run_nb,
-    "call_info_respond_to" : $scope.report.call_info_respond_to,
-    "call_info_milage_start" : $scope.report.call_info_milage_start,
-    "call_info_milage_end" : $scope.report.call_info_milage_end,
-    "call_info_code_en_route" : $scope.report.call_info_code_en_route,
-    "call_info_code_return" : $scope.report.call_info_code_return,
-    "call_info_transported_to" : $scope.report.call_info_transported_to,
-    "call_info_transported_position" : $scope.report.call_info_transported_position,
-    "call_info_time" : $scope.report.call_info_time != '' ? JSON.parse($scope.report.call_info_time) : {},
-    "call_info_ppe" : $scope.report.call_info_ppe != undefined ?JSON.parse($scope.report.call_info_ppe) : [],
-    "call_info_determinant" : $scope.report.call_info_determinant != '' ?JSON.parse($scope.report.call_info_determinant) : {},
-    "call_info_assistance" : $scope.report.call_info_assistance,
+    "call_info_attendant1" : report.call_info_attendant1,
+    "call_info_attendant1_other" : report.call_info_attendant1_other,
+    "call_info_attendant2" : report.call_info_attendant2,
+    "call_info_attendant2_other" : report.call_info_attendant2_other,
+    "call_info_driver" : report.call_info_driver,
+    "call_info_driver_other" : report.call_info_driver_other,
+    "call_info_unit_nb" : report.call_info_unit_nb,
+    "call_info_run_nb" : report.call_info_run_nb,
+    "call_info_respond_to" : report.call_info_respond_to,
+    "call_info_milage_start" : report.call_info_milage_start,
+    "call_info_milage_end" : report.call_info_milage_end,
+    "call_info_code_en_route" : report.call_info_code_en_route,
+    "call_info_code_return" : report.call_info_code_return,
+    "call_info_transported_to" : report.call_info_transported_to,
+    "call_info_transported_position" : report.call_info_transported_position,
+    "call_info_time" : report.call_info_time != '' ? JSON.parse(report.call_info_time) : {},
+    "call_info_ppe" : report.call_info_ppe != undefined ?JSON.parse(report.call_info_ppe) : [],
+    "call_info_determinant" : report.call_info_determinant != '' ?JSON.parse(report.call_info_determinant) : {},
+    "call_info_assistance" : report.call_info_assistance,
   };
   
   var existingPpe = $scope.call.call_info_ppe;
@@ -1475,9 +1459,9 @@ angular.module('starter.controllers', [])
     // Time
     $scope.call.call_info_time = JSON.stringify($scope.call.call_info_time);
     
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.call.call_info_assessed = true;
-    $scope.db.update("report", $scope.call, {
+    db.update("report", $scope.call, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Call Info");
@@ -1487,23 +1471,23 @@ angular.module('starter.controllers', [])
 })
 
 .controller('NoTransportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+  
 
   $scope.noTransport = {
-    "no_transport_mentally_capable" : $scope.report.no_transport_mentally_capable == 'true',
-    "no_transport_should_transport" : $scope.report.no_transport_should_transport == 'true',
-    "no_transport_risk_informed" : $scope.report.no_transport_risk_informed == 'true',
-    "no_transport_reason" : $scope.report.no_transport_reason,
-    "no_transport_reason_other" : $scope.report.no_transport_reason_other,
-    "no_transport_left_with" : $scope.report.no_transport_left_with,
-    "no_transport_left_with_other" : $scope.report.no_transport_left_with_other,
-    "no_transport_consult_with" : $scope.report.no_transport_consult_with
+    "no_transport_mentally_capable" : report.no_transport_mentally_capable == 'true',
+    "no_transport_should_transport" : report.no_transport_should_transport == 'true',
+    "no_transport_risk_informed" : report.no_transport_risk_informed == 'true',
+    "no_transport_reason" : report.no_transport_reason,
+    "no_transport_reason_other" : report.no_transport_reason_other,
+    "no_transport_left_with" : report.no_transport_left_with,
+    "no_transport_left_with_other" : report.no_transport_left_with_other,
+    "no_transport_consult_with" : report.no_transport_consult_with
   };
 
   $scope.save = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.noTransport.no_transport_assessed = true;
-    $scope.db.update("report", $scope.noTransport, {
+    db.update("report", $scope.noTransport, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated No Transport");
@@ -1522,8 +1506,8 @@ angular.module('starter.controllers', [])
 
   $scope.save = function(){
     console.log($scope.narrativeEntry);
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.update("narrative", $scope.narrativeEntry, {
+
+    db.update("narrative", $scope.narrativeEntry, {
       'id': $stateParams.narrativeId
     }).then(function(){
       console.log("Updated Narrative");
@@ -1541,8 +1525,8 @@ angular.module('starter.controllers', [])
   }
   
   $scope.deleteItem = function(itemId){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.del('code', {"id": itemId})
+
+    db.del('code', {"id": itemId})
     .then(function(){
       delete $scope.codeList[itemId];
      });
@@ -1598,17 +1582,17 @@ angular.module('starter.controllers', [])
   }
 
   $scope.add = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
+
     $scope.code.report_id = $stateParams.reportId;
-    $scope.db.insert("code", $scope.code)
+    db.insert("code", $scope.code)
     .then(function(){
       console.log("Updated Code");
     });
   }
 })
 
-.controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
-  $scope.report = report;
+.controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report,  neuro) {
+  
   
   $scope.short_report = true;
   $scope.patient_info = true;
@@ -1624,6 +1608,7 @@ angular.module('starter.controllers', [])
   $scope.code = true;
   
   $scope.export = function(){
+    
       var docDefinition = {
          content: [
            { text: 'Patient Care Report', style: 'header' },
@@ -1632,22 +1617,23 @@ angular.module('starter.controllers', [])
            {text: 'Patient Name: ' + report.first_name + ' ' + report.last_name, style:"defaultStyle"},
            { text: 'Patient History', style: 'section_heading' },
            { text: 'Vitals', style: 'section_heading' },
+//           	{
+//                style: 'tableExample',
+//                table: {
+//                  headerRows: 1,
+//                  body: getTableRecords(vitals)
+//                }
+//		    },
+           { text: 'Chief Complaint', style: 'section_heading' },
+           { text: 'Exam', style: 'section_heading' },
+           { text: 'Neuro', style: 'section_heading' },
            	{
                 style: 'tableExample',
                 table: {
                   headerRows: 1,
-                  body: [
-                    [{ text: 'Time', style: 'tableHeader' }, { text: 'HR', style: 'tableHeader'}, { text: 'Sys', style: 'tableHeader' }],
-                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
-                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
-                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
-                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
-                    [ 'Sample value 1', 'Sample value 2', 'Sample value 3' ],
-                  ]
+                  body: getTableRecords(neuro)
                 }
 		    },
-           { text: 'Chief Complaint', style: 'section_heading' },
-           { text: 'Exam', style: 'section_heading' },
            { text: 'Procedures', style: 'section_heading' },
            { text: 'Signatures', style: 'section_heading' },
            { text: 'Call Info', style: 'section_heading' },
@@ -1666,7 +1652,8 @@ angular.module('starter.controllers', [])
              bold: true
            },
            tableExample: {
-			margin: [0, 5, 0, 15]
+             fontSize: 8,
+			margin: [0, 5, 0, 0]
            },
            tableHeader: {
             bold: true,
@@ -1699,56 +1686,83 @@ angular.module('starter.controllers', [])
   }
   
   $scope.deleteItem = function(itemId){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.del(tableName, {"id": itemId})
+
+    db.del(tableName, {"id": itemId})
     .then(function(){
       delete $scope.list[itemId];
      });
   }
     
   $scope.addItem = function(){
-    $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-    $scope.db.insert(tableName, {"report_id": $stateParams.reportId}).then(function(results) {
+
+    db.insert(tableName, {"report_id": $stateParams.reportId}).then(function(results) {
         console.log(results.insertId);
         window.location = redirection + results.insertId;
     });
   }
 })
 
+function getTableRecords(table){
+  var tableRecords = [];
+ 
+  var header = [];
+  for(field in table[Object.keys(table)[0]]){
+    if (field != 'id' && field != 'report_id'){
+      header.push(String(field));
+    }
+  }
+  tableRecords.push(header);
+    
+  for(index in table) {  
+    var header = [];
+    var row = [];
+    for(field in table[index]){
+      if (field != 'id' && field != 'report_id'){
+        var value = table[index][field] || '';
+        header.push(String(field));
+        row.push(String(value));
+      }
+    }
+    tableRecords.push(row);
+  }
+  
+  return tableRecords;
+}
+
 function deleteDatebase($webSql, DB_CONFIG){
-      $scope.db = $webSql.openDatabase(DB_CONFIG.name, DB_CONFIG.version, DB_CONFIG.description, DB_CONFIG.size);
-      $scope.db.dropTable('report');				
-      $scope.db.dropTable('vitals');	
-      $scope.db.dropTable('chief_complaint');		
-      $scope.db.dropTable('patient_hx');				
-      $scope.db.dropTable('neuro');			
-      $scope.db.dropTable('abc');			
-      $scope.db.dropTable('trauma');				
-      $scope.db.dropTable('trauma_auto');				
-      $scope.db.dropTable('trauma_fall');				
-      $scope.db.dropTable('trauma_blunt');				
-      $scope.db.dropTable('trauma_fall');
-      $scope.db.dropTable('trauma_burn');
-      $scope.db.dropTable('gi_gu');
-      $scope.db.dropTable('field_delivery');
-      $scope.db.dropTable('apgar');
-      $scope.db.dropTable('muscular_skeletal');			
-      $scope.db.dropTable('airway');			
-      $scope.db.dropTable('invasive_airway');				
-      $scope.db.dropTable('ventilator');				
-      $scope.db.dropTable('cpap_bipap');
-      $scope.db.dropTable('suction');
-      $scope.db.dropTable('iv_io');				
-      $scope.db.dropTable('splinting');		
-      $scope.db.dropTable('medication');				
-      $scope.db.dropTable('c_spine');				
-      $scope.db.dropTable('in_out');	
-      $scope.db.dropTable('ecg');
-      $scope.db.dropTable('signatures');
-      $scope.db.dropTable('call_info');
-      $scope.db.dropTable('no_transport');
-      $scope.db.dropTable('narrative');
-      $scope.db.dropTable('code');
+  
+      db.dropTable('report');				
+      db.dropTable('vitals');	
+      db.dropTable('chief_complaint');		
+      db.dropTable('patient_hx');				
+      db.dropTable('neuro');			
+      db.dropTable('abc');			
+      db.dropTable('trauma');				
+      db.dropTable('trauma_auto');				
+      db.dropTable('trauma_fall');				
+      db.dropTable('trauma_blunt');				
+      db.dropTable('trauma_fall');
+      db.dropTable('trauma_burn');
+      db.dropTable('gi_gu');
+      db.dropTable('field_delivery');
+      db.dropTable('apgar');
+      db.dropTable('muscular_skeletal');			
+      db.dropTable('airway');			
+      db.dropTable('invasive_airway');				
+      db.dropTable('ventilator');				
+      db.dropTable('cpap_bipap');
+      db.dropTable('suction');
+      db.dropTable('iv_io');				
+      db.dropTable('splinting');		
+      db.dropTable('medication');				
+      db.dropTable('c_spine');				
+      db.dropTable('in_out');	
+      db.dropTable('ecg');
+      db.dropTable('signatures');
+      db.dropTable('call_info');
+      db.dropTable('no_transport');
+      db.dropTable('narrative');
+      db.dropTable('code');
 }
 
 Object.size = function(obj) {
