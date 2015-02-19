@@ -23,63 +23,78 @@ margin-left: 0px;
 .flaticon-breathing:before {
 	content: "\e002";
 }
-.flaticon-clinic2:before {
+.flaticon-caution10:before {
 	content: "\e003";
 }
-.flaticon-contract11:before {
+.flaticon-clinic2:before {
 	content: "\e004";
 }
-.flaticon-drugs5:before {
+.flaticon-contract11:before {
 	content: "\e005";
 }
-.flaticon-ecg2:before {
+.flaticon-drugs5:before {
 	content: "\e006";
 }
-.flaticon-electrocardiogram1:before {
+.flaticon-ecg2:before {
 	content: "\e007";
 }
-.flaticon-electrocardiography:before {
+.flaticon-electrocardiogram1:before {
 	content: "\e008";
 }
-.flaticon-litter:before {
+.flaticon-electrocardiography:before {
 	content: "\e009";
 }
-.flaticon-lungs4:before {
+.flaticon-line23:before {
 	content: "\e00a";
 }
-.flaticon-man412:before {
+.flaticon-litter:before {
 	content: "\e00b";
 }
-.flaticon-medical1:before {
+.flaticon-lungs4:before {
 	content: "\e00c";
 }
-.flaticon-medical14:before {
+.flaticon-man412:before {
 	content: "\e00d";
 }
-.flaticon-medical9:before {
+.flaticon-man55:before {
 	content: "\e00e";
 }
-.flaticon-medkit:before {
+.flaticon-medical1:before {
 	content: "\e00f";
 }
-.flaticon-patient1:before {
+.flaticon-medical14:before {
 	content: "\e010";
 }
-.flaticon-pill:before {
+.flaticon-medical9:before {
 	content: "\e011";
 }
-.flaticon-stethoscope11:before {
+.flaticon-medkit:before {
 	content: "\e012";
 }
-.flaticon-syringe:before {
+.flaticon-paratrooper:before {
 	content: "\e013";
 }
-.flaticon-vehicle41:before {
+.flaticon-patient1:before {
 	content: "\e014";
 }
-.flaticon-water12:before {
+.flaticon-pill:before {
 	content: "\e015";
 }
-.flaticon-xray2:before {
+.flaticon-slide2:before {
 	content: "\e016";
+}
+.flaticon-stethoscope11:before {
+	content: "\e017";
+}
+.flaticon-syringe:before {
+	content: "\e018";
+}
+.flaticon-vehicle41:before {
+	content: "\e019";
+}
+.flaticon-water12:before {
+	content: "\e01a";
+}
+.flaticon-xray2:before {
+	content: "\e01b";
 }

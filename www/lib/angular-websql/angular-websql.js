@@ -12,13 +12,12 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
 				try {
                   var db;
                     if (window.cordova) {
-                      db = window.sqlitePlugin.openDatabase({ name: dbName }); //device
+                      //device
+                      db = window.sqlitePlugin.openDatabase({ name: dbName });      
                     }else{
-                      db = window.openDatabase(dbName, version, desc, size); // browser
+                      //browser
+                      db = window.openDatabase(dbName, version, desc, size);
                     }
-//					var db = openDatabase(dbName, version, desc, size);
-//					if (typeof(openDatabase) == "undefined")
-//						throw "Browser does not support web sql";
 					return {
 						executeQuery: function(query, values) {
 							var deferred = $q.defer();

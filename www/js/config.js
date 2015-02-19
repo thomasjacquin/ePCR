@@ -36,9 +36,6 @@ angular.module('ePCR.config', [])
          "weight_unit":{
             "type":"TEXT"
          },
-         "profile_picture":{
-            "type":"TEXT"
-         },
          "address_street":{
             "type":"TEXT"
          },

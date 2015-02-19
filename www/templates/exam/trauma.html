@@ -13,24 +13,29 @@
            </div>
         </label>
       </ion-item>
-      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/auto">
-        <i class="icon ion-chevron-right"></i>
+      <a class="item item-icon-left item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/auto">
+       <i class="icon ion-android-car"></i>
+        <i class="icon ion-checkmark-round balanced" ng-show="report.trauma_auto_assessed" style="font-size: 25px"></i>
         Auto/Moto
       </a>
-      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/penetrating">
-        <i class="icon ion-chevron-right"></i>
+      <a class="item item-icon-left item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/penetrating">
+       <i class="icon ion-scissors"></i>
+       <i class="icon ion-checkmark-round balanced" ng-show="report.trauma_penetrating_assessed" style="font-size: 25px"></i>
         Penetrating
       </a>
-      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/blunt">
-        <i class="icon ion-chevron-right"></i>
+      <a class="item item-icon-left item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/blunt">
+       <i class="icon ion-hammer"></i>
+        <i class="icon ion-checkmark-round balanced" ng-show="report.trauma_blunt_assessed" style="font-size: 25px"></i>
         Blunt
       </a>
-      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/fall">
-        <i class="icon ion-chevron-right"></i>
+      <a class="item item-icon-left item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/fall">
+       <i class="icon flaticon-slide2"></i>
+       <i class="icon ion-checkmark-round balanced" ng-show="report.trauma_fall_assessed" style="font-size: 25px"></i>
         Fall
       </a>
-      <a class="item item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/burn">
-        <i class="icon ion-chevron-right"></i>
+      <a class="item item-icon-left item-icon-right" ng-show="trauma.has_trauma == true" href="#/tab/report/{{report.id}}/exam/trauma/burn">
+      <i class="icon ion-ios-flame"></i>
+      <i class="icon ion-checkmark-round balanced" ng-show="report.trauma_burn_assessed" style="font-size: 25px"></i>
         Burn
       </a>
       

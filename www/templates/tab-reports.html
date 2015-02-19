@@ -9,8 +9,8 @@
     </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
-      <ion-item class="item-avatar" ng-repeat="report in reports" type="item-text-wrap" href="#/tab/report/{{report.id}}">
-        <img ng-src="{{report.profile_picture}}">
+      <ion-item class="item-icon-left" ng-repeat="report in reports" type="item-text-wrap" href="#/tab/report/{{report.id}}">
+        <i class="icon" ng-class="report.gender == 'Female' ? 'ion-woman':'ion-man'"></i>
         <h2>{{report.first_name}} {{report.last_name}}</h2>
         <h4>Created on {{report.created}}</h4>
         <ion-delete-button class="ion-minus-circled" ng-click="deleteReport(report.id)">

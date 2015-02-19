@@ -58,7 +58,6 @@ angular.module('starter.controllers', [])
     "gender": report.gender, 
     "weight": report.weight,
     "weight_unit": report.weight_unit,
-    "profile_picture": report.profile_picture,
     "address_street": report.address_street,
     "address_city": report.address_city,
     "address_province": report.address_province,
