@@ -2,7 +2,7 @@
 </ion-nav-bar>
   <ion-view view-title="ABC">
   <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="save()">
+      <button class="button button-clear" ng-click="save(true)">
          <i class="icon ion-ios-checkmark-outline"></i> Save
       </button>
     </ion-nav-buttons>
@@ -379,7 +379,7 @@
     </ion-list>
     </div>
     
-    <button class="button button-block button-positive" ng-show="activeButton == 1 && abc.interventions">
+    <button class="button button-block button-positive" ng-show="activeButton == 1 && abc.interventions" ng-click="airwayProcedures()">
       Airway Procedures
     </button>
   </ion-content>

@@ -429,7 +429,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
   
-  .state('tab.gyn.field-delivery', {
+  .state('tab.field-delivery', {
     url: '/report/:reportId/exam/gyn/field-delivery',
     views: {
       'tab-reports': {

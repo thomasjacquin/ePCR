@@ -9,67 +9,67 @@
   <ion-content class="padding">
     <div class="list">
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/info">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.personal-info({reportId: reportId})">
         <i class="icon ion-person"></i>
         Patient Info
         <i class="icon ion-checkmark-round balanced" ng-show="report.patient_info_assessed" style="font-size: 25px"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/vitals">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.vitals-list({reportId: reportId})">
         <i class="icon icon-i-cardiology"></i>
         Vitals
         <span class="badge badge-balanced">{{vitalsNumber}}</span>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/chief-complaint">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.chief-complaint({reportId: reportId})">
         <i class="icon ion-sad-outline"></i>
         Chief Complaint
         <i class="icon ion-checkmark-round balanced" ng-show="report.chief_complaint_assessed" style="font-size: 25px"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/patient-history">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.patient-history({reportId: reportId})">
         <i class="icon flaticon-clinic2"></i>
         Patient History
         <i class="icon ion-checkmark-round balanced" ng-show="report.patient_hx_assessed" style="font-size: 25px"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.exam({reportId: reportId})">
         <i class="icon flaticon-medical14"></i>
         Exam
         <i class="icon ion-ios-arrow-forward"></i>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/procedures">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.procedures({reportId: reportId})">
         <i class="icon icon-i-physical-therapy"></i>
         Procedures
         <i class="icon ion-ios-arrow-forward"></i>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/signatures">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.signatures({reportId: reportId})">
         <i class="icon flaticon-contract11"></i>
         Signatures
         <i class="icon ion-checkmark-round balanced" ng-show="report.signature_assessed" style="font-size: 25px"></i>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/call-info">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.call-info({reportId: reportId})">
         <i class="icon flaticon-vehicle41"></i>
         Call Info
         <i class="icon ion-checkmark-round balanced" ng-show="report.call_info_assessed" style="font-size: 25px"></i>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/narrative">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.narrative({reportId: reportId})">
         <i class="icon ion-chatboxes"></i>
         Narrative
         <span class="badge badge-balanced">{{narrativeNumber}}</span>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/code-list">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.code-list({reportId: reportId})">
         <i class="icon ion-android-stopwatch"></i>
         CPR Summary
         <span class="badge badge-balanced">{{codeNumber}}</span>
       </a>
       
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/export">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.export({reportId: reportId})">
         <i class="icon ion-paper-airplane"></i>
         Export
         <i class="icon ion-checkmark-round balanced" style="font-size: 25px"></i>

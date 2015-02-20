@@ -12,9 +12,10 @@ angular.module('starter.controllers', [])
   
   $scope.reports = reports;
   $scope.showDelete = false;
-    
+  
   $scope.addReport = function(){
-    db.insert('report', {"created": ""}).then(function(results) {
+    var now = new Date();
+    db.insert('report', {"first_name": ''}).then(function(results) {
         console.log(results.insertId);
         window.location = '#/tab/report/' + results.insertId;
     });
@@ -39,6 +40,7 @@ angular.module('starter.controllers', [])
 .controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, $window, Records) {
   
   $scope.report = report;
+  $scope.reportId = $stateParams.reportId;
   
   Records.all('vitals', $stateParams.reportId)
   .then(function(vitalsRecords){
@@ -457,7 +459,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('AbcCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+.controller('AbcCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
   
   $scope.activeButton = 1;
 
@@ -502,14 +504,20 @@ angular.module('starter.controllers', [])
     $scope.activeButton = tab;
   }
   
-  $scope.save = function(){
+  $scope.airwayProcedures = function(){
+    $scope.save();
+    $state.go('tab.airway', {"reportId": $stateParams.reportId});
+  }
+  
+  $scope.save = function(goBack){
 
     $scope.abc.abc_assessed = true;
     db.update("report", $scope.abc, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated abc");
-      $window.history.back();
+      if (goBack)
+        $window.history.back();
     });
   }
 })
@@ -812,18 +820,19 @@ angular.module('starter.controllers', [])
   console.log($scope.gyn);
   
   $scope.fieldDelivery = function(){
-    $scope.save();
-    $state.go('.field-delivery', {reportId: $stateParams.reportId});
+    $scope.save(false);
+    $state.go('tab.field-delivery', {'reportId': $stateParams.reportId});
 
   }
 
-  $scope.save = function(){
+  $scope.save = function(goBack){
     $scope.gyn.gyn_assessed = true;
     db.update("report", $scope.gyn, {
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Gyn");
-      $window.history.back();
+      if (goBack)
+        $window.history.back();
     });
   }
 })
@@ -1457,7 +1466,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, ppe) {
+.controller('CallInfoCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe) {
   
   $scope.ppeList = [];
 
@@ -1492,10 +1501,10 @@ angular.module('starter.controllers', [])
   
   $scope.noTransport = function(){
     $scope.save();
-    $window.location = '#/tab/report/' + $stateParams.reportId + '/no-transport';
+    $state.go('tab.no-transport', {"reportId": $stateParams.reportId});
   }
 
-  $scope.save = function(){
+  $scope.save = function(goBack){
 
     // PPE
     var selected = [];
@@ -1518,7 +1527,8 @@ angular.module('starter.controllers', [])
       'id': $stateParams.reportId
     }).then(function(){
       console.log("Updated Call Info");
-      $window.history.back();
+      if (goBack)
+        $window.history.back();
     });
   }
 })
@@ -1644,7 +1654,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report,  neuro) {
+.controller('ExportCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records) {
   
   
   $scope.short_report = true;
@@ -1660,6 +1670,23 @@ angular.module('starter.controllers', [])
   $scope.narrative = true;
   $scope.code = true;
   
+   Records.all('vitals', $stateParams.reportId)
+  .then(function(records){
+    $scope.vitalsRecords = records;
+  })
+  .then(function(){
+     Records.all('neuro', $stateParams.reportId)
+    .then(function(records){
+      $scope.neuroRecords = records;
+    })
+    .then(function(){
+      Records.all('code', $stateParams.reportId)
+      .then(function(records){
+        $scope.codeRecords = records;
+      })
+    })
+  });
+  
   $scope.export = function(){
     
       var docDefinition = {
@@ -1670,13 +1697,13 @@ angular.module('starter.controllers', [])
            {text: 'Patient Name: ' + report.first_name + ' ' + report.last_name, style:"defaultStyle"},
            { text: 'Patient History', style: 'section_heading' },
            { text: 'Vitals', style: 'section_heading' },
-//           	{
-//                style: 'tableExample',
-//                table: {
-//                  headerRows: 1,
-//                  body: getTableRecords(vitals)
-//                }
-//		    },
+           	{
+                style: 'tableExample',
+                table: {
+                  headerRows: 1,
+                  body: getTableRecords($scope.vitalsRecords)
+                }
+		    },
            { text: 'Chief Complaint', style: 'section_heading' },
            { text: 'Exam', style: 'section_heading' },
            { text: 'Neuro', style: 'section_heading' },
@@ -1684,7 +1711,7 @@ angular.module('starter.controllers', [])
                 style: 'tableExample',
                 table: {
                   headerRows: 1,
-                  body: getTableRecords(neuro)
+                  body: getTableRecords($scope.neuroRecords)
                 }
 		    },
            { text: 'Procedures', style: 'section_heading' },
