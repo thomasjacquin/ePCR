@@ -468,22 +468,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
-          },
-          ivIoList: function($stateParams, Records) {
-            return Records.all('iv_io', $stateParams.reportId)
-          },
-          splintingList: function($stateParams, Records) {
-            return Records.all('splinting', $stateParams.reportId)
-          },
-          medicationList: function($stateParams, Records) {
-            return Records.all('medication', $stateParams.reportId)
-          },
-          inOutList: function($stateParams, Records) {
-            return Records.all('in_out', $stateParams.reportId)
-          },
-          ecgList: function($stateParams, Records) {
-            return Records.all('ecg', $stateParams.reportId)
-          },
+          }
         }
       }
     }
@@ -498,18 +483,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
           report: function($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
-          },
-          basicAirwayList: function($stateParams, Records) {
-            return Records.all('airway_basic', $stateParams.reportId)
-          },
-          ventilatorList: function($stateParams, Records) {
-            return Records.all('airway_ventilator', $stateParams.reportId)
-          },
-          cpapBipapList: function($stateParams, Records) {
-            return Records.all('airway_cpap_bipap', $stateParams.reportId)
-          },
-          suctionList: function($stateParams, Records) {
-            return Records.all('airway_suction', $stateParams.reportId)
           }
         }
       }

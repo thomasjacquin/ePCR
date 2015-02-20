@@ -999,12 +999,31 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('AirwayCtrl', function($scope, $webSql, DB_CONFIG, report, basicAirwayList, ventilatorList, cpapBipapList, suctionList) {
+.controller('AirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
-  $scope.basicAirwayNumber = Object.size(basicAirwayList);
-  $scope.ventilatorNumber = Object.size(ventilatorList);
-  $scope.cpapBipapNumber = Object.size(cpapBipapList);
-  $scope.suctionNumber = Object.size(suctionList);
+
+  Records.all('airway_basic', $stateParams.reportId)
+  .then(function(records){
+    $scope.basicAirwayNumber = Object.size(records);
+  })
+  .then(function(){
+     Records.all('airway_ventilator', $stateParams.reportId)
+    .then(function(records){
+      $scope.ventilatorNumber = Object.size(records);
+    })
+    .then(function(){
+      Records.all('airway_cpap_bipap', $stateParams.reportId)
+      .then(function(records){
+        $scope.cpapBipapNumber = Object.size(records);
+      })
+      .then(function(){
+        Records.all('airway_suction', $stateParams.reportId)
+        .then(function(records){
+          $scope.suctionNumber = Object.size(records);
+        })
+      })
+    })
+  });
 })
 
 .controller('BasicAirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
