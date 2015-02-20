@@ -53,7 +53,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/dash',
     views: {
       'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
+        templateUrl: 'templates/dash.html',
         controller: 'DashCtrl'
       }
     }
@@ -63,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       url: '/reports',
       views: {
         'tab-reports': {
-          templateUrl: 'templates/tab-reports.html',
+          templateUrl: 'templates/reports.html',
           controller: 'ReportsCtrl',
           resolve: {
             reports: function(Reports) {
@@ -82,15 +82,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           resolve: {
               report: function($stateParams, Reports) {
                 return Reports.get($stateParams.reportId)
-              },
-              vitals: function($stateParams, Records) {
-                return Records.all('vitals', $stateParams.reportId)
-              },
-              narrative: function($stateParams, Records) {
-                return Records.all('narrative', $stateParams.reportId)
-              },
-              code: function($stateParams, Records) {
-                return Records.all('code', $stateParams.reportId)
               }
           }
         }
@@ -246,9 +237,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         resolve: {
             report: function($stateParams, Reports) {
               return Reports.get($stateParams.reportId)
-            },
-            neuroList: function($stateParams, Records) {
-              return Records.all('neuro', $stateParams.reportId)
             }
         }
       }
@@ -441,7 +429,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   })
   
-  .state('tab.field-delivery', {
+  .state('tab.gyn.field-delivery', {
     url: '/report/:reportId/exam/gyn/field-delivery',
     views: {
       'tab-reports': {
@@ -1018,7 +1006,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/settings',
     views: {
       'tab-account': {
-        templateUrl: 'templates/tab-settings.html',
+        templateUrl: 'templates/settings.html',
         controller: 'SettingsCtrl',
         resolve: {
           settings: function(Records) {
@@ -1033,7 +1021,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/about',
     views: {
       'tab-about': {
-        templateUrl: 'templates/tab-about.html'
+        templateUrl: 'templates/about.html'
       }
     }
   });

@@ -71,6 +71,5 @@ angular.module('starter.services', [])
       })
       return dfd.promise;
     }
-
   }
 })

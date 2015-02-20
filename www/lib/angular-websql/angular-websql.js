@@ -25,7 +25,7 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
 								tx.executeSql(query, values, function(tx, results) {
 									deferred.resolve(results);
 								}, function(tx, e){
-									console.log("There has been an error: " + e.message);
+									console.log("There has been an error: " + query);
 									deferred.reject();
 								});
 							});

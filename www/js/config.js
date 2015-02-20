@@ -1,7 +1,7 @@
 angular.module('ePCR.config', [])
 
   .constant('DB_CONFIG', {
-      name: 'myPCR',
+      name: 'ePCR',
       description: 'Electronic Patient Care Report',
       version: '',
       size: 2 * 1024 * 1024,
@@ -1234,7 +1234,9 @@ angular.module('ePCR.config', [])
       "columns":{
          "id":{
             "type":"INTEGER",
-            "null":"NOT NULL"
+            "null":"NOT NULL",
+            "primary":true,
+            "auto_increment":true
          },
          "first_name":{
             "type":"TEXT"

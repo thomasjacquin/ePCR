@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
   $scope.showDelete = false;
     
   $scope.addReport = function(){
-    db.insert('report', {"profile_picture": "http://lorempixel.com/output/people-q-c-200-200-7.jpg"}).then(function(results) {
+    db.insert('report', {"created": ""}).then(function(results) {
         console.log(results.insertId);
         window.location = '#/tab/report/' + results.insertId;
     });
@@ -36,13 +36,26 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, vitals, narrative, code, $window) {
+.controller('ReportDetailCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, $window, Records) {
   
   $scope.report = report;
   
-  $scope.vitalsNumber = Object.size(vitals);
-  $scope.narrativeNumber = Object.size(narrative);
-  $scope.codeNumber = Object.size(code);
+  Records.all('vitals', $stateParams.reportId)
+  .then(function(vitalsRecords){
+    $scope.vitalsNumber = Object.size(vitalsRecords);
+  })
+  .then(function(){
+     Records.all('narrative', $stateParams.reportId)
+    .then(function(narrativeRecords){
+      $scope.narrativeNumber = Object.size(narrativeRecords);
+    })
+    .then(function(){
+      Records.all('code', $stateParams.reportId)
+      .then(function(codeRecords){
+        $scope.codeNumber = Object.size(codeRecords);
+      })
+    })
+  });
   
   $scope.code = function(){
     $window.location = '#/tab/report/' + $stateParams.reportId + '/code';
@@ -156,7 +169,7 @@ angular.module('starter.controllers', [])
     "temp" : vitals.temp,
     "temp_unit" : vitals.temp_unit,
     "etco2" : vitals.etco2,
-    "pain" : vitals.pain,
+    "pain" : vitals.pain || 0,
   };
   
   console.log($scope.vitals);
@@ -396,9 +409,12 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ExamCtrl', function($scope, $webSql, DB_CONFIG, report, neuroList) {
+.controller('ExamCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
-  $scope.neuroNumber = Object.size(neuroList);
+  Records.all('neuro', $stateParams.reportId)
+  .then(function(neuroRecords){
+    $scope.neuroNumber = Object.size(neuroRecords);
+  })
 })
 
 .controller('NeuroCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, neuro) {
@@ -797,7 +813,8 @@ angular.module('starter.controllers', [])
   
   $scope.fieldDelivery = function(){
     $scope.save();
-    $window.location = '#/tab/report/' + $stateParams.reportId + '/exam/gyn/field-delivery';
+    $state.go('.field-delivery', {reportId: $stateParams.reportId});
+
   }
 
   $scope.save = function(){
@@ -813,9 +830,8 @@ angular.module('starter.controllers', [])
 
 .controller('FieldDeliveryCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
   
-  
-  var apgar1 = typeof(JSON.parse(report.field_delivery_apgar1)) == 'object' ? JSON.parse(report.field_delivery_apgar1) : {};
-  var apgar5 = typeof(JSON.parse(report.field_delivery_apgar5)) == 'object' ? JSON.parse(report.field_delivery_apgar5) : {};
+  var apgar1 = report.field_delivery_apgar1 != null ? JSON.parse(report.field_delivery_apgar1) : {};
+  var apgar5 = report.field_delivery_apgar5 != null ? JSON.parse(report.field_delivery_apgar5) : {};
 
   $scope.field = {
     "field_delivery_presentation" : report.field_delivery_presentation,
@@ -865,8 +881,8 @@ angular.module('starter.controllers', [])
   });
 
   $scope.save = function(){
-     $scope.field.field_delivery_apgar1 = JSON.stringify(apgar1);
-     $scope.field.field_delivery_apgar5 = JSON.stringify(apgar5);
+     $scope.field.field_delivery_apgar1 = Object.size(apgar1) != 0 ? JSON.stringify(apgar1) : null;
+     $scope.field.field_delivery_apgar5 = Object.size(apgar1) != 0 ? JSON.stringify(apgar5) : null;
 
     $scope.field.field_delivery_assessed = true;
     db.update("report", $scope.field, {
@@ -946,18 +962,41 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('ProceduresCtrl', function($scope, $webSql, DB_CONFIG, report, ivIoList, splintingList, medicationList, inOutList, ecgList) {
+.controller('ProceduresCtrl', function($scope, $webSql, $stateParams, DB_CONFIG, report, Records) {
   $scope.report = report;
-  $scope
-  $scope.splintingNumber = Object.size(splintingList);
-  $scope.medicationNumber = Object.size(medicationList);
-  $scope.inOutNumber = Object.size(inOutList);
-  $scope.ecgNumber = Object.size(ecgList);
+
   $scope.procedures = {
-    "spinal_assessed" : report.spinal_assessed == 'true',
-    "ivIoNumber" :  Object.size(ivIoList),
-    "medicationNumber" :  Object.size(medicationList),
+    "spinal_assessed" : report.spinal_assessed == 'true'
   };
+  
+  Records.all('splinting', $stateParams.reportId)
+  .then(function(records){
+    $scope.splintingNumber = Object.size(records);
+  })
+  .then(function(){
+     Records.all('medication', $stateParams.reportId)
+    .then(function(records){
+      $scope.medicationNumber = Object.size(records);
+    })
+    .then(function(){
+      Records.all('in_out', $stateParams.reportId)
+      .then(function(records){
+        $scope.inOutNumber = Object.size(records);
+      })
+      .then(function(){
+        Records.all('ecg', $stateParams.reportId)
+        .then(function(records){
+          $scope.ecgNumber = Object.size(records);
+        })
+        .then(function(){
+          Records.all('iv_io', $stateParams.reportId)
+          .then(function(records){
+            $scope.ivIoNumber = Object.size(records);
+          })
+        })
+      })
+    })
+  });
 })
 
 .controller('AirwayCtrl', function($scope, $webSql, DB_CONFIG, report, basicAirwayList, ventilatorList, cpapBipapList, suctionList) {
@@ -1390,10 +1429,6 @@ angular.module('starter.controllers', [])
   };
 
   $scope.save = function(){
-    
-    console.log($scope.form);
-    
-
     db.update("settings", $scope.form, {
       'id': 1
     }).then(function(){

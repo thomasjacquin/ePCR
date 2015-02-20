@@ -11,7 +11,7 @@ angular.module("database", ['angular-websql', 'ePCR.config'])
         console.log('Table ' + table.name + ' initialized');
       });
       // Create Settings record
-      db.insert('settings', {"id":1}).then(function(results) {
+      db.insert('settings', {"first_name":""}).then(function(results) {
         console.log("Initialized Settings record");
       });
     }
