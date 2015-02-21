@@ -1535,47 +1535,6 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, Camera) {
-  $scope.settings = settings;
-
-  $scope.form = {
-    "first_name": $scope.settings.first_name,
-    "last_name": $scope.settings.last_name,
-    "identification": $scope.settings.identification,
-    "position": $scope.settings.position,
-    "work_place": $scope.settings.work_place,
-    "send_report_to": $scope.settings.send_report_to
-  };
-
-  $scope.getPhoto = function () {
-    var options = {
-      quality: 50,
-      destinationType: Camera.DestinationType.FILE_URI,
-      allowEdit: true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 200,
-      targetHeight: 200,
-      correctOrientation: true,
-      cameraDirection: Camera.Direction.FRONT
-    };
-    Camera.getPicture(options).then(function (imageURI) {
-      console.log(imageURI);
-      $scope.form.photo = imageURI;
-    }, function (err) {
-      console.err(err);
-    });
-  };
-
-  $scope.save = function () {
-    db.update("settings", $scope.form, {
-      'id': 1
-    }).then(function () {
-      console.log("Updated Settings");
-      $window.history.back();
-    });
-  }
-})
-
 .controller('CallInfoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe) {
 
   $scope.ppeList = [];
@@ -1944,6 +1903,59 @@ angular.module('ePCR.controllers', [])
     });
   }
 })
+
+.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, CameraFactory) {
+  $scope.settings = settings;
+  $scope.activeButton = 1;
+
+  $scope.form = {
+    "first_name": $scope.settings.first_name,
+    "last_name": $scope.settings.last_name,
+    "identification": $scope.settings.identification,
+    "position": $scope.settings.position,
+    "work_place": $scope.settings.work_place,
+    "send_report_to": $scope.settings.send_report_to,
+    "photo": $scope.settings.photo
+  };
+
+  $scope.getPhoto = function (fromCamera) {
+    var options = {
+      quality: 50,
+      destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 600,
+      targetHeight: 600,
+      correctOrientation: true,
+      cameraDirection: Camera.Direction.FRONT
+    };
+    CameraFactory.getPicture(options).then(function (imageURI) {
+      console.log(imageURI);
+      $scope.form.photo = imageURI;
+    }, function (err) {
+      console.err(err);
+    });
+  };
+
+  $scope.removePhoto = function () {
+    $scope.form.photo = '';
+  }
+
+  $scope.switchTab = function (tab) {
+    $scope.activeButton = tab;
+  }
+
+  $scope.save = function () {
+    db.update("settings", $scope.form, {
+      'id': 1
+    }).then(function () {
+      console.log("Updated Settings");
+      $window.history.back();
+    });
+  }
+})
+
 
 function getTableRecords(table) {
   var tableRecords = [];

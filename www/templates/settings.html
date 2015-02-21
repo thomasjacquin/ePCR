@@ -1,48 +1,67 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Settings">
+<ion-view view-title="Settings">
   <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="save()">
-         <i class="icon ion-ios-checkmark-outline"></i> Save
-      </button>
-    </ion-nav-buttons>
+    <button class="button button-clear" ng-click="save()">
+      <i class="icon ion-ios-checkmark-outline"></i> Save
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
-    <img ng-src="{{settings.photo}}" style="width: 150px; height: 150px">
-     <button class="button button-positive" ng-click="getPhoto()">Take a profile picture</button>
-      <ion-list>
-        <ion-item class="item-divider">
-            User Info
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">First Name</span>
-          <input type="text" ng-model="form.first_name">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Last Name</span>
-          <input type="text" ng-model="form.last_name">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Identification</span>
-          <input type="text" ng-model="form.identification">
-        </ion-item>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Position</span>
-          <select ng-model="form.position">
-              <option>Paramedic</option>
-              <option>Nurse</option>
-              <option>Medic</option>
-              <option>EMT</option>
-              <option>Firefighter</option>
-          </select>
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Work Place</span>
-          <input type="text" ng-model="form.work_place">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Email reports to</span>
-          <input type="email" ng-model="form.send_report_to">
-        </ion-item>
-      </ion-list>
+    <div class="button-bar bar-positive">
+      <a class="button" ng-class="{'active' : activeButton == 1}" ng-click="switchTab(1)">Profile Picture</a>
+      <a class="button" ng-class="{'active' : activeButton == 2}" ng-click="switchTab(2)">User Info</a>
+    </div>
+    <br>
+    <div ng-show="activeButton == 1">
+     <div class="row">
+       <img ng-src="{{form.photo}}" style="width: 100%">
+     </div>
+     <div class="row">
+      <div class="col">
+        <button class="button button-block button-outline button-positive" ng-click="getPhoto(true)"><i class="icon ion-camera"></i> Camera</button>
+      </div>
+      <div class="col">
+        <button class="button button-block button-outline button-positive" ng-click="getPhoto(false)"><i class="icon ion-images"></i> Library</button>
+      </div>
+      <div class="col">
+        <button class="button button-block button-outline button-positive" ng-click="removePhoto()"><i class="icon ion-close-round"></i> Remove</button>
+      </div>
+     </div>
+    </div>
+    <ion-list ng-show="activeButton == 2">
+      <ion-item class="item-divider">
+        User Info
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">First Name</span>
+        <input type="text" ng-model="form.first_name">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Last Name</span>
+        <input type="text" ng-model="form.last_name">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Identification</span>
+        <input type="text" ng-model="form.identification">
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Position</span>
+        <select ng-model="form.position">
+          <option>Paramedic</option>
+          <option>Nurse</option>
+          <option>Medic</option>
+          <option>EMT</option>
+          <option>Firefighter</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Work Place</span>
+        <input type="text" ng-model="form.work_place">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Email reports to</span>
+        <input type="email" ng-model="form.send_report_to">
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

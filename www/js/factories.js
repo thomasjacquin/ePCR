@@ -1,6 +1,6 @@
 angular.module('customFactories', [])
 
-.factory('Camera', ['$q', function($q) {
+.factory('CameraFactory', ['$q', function($q) {
 
   return {
     getPicture: function(options) {
