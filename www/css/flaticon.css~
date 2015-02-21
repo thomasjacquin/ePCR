@@ -20,66 +20,90 @@ margin-left: 20px;
 .flaticon-brain5:before {
 	content: "\e001";
 }
-.flaticon-clinic2:before {
+.flaticon-breathing:before {
 	content: "\e002";
 }
-.flaticon-contract11:before {
+.flaticon-caution10:before {
 	content: "\e003";
 }
-.flaticon-drugs5:before {
+.flaticon-clinic2:before {
 	content: "\e004";
 }
-.flaticon-ecg2:before {
+.flaticon-contract11:before {
 	content: "\e005";
 }
-.flaticon-electrocardiogram1:before {
+.flaticon-drugs5:before {
 	content: "\e006";
 }
-.flaticon-electrocardiography:before {
+.flaticon-ecg2:before {
 	content: "\e007";
 }
-.flaticon-firstaid:before {
+.flaticon-electrocardiogram1:before {
 	content: "\e008";
 }
-.flaticon-heart27:before {
+.flaticon-electrocardiography:before {
 	content: "\e009";
 }
-.flaticon-litter:before {
+.flaticon-line23:before {
 	content: "\e00a";
 }
-.flaticon-lungs4:before {
+.flaticon-litter:before {
 	content: "\e00b";
 }
-.flaticon-man412:before {
+.flaticon-lungs4:before {
 	content: "\e00c";
 }
-.flaticon-medical1:before {
+.flaticon-man412:before {
 	content: "\e00d";
 }
-.flaticon-medical14:before {
+.flaticon-man55:before {
 	content: "\e00e";
 }
-.flaticon-medical9:before {
+.flaticon-medicalequipment:before {
 	content: "\e00f";
 }
-.flaticon-patient1:before {
+.flaticon-medical1:before {
 	content: "\e010";
 }
-.flaticon-pill:before {
+.flaticon-medical14:before {
 	content: "\e011";
 }
-.flaticon-stethoscope11:before {
+.flaticon-medical50:before {
 	content: "\e012";
 }
-.flaticon-syringe:before {
+.flaticon-medical9:before {
 	content: "\e013";
 }
-.flaticon-vehicle41:before {
+.flaticon-medicine:before {
 	content: "\e014";
 }
-.flaticon-water12:before {
+.flaticon-medkit:before {
 	content: "\e015";
 }
-.flaticon-xray2:before {
+.flaticon-paratrooper:before {
 	content: "\e016";
+}
+.flaticon-patient1:before {
+	content: "\e017";
+}
+.flaticon-pill:before {
+	content: "\e018";
+}
+.flaticon-slide2:before {
+	content: "\e019";
+}
+.flaticon-stethoscope11:before {
+	content: "\e01a";
+}
+.flaticon-syringe:before {
+	content: "\e01b";
+}
+.flaticon-vehicle41:before {
+	content: "\e01c";
+}
+.flaticon-water12:before {
+	content: "\e01d";
+}
+.flaticon-xray2:before {
+	content: "\e01e";
 }

@@ -1,15 +1,15 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Vitals Records">
-    <ion-nav-buttons side="secondary">
-     <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
-      <button class="button button-clear" go-click="tab/report/{{reportId}}/vitals/charts">
-         <i class="icon ion-stats-bars positive"></i> Charts
-      </button>
-      <button class="button button-clear" ng-click="addItem()">
-        <i class="icon ion-ios-plus-outline"></i> Add
-      </button>
-    </ion-nav-buttons>
+<ion-view view-title="Vitals Records">
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
+    <button class="button button-clear" ui-sref="tab.vitals-charts({reportId:reportId})">
+      <i class="icon ion-stats-bars positive"></i> Charts
+    </button>
+    <button class="button button-clear" ng-click="addItem()">
+      <i class="icon ion-ios-plus-outline"></i> Add
+    </button>
+  </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
       <ion-item class="item-icon-left" ng-repeat="vitals in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/vitals/{{vitals.id}}">
@@ -17,7 +17,7 @@
         <h2>{{vitals.created}}</h2>
         <h4>HR:{{vitals.hr}} bpm, Sys:{{vitals.sys}}/Dia:{{vitals.dia}}</h4>
         <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(vitals.id)">
-       </ion-delete-button>
+        </ion-delete-button>
       </ion-item>
     </ion-list>
   </ion-content>

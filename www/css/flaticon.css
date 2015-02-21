@@ -59,42 +59,51 @@ margin-left: 0px;
 .flaticon-man55:before {
 	content: "\e00e";
 }
-.flaticon-medical1:before {
+.flaticon-medicalequipment:before {
 	content: "\e00f";
 }
-.flaticon-medical14:before {
+.flaticon-medical1:before {
 	content: "\e010";
 }
-.flaticon-medical9:before {
+.flaticon-medical14:before {
 	content: "\e011";
 }
-.flaticon-medkit:before {
+.flaticon-medical50:before {
 	content: "\e012";
 }
-.flaticon-paratrooper:before {
+.flaticon-medical9:before {
 	content: "\e013";
 }
-.flaticon-patient1:before {
+.flaticon-medicine:before {
 	content: "\e014";
 }
-.flaticon-pill:before {
+.flaticon-medkit:before {
 	content: "\e015";
 }
-.flaticon-slide2:before {
+.flaticon-paratrooper:before {
 	content: "\e016";
 }
-.flaticon-stethoscope11:before {
+.flaticon-patient1:before {
 	content: "\e017";
 }
-.flaticon-syringe:before {
+.flaticon-pill:before {
 	content: "\e018";
 }
-.flaticon-vehicle41:before {
+.flaticon-slide2:before {
 	content: "\e019";
 }
-.flaticon-water12:before {
+.flaticon-stethoscope11:before {
 	content: "\e01a";
 }
-.flaticon-xray2:before {
+.flaticon-syringe:before {
 	content: "\e01b";
+}
+.flaticon-vehicle41:before {
+	content: "\e01c";
+}
+.flaticon-water12:before {
+	content: "\e01d";
+}
+.flaticon-xray2:before {
+	content: "\e01e";
 }

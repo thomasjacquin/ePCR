@@ -51,8 +51,6 @@ angular.module('starter.services', [])
           for(var i=0; i < results.rows.length; i++){
               list[results.rows.item(i).id] = results.rows.item(i);
           }
-//          console.log(tableName);
-//          console.dir(list);
           dfd.resolve(list);
         });
       return dfd.promise;
