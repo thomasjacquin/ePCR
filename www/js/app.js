@@ -1,11 +1,4 @@
-// Ionic Starter App
-
-// angular.module is a global place for creating, registering and retrieving Angular modules
-// 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
-// the 2nd parameter is an array of 'requires'
-// 'starter.services' is found in services.js
-// 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'customDirectives', 'angular-websql', 'database', 'ePCR.config', 'ngRoute', 'angles'])
+angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.services', 'customDirectives', 'customFactories', 'angular-websql', 'database', 'ePCR.config', 'ngRoute', 'angles'])
 
 .run(function ($ionicPlatform, database) {
   $ionicPlatform.ready(function () {
@@ -24,6 +17,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
+.config(function($compileProvider){
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
+})
+
 .config(function ($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
 
   $ionicConfigProvider.views.maxCache(0);
@@ -34,10 +31,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   $ionicConfigProvider.navBar.positionSecondaryButtons("right");
   $ionicConfigProvider.form.checkbox("circle");
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
   $stateProvider
 
   // setup an abstract state for the tabs directive
@@ -54,7 +47,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     views: {
       'tab-dash': {
         templateUrl: 'templates/dash.html',
-        controller: 'DashCtrl'
+        controller: 'DashCtrl',
+        resolve: {
+            reports: function (Reports) {
+              return Reports.all();
+            }
+          }
       }
     }
   })

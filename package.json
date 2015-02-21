@@ -16,6 +16,7 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "https://github.com/brodysoft/Cordova-SQLitePlugin"
+    "https://github.com/brodysoft/Cordova-SQLitePlugin",
+    "org.apache.cordova.camera"
   ]
 }

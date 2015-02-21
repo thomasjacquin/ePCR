@@ -1,11 +1,7 @@
-angular.module('starter.controllers', [])
+angular.module('ePCR.controllers', [])
 
-.controller('DashCtrl', function ($scope) {})
-
-.controller('AccountCtrl', function ($scope) {
-  $scope.settings = {
-    enablePatients: true
-  };
+.controller('DashCtrl', function ($scope, reports) {
+  $scope.reportsNumber = Object.size(reports);
 })
 
 .controller('ReportsCtrl', function ($scope, $q, $webSql, DB_CONFIG, reports) {
@@ -1302,7 +1298,6 @@ angular.module('starter.controllers', [])
   console.log($scope.splinting);
 
   $scope.save = function () {
-
     db.update("splinting", $scope.splinting, {
       'id': $stateParams.procedureId
     }).then(function () {
@@ -1540,7 +1535,7 @@ angular.module('starter.controllers', [])
   }
 })
 
-.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings) {
+.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, Camera) {
   $scope.settings = settings;
 
   $scope.form = {
@@ -1549,8 +1544,26 @@ angular.module('starter.controllers', [])
     "identification": $scope.settings.identification,
     "position": $scope.settings.position,
     "work_place": $scope.settings.work_place,
-    "send_report_to": $scope.settings.send_report_to,
-    "photo": "http://lorempixel.com/output/people-q-c-200-200-7.jpg"
+    "send_report_to": $scope.settings.send_report_to
+  };
+
+  $scope.getPhoto = function () {
+    var options = {
+      quality: 50,
+      destinationType: Camera.DestinationType.FILE_URI,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 200,
+      targetHeight: 200,
+      correctOrientation: true,
+      cameraDirection: Camera.Direction.FRONT
+    };
+    Camera.getPicture(options).then(function (imageURI) {
+      console.log(imageURI);
+      $scope.form.photo = imageURI;
+    }, function (err) {
+      console.err(err);
+    });
   };
 
   $scope.save = function () {
@@ -1923,7 +1936,9 @@ angular.module('starter.controllers', [])
     db.insert(urlData.tableName, {
       "report_id": $stateParams.reportId
     }).then(function (results) {
-      var params = {"reportId":$stateParams.reportId};
+      var params = {
+        "reportId": $stateParams.reportId
+      };
       params[urlData.indexName] = results.insertId
       $state.go(urlData.newRecordState, params);
     });

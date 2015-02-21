@@ -1,4 +1,4 @@
-angular.module('starter.services', [])
+angular.module('ePCR.services', [])
 
 .service('Reports', function($q, $webSql, DB_CONFIG) {
   var reports = {};
