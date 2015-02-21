@@ -2,37 +2,37 @@
   <ion-content class="padding">
     <div class="list">
 
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/neuro">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.neuro({reportId: reportId})">
       <i class="icon icon-i-neurology"></i>
        Neuro
         <span class="badge badge-balanced">{{neuroNumber}}</span>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/abc">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.abc({reportId: reportId})">
        <i class="icon icon-i-ear-nose-throat"></i>
         ABC
         <i class="icon ion-checkmark-round balanced" ng-show="report.abc_assessed" style="font-size: 25px"></i>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/trauma">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.trauma({reportId: reportId})">
        <i class="icon flaticon-xray2"></i>
         Trauma
          <i class="icon ion-ios-arrow-forward"></i>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/gi">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.gi({reportId: reportId})">
        <i class="icon icon-i-internal-medicine"></i>
         Gastrointestinal
         <i class="icon ion-checkmark-round balanced" ng-show="report.gi_assessed" style="font-size: 25px"></i>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/gu">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.gu({reportId: reportId})">
        <i class="icon icon-i-kidney"></i>
         Genitourinary
         <i class="icon ion-checkmark-round balanced" ng-show="report.gu_assessed" style="font-size: 25px"></i>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/gyn" ng-show="report.gender == 'Female'">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.gyn({reportId: reportId})" ng-show="report.gender == 'Female'">
        <i class="icon icon-i-labor-delivery"></i>
         Ob/Gyn
         <i class="icon ion-checkmark-round balanced" ng-show="report.gyn_assessed" style="font-size: 25px"></i>
       </a>
-      <a class="item item-icon-left item-icon-right" href="#/tab/report/{{report.id}}/exam/muscular">
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.muscular({reportId: reportId})">
        <i class="icon icon-i-physical-therapy"></i>
         Muscular/Skeletal
         <i class="icon ion-checkmark-round balanced" ng-show="report.muscular_has_complaint=='true'" style="font-size: 25px"></i>

@@ -413,6 +413,8 @@ angular.module('starter.controllers', [])
 
 .controller('ExamCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
+  $scope.reportId = $stateParams.reportId;
+  
   Records.all('neuro', $stateParams.reportId)
   .then(function(neuroRecords){
     $scope.neuroNumber = Object.size(neuroRecords);
@@ -524,6 +526,8 @@ angular.module('starter.controllers', [])
 
 .controller('TraumaCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report) {
   $scope.report = report;
+  $scope.reportId = $stateParams.reportId;
+  
   $scope.trauma = {
     "has_trauma": report.has_trauma == 'true'
   }
@@ -973,6 +977,7 @@ angular.module('starter.controllers', [])
 
 .controller('ProceduresCtrl', function($scope, $webSql, $stateParams, DB_CONFIG, report, Records) {
   $scope.report = report;
+  $scope.reportId = $stateParams.reportId;
 
   $scope.procedures = {
     "spinal_assessed" : report.spinal_assessed == 'true'
@@ -1010,6 +1015,7 @@ angular.module('starter.controllers', [])
 
 .controller('AirwayCtrl', function($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
+  $scope.reportId = $stateParams.reportId;
 
   Records.all('airway_basic', $stateParams.reportId)
   .then(function(records){
