@@ -354,12 +354,6 @@ angular.module('ePCR.config', [])
          "gi_pain_location":{
             "type":"TEXT"
          },
-//         "epigastric":{
-//            "type":"BOOLEAN"
-//         },
-//         "suprapubic":{
-//            "type":"BOOLEAN"
-//         },
          "gi_obese":{
             "type":"BOOLEAN"
          },

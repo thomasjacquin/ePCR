@@ -48,3 +48,18 @@ body {
   background-color: #525EAE;
   color: white
 }
+
+#gastro_map img {
+  opacity: 0.5;
+  margin-left: -5px;
+}
+
+#gastro_map>div {
+  border-top: none;
+  border-bottom:none;
+  margin-bottom: -5px;
+}
+
+.region-selected {
+  opacity: 1 !important;
+}

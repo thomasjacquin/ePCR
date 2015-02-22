@@ -815,21 +815,33 @@ angular.module('ePCR.controllers', [])
 
 .controller('GiCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
-
   $scope.gi = {
     "gi_soft": report.gi_soft == 'true',
     "gi_flat": report.gi_flat == 'true',
     "gi_non_distended": report.gi_non_distended == 'true',
     "gi_non_tender": report.gi_non_tender == 'true',
     "gi_rebound": report.gi_rebound == 'true',
+    "gi_pain_location": JSON.parse(report.gi_pain_location) || [],
     "gi_obese": report.gi_obese == 'true',
     "gi_last_bm": report.gi_last_bm,
     "gi_loi": report.gi_loi,
   };
   console.log($scope.gi);
+  
+  $scope.toggleRegion = function (region) {
+    if ($scope.gi.gi_pain_location.indexOf(region) == -1){
+      $scope.gi.gi_pain_location.push(region);
+    } else {
+      $scope.gi.gi_pain_location.splice($scope.gi.gi_pain_location.indexOf(region), 1);
+    }
+    console.log($scope.gi.gi_pain_location);
+  }
+  
+  $scope.isSelected = function(region){
+    return $scope.gi.gi_pain_location.indexOf(region) != -1;
+  }
 
   $scope.save = function () {
-
     $scope.gi.gi_assessed = true;
     db.update("report", $scope.gi, {
       'id': $stateParams.reportId

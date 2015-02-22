@@ -1,81 +1,103 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Gastrointestinal">
+<ion-view view-title="Gastrointestinal">
   <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="save()">
-         <i class="icon ion-ios-checkmark-outline"></i> Save
-      </button>
-    </ion-nav-buttons>
+    <button class="button button-clear" ng-click="save()">
+      <i class="icon ion-ios-checkmark-outline"></i> Save
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
-   <ion-list>
-        <ion-item class="item-divider">
-          Abdomen
-        </ion-item>
-        <ion-item class="item-toggle">
-          Soft
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_soft">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
-        <ion-item class="item-toggle">
-          Flat
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_flat">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
-        <ion-item class="item-toggle">
-          Non Distended
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_non_distended">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
-        <ion-item class="item-toggle">
-          Non Tender
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_non_tender">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
-        <ion-item class="item-toggle">
-          Rebound
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_rebound">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
+    <ion-list>
+      <ion-item class="item-divider">
+        Abdomen
+      </ion-item>
+      <ion-item class="item-toggle">
+        Soft
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_soft">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Flat
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_flat">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Non Distended
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_non_distended">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Non Tender
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_non_tender">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-toggle">
+        Rebound
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_rebound">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
     </ion-list>
     <br>
     <ion-list>
+      <ion-item class="item-divider">
+        Location of Pain
+      </ion-item>
+      <ion-item id="gastro_map">
+        <div>
+          <img style="width:50px" src="img/right_hypochondriac.png" ng-class="{'region-selected': isSelected('right_hypochondriac')}" ng-click="toggleRegion('right_hypochondriac')">
+          <img  style="width:76px" src="img/epigastric.png" ng-class="{'region-selected': isSelected('epigastric')}" ng-click="toggleRegion('epigastric')">
+          <img  style="width:50px" src="img/left_hypochondriac.png" ng-class="{'region-selected': isSelected('left_hypochondriac')}" ng-click="toggleRegion('left_hypochondriac')">
+        </div>
+        <div>
+          <img style="width:50px" src="img/right_lumbar.png" ng-class="{'region-selected': isSelected('right_lumbar')}" ng-click="toggleRegion('right_lumbar')">
+          <img style="width:76px" src="img/umbilical.png" ng-class="{'region-selected': isSelected('umbilical')}" ng-click="toggleRegion('umbilical')">
+          <img style="width:50px" src="img/left_lumbar.png" ng-class="{'region-selected': isSelected('left_lumbar')}" ng-click="toggleRegion('left_lumbar')">
+        </div>
+        <div>
+          <img style="width:50px"src="img/right_iliac.png" ng-class="{'region-selected': isSelected('right_iliac')}" ng-click="toggleRegion('right_iliac')">
+          <img style="width:76px" src="img/hypogastric.png" ng-class="{'region-selected': isSelected('hypogastric')}" ng-click="toggleRegion('hypogastric')">
+          <img style="width:50px" src="img/left_iliac.png" ng-class="{'region-selected': isSelected('left_iliac')}" ng-click="toggleRegion('left_iliac')">
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list>
       <ion-item class="item-toggle">
-          Obese
-           <label class="toggle toggle-balanced">
-             <input type="checkbox" ng-model="gi.gi_obese">
-             <div class="track">
-               <div class="handle"></div>
-             </div>
-          </label>
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Last BM</span>
-          <input type="date" ng-model="gi.gi_last_bm">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Last OI</span>
-          <input type="date" ng-model="gi.gi_last_oi">
-        </ion-item>
+        Obese
+        <label class="toggle toggle-balanced">
+          <input type="checkbox" ng-model="gi.gi_obese">
+          <div class="track">
+            <div class="handle"></div>
+          </div>
+        </label>
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Last BM</span>
+        <input type="date" ng-model="gi.gi_last_bm">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Last OI</span>
+        <input type="date" ng-model="gi.gi_last_oi">
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
