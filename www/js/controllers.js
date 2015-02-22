@@ -623,8 +623,7 @@ angular.module('ePCR.controllers', [])
     "trauma_auto_vehicle_speed": report.trauma_auto_vehicle_speed,
     "trauma_auto_speed_unit": report.trauma_auto_speed_unit,
     "trauma_auto_removed_by": report.trauma_auto_removed_by,
-    "trauma_auto_details_per": report.trauma_auto_details_per,
-    "trauma_auto_photo": report.trauma_auto_photo,
+    "trauma_auto_details_per": report.trauma_auto_details_per
   };
 
   $scope.toggleSeat = function (seat) {
@@ -695,7 +694,6 @@ angular.module('ePCR.controllers', [])
     "trauma_blunt_bleeding": report.trauma_blunt_bleeding == 'true',
     "trauma_blunt_controlled": report.trauma_blunt_controlled == 'true',
     "trauma_blunt_body_parts": JSON.parse(report.trauma_blunt_body_parts),
-    "trauma_blunt_photo": report.trauma_blunt_photo
   };
 
   var bodyPartsInvolved = $scope.blunt.trauma_blunt_body_parts;
@@ -741,7 +739,6 @@ angular.module('ePCR.controllers', [])
     "trauma_fall_bleeding": report.trauma_fall_bleeding == 'true',
     "trauma_fall_controlled": report.trauma_fall_controlled == 'true',
     "trauma_fall_body_parts": JSON.parse(report.trauma_fall_body_parts),
-    "trauma_fall_photo": report.trauma_fall_photo
   };
 
   var bodyPartsInvolved = $scope.fall.trauma_fall_body_parts;
@@ -780,35 +777,60 @@ angular.module('ePCR.controllers', [])
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
     "trauma_burn_body_type": report.trauma_burn_body_type,
-    "trauma_burn_body_parts": JSON.parse(report.trauma_burn_areas),
-    "trauma_burn_body_photo": report.trauma_burn_body_photo
+    "trauma_burn_body_parts": JSON.parse(report.trauma_burn_body_parts) || {},
   };
 
   var bodyPartsInvolved = $scope.burn.trauma_burn_body_parts;
 
-  bodyParts.list.forEach(function (part) {
-    var checked = bodyPartsInvolved != null ? bodyPartsInvolved.indexOf(part) != -1 : false;
-    $scope.bodyPartsList.push({
-      "text": part,
-      "checked": checked
-    })
+  angular.element(document).ready(function () {
+    var bodyFrontSvg = bodyMap();
+    var classMap = {
+      "First": "first-degree",
+      "Second": "second-degree",
+      "Third": "third-degree"
+    }
+
+    // Add click handler
+    for (var i = 0, len = bodyFrontSvg.length; i <= len; i++) {
+      var el = bodyFrontSvg[i];
+      if (el) {
+        el.node.setAttribute("class", classMap[bodyPartsInvolved[el.data('id')]]);
+
+        el.click(function () {
+          var current = bodyPartsInvolved[this.data('id')];
+
+          switch (current) {
+          case 'First':
+            bodyPartsInvolved[this.data('id')] = "Second";
+            this.node.setAttribute("class", classMap["Second"]);
+            break;
+          case 'Second':
+            bodyPartsInvolved[this.data('id')] = "Third";
+            this.node.setAttribute("class", classMap["Third"]);
+            break;
+          case 'Third':
+            delete bodyPartsInvolved[this.data('id')];
+            this.node.setAttribute("class", "");
+            break;
+          default:
+            bodyPartsInvolved[this.data('id')] = "First";
+            this.node.setAttribute("class", classMap["First"]);
+            break;
+          }
+        });
+      }
+    }
   });
 
   $scope.save = function () {
-    var selected = [];
-    $scope.bodyPartsList.forEach(function (value, index) {
-      if (value.checked) {
-        selected.push(value.text);
-      }
-    });
-    $scope.burn.trauma_burn_body_parts = JSON.stringify(selected);
-
+    $scope.burn.trauma_burn_body_parts = JSON.stringify(bodyPartsInvolved);
 
     $scope.burn.trauma_burn_assessed = true;
     db.update("report", $scope.burn, {
       'id': $stateParams.reportId
     }).then(function () {
-      console.log("Updated trauma burn");
+      console.log("Updated trauma fall");
+      $window.history.back();
     });
   }
 })
@@ -827,17 +849,17 @@ angular.module('ePCR.controllers', [])
     "gi_loi": report.gi_loi,
   };
   console.log($scope.gi);
-  
+
   $scope.toggleRegion = function (region) {
-    if ($scope.gi.gi_pain_location.indexOf(region) == -1){
+    if ($scope.gi.gi_pain_location.indexOf(region) == -1) {
       $scope.gi.gi_pain_location.push(region);
     } else {
       $scope.gi.gi_pain_location.splice($scope.gi.gi_pain_location.indexOf(region), 1);
     }
     console.log($scope.gi.gi_pain_location);
   }
-  
-  $scope.isSelected = function(region){
+
+  $scope.isSelected = function (region) {
     return $scope.gi.gi_pain_location.indexOf(region) != -1;
   }
 
@@ -1763,8 +1785,8 @@ angular.module('ePCR.controllers', [])
           value = 'Yes';
         else if (value == 'false')
           value = '';
-        if (records[index][definition.unit]){
-          value += ' ' + records[index][definition.unit]; 
+        if (records[index][definition.unit]) {
+          value += ' ' + records[index][definition.unit];
         }
         row.push(String(value));
       });
@@ -1804,7 +1826,7 @@ angular.module('ePCR.controllers', [])
             .then(function () {
               Records.get('settings', 1)
                 .then(function (record) {
-                console.log(record)
+                  console.log(record)
                   $scope.settingsRecord = record;
                 })
             })
@@ -1926,10 +1948,10 @@ angular.module('ePCR.controllers', [])
     pdfMake.createPdf(docDefinition).open();
 
     // print the PDF (temporarily Chrome-only)
-//         pdfMake.createPdf(docDefinition).print();
+    //         pdfMake.createPdf(docDefinition).print();
 
     // download the PDF (temporarily Chrome-only)
-//         pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+    //         pdfMake.createPdf(docDefinition).download('optionalName.pdf');
   }
 })
 

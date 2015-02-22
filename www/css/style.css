@@ -63,3 +63,15 @@ body {
 .region-selected {
   opacity: 1 !important;
 }
+
+.first-degree {
+  fill: #FF758D;
+}
+
+.second-degree {
+  fill: red;
+}
+
+.third-degree {
+  fill: #222;
+}
