@@ -37,14 +37,14 @@
         <label class="item item-input item-select">
           <span class="input-label">Level of Consciousness</span>
           <select ng-model="vitals.level_of_c">
-              <option value="1">Alert and Oriented x4</option>
-              <option value="2">Alert and Oriented x3</option>
-              <option value="3">Alert and Oriented x2</option>
-              <option value="4">Alert and Oriented x1</option>
-              <option value="5">Alert and Confused</option>
-              <option value="6">Responds to Verbal Stimuli</option>
-              <option value="7">Responds to Painful Stimuli</option>
-              <option value="8">Unresponsive</option>
+              <option>Alert and Oriented x4</option>
+              <option>Alert and Oriented x3</option>
+              <option>Alert and Oriented x2</option>
+              <option>Alert and Oriented x1</option>
+              <option>Alert and Confused</option>
+              <option>Responds to Verbal Stimuli</option>
+              <option>Responds to Painful Stimuli</option>
+              <option>Unresponsive</option>
           </select>
         </label>
         <ion-item class="item-toggle">
@@ -79,24 +79,24 @@
           <span class="input-label">BGL</span>
           <input type="number" ng-model="vitals.bgl" placeholder="BGL">
           <select ng-model="vitals.bgl_unit">
-              <option value="0">mmol/L</option>
-              <option value="1">mg/dL</option>
+              <option>mmol/L</option>
+              <option>mg/dL</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <span class="input-label">ETCO2</span>
           <input type="number" ng-model="vitals.etco2" placeholder="ETCO2">
           <select ng-model="vitals.etco2_unit">
-              <option value="0">%</option>
-              <option value="1">mmHg</option>
+              <option>%</option>
+              <option>mmHg</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <span class="input-label">Temperature</span>
           <input type="number" ng-model="vitals.temp" placeholder="Temperature">
           <select ng-model="vitals.temp_unit">
-              <option value="0">Celsius</option>
-              <option value="1">Farenheit</option>
+              <option>C</option>
+              <option>F</option>
           </select>
         </label>
         <div class="item range range-assertive">

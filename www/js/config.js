@@ -2030,4 +2030,43 @@ angular.module('ePCR.config', [])
         "Isolation gear",
         "Mask"
       ]
+})
+
+.constant('exportTableDefinition', {
+      vitals: {
+        created:{name:"Date"},
+        hr:{name:"Heart Rate"},
+        sys:{name:"Systole"},
+        dia:{name:"Diastole"},
+        fio2:{name:"FiO2"},
+        spo2:{name:"SpO2"},
+        resp:{name:"Resp"},
+        level_of_c:{name:"L.O.C."},
+        left_eye:{name:"Left Eye (mm)"},
+        right_eye:{name:"Right Eye (mm)"},
+        bgl:{name:"BGL", unit: 'bgl_unit'},
+        temp:{name:"Temp", unit: 'temp_unit'},
+        etco2:{name:"etCO2", unit: 'etco2_unit'},
+        pain:{name:"Pain"}
+      },
+      neuro: {
+        avpu:{name:"AVPU"},
+        gcs:{name:"GCS"},
+        luxr:{name:"Left arm Reflex"},
+        ruxr:{name:"Right arm Reflex"},
+        llrx:{name:"Left leg Reflex"},
+        rlxr:{name:"Right leg Reflex"},
+        suspect_stroke:{name:"Suspect Stroke"},
+        facial_droop:{name:"Facial Droop"},
+        arm_drift:{name:"Arm Drift"},
+        speech:{name:"Speech"}
+      },
+      airway_basic: {
+        oxygen_volume:{name:"Volume"},
+        basic_maneuvers:{name:"Maneuver"},
+        opa:{name:"OPA"},
+        npa:{name:"NPA"},
+        bvm:{name:"BVM"},
+        airway_rate:{name:"Rate"}
+      },
 });

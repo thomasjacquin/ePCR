@@ -14,36 +14,36 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Attendant 1</span>
           <select ng-model="call.call_info_attendant1">
-              <option value='0'>Other</option>
-              <option value='1'>Nurse</option>
-              <option value='2'>Medic</option>
+              <option>Other</option>
+              <option>Nurse</option>
+              <option>Medic</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_attendant1 == 0">
+        <ion-item class="item-input" ng-show="call.call_info_attendant1 == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="form.call_info_attendant1_other" placeholder="Other">
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Attendant 2</span>
           <select ng-model="call.call_info_attendant2">
-              <option value='0'>Other</option>
-              <option value='1'>Nurse</option>
-              <option value='2'>Medic</option>
+              <option>Other</option>
+              <option>Nurse</option>
+              <option>Medic</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_attendant2 == 0">
+        <ion-item class="item-input" ng-show="call.call_info_attendant2 == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="call.call_info_attendant2_other" placeholder="Other">
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Driver</span>
           <select ng-model="call.call_info_driver">
-              <option value='0'>Other</option>
-              <option value='1'>Nurse</option>
-              <option value='2'>Medic</option>
+              <option>Other</option>
+              <option>Nurse</option>
+              <option>Medic</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_driver == 0">
+        <ion-item class="item-input" ng-show="call.call_info_driver == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="call.call_info_driver_other" placeholder="Other">
         </ion-item>
@@ -92,13 +92,13 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Transport position</span>
           <select ng-model="call.call_info_transported_position">
-              <option value="0">Sitting</option>
-              <option value="1">Semi-Sitting</option>
-              <option value="2">Prone</option>
-              <option value="3">Supine</option>
-              <option value="4">Fowlers</option>
-              <option value="5">Semi-Fowlers</option>
-              <option value="6">Position of comfort</option>
+              <option>Sitting</option>
+              <option>Semi-Sitting</option>
+              <option>Prone</option>
+              <option>Supine</option>
+              <option>Fowlers</option>
+              <option>Semi-Fowlers</option>
+              <option>Position of comfort</option>
           </select>
         </ion-item>
       </ion-list>
@@ -160,12 +160,12 @@
             </div>
             <div class="col">
               <select ng-model="call.call_info_determinant['2']">
-                  <option value="0">A</option>
-                  <option value="1">B</option>
-                  <option value="2">C</option>
-                  <option value="3">D</option>
-                  <option value="4">E</option>
-                  <option value="5">Omega</option>
+                  <option>A</option>
+                  <option>B</option>
+                  <option>C</option>
+                  <option>D</option>
+                  <option>E</option>
+                  <option>Omega</option>
               </select>
             </div>
             <div class="col">
@@ -181,12 +181,12 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Assistance given by</span>
           <select ng-model="call.call_info_assistance">
-              <option value="0">Police</option>
-              <option value="1">Firefighter</option>
-              <option value="2">Other</option>
+              <option>Police</option>
+              <option>Firefighter</option>
+              <option>Other</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_assistance == 2">
+        <ion-item class="item-input" ng-show="call.call_info_assistance == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="call.call_info_assistance_other" placeholder="Other">
         </ion-item>

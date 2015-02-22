@@ -11,33 +11,33 @@
        <ion-item class="item-input item-select">
           <span class="input-label">Site</span>
           <select ng-model="ivio.site">
-              <option value="0">Hand</option>
-              <option value="1">Wrist</option>
-              <option value="2">Forearm</option>
-              <option value="3">AC</option>
-              <option value="4">Upper arm</option>
-              <option value="5">External jugular</option>
-              <option value="6">Tibial tuberosity</option>
+              <option>Hand</option>
+              <option>Wrist</option>
+              <option>Forearm</option>
+              <option>AC</option>
+              <option>Upper arm</option>
+              <option>External jugular</option>
+              <option>Tibial tuberosity</option>
           </select>
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Side</span>
           <select ng-model="ivio.side">
-              <option value="0">Left</option>
-              <option value="1">Right</option>
+              <option>Left</option>
+              <option>Right</option>
           </select>
         </ion-item>
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Gauge</span>
           <select ng-model="ivio.gauge">
-              <option value="0">14</option>
-              <option value="1">16</option>
-              <option value="1">18</option>
-              <option value="1">20</option>
-              <option value="1">22</option>
-              <option value="1">24</option>
-              <option value="1">IO 18</option>
+              <option>14</option>
+              <option>16</option>
+              <option>18</option>
+              <option>20</option>
+              <option>22</option>
+              <option>24</option>
+              <option>IO 18</option>
           </select>
         </ion-item>
         <ion-item class="item-input">
@@ -56,15 +56,15 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Fluid</span>
           <select ng-model="ivio.fluid">
-              <option value="0">Other</option>
-              <option value="1">Normal Saline</option>
-              <option value="2">Lactate Ringers</option>
-              <option value="3">D5W</option>
-              <option value="4">D10W</option>
-              <option value="5">2/3 &amp; 1/3</option>
+              <option>Other</option>
+              <option>Normal Saline</option>
+              <option>Lactate Ringers</option>
+              <option>D5W</option>
+              <option>D10W</option>
+              <option>2/3 &amp; 1/3</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="ivio.fluid == 0">
+        <ion-item class="item-input" ng-show="ivio.fluid == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="ivio.fluid_other" placeholder="Other fluid">
         </ion-item>

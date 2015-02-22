@@ -143,7 +143,7 @@ angular.module('ePCR.controllers', [])
       name: "Left Eye Diameter"
     },
     {
-      code: "left_eye",
+      code: "right_eye",
       name: "Right Eye Diameter"
     },
     {
@@ -212,6 +212,7 @@ angular.module('ePCR.controllers', [])
     "temp": vitals.temp,
     "temp_unit": vitals.temp_unit,
     "etco2": vitals.etco2,
+    "etco2_unit": vitals.etco2_unit,
     "pain": vitals.pain || 0,
   };
 
@@ -1309,7 +1310,7 @@ angular.module('ePCR.controllers', [])
 
 .controller('MedicationCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure, homeMedications) {
 
-  $scope.medication_list = procedure.medication_type == '0' ? homeMedications.generic.list : homeMedications.brand.list;
+  $scope.medication_list = procedure.medication_type == 'Generic' ? homeMedications.generic.list : homeMedications.brand.list;
   if ($scope.medication_list[0] != "Other")
     $scope.medication_list.unshift("Other");
 
@@ -1329,7 +1330,7 @@ angular.module('ePCR.controllers', [])
   console.log($scope.medication);
 
   $scope.updateMedicationList = function () {
-    if ($scope.medication.medication_type == '0') {
+    if ($scope.medication.medication_type == 'Generic') {
       $scope.medication_list = homeMedications.generic.list;
     } else {
       $scope.medication_list = homeMedications.brand.list;
@@ -1730,8 +1731,36 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('ExportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records) {
+.controller('ExportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
+  var getTableArray = function (records, tableName) {
+    var tableRecords = [];
+
+    var header = [];
+    angular.forEach(exportTableDefinition[tableName], function (definition, field) {
+      header.push(definition.name);
+    });
+
+    tableRecords.push(header);
+
+    for (index in records) {
+      var row = [];
+      angular.forEach(exportTableDefinition[tableName], function (definition, field) {
+        var value = records[index][field] || '';
+        if (value == 'true')
+          value = 'Yes';
+        else if (value == 'false')
+          value = '';
+        if (records[index][definition.unit]){
+          value += ' ' + records[index][definition.unit]; 
+        }
+        row.push(String(value));
+      });
+      tableRecords.push(row);
+    }
+
+    return tableRecords;
+  };
 
   $scope.short_report = true;
   $scope.patient_info = true;
@@ -1756,9 +1785,16 @@ angular.module('ePCR.controllers', [])
           $scope.neuroRecords = records;
         })
         .then(function () {
-          Records.all('code', $stateParams.reportId)
+          Records.all('airway_basic', $stateParams.reportId)
             .then(function (records) {
-              $scope.codeRecords = records;
+              $scope.basicAirwayRecords = records;
+            })
+            .then(function () {
+              Records.get('settings', 1)
+                .then(function (record) {
+                console.log(record)
+                  $scope.settingsRecord = record;
+                })
             })
         })
     });
@@ -1772,6 +1808,9 @@ angular.module('ePCR.controllers', [])
           style: 'header'
         },
            'By Thomas Jacquin',
+//        {
+//			image: $scope.settingsRecord.photo,
+//		},
         {
           text: 'Patient Info',
           style: 'section_heading'
@@ -1792,9 +1831,9 @@ angular.module('ePCR.controllers', [])
           style: 'tableExample',
           table: {
             headerRows: 1,
-            body: getTableRecords($scope.vitalsRecords)
+            body: getTableArray($scope.vitalsRecords, 'vitals')
           }
-      },
+        },
         {
           text: 'Chief Complaint',
           style: 'section_heading'
@@ -1811,12 +1850,23 @@ angular.module('ePCR.controllers', [])
           style: 'tableExample',
           table: {
             headerRows: 1,
-            body: getTableRecords($scope.neuroRecords)
+            body: getTableArray($scope.neuroRecords, 'neuro')
           }
-      },
+        },
         {
           text: 'Procedures',
           style: 'section_heading'
+        },
+        {
+          text: 'Basic Airway',
+          style: 'section_heading'
+        },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
+          }
         },
         {
           text: 'Signatures',
@@ -1864,10 +1914,10 @@ angular.module('ePCR.controllers', [])
     pdfMake.createPdf(docDefinition).open();
 
     // print the PDF (temporarily Chrome-only)
-    //     pdfMake.createPdf(docDefinition).print();
+//         pdfMake.createPdf(docDefinition).print();
 
     // download the PDF (temporarily Chrome-only)
-    //     pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+//         pdfMake.createPdf(docDefinition).download('optionalName.pdf');
   }
 })
 
@@ -1956,33 +2006,6 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-
-function getTableRecords(table) {
-  var tableRecords = [];
-
-  var header = [];
-  for (field in table[Object.keys(table)[0]]) {
-    if (field != 'id' && field != 'report_id') {
-      header.push(String(field));
-    }
-  }
-  tableRecords.push(header);
-
-  for (index in table) {
-    var header = [];
-    var row = [];
-    for (field in table[index]) {
-      if (field != 'id' && field != 'report_id') {
-        var value = table[index][field] || '';
-        header.push(String(field));
-        row.push(String(value));
-      }
-    }
-    tableRecords.push(row);
-  }
-
-  return tableRecords;
-}
 
 function deleteDatebase($webSql, DB_CONFIG) {
 

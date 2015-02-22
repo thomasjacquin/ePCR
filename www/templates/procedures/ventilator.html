@@ -11,15 +11,15 @@
       <ion-item class="item-input item-select">
         <span class="input-label">Control</span>
         <select ng-model="ventilator.control">
-          <option value="0">Pressure</option>
-          <option value="1">Volume</option>
+          <option>Pressure</option>
+          <option>Volume</option>
         </select>
       </ion-item>
       <ion-item class="item-input item-select">
         <span class="input-label">Mode</span>
         <select ng-model="ventilator.mode">
-          <option value="0">SIMV</option>
-          <option value="1">Assist/Ctrl</option>
+          <option>SIMV</option>
+          <option>Assist/Ctrl</option>
         </select>
       </ion-item>
       <ion-item class="item-input">
@@ -58,27 +58,27 @@
         <input type="number" ng-model="ventilator.sensitivity" placeholder="Sensitivity">
         <span class="input-label">/min</span>
       </ion-item>
-      <ion-item class="item-input" ng-show="ventilator.control == 0">
+      <ion-item class="item-input" ng-show="ventilator.control == 'Pressure'">
         <span class="input-label">Expiration pressure</span>
         <input type="number" ng-model="ventilator.expiration_pressure" placeholder="Expiration pressure">
         <span class="input-label">cm H<sub>2</sub>O</span>
       </ion-item>
-      <ion-item class="item-input" ng-show="ventilator.control == 0">
+      <ion-item class="item-input" ng-show="ventilator.control == 'Pressure'">
         <span class="input-label">Expiration tidal volume</span>
         <input type="number" ng-model="ventilator.expiration_tidal_volume" placeholder="Expiration tidal volume">
         <span class="input-label">mL</span>
       </ion-item>
-      <ion-item class="item-input" ng-show="ventilator.control == 0">
+      <ion-item class="item-input" ng-show="ventilator.control == 'Pressure'">
         <span class="input-label">Max inspiration pressure</span>
         <input type="number" ng-model="ventilator.max_inspiration_pressure" placeholder="Max inspiration Pressure">
         <span class="input-label">cm H<sub>2</sub>O</span>
       </ion-item>
-      <ion-item class="item-input" ng-show="ventilator.mode == 0">
+      <ion-item class="item-input" ng-show="ventilator.mode == 'SIMV'">
         <span class="input-label">Pressure support</span>
         <input type="number" ng-model="ventilator.pressure_support" placeholder="Pressure support">
         <span class="input-label">cm H<sub>2</sub>O</span>
       </ion-item>
-      <ion-item class="item-input" ng-show="ventilator.control == 1">
+      <ion-item class="item-input" ng-show="ventilator.control == 'Volume'">
         <span class="input-label">Plateau pressure</span>
         <input type="number" ng-model="ventilator.plateau_pressure" placeholder="Plateau pressure">
         <span class="input-label">cm H<sub>2</sub>O</span>

@@ -11,13 +11,13 @@
     <ion-item class="item-input item-select">
       <span class="input-label">Vehicle</span>
       <select ng-model="auto.trauma_auto_vehicle">
-        <option value="0">Car</option>
-        <option value="1">Truck</option>
-        <option value="2">Motorcycle</option>
-        <option value="3">Sidecar</option>
+        <option>Car</option>
+        <option>Truck</option>
+        <option>Motorcycle</option>
+        <option>Sidecar</option>
       </select>
     </ion-item>
-    <ion-item ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+    <ion-item ng-show="auto.trauma_auto_vehicle == 'Car' || auto.trauma_auto_vehicle == 'Truck'">
       <span class="label left">Seat where patient was seated</span>
       <div id="car_outline" style="display: block;">
         <div class="car_front_wheels"></div>
@@ -36,7 +36,7 @@
         <div class="car_steering_wheel" id="car_steering_wheel"></div>
       </div>
     </ion-item>
-     <ion-item ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+     <ion-item ng-show="auto.trauma_auto_vehicle == 'Motorcycle' || auto.trauma_auto_vehicle == 'Sidecar'">
       <span class="label left">Seat where patient was seated</span>
       <div id="motorcycle_outline" style="display: block;">
         <div class="moto_side_wheel_axe"></div>
@@ -54,7 +54,7 @@
         </div>
       </div>
      </ion-item>
-    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 'Car' || auto.trauma_auto_vehicle == 'Truck'">
       Seatbelt
        <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_seatbelt">
@@ -63,7 +63,7 @@
          </div>
       </label>
     </ion-item>
-    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 0 || auto.trauma_auto_vehicle == 1">
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 'Car' || auto.trauma_auto_vehicle == 'Truck'">
       Airbag Deployed
        <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_airbag">
@@ -72,7 +72,7 @@
          </div>
       </label>
     </ion-item>
-    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 'Motorcycle' || auto.trauma_auto_vehicle == 'Sidecar'">
      Helmet
        <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_helmet">
@@ -81,7 +81,7 @@
          </div>
       </label>
     </ion-item>
-    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 2 || auto.trauma_auto_vehicle == 3">
+    <ion-item class="item-toggle" ng-show="auto.trauma_auto_vehicle == 'Motorcycle' || auto.trauma_auto_vehicle == 'Sidecar'">
       Leathers
        <label class="toggle toggle-balanced">
          <input type="checkbox" ng-model="auto.trauma_auto_leathers">
@@ -105,19 +105,19 @@
     <ion-item class="item-input item-select">
       <span class="input-label">Patient removed by</span>
       <select ng-model="auto.trauma_auto_removed_by">
-        <option value="0">Driver</option>
-        <option value="1">Passenger</option>
-        <option value="2">Bystander</option>
-        <option value="3">Police</option>
+        <option>Driver</option>
+        <option>Passenger</option>
+        <option>Bystander</option>
+        <option>Police</option>
       </select>
     </ion-item>
     <ion-item class="item-input item-select">
       <span class="input-label">Details given by</span>
       <select ng-model="auto.trauma_auto_details_per">
-        <option value="0">Driver</option>
-        <option value="1">Passenger</option>
-        <option value="2">Bystander</option>
-        <option value="3">Police</option>
+        <option>Driver</option>
+        <option>Passenger</option>
+        <option>Bystander</option>
+        <option>Police</option>
       </select>
     </ion-item>
     </ion-list>

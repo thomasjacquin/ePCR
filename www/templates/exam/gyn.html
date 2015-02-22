@@ -38,15 +38,15 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Pregnant</span>
           <select ng-model="gyn.gyn_pregnant">
-            <option value="0">Yes</option>
-            <option value="1">No</option>
-            <option value="2">Possibly</option>
-            <option value="3">Unknown</option>
+            <option>Yes</option>
+            <option>No</option>
+            <option>Possibly</option>
+            <option>Unknown</option>
           </select>
         </ion-item>
       </ion-list>
       
-      <ion-list ng-show="gyn.gyn_pregnant == 0">
+      <ion-list ng-show="gyn.gyn_pregnant == 'Yes'">
        <br>
         <ion-item class="item-divider">
           Pregnancy
@@ -143,37 +143,37 @@
       <ion-item class="item item-input item-select" ng-show="gyn.peripheral_edema">
         <div class="input-label">Edema Location</div>
         <select ng-model="gyn.peripheral_edema_location">
-          <optgroup label="Lower Extremities"> 
-              <option value="ankle">Ankle</option>
-              <option value="midcalf">Mid Calf</option>
-              <option value="knee">Knee</option>
+           <optgroup label="Lower Extremities"> 
+              <option>Ankle</option>
+              <option>Mid Calf</option>
+              <option>Knee</option>
           </optgroup><optgroup label="Upper Extremities"> 
-              <option value="fingers">Fingers</option>
-              <option value="hand">Hand</option>
-              <option value="wrist">Wrist</option>
-              <option value="midforearm">Mid Forearm</option>
-              <option value="elbow">Elbow</option>
+              <option>Fingers</option>
+              <option>Hand</option>
+              <option>Wrist</option>
+              <option>Mid Forearm</option>
+              <option>Elbow</option>
           </optgroup><optgroup label="Pulmonary"> 
-              <option value="bases">Bases</option>
-              <option value="lowerlobes">Lower Lobes</option>
-              <option value="midway">Midway</option>
-              <option value="upperlobes">Upper Lobes</option>
-              <option value="apex">Apex</option>
+              <option>Bases</option>
+              <option>Lower Lobes</option>
+              <option>Midway</option>
+              <option>Upper Lobes</option>
+              <option>Apex</option>
           </optgroup><optgroup label="Facial"> 
-              <option value="face">Face</option>
-              <option value="eyes">Eyes</option>
-              <option value="mouth">Mouth</option>
-              <option value="throat">Throat</option>
+              <option>Face</option>
+              <option>Eyes</option>
+              <option>Mouth</option>
+              <option>Throat</option>
         </select>
       </ion-item>
       <ion-item class="item item-input item-select" ng-show="gyn.peripheral_edema">
         <div class="input-label">Edema Severity</div>
         <select ng-model="gyn.peripheral_edema_severity">
-          <option value="0">Non Pitting</option>
-          <option value="1">+1</option>
-          <option value="2">+2</option>
-          <option value="3">+3</option>
-          <option value="4">+4</option>
+          <option>Non Pitting</option>
+          <option>+1</option>
+          <option>+2</option>
+          <option>+3</option>
+          <option>+4</option>
         </select>
       </ion-item>
   </ion-content>

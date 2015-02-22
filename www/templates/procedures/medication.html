@@ -11,8 +11,8 @@
          <ion-item class="item-input item-select">
           <span class="input-label">Medication name</span>
           <select ng-model="medication.medication_type" ng-change="updateMedicationList()">
-              <option value="0">Generic</option>
-              <option value="1">Brand</option>
+              <option>Generic</option>
+              <option>Brand</option>
           </select>
         </ion-item>
         <ion-item class="item-input item-select">
@@ -28,36 +28,36 @@
           <span class="input-label">Dose</span>
           <input type="text" ng-model="medication.dose" placeholder="Dose">
           <select ng-model="medication.dose_unit">
-              <option value="0">mg</option>
-              <option value="1">mcg</option>
-              <option value="2">G</option>
-              <option value="3">units</option>
-              <option value="4">L</option>
+              <option>mg</option>
+              <option>mcg</option>
+              <option>G</option>
+              <option>units</option>
+              <option>L</option>
           </select>
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Route</span>
           <select ng-model="medication.route">
-              <option value="0">Other</option>
-              <option value="1">SIVP</option>
-              <option value="2">IVP</option> 
-              <option value="3">RIVP</option> 
-              <option value="4">IM</option> 
-              <option value="5">SQ</option> 
-              <option value="6">SL</option> 
-              <option value="7">PO</option> 
-              <option value="8">Buccal</option> 
-              <option value="9">Rectal</option> 
-              <option value="10">Neb</option> 
-              <option value="11">Ocular</option> 
-              <option value="12">Nasal</option> 
-              <option value="13">Intra</option> 	
-              <option value="14">Lingual</option> 
-              <option value="15">Percutanious</option> 
-              <option value="16">Transdermal</option> 
+              <option>Other</option>
+              <option>SIVP</option>
+              <option>IVP</option> 
+              <option>RIVP</option> 
+              <option>IM</option> 
+              <option>SQ</option> 
+              <option>SL</option> 
+              <option>PO</option> 
+              <option>Buccal</option> 
+              <option>Rectal</option> 
+              <option>Neb</option> 
+              <option>Ocular</option> 
+              <option>Nasal</option> 
+              <option>Intra</option> 	
+              <option>Lingual</option> 
+              <option>Percutanious</option> 
+              <option>Transdermal</option> 
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="medication.route == 0">
+        <ion-item class="item-input" ng-show="medication.route == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="medication.route_other" placeholder="Route other">
         </ion-item>
@@ -68,12 +68,12 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Administrated</span>
           <select ng-model="medication.administrated">
-              <option value="0">Other</option>
-              <option value="1">Self</option>
-              <option value="2">Partner</option>
+              <option>Other</option>
+              <option>Self</option>
+              <option>Partner</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="medication.administrated == 0">
+        <ion-item class="item-input" ng-show="medication.administrated == 'Other'">
           <span class="input-label">Other</span>
           <input type="text" ng-model="medication.administrated_other" placeholder="Indication">
         </ion-item>
