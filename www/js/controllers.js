@@ -777,7 +777,7 @@ angular.module('ePCR.controllers', [])
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
     "trauma_burn_body_type": report.trauma_burn_body_type,
-    "trauma_burn_body_parts": JSON.parse(report.trauma_burn_body_parts) || {},
+    "trauma_burn_body_parts": report.trauma_burn_body_parts != undefined ? JSON.parse(report.trauma_burn_body_parts) : {},
   };
 
   var bodyPartsInvolved = $scope.burn.trauma_burn_body_parts;
@@ -791,33 +791,35 @@ angular.module('ePCR.controllers', [])
     }
 
     // Add click handler
-    for (var i = 0, len = bodyFrontSvg.length; i <= len; i++) {
-      var el = bodyFrontSvg[i];
-      if (el) {
-        el.node.setAttribute("class", classMap[bodyPartsInvolved[el.data('id')]]);
+    for (side in bodyFrontSvg) {
+      for (var i = 0, len = bodyFrontSvg[side].length; i <= len; i++) {
+        var el = bodyFrontSvg[side][i];
+        if (el) {
+          el.node.setAttribute("class", classMap[bodyPartsInvolved[el.data('id')]]);
 
-        el.click(function () {
-          var current = bodyPartsInvolved[this.data('id')];
+          el.click(function () {
+            var current = bodyPartsInvolved[this.data('id')];
 
-          switch (current) {
-          case 'First':
-            bodyPartsInvolved[this.data('id')] = "Second";
-            this.node.setAttribute("class", classMap["Second"]);
-            break;
-          case 'Second':
-            bodyPartsInvolved[this.data('id')] = "Third";
-            this.node.setAttribute("class", classMap["Third"]);
-            break;
-          case 'Third':
-            delete bodyPartsInvolved[this.data('id')];
-            this.node.setAttribute("class", "");
-            break;
-          default:
-            bodyPartsInvolved[this.data('id')] = "First";
-            this.node.setAttribute("class", classMap["First"]);
-            break;
-          }
-        });
+            switch (current) {
+            case 'First':
+              bodyPartsInvolved[this.data('id')] = "Second";
+              this.node.setAttribute("class", classMap["Second"]);
+              break;
+            case 'Second':
+              bodyPartsInvolved[this.data('id')] = "Third";
+              this.node.setAttribute("class", classMap["Third"]);
+              break;
+            case 'Third':
+              delete bodyPartsInvolved[this.data('id')];
+              this.node.setAttribute("class", "");
+              break;
+            default:
+              bodyPartsInvolved[this.data('id')] = "First";
+              this.node.setAttribute("class", classMap["First"]);
+              break;
+            }
+          });
+        }
       }
     }
   });

@@ -1,16 +1,26 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Burn">
+<ion-view view-title="Burn">
   <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="save()">
-         <i class="icon ion-ios-checkmark-outline"></i> Save
-      </button>
-    </ion-nav-buttons>
+    <button class="button button-clear" ng-click="save()">
+      <i class="icon ion-ios-checkmark-outline"></i> Save
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
-   <ion-list>
-       <ion-item>
-         <div id="body"></div>
-       </ion-item>
+    <ion-list>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Body type</span>
+        <select ng-model="burn.trauma_burn_body_parts">
+          <option>Adult</option>
+          <option>Obese</option>
+          <option>Child</option>
+          <option>Infant</option>
+        </select>
+      </ion-item>
+      <ion-item class="row">
+        <div id="body_front" class="col"></div>
+        <div id="body_back" class="col"></div>
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
