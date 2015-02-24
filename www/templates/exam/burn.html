@@ -9,6 +9,13 @@
   <ion-content class="padding">
     <ion-list>
       <ion-item class="item-input item-select">
+        <span class="input-label">Method</span>
+        <select ng-model="burn.trauma_burn_method">
+          <option>Rule of 9</option>
+          <option>Lund Browder</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-input item-select">
         <span class="input-label">Body type</span>
         <select ng-model="burn.trauma_burn_body_parts">
           <option>Adult</option>
@@ -17,9 +24,13 @@
           <option>Infant</option>
         </select>
       </ion-item>
-      <ion-item class="row">
-        <div id="body_front" class="col"></div>
-        <div id="body_back" class="col"></div>
+      <ion-item class="row" ng-show="burn.trauma_burn_method=='Rule of 9'">
+        <div id="rule_9_front" class="col"></div>
+        <div id="rule_9_back" class="col"></div>
+      </ion-item>
+      <ion-item class="row" ng-show="burn.trauma_burn_method=='Lund Browder'">
+        <div id="lb_front" class="col"></div>
+        <div id="lb_back" class="col"></div>
       </ion-item>
     </ion-list>
   </ion-content>

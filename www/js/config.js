@@ -315,6 +315,9 @@ angular.module('ePCR.config', [])
         "trauma_burn_body_type": {
           "type": "TEXT"
         },
+        "trauma_burn_method": {
+          "type": "TEXT"
+        },
         "trauma_burn_body_parts": {
           "type": "TEXT"
         },
