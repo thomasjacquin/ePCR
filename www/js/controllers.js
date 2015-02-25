@@ -771,19 +771,59 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('TraumaBurnCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+.controller('TraumaBurnCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts, body_parts_area, $timeout) {
 
+  var bodySvg = null;
   $scope.bodyPartsList = [];
+  $scope.totalSurface = 0;
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
+    "trauma_burn_method": report.trauma_burn_method,
     "trauma_burn_body_type": report.trauma_burn_body_type,
+    "trauma_burn_age": report.trauma_burn_age || 'adult',
     "trauma_burn_body_parts": report.trauma_burn_body_parts != undefined ? JSON.parse(report.trauma_burn_body_parts) : {},
   };
 
   var bodyPartsInvolved = $scope.burn.trauma_burn_body_parts;
 
-  angular.element(document).ready(function () {
-    var bodyFrontSvg = bodyMap();
+  $scope.calculateTotalSurface = function () {
+    var totalSurface = 0;
+    angular.forEach(bodyPartsInvolved, function (partObject, partName) {
+      var severity = bodyPartsInvolved[partName];
+      if (severity == 'Second' || severity == 'Third') {
+        var age = $scope.burn.trauma_burn_age;
+        var method = $scope.burn.trauma_burn_method;
+        var method_surfaces = body_parts_area[method];
+        if (method_surfaces[partName]) {
+          var surface = typeof (method_surfaces[partName]) == 'object' ? method_surfaces[partName][age] : method_surfaces[partName];
+          totalSurface += surface;
+          console.log(method + ' ' + partName + ':' + surface);
+          console.log(totalSurface);
+        }
+      }
+    });
+    $timeout(function () {
+      $scope.totalSurface = totalSurface;
+    });
+  };
+
+  $scope.calculateTotalSurface();
+
+  $scope.resetBodyPartsInvolved = function () {
+    bodyPartsInvolved = {};
+    $scope.calculateTotalSurface();
+    for (side in bodySvg) {
+      for (var i = 0, len = bodySvg[side].length; i <= len; i++) {
+        var el = bodySvg[side][i];
+        if (el) {
+          el.node.setAttribute("class","");
+        }
+      }
+    }
+  }
+
+  $scope.fillColors = function () {
+    bodySvg = bodyMap();
     var classMap = {
       "First": "first-degree",
       "Second": "second-degree",
@@ -791,37 +831,44 @@ angular.module('ePCR.controllers', [])
     }
 
     // Add click handler
-    for (side in bodyFrontSvg) {
-      for (var i = 0, len = bodyFrontSvg[side].length; i <= len; i++) {
-        var el = bodyFrontSvg[side][i];
+    for (side in bodySvg) {
+      for (var i = 0, len = bodySvg[side].length; i <= len; i++) {
+        var el = bodySvg[side][i];
         if (el) {
           el.node.setAttribute("class", classMap[bodyPartsInvolved[el.data('id')]]);
 
           el.click(function () {
-            var current = bodyPartsInvolved[this.data('id')];
+            var part = this.data('id');
+            var current = bodyPartsInvolved[part];
 
             switch (current) {
             case 'First':
-              bodyPartsInvolved[this.data('id')] = "Second";
+              bodyPartsInvolved[part] = "Second";
               this.node.setAttribute("class", classMap["Second"]);
               break;
             case 'Second':
-              bodyPartsInvolved[this.data('id')] = "Third";
+              bodyPartsInvolved[part] = "Third";
               this.node.setAttribute("class", classMap["Third"]);
               break;
             case 'Third':
-              delete bodyPartsInvolved[this.data('id')];
+              delete bodyPartsInvolved[part];
               this.node.setAttribute("class", "");
               break;
             default:
-              bodyPartsInvolved[this.data('id')] = "First";
+              bodyPartsInvolved[part] = "First";
               this.node.setAttribute("class", classMap["First"]);
               break;
             }
+
+            $scope.calculateTotalSurface();
           });
         }
       }
     }
+  }
+
+  angular.element(document).ready(function () {
+    $scope.fillColors();
   });
 
   $scope.save = function () {

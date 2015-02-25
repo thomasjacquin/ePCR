@@ -10,27 +10,41 @@
     <ion-list>
       <ion-item class="item-input item-select">
         <span class="input-label">Method</span>
-        <select ng-model="burn.trauma_burn_method">
-          <option>Rule of 9</option>
-          <option>Lund Browder</option>
+        <select ng-model="burn.trauma_burn_method" ng-change="resetBodyPartsInvolved()">
+          <option value='rule_of_9'>Rule of 9</option>
+          <option value='lund_browder'>Lund Browder</option>
         </select>
       </ion-item>
-      <ion-item class="item-input item-select">
+      <ion-item class="item-input item-select" ng-show="burn.trauma_burn_method=='rule_of_9'">
         <span class="input-label">Body type</span>
-        <select ng-model="burn.trauma_burn_body_parts">
+        <select ng-model="burn.trauma_burn_body_type">
           <option>Adult</option>
           <option>Obese</option>
           <option>Child</option>
           <option>Infant</option>
         </select>
       </ion-item>
-      <ion-item class="row" ng-show="burn.trauma_burn_method=='Rule of 9'">
-        <div id="rule_9_front" class="col"></div>
-        <div id="rule_9_back" class="col"></div>
+      <ion-item class="item-input item-select"  ng-show="burn.trauma_burn_method=='lund_browder'">
+        <span class="input-label">Age</span>
+        <select ng-model="burn.trauma_burn_age">
+          <option value=0>0 year</option>
+          <option value=1>1 year</option>
+          <option value=5>5 years</option>
+          <option value=10>10 years</option>
+          <option value=15>15 years</option>
+          <option value=adult>Adult</option>
+        </select>
       </ion-item>
-      <ion-item class="row" ng-show="burn.trauma_burn_method=='Lund Browder'">
-        <div id="lb_front" class="col"></div>
-        <div id="lb_back" class="col"></div>
+      <ion-item class="row" ng-show="burn.trauma_burn_method=='rule_of_9'">
+        <div id="rule_9_front"></div>
+        <div id="rule_9_back"></div>
+      </ion-item>
+      <ion-item class="row" style="margin-top:0px; padding:5px" ng-show="burn.trauma_burn_method=='lund_browder'">
+        <div id="lb_front"></div>
+        <div id="lb_back"></div>
+      </ion-item>
+      <ion-item>
+        <p>Total burn purcentage: {{totalSurface}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

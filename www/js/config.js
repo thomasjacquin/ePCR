@@ -1,3 +1,30 @@
+var headSurface = {
+  0: 9.5,
+  1: 8.5,
+  5: 6.5,
+  10: 5.5,
+  15: 4.5,
+  adult: 3.5
+};
+
+var upperLegSurface = {
+  0: 9.5,
+  1: 8.5,
+  5: 6.5,
+  10: 5.5,
+  15: 4.5,
+  adult: 3.5
+};
+
+var lowerLegSurface = {
+  0: 9.5,
+  1: 8.5,
+  5: 6.5,
+  10: 5.5,
+  15: 4.5,
+  adult: 3.5
+};
+
 angular.module('ePCR.config', [])
 
 .constant('DB_CONFIG', {
@@ -313,6 +340,9 @@ angular.module('ePCR.config', [])
           "type": "INTEGER"
         },
         "trauma_burn_body_type": {
+          "type": "TEXT"
+        },
+        "trauma_burn_age": {
           "type": "TEXT"
         },
         "trauma_burn_method": {
@@ -2113,5 +2143,60 @@ angular.module('ePCR.config', [])
     airway_rate: {
       name: "Rate"
     }
+  }
+})
+
+.constant('body_parts_area', {
+  rule_of_9: {
+    head_front: 4.5,
+    head_back: 4.5,
+    chest: 9,
+    abdomen: 9,
+    upper_back: 9,
+    lower_back: 9,
+    groin: 1,
+    left_arm_front: 4.5,
+    left_arm_back: 4.5,
+    right_arm_front: 4.5,
+    right_arm_back: 4.5,
+    left_leg_front: 9,
+    left_leg_back: 9,
+    right_leg_front: 9,
+    right_leg_back: 9
   },
-});
+  lund_browder: {
+    head_front: headSurface,
+    head_back: headSurface,
+    neck_front: 1,
+    neck_back: 1,
+    chest: 13,
+    back: 13,
+    left_buttock: 2.5,
+    right_buttock: 2.5,
+    groin: 1,
+    left_arm_front: 2,
+    left_arm_back: 2,
+    left_forearm_front: 1.5,
+    left_forearm_back: 1.5,
+    left_hand_front: 1.5,
+    left_hand_back: 1.5,
+    right_arm_front: 2,
+    right_arm_back: 2,
+    right_forearm_front: 1.5,
+    right_forearm_back: 1.5,
+    right_hand_front: 1.5,
+    right_hand_back: 1.5,
+    left_upper_leg_front: upperLegSurface,
+    left_upper_leg_back: upperLegSurface,
+    left_lower_leg_front: lowerLegSurface,
+    left_lower_leg_back: lowerLegSurface,
+    left_foot_front: 1.75,
+    left_foot_back: 1.75,
+    right_upper_leg_front: upperLegSurface,
+    right_upper_leg_back: upperLegSurface,
+    right_lower_leg_front: lowerLegSurface,
+    right_lower_leg_back: lowerLegSurface,
+    right_foot_front: 1.75,
+    right_foot_back: 1.75
+  }
+})
