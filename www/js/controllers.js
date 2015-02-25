@@ -776,6 +776,9 @@ angular.module('ePCR.controllers', [])
   var bodySvg = null;
   $scope.bodyPartsList = [];
   $scope.totalSurface = 0;
+  $scope.ptl = 0;
+  $scope.ftl = 0;
+  
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
     "trauma_burn_method": report.trauma_burn_method,
@@ -788,6 +791,8 @@ angular.module('ePCR.controllers', [])
 
   $scope.calculateTotalSurface = function () {
     var totalSurface = 0;
+    var ptl = 0;
+    var ftl = 0;
     angular.forEach(bodyPartsInvolved, function (partObject, partName) {
       var severity = bodyPartsInvolved[partName];
       if (severity == 'Second' || severity == 'Third') {
@@ -799,13 +804,15 @@ angular.module('ePCR.controllers', [])
         if (method_surfaces[partName]) {
           var surface = typeof (method_surfaces[partName]) == 'object' ? method_surfaces[partName][criteria] : method_surfaces[partName];
           totalSurface += surface;
-          console.log(method + ' ' + partName + ':' + surface);
-          console.log(totalSurface);
+          ptl += severity == "Second" ? surface : 0;
+          ftl += severity == "Third" ? surface : 0;
         }
       }
     });
     $timeout(function () {
       $scope.totalSurface = totalSurface;
+      $scope.ptl = ptl;
+      $scope.ftl = ftl;
     });
   };
 

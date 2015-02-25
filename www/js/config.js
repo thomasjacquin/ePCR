@@ -8,20 +8,20 @@ var headSurface = {
 };
 
 var upperLegSurface = {
-  0: 9.5,
-  1: 8.5,
-  5: 6.5,
-  10: 5.5,
+  0: 2.75,
+  1: 3.25,
+  5: 4,
+  10: 4.5,
   15: 4.5,
-  adult: 3.5
+  adult: 4.75
 };
 
 var lowerLegSurface = {
-  0: 9.5,
-  1: 8.5,
-  5: 6.5,
-  10: 5.5,
-  15: 4.5,
+  0: 2.5,
+  1: 2.5,
+  5: 2.75,
+  10: 3,
+  15: 3.25,
   adult: 3.5
 };
 
@@ -2152,13 +2152,13 @@ angular.module('ePCR.config', [])
       adult: 4.5,
       obese: 1,
       child: 9,
-      infant: 10,
+      infant: 9.5,
     },
     head_back: {
       adult: 4.5,
       obese: 1,
       child: 9,
-      infant: 10,
+      infant: 9.5,
     },
     chest: {
       adult: 9,

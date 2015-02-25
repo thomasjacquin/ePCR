@@ -24,7 +24,7 @@
           <option value=infant>Infant</option>
         </select>
       </ion-item>
-      <ion-item class="item-input item-select"  ng-show="burn.trauma_burn_method=='lund_browder'">
+      <ion-item class="item-input item-select" ng-show="burn.trauma_burn_method=='lund_browder'">
         <span class="input-label">Age</span>
         <select ng-model="burn.trauma_burn_age" ng-change="calculateTotalSurface()">
           <option value=0>0 year</option>
@@ -44,7 +44,12 @@
         <div id="lb_back"></div>
       </ion-item>
       <ion-item>
-        <p>Total burn purcentage: {{totalSurface}}</p>
+        <p>Total burn purcentage: <strong>{{totalSurface}}</strong> (PTL:{{ptl}}%, FTL:{{ftl}}%)</p>
+      </ion-item>
+      <ion-item class="row">
+        <div class="col positive">Superficial Erythema</div>
+        <div class="col assertive">Partial Tissue Loss</div>
+        <div class="col dark">Full Tissue Loss</div>
       </ion-item>
     </ion-list>
   </ion-content>
