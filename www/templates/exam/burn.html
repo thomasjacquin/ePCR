@@ -17,16 +17,16 @@
       </ion-item>
       <ion-item class="item-input item-select" ng-show="burn.trauma_burn_method=='rule_of_9'">
         <span class="input-label">Body type</span>
-        <select ng-model="burn.trauma_burn_body_type">
-          <option>Adult</option>
-          <option>Obese</option>
-          <option>Child</option>
-          <option>Infant</option>
+        <select ng-model="burn.trauma_burn_body_type" ng-change="calculateTotalSurface()">
+          <option value=adult>Adult</option>
+          <option value=obese>Obese</option>
+          <option value=child>Child</option>
+          <option value=infant>Infant</option>
         </select>
       </ion-item>
       <ion-item class="item-input item-select"  ng-show="burn.trauma_burn_method=='lund_browder'">
         <span class="input-label">Age</span>
-        <select ng-model="burn.trauma_burn_age">
+        <select ng-model="burn.trauma_burn_age" ng-change="calculateTotalSurface()">
           <option value=0>0 year</option>
           <option value=1>1 year</option>
           <option value=5>5 years</option>

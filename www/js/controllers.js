@@ -779,7 +779,7 @@ angular.module('ePCR.controllers', [])
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
     "trauma_burn_method": report.trauma_burn_method,
-    "trauma_burn_body_type": report.trauma_burn_body_type,
+    "trauma_burn_body_type": report.trauma_burn_body_type || 'adult',
     "trauma_burn_age": report.trauma_burn_age || 'adult',
     "trauma_burn_body_parts": report.trauma_burn_body_parts != undefined ? JSON.parse(report.trauma_burn_body_parts) : {},
   };
@@ -792,10 +792,12 @@ angular.module('ePCR.controllers', [])
       var severity = bodyPartsInvolved[partName];
       if (severity == 'Second' || severity == 'Third') {
         var age = $scope.burn.trauma_burn_age;
+        var bodyType = $scope.burn.trauma_burn_body_type;
         var method = $scope.burn.trauma_burn_method;
+        var criteria = method == 'rule_of_9' ? bodyType : age;
         var method_surfaces = body_parts_area[method];
         if (method_surfaces[partName]) {
-          var surface = typeof (method_surfaces[partName]) == 'object' ? method_surfaces[partName][age] : method_surfaces[partName];
+          var surface = typeof (method_surfaces[partName]) == 'object' ? method_surfaces[partName][criteria] : method_surfaces[partName];
           totalSurface += surface;
           console.log(method + ' ' + partName + ':' + surface);
           console.log(totalSurface);

@@ -2148,21 +2148,96 @@ angular.module('ePCR.config', [])
 
 .constant('body_parts_area', {
   rule_of_9: {
-    head_front: 4.5,
-    head_back: 4.5,
-    chest: 9,
-    abdomen: 9,
-    upper_back: 9,
-    lower_back: 9,
-    groin: 1,
-    left_arm_front: 4.5,
-    left_arm_back: 4.5,
-    right_arm_front: 4.5,
-    right_arm_back: 4.5,
-    left_leg_front: 9,
-    left_leg_back: 9,
-    right_leg_front: 9,
-    right_leg_back: 9
+    head_front: {
+      adult: 4.5,
+      obese: 1,
+      child: 9,
+      infant: 10,
+    },
+    head_back: {
+      adult: 4.5,
+      obese: 1,
+      child: 9,
+      infant: 10,
+    },
+    chest: {
+      adult: 9,
+      obese: 12,
+      child: 9,
+      infant: 8,
+    },
+    abdomen: {
+      adult: 9,
+      obese: 12,
+      child: 9,
+      infant: 8,
+    },
+    upper_back: {
+      adult: 9,
+      obese: 12,
+      child: 9,
+      infant: 8,
+    },
+    lower_back: {
+      adult: 9,
+      obese: 12,
+      child: 9,
+      infant: 8,
+    },
+    groin: {
+      adult: 1,
+      obese: 0,
+      child: 1,
+      infant: 1,
+    },
+    left_arm_front: {
+      adult: 4.5,
+      obese: 2.5,
+      child: 4.5,
+      infant: 4,
+    },
+    left_arm_back: {
+      adult: 4.5,
+      obese: 2.5,
+      child: 4.5,
+      infant: 4,
+    },
+    right_arm_front: {
+      adult: 4.5,
+      obese: 2.5,
+      child: 4.5,
+      infant: 4,
+    },
+    right_arm_back: {
+      adult: 4.5,
+      obese: 2.5,
+      child: 4.5,
+      infant: 4,
+    },
+    left_leg_front: {
+      adult: 9,
+      obese: 10,
+      child: 6.75,
+      infant: 8,
+    },
+    left_leg_back: {
+      adult: 9,
+      obese: 10,
+      child: 6.75,
+      infant: 8,
+    },
+    right_leg_front: {
+      adult: 9,
+      obese: 10,
+      child: 6.75,
+      infant: 8,
+    },
+    right_leg_back: {
+      adult: 9,
+      obese: 10,
+      child: 6.75,
+      infant: 8,
+    }
   },
   lund_browder: {
     head_front: headSurface,
