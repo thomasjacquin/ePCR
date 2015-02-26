@@ -1,7 +1,8 @@
 function bodyMap() {
 
   var svgHeight = 964;
-  var availableWidth = window.innerWidth < 600 ? window.innerWidth : 600;
+  var availableWidth = (window.innerWidth < 600 ? window.innerWidth : 600) -32;
+  alert(availableWidth);
   var bodyWidth = (availableWidth)/2;
   var bodyHeight = bodyWidth*2.53;
   var front = Raphael('lb_front', bodyWidth, bodyHeight);
