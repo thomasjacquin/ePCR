@@ -1539,7 +1539,8 @@ angular.module('ePCR.controllers', [])
 .controller('SignaturesCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.activeButton = 1;
-
+  $scope.canvasWidth = window.innerWidth - 52;
+  $scope.canvasHeight = ($scope.canvasWidth/3) < 200 ? ($scope.canvasWidth/3) : 250;
 
   var signaturePads = [];
   var storedSignatures = [];

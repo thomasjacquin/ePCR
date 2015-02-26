@@ -25,11 +25,10 @@
      <ion-item class="item-input">
        <div id="signature-pad-practitioner" class="m-signature-pad">
           <div class="m-signature-pad--body">
-            <canvas width="658" height="318" style="background:#EEE"></canvas>
+            <canvas width="{{canvasWidth}}" height="{{canvasHeight}}" style="background:#EEE"></canvas>
           </div>
           <div class="m-signature-pad--footer">
-            <div class="description">Sign above</div>
-            <button class="button clear" data-action="clear">Clear</button>
+            <button class="button button-positive" data-action="clear"><i class="icon ion-android-close"></i> Clear</button>
           </div>
         </div>
      </ion-item>
@@ -58,11 +57,10 @@
        <ion-item class="item-input" ng-show="!signatures.no_signature">
          <div id="signature-pad-patient" class="m-signature-pad">
             <div class="m-signature-pad--body">
-              <canvas width="658" height="318" style="background:#EEE"></canvas>
+              <canvas width="{{canvasWidth}}" height="{{canvasHeight}}" style="background:#EEE"></canvas>
             </div>
             <div class="m-signature-pad--footer">
-              <div class="description">Sign above</div>
-              <button class="button clear" data-action="clear">Clear</button>
+              <button class="button button-positive" data-action="clear"><i class="icon ion-android-close"></i> Clear</button>
             </div>
           </div>
        </ion-item>
@@ -78,11 +76,10 @@
        <ion-item class="item-input">
          <div id="signature-pad-hospital" class="m-signature-pad">
             <div class="m-signature-pad--body">
-              <canvas width="658" height="318" style="background:#EEE"></canvas>
+              <canvas width="{{canvasWidth}}" height="{{canvasHeight}}" style="background:#EEE"></canvas>
             </div>
             <div class="m-signature-pad--footer">
-              <div class="description">Sign above</div>
-              <button class="button clear" data-action="clear">Clear</button>
+              <button class="button button-positive" data-action="clear"><i class="icon ion-android-close"></i> Clear</button>
             </div>
           </div>
        </ion-item>
@@ -98,11 +95,10 @@
        <ion-item class="item-input">
          <div id="signature-pad-witness" class="m-signature-pad">
             <div class="m-signature-pad--body">
-              <canvas width="658" height="318" style="background:#EEE"></canvas>
+              <canvas width="{{canvasWidth}}" height="{{canvasHeight}}" style="background:#EEE"></canvas>
             </div>
             <div class="m-signature-pad--footer">
-              <div class="description">Sign above</div>
-              <button class="button clear" data-action="clear">Clear</button>
+              <button class="button button-positive" data-action="clear"><i class="icon ion-android-close"></i> Clear</button>
             </div>
           </div>
        </ion-item>
