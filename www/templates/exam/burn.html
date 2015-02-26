@@ -36,20 +36,27 @@
         </select>
       </ion-item>
       <ion-item class="row" ng-show="burn.trauma_burn_method=='rule_of_9'">
-        <div id="rule_9_front"></div>
+        <div id="rule_9_front" style="padding-right:4px"></div>
         <div id="rule_9_back"></div>
       </ion-item>
       <ion-item class="row" style="margin-top:0px; padding:5px" ng-show="burn.trauma_burn_method=='lund_browder'">
-        <div id="lb_front"></div>
+        <div id="lb_front" style="padding-right:4px"></div>
         <div id="lb_back"></div>
       </ion-item>
       <ion-item>
-        <p>Total burn purcentage: <strong>{{totalSurface}}</strong> (PTL:{{ptl}}%, FTL:{{ftl}}%)</p>
+        <span>Total burn purcentage: <strong>{{totalSurface}}</strong> (PTL:{{ptl}}%, FTL:{{ftl}}%)</span>
       </ion-item>
-      <ion-item class="row">
-        <div class="col positive">Superficial Erythema</div>
-        <div class="col assertive">Partial Tissue Loss</div>
-        <div class="col dark">Full Tissue Loss</div>
+      <ion-item>
+        Superficial Erythema
+        <span class="color-code burn-1-color"></span>
+      </ion-item>
+      <ion-item>
+        Partial Tissue Loss
+        <span class="color-code burn-2-color"></span>
+      </ion-item>
+      <ion-item>
+        Full Tissue Loss
+        <span class="color-code burn-3-color"></span>
       </ion-item>
     </ion-list>
   </ion-content>

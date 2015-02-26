@@ -1,21 +1,23 @@
 /* Empty. Add your own CSS if you like */
 
 body {
-/*  cursor: url('http://ionicframework.com/img/finger.png'), auto;*/
+  /*  cursor: url('http://ionicframework.com/img/finger.png'), auto;*/
 }
-
 /*
  * http://docs.angularjs.org/api/ng/directive/ngShow#usage_animations
  */
+
 .list .item.item-accordion {
   line-height: 38px;
   padding-top: 0;
   padding-bottom: 0;
   transition: 0.09s all linear;
 }
+
 .list .item.item-accordion.ng-hide {
   line-height: 0px;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
   display: block !important;
@@ -25,12 +27,12 @@ body {
   right: 15px;
 }
 
-.ecg_buttons>div{
-  float:left;
+.ecg_buttons>div {
+  float: left;
   width: 25%;
 }
 
-.ecg_buttons>div button{
+.ecg_buttons>div button {
   width: 100%;
 }
 
@@ -56,7 +58,7 @@ body {
 
 #gastro_map>div {
   border-top: none;
-  border-bottom:none;
+  border-bottom: none;
   margin-bottom: -5px;
 }
 
@@ -74,4 +76,29 @@ body {
 
 .third-degree {
   fill: #222;
+}
+
+.color-code {
+  float: right;
+  width: 20px;
+  height: 20px;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  background: gray;
+}
+
+.burn-1-color {
+  border-color: #FF758D;
+  background-color: #FF758D;
+}
+
+.burn-2-color {
+  border-color: red;
+  background-color: red;
+}
+
+.burn-3-color {
+  border-color: #222;
+  background-color: #222;
 }
