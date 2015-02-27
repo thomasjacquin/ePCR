@@ -1268,6 +1268,9 @@ angular.module('ePCR.config', [])
         "send_report_to": {
           "type": "TEXT"
         },
+        "partners": {
+          "type": "TEXT"
+        },
         "photo": {
           "type": "TEXT"
         }

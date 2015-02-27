@@ -778,7 +778,7 @@ angular.module('ePCR.controllers', [])
   $scope.totalSurface = 0;
   $scope.ptl = 0;
   $scope.ftl = 0;
-  
+
   $scope.burn = {
     "trauma_burn_total_surface": report.trauma_burn_total_surface,
     "trauma_burn_method": report.trauma_burn_method,
@@ -825,7 +825,7 @@ angular.module('ePCR.controllers', [])
       for (var i = 0, len = bodySvg[side].length; i <= len; i++) {
         var el = bodySvg[side][i];
         if (el) {
-          el.node.setAttribute("class","");
+          el.node.setAttribute("class", "");
         }
       }
     }
@@ -1540,7 +1540,7 @@ angular.module('ePCR.controllers', [])
 
   $scope.activeButton = 1;
   $scope.canvasWidth = window.innerWidth - 52;
-  $scope.canvasHeight = ($scope.canvasWidth/3) < 200 ? ($scope.canvasWidth/3) : 250;
+  $scope.canvasHeight = ($scope.canvasWidth / 3) < 200 ? ($scope.canvasWidth / 3) : 250;
 
   var signaturePads = [];
   var storedSignatures = [];
@@ -1586,15 +1586,15 @@ angular.module('ePCR.controllers', [])
 
   wireCanvas();
 
-  function resizeCanvas() {
-    var ratio = window.devicePixelRatio || 1;
-    canvas.width = canvas.offsetWidth * ratio;
-    canvas.height = canvas.offsetHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
-  }
-
-  window.onresize = resizeCanvas;
-  resizeCanvas();
+  //  function resizeCanvas() {
+  //    var ratio = window.devicePixelRatio || 1;
+  //    canvas.width = canvas.offsetWidth * ratio;
+  //    canvas.height = canvas.offsetHeight * ratio;
+  //    canvas.getContext("2d").scale(ratio, ratio);
+  //  }
+  //
+  //  window.onresize = resizeCanvas;
+  //  resizeCanvas();
 
   $scope.signatures = {
     "signature_practitioner_name": report.signature_practitioner_name,
@@ -2047,10 +2047,13 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, CameraFactory) {
+.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, CameraFactory, $ionicModal) {
   $scope.settings = settings;
   $scope.activeButton = 1;
-
+  $scope.addPartner = {
+    name: ""
+  };
+  
   $scope.form = {
     "first_name": $scope.settings.first_name,
     "last_name": $scope.settings.last_name,
@@ -2058,8 +2061,11 @@ angular.module('ePCR.controllers', [])
     "position": $scope.settings.position,
     "work_place": $scope.settings.work_place,
     "send_report_to": $scope.settings.send_report_to,
+    "partners": $scope.settings.partners ? JSON.parse($scope.settings.partners) : [],
     "photo": $scope.settings.photo
   };
+  
+  console.log($scope.settings.partners);
 
   $scope.getPhoto = function (fromCamera) {
     var options = {
@@ -2089,7 +2095,37 @@ angular.module('ePCR.controllers', [])
     $scope.activeButton = tab;
   }
 
+  $scope.toggleDelete = function () {
+    $scope.showDelete = !$scope.showDelete;
+  }
+
+  $scope.deletePartner = function (index) {
+    $scope.form.partners.splice(index, 1);
+  }
+  
+  $ionicModal.fromTemplateUrl('add_partner.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function (modal) {
+    $scope.modal = modal
+  })
+
+  $scope.openModal = function () {
+    $scope.modal.show();
+  }
+
+  $scope.closeModal = function () {
+    $scope.form.partners.push($scope.addPartner.name);
+    $scope.modal.hide();
+    $scope.addPartner.name = "";
+  };
+
+  $scope.$on('$destroy', function () {
+    $scope.modal.remove();
+  });
+
   $scope.save = function () {
+    $scope.form.partners = JSON.stringify($scope.form.partners);
     db.update("settings", $scope.form, {
       'id': 1
     }).then(function () {
