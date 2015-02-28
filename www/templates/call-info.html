@@ -13,10 +13,7 @@
     <ion-list>
         <ion-item class="item-input item-select">
           <span class="input-label">Attendant 1</span>
-          <select ng-model="call.call_info_attendant1">
-              <option>Other</option>
-              <option>Nurse</option>
-              <option>Medic</option>
+          <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant1">
           </select>
         </ion-item>
         <ion-item class="item-input" ng-show="call.call_info_attendant1 == 'Other'">
@@ -25,10 +22,7 @@
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Attendant 2</span>
-          <select ng-model="call.call_info_attendant2">
-              <option>Other</option>
-              <option>Nurse</option>
-              <option>Medic</option>
+          <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant2">
           </select>
         </ion-item>
         <ion-item class="item-input" ng-show="call.call_info_attendant2 == 'Other'">

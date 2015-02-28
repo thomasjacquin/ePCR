@@ -74,7 +74,7 @@
       <ion-item class="item-divider">
         Partners
       </ion-item>
-      <ion-item ng-repeat="partner in form.partners" type="item-text-wrap">
+      <ion-item ng-repeat="partner in partners" type="item-text-wrap">
         <h2>{{partner}}</h2>
         <!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
         <ion-delete-button class="ion-minus-circled" ng-click="deletePartner($index)">

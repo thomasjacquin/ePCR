@@ -1629,7 +1629,7 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('CallInfoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe) {
+.controller('CallInfoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe, settings) {
 
   $scope.ppeList = [];
 
@@ -1664,6 +1664,11 @@ angular.module('ePCR.controllers', [])
       "checked": checked
     })
   });
+
+  $scope.attendantsList = settings.partners ? JSON.parse(settings.partners) : [];
+  var me = settings.first_name + ' ' + settings.last_name;
+  $scope.attendantsList.unshift(me);
+  $scope.attendantsList.push("Other");
 
   $scope.noTransport = function () {
     $scope.save();
@@ -2053,7 +2058,7 @@ angular.module('ePCR.controllers', [])
   $scope.addPartner = {
     name: ""
   };
-  
+
   $scope.form = {
     "first_name": $scope.settings.first_name,
     "last_name": $scope.settings.last_name,
@@ -2061,31 +2066,30 @@ angular.module('ePCR.controllers', [])
     "position": $scope.settings.position,
     "work_place": $scope.settings.work_place,
     "send_report_to": $scope.settings.send_report_to,
-    "partners": $scope.settings.partners ? JSON.parse($scope.settings.partners) : [],
     "photo": $scope.settings.photo
   };
-  
-  console.log($scope.settings.partners);
 
-  $scope.getPhoto = function (fromCamera) {
-    var options = {
-      quality: 50,
-      destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
-      allowEdit: true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 600,
-      targetHeight: 600,
-      correctOrientation: true,
-      cameraDirection: Camera.Direction.FRONT
+  $scope.partners = $scope.settings.partners ? JSON.parse($scope.settings.partners) : [],
+
+    $scope.getPhoto = function (fromCamera) {
+      var options = {
+        quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI,
+        sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
+        allowEdit: true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 600,
+        targetHeight: 600,
+        correctOrientation: true,
+        cameraDirection: Camera.Direction.FRONT
+      };
+      CameraFactory.getPicture(options).then(function (imageURI) {
+        console.log(imageURI);
+        $scope.form.photo = imageURI;
+      }, function (err) {
+        console.err(err);
+      });
     };
-    CameraFactory.getPicture(options).then(function (imageURI) {
-      console.log(imageURI);
-      $scope.form.photo = imageURI;
-    }, function (err) {
-      console.err(err);
-    });
-  };
 
   $scope.removePhoto = function () {
     $scope.form.photo = '';
@@ -2100,9 +2104,9 @@ angular.module('ePCR.controllers', [])
   }
 
   $scope.deletePartner = function (index) {
-    $scope.form.partners.splice(index, 1);
+    $scope.partners.splice(index, 1);
   }
-  
+
   $ionicModal.fromTemplateUrl('add_partner.html', {
     scope: $scope,
     animation: 'slide-in-up'
@@ -2115,7 +2119,7 @@ angular.module('ePCR.controllers', [])
   }
 
   $scope.closeModal = function () {
-    $scope.form.partners.push($scope.addPartner.name);
+    $scope.partners.push($scope.addPartner.name);
     $scope.modal.hide();
     $scope.addPartner.name = "";
   };
@@ -2125,7 +2129,7 @@ angular.module('ePCR.controllers', [])
   });
 
   $scope.save = function () {
-    $scope.form.partners = JSON.stringify($scope.form.partners);
+    $scope.form.partners = JSON.stringify($scope.partners);
     db.update("settings", $scope.form, {
       'id': 1
     }).then(function () {
