@@ -24,14 +24,14 @@
           <span class="input-label">Substance</span>
           <select ng-model="inOut.substance">
               <option>Other</option>
-              <option ng-show="inOut.direction == 'Intake'">Urine</option>
-              <option ng-show="inOut.direction == 'Intake'">Vomit</option>
-              <option ng-show="inOut.direction == 'Intake'">Blood</option>
-              <option ng-show="inOut.direction == 'Output'">Normal Saline</option>
-              <option ng-show="inOut.direction == 'Output'">Lactated Ringers</option>
-              <option ng-show="inOut.direction == 'Output'">D5W</option>
-              <option ng-show="inOut.direction == 'Output'">D10W</option>
-              <option ng-show="inOut.direction == 'Output'">2/3 &amp; 1/3</option>
+              <option ng-show="inOut.direction == 'Output'">Urine</option>
+              <option ng-show="inOut.direction == 'Output'">Vomit</option>
+              <option ng-show="inOut.direction == 'Output'">Blood</option>
+              <option ng-show="inOut.direction == 'Intake'">Normal Saline</option>
+              <option ng-show="inOut.direction == 'Intake'">Lactated Ringers</option>
+              <option ng-show="inOut.direction == 'Intake'">D5W</option>
+              <option ng-show="inOut.direction == 'Intake'">D10W</option>
+              <option ng-show="inOut.direction == 'Intake'">2/3 &amp; 1/3</option>
           </select>
         </ion-item>
         <ion-item class="item-input" ng-show="inOut.substance == 'Other'">

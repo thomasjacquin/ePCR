@@ -167,19 +167,19 @@ angular.module('ePCR.controllers', [])
   ];
 
   for (index in vitals) {
-    xAxis.push(vitals[index].created);
+    xAxis.push(vitals[index].created.substring(11));
     $scope.vitalsSeries.forEach(function (serie) {
       if (!data[serie.code])
         data[serie.code] = [];
       data[serie.code].push(vitals[index][serie.code]);
     });
   }
+  
 
   $scope.chart = {
     labels: xAxis,
     datasets: [
       {
-        scaleLabel:  "rwthygfds",
         fillColor: "rgba(151,187,205,0)",
         strokeColor: "#e67e22",
         pointColor: "rgba(151,187,205,0)",
@@ -192,8 +192,9 @@ angular.module('ePCR.controllers', [])
   $scope.options = {
     responsive: true,
     maintainAspectRatio: false,
+    animationSteps: 10
   }
-
+  
   $scope.changeVital = function () {
     $scope.chart.datasets[0].data = data[$scope.vitalSelected.serie];
   }

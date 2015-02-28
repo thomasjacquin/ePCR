@@ -1,21 +1,21 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Splinting Procedures">
-    <ion-nav-buttons side="primary">
-      <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
-    </ion-nav-buttons>
-    <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="addItem()">
-         <i class="icon ion-ios-plus-outline"></i> Add
-      </button>
-    </ion-nav-buttons>
+<ion-view view-title="Splinting Procedures">
+  <ion-nav-buttons side="primary">
+    <button class="button button-icon icon ion-ios-minus-outline" ng-click="toggleDelete()"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="secondary">
+    <button class="button button-clear" ng-click="addItem()">
+      <i class="icon ion-ios-plus-outline"></i> Add
+    </button>
+  </ion-nav-buttons>
   <ion-content>
     <ion-list show-delete="showDelete">
       <ion-item ng-repeat="procedure in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/procedures/splinting/{{procedure.id}}">
         <h2>{{procedure.created}}</h2>
-<!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
+        <h4 class="list-detail">Location:{{procedure.location}}, Side:{{procedure.side}}</h4>
         <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(procedure.id)">
-       </ion-delete-button>
+        </ion-delete-button>
       </ion-item>
     </ion-list>
   </ion-content>

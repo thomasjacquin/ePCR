@@ -3,9 +3,6 @@
 body {
   /*  cursor: url('http://ionicframework.com/img/finger.png'), auto;*/
 }
-/*
- * http://docs.angularjs.org/api/ng/directive/ngShow#usage_animations
- */
 
 .list .item.item-accordion {
   line-height: 38px;
@@ -23,6 +20,10 @@ body {
   display: block !important;
 }
 
+h4.list-detail{
+  color: #666;
+}
+
 .item .badge {
   right: 15px;
 }
@@ -36,19 +37,16 @@ body {
   width: 100%;
 }
 
-#codeButtons .row,
-#codeButtons .col {
+#codeButtons .row{
   padding: 0px 4px;
+}
+#codeButtons .col {
+  padding: 1px 4px;
 }
 
 #codeButtons .button {
   margin-top: 2px;
   margin-bo: 2px;
-}
-
-.item-divider {
-  background-color: #525EAE;
-  color: white
 }
 
 #gastro_map img {

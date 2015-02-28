@@ -13,7 +13,7 @@
     <ion-list show-delete="showDelete">
       <ion-item ng-repeat="procedure in list" type="item-text-wrap" href="#/tab/report/{{reportId}}/procedures/airway/basic/{{procedure.id}}">
         <h2>{{procedure.created}}</h2>
-<!--        <h4>HR:{{vitals.hr}} bpm, Sys/Dia:{{vitals.sys}}/{{vitals.dia}}</h4>-->
+        <h4 class="list-detail">HR:{{procedure.oxygen_volume}} lpm, Maneuver:{{procedure.basic_maneuvers}}</h4>
         <ion-delete-button class="ion-minus-circled" ng-click="deleteItem(procedure.id)">
        </ion-delete-button>
       </ion-item>
