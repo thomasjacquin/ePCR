@@ -100,10 +100,12 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('VitalsChartCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
+.controller('VitalsChartCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals, exportTableDefinition) {
 
   var xAxis = [],
     data = {};
+
+  $scope.chartsHeight = "height:" + (window.innerHeight - 160) + "px";
 
   $scope.vitalSelected = {
     serie: "hr"
@@ -177,6 +179,7 @@ angular.module('ePCR.controllers', [])
     labels: xAxis,
     datasets: [
       {
+        scaleLabel:  "rwthygfds",
         fillColor: "rgba(151,187,205,0)",
         strokeColor: "#e67e22",
         pointColor: "rgba(151,187,205,0)",
@@ -185,6 +188,11 @@ angular.module('ePCR.controllers', [])
           }
       ],
   };
+
+  $scope.options = {
+    responsive: true,
+    maintainAspectRatio: false,
+  }
 
   $scope.changeVital = function () {
     $scope.chart.datasets[0].data = data[$scope.vitalSelected.serie];
