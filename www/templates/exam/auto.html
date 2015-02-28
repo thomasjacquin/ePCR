@@ -46,6 +46,7 @@
           <div class="truck-front-wheels"></div>
           <div class="truck-rear-wheels"></div>
           <div class="truck-body"></div>
+          <div class="truck-semi-body" ng-show="auto.trauma_auto_vehicle == 'Semi truck'"></div>
           <div class="truck-box" ng-show="auto.trauma_auto_vehicle == 'Light truck'"></div>
           <div class="truck-hood" ng-hide="auto.trauma_auto_vehicle == 'R.V.'"></div>
           <div class="truck-left-light"></div>
@@ -85,6 +86,22 @@
           <div class="snowmobile-seats">
             <div id="snowmobile1" class="seat front" ng-class="{'active': 'snowmobile1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
             <div id="snowmobile2" class="seat rear" ng-class="{'active': 'snowmobile2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+          </div>
+        </div>
+        <div ng-show="auto.trauma_auto_vehicle == 'ATV'">
+          <div class="atv-front-wheels"></div>
+          <div class="atv-rear-wheels"></div>
+          <div class="atv-body"></div>
+          <div class="atv-body-front"></div>
+          <div class="atv-body-rear"></div>
+          <div class="atv-left-light"></div>
+          <div class="atv-left-cache-light"></div>
+          <div class="atv-right-light"></div>
+          <div class="atv-right-cache-light"></div>
+          <div class="atv-handle"></div>
+          <div class="atv-seats">
+            <div id="atv1" class="seat front" ng-class="{'active': 'atv1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="atv2" class="seat rear" ng-class="{'active': 'atv2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
           </div>
         </div>
       </ion-item>
