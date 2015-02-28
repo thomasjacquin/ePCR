@@ -1,314 +1,477 @@
-#car_outline, #truck_outline, #motorcycle_outline{
-	display: block;
-	margin-top: 100px;
-	height: 200px;
+.vehicles {
+  display: block;
+  height: 330px;
 }
 
-#car_outline .active, #truck_outline .active, #motorcycle_outline .active{
-  background-color: green;
+.vehicles .active {
+  background-color: green !important;
 }
-
 /* Drawing a car */
-.car_front_wheels, .car_rear_wheels{
-	position:absolute;
-	left: 76px;
-	top: 90px;
-	width: 128px;
-	height: 40px;
-	background: black;
-	-webkit-border-radius: 4px;
-	border: 3px solid #000;
+
+.car-front-wheels,
+.car-rear-wheels {
+  position: absolute;
+  left: 76px;
+  top: 90px;
+  width: 128px;
+  height: 40px;
+  background: black;
+  -webkit-border-radius: 4px;
+  border: 3px solid #000;
 }
 
-.car_rear_wheels{
-	top: 245px;
+.car-rear-wheels {
+  top: 245px;
 }
 
-.car_left_light, .car_right_light{
-	position:absolute;
-	left: 90px;
-	top: 55px;
-	width: 20px;
-	height: 8px;
-	background: yellow;
-	-webkit-border-radius: 4px;
-	border: 3px solid #333333;
+.car-left-light,
+.car-right-light {
+  position: absolute;
+  left: 90px;
+  top: 55px;
+  width: 20px;
+  height: 8px;
+  background: yellow;
+  -webkit-border-radius: 4px;
+  border: 3px solid #333333;
 }
 
-.car_right_light{
-	left: 170px;
+.car-right-light {
+  left: 170px;
 }
 
-.car_steering_wheel{
-	position:absolute;
-	left: 105px;
-	top: 125px;
-	width: 17px;
-	height: 12px;
-	background: transparent;
-	border: 3px solid #000;
-	-webkit-border-radius: 15px;
+.car-steering-wheel {
+  position: absolute;
+  left: 105px;
+  top: 125px;
+  width: 17px;
+  height: 12px;
+  background: transparent;
+  border: 3px solid #000;
+  -webkit-border-radius: 15px;
 }
 
-.car_hood{
-	position:absolute;
-	left: 80px;
-	top: 60px;
-	width: 120px;
-	height: 250px;
-	background: grey;
-	-webkit-border-radius: 10px;
-	border: 3px solid #333333;
-}
-.car1, .car2, .car3, .car4, .car5, .car6{
-	position:absolute;
-	width: 52px;
-	height: 50px;
-	background: white;
-	left: 86px;
-	top: 120px;
-	border: 3px solid #333333;
-}
-.car1{
-	-webkit-border-top-left-radius: 10px;
-}
-.car2{
-	left: 142px;
-	-webkit-border-top-right-radius: 10px;
-}
-.car3, .car4{
-	top: 170px;
-}
-.car4{
-	left: 142px;
-}
-.car5{
-	top: 220px;
-	-webkit-border-bottom-left-radius: 10px;
-}
-.car6{
-	top: 220px;
-	left: 142px;
-	-webkit-border-bottom-right-radius: 10px;
+.car-hood {
+  position: absolute;
+  left: 80px;
+  top: 60px;
+  width: 120px;
+  height: 250px;
+  background: grey;
+  -webkit-border-radius: 10px;
+  border: 3px solid #333333;
 }
 
+.car-seats .seat {
+  position: absolute;
+  width: 55px;
+  height: 53px;
+  background: white;
+  border: 3px solid #333333;
+}
+
+.car-seats .seat.front {
+  top: 120px;
+}
+
+.car-seats .seat.middle {
+  top: 170px;
+}
+
+.car-seats .seat.rear {
+  top: 220px;
+}
+
+.car-seats .seat.left {
+  left: 86px;
+}
+
+.car-seats .seat.right {
+  left: 139px;
+}
+
+.car-seats .seat.front.left {
+  -webkit-border-top-left-radius: 10px;
+}
+
+.car-seats .seat.front.right {
+  -webkit-border-top-right-radius: 10px;
+}
+
+.car-seats .seat.rear.left {
+  -webkit-border-bottom-left-radius: 10px;
+}
+
+.car-seats .seat.rear.right {
+  -webkit-border-bottom-right-radius: 10px;
+}
 /* Drawing a truck */
-.truck_front_wheels, .truck_rear_wheels{
-	position:absolute;
-	left: 75px;
-	top: 90px;
-	width: 156px;
-	height: 40px;
-	background: black;
-	-webkit-border-radius: 4px;
-	border: 3px solid #000;
+
+.truck-front-wheels,
+.truck-rear-wheels {
+  position: absolute;
+  left: 75px;
+  top: 90px;
+  width: 156px;
+  height: 40px;
+  background: black;
+  -webkit-border-radius: 4px;
+  border: 3px solid #000;
 }
 
-.truck_rear_wheels{
-	top: 245px;
+.truck-rear-wheels {
+  top: 245px;
 }
 
-.truck_left_light, .truck_right_light{
-	position:absolute;
-	left: 90px;
-	top: 55px;
-	width: 20px;
-	height: 8px;
-	background: yellow;
-	-webkit-border-radius: 4px;
-	border: 3px solid #333333;
+.truck-left-light,
+.truck-right-light {
+  position: absolute;
+  left: 90px;
+  top: 55px;
+  width: 20px;
+  height: 8px;
+  background: yellow;
+  -webkit-border-radius: 4px;
+  border: 3px solid #333333;
 }
 
-.truck_right_light{
-	left: 195px;
+.truck-right-light {
+  left: 195px;
 }
 
-.truck_steering_wheel{
-	position:absolute;
-	left: 100px;
-	top: 125px;
-	width: 17px;
-	height: 12px;
-	background: transparent;
-	border: 3px solid #000;
-	-webkit-border-radius: 15px;
+.truck-steering-wheel {
+  position: absolute;
+  left: 100px;
+  top: 125px;
+  width: 17px;
+  height: 12px;
+  background: transparent;
+  border: 3px solid #000;
+  -webkit-border-radius: 15px;
 }
 
-.truck_body{
-	position:absolute;
-	left: 80px;
-	top: 60px;
-	width: 146px;
-	height: 250px;
-	background: grey;
-	-webkit-border-radius: 10px;
-	border: 3px solid #333333;
+.truck-body {
+  position: absolute;
+  left: 80px;
+  top: 60px;
+  width: 146px;
+  height: 250px;
+  background: grey;
+  -webkit-border-radius: 10px;
+  border: 3px solid #333333;
 }
 
-.truck_box{
-	position:absolute;
-	left: 90px;
-	top: 60px;
-	width: 126px;
-	height: 240px;
-	background: #555;
-	-webkit-border-radius: 10px;
-	border: 3px solid #333333;
+.truck-box {
+  position: absolute;
+  left: 90px;
+  top: 60px;
+  width: 126px;
+  height: 240px;
+  background: #555;
+  -webkit-border-radius: 10px;
+  border: 3px solid #333333;
 }
 
-.truck_hood{
-	position:absolute;
-	left: 80px;
-	top: 60px;
-	width: 146px;
-	height: 110px;
-	background: grey;
-	-webkit-border-radius: 10px;
-	border: 3px solid #333333;
+.truck-hood {
+  position: absolute;
+  left: 80px;
+  top: 60px;
+  width: 146px;
+  height: 110px;
+  background: grey;
+  -webkit-border-radius: 10px;
+  border: 3px solid #333333;
 }
 
-.truck1, .truck2, .truck3{
-	position:absolute;
-	width: 42px;
-	height: 40px;
-	background: white;
-	left: 86px;
-	top: 120px;
-	border: 3px solid #333333;
-}
-.truck1{
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-bottom-left-radius: 10px;
-}
-.truck2{
-	left: 132px;
-}
-.truck3{
-	left: 178px;
-    -webkit-border-top-right-radius: 10px;
-    -webkit-border-bottom-right-radius: 10px;
+.truck-seats .seat {
+  position: absolute;
+  width: 45px;
+  height: 50px;
+  background: white;
+  border: 3px solid #333333;
 }
 
+.truck-seats .seat.front {
+  top: 113px;
+}
 
+.truck-seats .seat.left {
+  width: 45px;
+  left: 88px;
+}
+
+.truck-seats .seat.center {
+  width: 46px;
+  left: 130px;
+}
+
+.truck-seats .seat.right {
+  width: 45px;
+  left: 172px;
+}
+
+.truck-seats .seat.front.left {
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+}
+
+.truck-seats .seat.front.right {
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+}
 /* Drawing a motorbike */
-.moto_wheels{
-	position:absolute;
-	left: 84px;
-	top: 50px;
-	width: 20px;
-	height: 255px;
-	background: black;
-	-webkit-border-radius: 12px;
-	border: 3px solid #000;
+
+.moto-wheels {
+  position: absolute;
+  left: 84px;
+  top: 50px;
+  width: 20px;
+  height: 255px;
+  background: black;
+  -webkit-border-radius: 12px;
+  border: 3px solid #000;
 }
-.moto_body{
-	position:absolute;
-	left: 64px;
-	top: 100px;
-	width: 60px;
-	height: 190px;
-	background: grey;
-	-webkit-border-radius: 25px;
-	border: 3px solid #333333;
+
+.moto-body {
+  position: absolute;
+  left: 64px;
+  top: 100px;
+  width: 60px;
+  height: 190px;
+  background: grey;
+  -webkit-border-radius: 25px;
+  border: 3px solid #333333;
 }
-.moto_handle{
-	position:absolute;
-	left: 54px;
-	top: 110px;
-	width: 80px;
-	height: 4px;
-	background: #555;
-	-webkit-border-radius: 3px;
-	border: 3px solid #333333;
+
+.moto-handle {
+  position: absolute;
+  left: 54px;
+  top: 110px;
+  width: 80px;
+  height: 4px;
+  background: #555;
+  -webkit-border-radius: 3px;
+  border: 3px solid #333333;
 }
-.moto_light{
-	position:absolute;
-	left: 80px;
-	top: 89px;
-	width: 28px;
-	height: 16px;
-	background: yellow;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-left-radius: 14px;
-	-webkit-border-bottom-right-radius: 14px;
-	border: 3px solid #333333;
+
+.moto-light {
+  position: absolute;
+  left: 80px;
+  top: 89px;
+  width: 28px;
+  height: 16px;
+  background: yellow;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 14px;
+  -webkit-border-bottom-right-radius: 14px;
+  border: 3px solid #333333;
 }
-.moto_cache_light{
-	position:absolute;
-	left: 80px;
-	top: 95px;
-	width: 28px;
-	height: 10px;
-	background: #555;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-top-right-radius: 3px;
-	-webkit-border-bottom-left-radius: 14px;
-	-webkit-border-bottom-right-radius: 14px;
-	border: 3px solid #333333;
+
+.moto-cache-light {
+  position: absolute;
+  left: 80px;
+  top: 95px;
+  width: 28px;
+  height: 10px;
+  background: #555;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 14px;
+  -webkit-border-bottom-right-radius: 14px;
+  border: 3px solid #333333;
 }
-.moto_side{
-	position:absolute;
-	left: 133px;
-	top: 185px;
-	width: 73px;
-	height: 100px;
-	background: grey;
-	-webkit-border-radius: 15px;
-	border: 3px solid #333333;
+
+.moto-side {
+  position: absolute;
+  left: 133px;
+  top: 185px;
+  width: 73px;
+  height: 100px;
+  background: grey;
+  -webkit-border-radius: 15px;
+  border: 3px solid #333333;
 }
-.moto_side_wheel{
-	position:absolute;
-	left: 215px;
-	top: 205px;
-	width: 15px;
-	height: 74px;
-	background: black;
-	-webkit-border-radius: 10px;
-	border: 3px solid #000;
+
+.moto-side-wheel {
+  position: absolute;
+  left: 215px;
+  top: 205px;
+  width: 15px;
+  height: 74px;
+  background: black;
+  -webkit-border-radius: 10px;
+  border: 3px solid #000;
 }
-.moto_side_wheel_axe{
-	position:absolute;
-	left: 124px;
-	top: 235px;
-	width: 95px;
-	height: 10px;
-	background: grey;
-	border: 3px solid #333333;
+
+.moto-side-wheel-axe {
+  position: absolute;
+  left: 124px;
+  top: 235px;
+  width: 95px;
+  height: 10px;
+  background: grey;
+  border: 3px solid #333333;
 }
-.motorcycle1{
-	position:absolute;
-	left: 70px;
-	top: 142px;
-	width: 48px;
-	height: 60px;
-	background: white;
-	-webkit-border-top-left-radius: 10px;
-	-webkit-border-top-right-radius: 10px;
-	-webkit-border-bottom-left-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	border: 3px solid #333333;
+
+.motorcycle-seats .seat {
+  position: absolute;
+  left: 70px;
+  width: 48px;
+  height: 60px;
+  background: white;
+  border: 3px solid #333333;
 }
-.motorcycle2{
-	position:absolute;
-	left: 70px;
-	top: 212px;
-	width: 48px;
-	height: 60px;
-	background: white;
-	-webkit-border-top-left-radius: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 10px;
-	-webkit-border-bottom-right-radius: 10px;
-	border: 3px solid #333333;
+
+.motorcycle-seats .seat.front {
+  top: 142px;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
 }
-.motorcycle3{
-	position:absolute;
-	left: 139px;
-	top: 191px;
-	width: 61px;
-	height: 88px;
-	background: white;
-	-webkit-border-radius: 13px;
-	border: 3px solid #333333;
+
+.motorcycle-seats .seat.rear {
+  top: 212px;
+  -webkit-border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+}
+
+.motorcycle-seats .seat.side {
+  left: 139px;
+  top: 191px;
+  width: 61px;
+  height: 88px;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+}
+
+/* Drawing a snowmobile */
+
+.snowmobile-ski-left, .snowmobile-ski-right {
+  position: absolute;
+  left: 38px;
+  top: 50px;
+  width: 15px;
+  height: 90px;
+  background: black;
+  -webkit-border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+    border: 3px solid #333;
+  background-color: #333;
+}
+
+.snowmobile-ski-right {
+  left: 135px;
+}
+
+.snowmobile-belt {
+  position: absolute;
+  left: 74px;
+  top: 180px;
+  width: 40px;
+  height: 120px;
+  background: black;
+  -webkit-border-radius: 3px;
+  border: 3px solid #333;
+  background-color: #333;
+}
+
+.snowmobile-axis {
+  position: absolute;
+  left: 45px;
+  top: 95px;
+  width: 100px;
+  height: 15px;
+  background: #555;
+  -webkit-border-radius: 5px;
+  background-color: #666;
+  border: 3px solid #333333;
+}
+
+.snowmobile-body-front {
+  position: absolute;
+  left: 59px;
+  top: 80px;
+  width: 70px;
+  height: 130px;
+  background: grey;
+  -webkit-border-top-left-radius: 50px;
+  -webkit-border-top-right-radius: 50px;
+  -webkit-border-bottom-left-radius: 10px;
+  -webkit-border-bottom-right-radius: 10px;
+  border: 3px solid #333333;
+}
+
+.snowmobile-body-rear {
+  position: absolute;
+  left: 65px;
+  top: 170px;
+  width: 58px;
+  height: 100px;
+  background: grey;
+  -webkit-border-bottom-left-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border: 3px solid #333333;
+}
+
+.snowmobile-handle {
+  position: absolute;
+  left: 54px;
+  top: 115px;
+  width: 80px;
+  height: 4px;
+  background: #555;
+  -webkit-border-radius: 3px;
+  border: 3px solid #333333;
+}
+
+.snowmobile-light {
+  position: absolute;
+  left: 80px;
+  top: 78px;
+  width: 28px;
+  height: 7px;
+  background: yellow;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  border: 3px solid #333333;
+  border-bottom: none;
+}
+
+.snowmobile-cache-light {
+  position: absolute;
+  left: 80px;
+  top: 85px;
+  width: 28px;
+  height: 15px;
+  background: #555;
+  -webkit-border-top-left-radius: 3px;
+  -webkit-border-top-right-radius: 3px;
+  -webkit-border-bottom-left-radius: 14px;
+  -webkit-border-bottom-right-radius: 14px;
+  border: 3px solid #333333;
+}
+
+.snowmobile-seats .seat {
+  position: absolute;
+  left: 70px;
+  width: 48px;
+  height: 50px;
+  background: white;
+  border: 3px solid #333333;
+  -webkit-border-radius: 10px;
+}
+
+.snowmobile-seats .seat.front {
+  top: 142px;
+  height: 60px;
+}
+
+.snowmobile-seats .seat.rear {
+  top: 214px;
 }

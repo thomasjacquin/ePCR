@@ -22,55 +22,69 @@
           <option>Snowmobile</option>
         </select>
       </ion-item>
-      <ion-item>
-        <span class="label left">Seat where patient was seated</span>
-        <div id="car_outline" ng-show="auto.trauma_auto_vehicle == 'Car'
-       || auto.trauma_auto_vehicle == 'Minivan'">
-          <div class="car_front_wheels"></div>
-          <div class="car_rear_wheels"></div>
-          <div class="car_hood"></div>
-          <div class="car_left_light"></div>
-          <div class="car_right_light"></div>
-          <div id="car_seats">
-            <div class="car1" ng-class="{'active': 'car1' == auto.trauma_auto_seat}" ng-click="toggleSeat('car1')"></div>
-            <div class="car2" ng-class="{'active': 'car2' == auto.trauma_auto_seat}" ng-click="toggleSeat('car2')" ng-click="toggleSeat('car2')"></div>
-            <div class="car3" ng-class="{'active': 'car3' == auto.trauma_auto_seat}" ng-click="toggleSeat('car3')" ng-click="toggleSeat('car3')"></div>
-            <div class="car4" ng-class="{'active': 'car4' == auto.trauma_auto_seat}" ng-click="toggleSeat('car4')" ng-click="toggleSeat('car4')"></div>
-            <div class="car5" ng-class="{'active': 'car5' == auto.trauma_auto_seat}" ng-click="toggleSeat('car5')" ng-click="toggleSeat('car5')"></div>
-            <div class="car6" ng-class="{'active': 'car6' == auto.trauma_auto_seat}" ng-click="toggleSeat('car6')" ng-click="toggleSeat('car6')"></div>
+      <ion-item class="vehicles">
+        <span class="label">Seat where patient was seated</span>
+        <div ng-show="auto.trauma_auto_vehicle == 'Car' || auto.trauma_auto_vehicle == 'Minivan'">
+          <div class="car-front-wheels"></div>
+          <div class="car-rear-wheels"></div>
+          <div class="car-hood"></div>
+          <div class="car-left-light"></div>
+          <div class="car-right-light"></div>
+          <div class="car-seats">
+            <div id="car1" class="seat front left" ng-class="{'active': 'car1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="car2" class="seat front right" ng-class="{'active': 'car2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="car3" class="seat middle left" ng-class="{'active': 'car3' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="car4" class="seat middle right" ng-class="{'active': 'car4' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="car5" class="seat rear left" ng-class="{'active': 'car5' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="car6" class="seat rear right" ng-class="{'active': 'car6' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
           </div>
-          <div class="car_steering_wheel" id="car_steering_wheel"></div>
+          <div class="car-steering-wheel"></div>
         </div>
-        <div id="truck_outline" ng-show="auto.trauma_auto_vehicle == 'Light truck'
-       || auto.trauma_auto_vehicle == 'R.V.'
-       || auto.trauma_auto_vehicle == 'Semi truck'">
-          <div class="truck_front_wheels"></div>
-          <div class="truck_rear_wheels"></div>
-          <div class="truck_body"></div>
-          <div class="truck_box" ng-hide="auto.trauma_auto_vehicle == 'R.V.' || auto.trauma_auto_vehicle == 'Semi truck'"></div>
-          <div class="truck_hood" ng-hide="auto.trauma_auto_vehicle == 'R.V.'"></div>
-          <div class="truck_left_light"></div>
-          <div class="truck_right_light"></div>
-          <div id="truck_seats">
-            <div class="truck1" ng-class="{'active': 'truck1' == auto.trauma_auto_seat}" ng-click="toggleSeat('truck1')"></div>
-            <div class="truck2" ng-class="{'active': 'truck2' == auto.trauma_auto_seat}" ng-click="toggleSeat('truck2')" ng-click="toggleSeat('truck2')"></div>
-            <div class="truck3" ng-class="{'active': 'truck3' == auto.trauma_auto_seat}" ng-click="toggleSeat('truck3')" ng-click="toggleSeat('truck3')"></div>
+        <div ng-show="auto.trauma_auto_vehicle == 'Light truck'
+         || auto.trauma_auto_vehicle == 'R.V.'
+         || auto.trauma_auto_vehicle == 'Semi truck'">
+          <div class="truck-front-wheels"></div>
+          <div class="truck-rear-wheels"></div>
+          <div class="truck-body"></div>
+          <div class="truck-box" ng-show="auto.trauma_auto_vehicle == 'Light truck'"></div>
+          <div class="truck-hood" ng-hide="auto.trauma_auto_vehicle == 'R.V.'"></div>
+          <div class="truck-left-light"></div>
+          <div class="truck-right-light"></div>
+          <div class="truck-seats">
+            <div id="truck1" class="seat front left" ng-class="{'active': 'truck1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="truck2" class="seat front center" ng-class="{'active': 'truck2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="truck3" class="seat front right" ng-class="{'active': 'truck3' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
           </div>
-          <div class="truck_steering_wheel" id="truck_steering_wheel"></div>
+          <div class="truck-steering-wheel"></div>
         </div>
-        <div id="motorcycle_outline" ng-show="auto.trauma_auto_vehicle == 'Motorcycle' || auto.trauma_auto_vehicle == 'Sidecar'">
-          <div class="moto_side_wheel_axe" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
-          <div class="moto_wheels"></div>
-          <div class="moto_body"></div>
-          <div class="moto_light"></div>
-          <div class="moto_cache_light"></div>
-          <div class="moto_handle"></div>
-          <div class="moto_side_wheel" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
-          <div class="moto_side" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
-          <div id="motorcycle_seats">
-            <div class="motorcycle1" ng-class="{'active': 'motorcycle1' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle1')"></div>
-            <div class="motorcycle2" ng-class="{'active': 'motorcycle2' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle2')"></div>
-            <div class="motorcycle3" ng-class="{'active': 'motorcycle3' == auto.trauma_auto_seat}" ng-click="toggleSeat('motorcycle3')" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
+        <div ng-show="auto.trauma_auto_vehicle == 'Motorcycle' || auto.trauma_auto_vehicle == 'Sidecar'">
+          <div class="moto-side-wheel-axe" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
+          <div class="moto-wheels"></div>
+          <div class="moto-body"></div>
+          <div class="moto-light"></div>
+          <div class="moto-cache-light"></div>
+          <div class="moto-handle"></div>
+          <div class="moto-side-wheel" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
+          <div class="moto-side" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
+          <div class="motorcycle-seats">
+            <div id="motorcycle1" class="seat front" ng-class="{'active': 'motorcycle1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="motorcycle2" class="seat rear" ng-class="{'active': 'motorcycle2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="motorcycle3" class="seat side" ng-class="{'active': 'motorcycle3' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)" ng-show="auto.trauma_auto_vehicle == 'Sidecar'"></div>
+          </div>
+        </div>
+        <div ng-show="auto.trauma_auto_vehicle == 'Snowmobile'">
+          <div class="snowmobile-ski-left"></div>
+          <div class="snowmobile-ski-right"></div>
+          <div class="snowmobile-axis"></div>
+          <div class="snowmobile-belt"></div>
+          <div class="snowmobile-body-rear"></div>
+          <div class="snowmobile-body-front"></div>
+          <div class="snowmobile-light"></div>
+          <div class="snowmobile-cache-light"></div>
+          <div class="snowmobile-handle"></div>
+          <div class="snowmobile-seats">
+            <div id="snowmobile1" class="seat front" ng-class="{'active': 'snowmobile1' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
+            <div id="snowmobile2" class="seat rear" ng-class="{'active': 'snowmobile2' == auto.trauma_auto_seat}" ng-click="toggleSeat($event)"></div>
           </div>
         </div>
       </ion-item>

@@ -634,9 +634,9 @@ angular.module('ePCR.controllers', [])
     "trauma_auto_details_per": report.trauma_auto_details_per
   };
 
-  $scope.toggleSeat = function (seat) {
-    $scope.auto.trauma_auto_seat = seat;
-    console.log(seat);
+  $scope.toggleSeat = function ($event) {
+    console.log($event.target.id);
+    $scope.auto.trauma_auto_seat = $event.target.id;
   }
 
   $scope.save = function () {
