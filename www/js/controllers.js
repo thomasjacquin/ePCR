@@ -1539,7 +1539,7 @@ angular.module('ePCR.controllers', [])
 .controller('SignaturesCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.activeButton = 1;
-  $scope.canvasWidth = window.innerWidth - 52;
+  $scope.canvasWidth = window.innerWidth - 80;
   $scope.canvasHeight = ($scope.canvasWidth / 3) < 200 ? ($scope.canvasWidth / 3) : 250;
 
   var signaturePads = [];
@@ -1565,6 +1565,8 @@ angular.module('ePCR.controllers', [])
     }
     clearButton = wrapper.querySelector("[data-action=clear]");
     canvas = wrapper.querySelector("canvas");
+    canvas.width = $scope.canvasWidth;
+    canvas.height = $scope.canvasHeight;
 
     signaturePad = signaturePads[tab] || new SignaturePad(canvas, {
       penColor: "rgb(66, 133, 244)",
@@ -1586,15 +1588,18 @@ angular.module('ePCR.controllers', [])
 
   wireCanvas();
 
-  //  function resizeCanvas() {
-  //    var ratio = window.devicePixelRatio || 1;
-  //    canvas.width = canvas.offsetWidth * ratio;
-  //    canvas.height = canvas.offsetHeight * ratio;
-  //    canvas.getContext("2d").scale(ratio, ratio);
-  //  }
-  //
-  //  window.onresize = resizeCanvas;
-  //  resizeCanvas();
+  function resizeCanvas() {
+    $scope.canvasWidth = window.innerWidth - 80;
+    $scope.canvasHeight = ($scope.canvasWidth / 3) < 200 ? ($scope.canvasWidth / 3) : 250;
+    var ratio = window.devicePixelRatio || 1;
+    canvas.width = $scope.canvasWidth * ratio;
+    canvas.height = $scope.canvasHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+    setTimeout(wireCanvas(), 100);
+  }
+
+  window.onresize = resizeCanvas;
+  resizeCanvas();
 
   $scope.signatures = {
     "signature_practitioner_name": report.signature_practitioner_name,
