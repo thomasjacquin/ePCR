@@ -1578,6 +1578,7 @@ angular.module('ePCR.controllers', [])
 
     signaturePad = signaturePads[tab] || new SignaturePad(canvas, {
       penColor: "rgb(66, 133, 244)",
+      maxWidth: 1.5
     });
     signaturePads[tab] = signaturePad;
     signaturePad.fromDataURL(storedSignatures[tab] || "");

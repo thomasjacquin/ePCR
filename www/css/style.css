@@ -102,3 +102,15 @@ body {
   border-color: #222;
   background-color: #222;
 }
+
+@media screen and (max-width: 380px) {
+    .phone-landscape {
+        display: none !important;
+    }
+}
+
+@media screen and (min-width: 381px) {
+    .phone-landscape {
+        display: inline-block !important;
+    }
+}
