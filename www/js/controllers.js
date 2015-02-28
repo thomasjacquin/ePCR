@@ -1598,16 +1598,11 @@ angular.module('ePCR.controllers', [])
 
   function resizeCanvas() {
     $scope.canvasWidth = window.innerWidth - 80;
-    $scope.canvasHeight = ($scope.canvasWidth / 3) < 200 ? ($scope.canvasWidth / 3) : 250;
-    var ratio = window.devicePixelRatio || 1;
-    canvas.width = $scope.canvasWidth * ratio;
-    canvas.height = $scope.canvasHeight * ratio;
-    canvas.getContext("2d").scale(ratio, ratio);
+    $scope.canvasHeight = ($scope.canvasWidth / 3) < 250 ? ($scope.canvasWidth / 3) : 250;
     setTimeout(wireCanvas(), 100);
   }
 
   window.onresize = resizeCanvas;
-  resizeCanvas();
 
   $scope.signatures = {
     "signature_practitioner_name": report.signature_practitioner_name,
