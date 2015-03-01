@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "angular-route": "~1.3.10",
-    "angles": "*"
+    "angles": "*",
+    "pdfjs-bower": "~1.0.233"
   }
 }

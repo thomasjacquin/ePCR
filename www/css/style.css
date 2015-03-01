@@ -20,7 +20,7 @@ body {
   display: block !important;
 }
 
-h4.list-detail{
+h4.list-detail {
   color: #666;
 }
 
@@ -37,9 +37,10 @@ h4.list-detail{
   width: 100%;
 }
 
-#codeButtons .row{
+#codeButtons .row {
   padding: 0px 4px;
 }
+
 #codeButtons .col {
   padding: 1px 4px;
 }
@@ -102,13 +103,34 @@ h4.list-detail{
 }
 
 @media screen and (max-width: 380px) {
-    .phone-landscape {
-        display: none !important;
-    }
+  .phone-landscape {
+    display: none !important;
+  }
 }
 
 @media screen and (min-width: 381px) {
-    .phone-landscape {
-        display: inline-block !important;
-    }
+  .phone-landscape {
+    display: inline-block !important;
+  }
+}
+
+#exportContainer table,
+#exportContainer table th,
+#exportContainer table tr,
+#exportContainer table tr td {
+  border: 1px solid black;
+}
+
+#exportContainer table tr td,
+#exportContainer table th{
+  padding: 3px;
+}
+
+#exportContainer table th{
+  font-weight: bold;
+}
+
+.androidpaintfix {
+-webkit-transform: translate3d(0,0,0);
+transform: translate3d(0, 0, 0);
 }

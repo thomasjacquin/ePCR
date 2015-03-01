@@ -1880,33 +1880,39 @@ angular.module('ePCR.controllers', [])
 
 .controller('ExportHtmlCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
-  var getTableArray = function (records, tableName) {
+  var getTable = function (records, tableName, tableNameReadable) {
     var tableRecords = [];
 
-    var header = [];
-    angular.forEach(exportTableDefinition[tableName], function (definition, field) {
-      header.push(definition.name);
-    });
+    var html = "<h5><strong>" + tableNameReadable + "</strong></h5>";
 
-    tableRecords.push(header);
-
-    for (index in records) {
-      var row = [];
+    if (Object.size(records) != 0) {
+      html += "<table><thead><tr>";
       angular.forEach(exportTableDefinition[tableName], function (definition, field) {
-        var value = records[index][field] || '';
-        if (value == 'true')
-          value = 'Yes';
-        else if (value == 'false')
-          value = '';
-        if (records[index][definition.unit]) {
-          value += ' ' + records[index][definition.unit];
-        }
-        row.push(String(value));
+        html += "<th>" + definition.name + "</th>";
       });
-      tableRecords.push(row);
+      html += "</tr></thead><tbody>";
+
+      for (index in records) {
+        html += "<tr>";
+        angular.forEach(exportTableDefinition[tableName], function (definition, field) {
+          var value = records[index][field] || '';
+          if (value == 'true')
+            value = 'Yes';
+          else if (value == 'false')
+            value = '';
+          if (records[index][definition.unit]) {
+            value += ' ' + records[index][definition.unit];
+          }
+          html += "<td>" + String(value) + "</td>";
+        });
+        html += "</tr>";
+      }
+      html += "</tbody></table>";
+    } else {
+      html += "no records";
     }
 
-    return tableRecords;
+    return html;
   };
 
   Records.all('vitals', $stateParams.reportId)
@@ -1927,22 +1933,74 @@ angular.module('ePCR.controllers', [])
               Records.get('settings', 1)
                 .then(function (record) {
                   $scope.settingsRecord = record;
+                  fillReport();
                 })
             })
         })
     });
 
-  var body = angular.element(document.getElementById('exportContainer'));
-  body.append("<h4>Patient Care Report</h4>");
-  body.append("<span>" + new Date() + "</span>");
+  function fillReport() {
+    $scope.body = angular.element(document.getElementById('exportContainer'));
+    $scope.body.append("<h4><strong>Patient Care Report</strong></h4>");
+    $scope.body.append("<span>" + new Date() + "</span>");
+    $scope.body.append("<h5><strong>Patient Details<strong></span>");
+    $scope.body.append("<strong>First Name: </strong>" + report.first_name + "</br>");
+    $scope.body.append("<strong>Last Name: </strong>" + report.last_name + "</br>");
+    $scope.body.append("<strong>Date of birth: </strong>" + report.date_of_birth + "</br>");
+    $scope.body.append("<strong>Gender: </strong>" + report.gender + "</br>");
+    $scope.body.append("<strong>Weight: </strong>" + report.weight + "" + report.weight_unit + "</br>");
+    $scope.body.append("<strong>Street: </strong>" + report.address_street + "</br>");
+    $scope.body.append("<strong>City: </strong>" + report.address_city + "</br>");
+    $scope.body.append("<strong>Province: </strong>" + report.address_province + "</br>");
+    $scope.body.append("<strong>Telephone (home): </strong>" + report.phone_home + "</br>");
+    $scope.body.append("<strong>Telephone (work): </strong>" + report.phone_work + "</br>");
+    $scope.body.append("<strong>Telephone (cell): </strong>" + report.phone_cell + "</br>");
+    $scope.body.append("<strong>Insurance: </strong>" + report.insurance + "</br>");
+    $scope.body.append("<strong>MRN: </strong>" + report.mrn + "</br>");
+    $scope.body.append("<strong>Next of kin: </strong>" + report.next_of_kin + " (" + report.next_of_kin_phone + ")</br>");
 
-  $scope.print = function () {
-    window.plugin.printer.isServiceAvailable(
+    $scope.body.append(getTable($scope.vitalsRecords, 'vitals', 'Vitals'));
+    $scope.body.append(getTable($scope.neuroRecords, 'neuro', 'Neuro'));
+    $scope.body.append(getTable($scope.basicAirwayRecords, 'airway_basic', 'Basic Airway'));
+  }
+
+
+  $scope.email = function () {
+
+//    var doc = new jsPDF();
+//    doc.text(20, 20, 'Hello world!');
+//    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+//    doc.addPage();
+//    doc.text(20, 20, 'Do you not like that test2?');
+//
+//    var res = doc.output('datauri');
+
+    cordova.plugins.email.isAvailable(
       function (isAvailable) {
-        alert(isAvailable ? 'Service is available' : 'Service NOT available');
+        if (isAvailable) {
+          //          alert("email available");
+          cordova.plugins.email.open({
+            to: $scope.settingsRecord.send_report_to,
+            subject: 'Patient Care Report',
+            body: $scope.body[0].innerHTML,
+            isHTML: true
+          })
+        } else {
+          //          alert("email not available");
+        }
       }
     );
-    //    window.plugin.printer.print(body);
+  }
+
+  $scope.print = function () {
+    window.plugin.printer.isAvailable(
+      function (isAvailable) {
+        //        alert(isAvailable ? 'Service is available' : 'Service NOT available');
+        cordova.plugins.printer.print($scope.body[0].innerHTML, 'Patient Care Report.html', function () {
+          //          alert('printing finished');
+        });
+      }
+    );
   }
 })
 

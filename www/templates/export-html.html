@@ -1,13 +1,17 @@
-<ion-nav-bar>
+<ion-nav-bar class="androidpaintfix">
 </ion-nav-bar>
   <ion-view view-title="Report">
   <ion-nav-buttons side="secondary">
+      <button class="button button-clear" ng-click="email()">
+         <i class="icon ion-share balanced"></i> Email
+      </button>
       <button class="button button-clear" ng-click="print()">
          <i class="icon ion-share balanced"></i> Print
       </button>
     </ion-nav-buttons>
   <ion-content class="padding">
-    <div id="exportContainer">
+    <canvas id="the-canvas"></canvas>
+    <div id="exportContainer" style="overflow:auto">
     </div>
   </ion-content>
 </ion-view>
