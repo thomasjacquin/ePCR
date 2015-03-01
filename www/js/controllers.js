@@ -174,7 +174,7 @@ angular.module('ePCR.controllers', [])
       data[serie.code].push(vitals[index][serie.code]);
     });
   }
-  
+
 
   $scope.chart = {
     labels: xAxis,
@@ -194,7 +194,7 @@ angular.module('ePCR.controllers', [])
     maintainAspectRatio: false,
     animationSteps: 10
   }
-  
+
   $scope.changeVital = function () {
     $scope.chart.datasets[0].data = data[$scope.vitalSelected.serie];
   }
@@ -1900,7 +1900,6 @@ angular.module('ePCR.controllers', [])
             .then(function () {
               Records.get('settings', 1)
                 .then(function (record) {
-                  console.log(record)
                   $scope.settingsRecord = record;
                 })
             })
@@ -1908,124 +1907,116 @@ angular.module('ePCR.controllers', [])
     });
 
   $scope.export = function () {
+        var doc = new jsPDF();
+        doc.text(20, 20, 'Hello world!');
+        doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+        doc.addPage();
+        doc.text(20, 20, 'Do you like that?');
+    //    var specialElementHandlers = {
+    //      '#editor': function (element, renderer) {
+    //        return true;
+    //      }
+    //    };
+    //    var body = angular.element(document).find('body');
+    //    doc.fromHTML(body, 15, 15, {
+    //      'width': 170,
+    //      'elementHandlers': specialElementHandlers
+    //    });
+        var pdfOutput = doc.output('datauri');
+    console.log(pdfOutput);
+    window.open(pdfOutput , '_blank', 'location=yes');
+    //        window.open(pdfOutput);
+    //        alert(">>>" + pdfOutput);
+    //
+    //    function win(file) {
+    //      var reader = new FileReader();
+    //      reader.onloadend = function (evt) {
+    //        console.log("read success");
+    //        console.log(evt.target.result);
+    //      };
+    //      reader.readAsDataURL(pdfOutput);
+    //    };
+    //
+    //    function gotFS(fileSystem) {
+    //      fileSystem.root.getFile(pdfOutput, null, gotFileEntry, fail);
+    //    }
+    //
+    //    function gotFileEntry(fileEntry) {
+    //      fileEntry.file(gotFile, fail);
+    //    }
+    //
+    //    function readDataUrl(file) {
+    //      var reader = new FileReader();
+    //      reader.onloadend = function (evt) {
+    //        alert("Read as data URL");
+    //        console.log(evt.target.result);
+    //      };
+    //      reader.readAsDataURL(file);
+    //    }
+    //
+    //    function gotFile(file) {
+    //      readDataUrl(file);
+    //    }
+    //
+    //    var fail = function (error) {
+    //      console.log(error.code);
+    //    };
+    //
+    //    function onDeviceReady() {
+    //        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    //      }
 
-    var docDefinition = {
-      content: [
-        {
-          text: 'Patient Care Report',
-          style: 'header'
-        },
-           'By Thomas Jacquin',
-//        {
-//			image: $scope.settingsRecord.photo,
-//		},
-        {
-          text: 'Patient Info',
-          style: 'section_heading'
-        },
-        {
-          text: 'Patient Name: ' + report.first_name + ' ' + report.last_name,
-          style: "defaultStyle"
-        },
-        {
-          text: 'Patient History',
-          style: 'section_heading'
-        },
-        {
-          text: 'Vitals',
-          style: 'section_heading'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            headerRows: 1,
-            body: getTableArray($scope.vitalsRecords, 'vitals')
-          }
-        },
-        {
-          text: 'Chief Complaint',
-          style: 'section_heading'
-        },
-        {
-          text: 'Exam',
-          style: 'section_heading'
-        },
-        {
-          text: 'Neuro',
-          style: 'section_heading'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            headerRows: 1,
-            body: getTableArray($scope.neuroRecords, 'neuro')
-          }
-        },
-        {
-          text: 'Procedures',
-          style: 'section_heading'
-        },
-        {
-          text: 'Basic Airway',
-          style: 'section_heading'
-        },
-        {
-          style: 'tableExample',
-          table: {
-            headerRows: 1,
-            body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
-          }
-        },
-        {
-          text: 'Signatures',
-          style: 'section_heading'
-        },
-        {
-          text: 'Call Info',
-          style: 'section_heading'
-        },
-        {
-          text: 'Narrative',
-          style: 'section_heading'
-        },
-        {
-          text: 'CPR',
-          style: 'section_heading'
-        },
-         ],
-
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true
-        },
-        section_heading: {
-          margin: [0, 20, 0, 0],
-          fontSize: 12,
-          bold: true
-        },
-        tableExample: {
-          fontSize: 8,
-          margin: [0, 5, 0, 0]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        },
-        defaultStyle: {
-          fontSize: 10
-        }
-      }
-    };
-    // open the PDF in a new window
-    pdfMake.createPdf(docDefinition).open();
-
-    // print the PDF (temporarily Chrome-only)
-    //         pdfMake.createPdf(docDefinition).print();
-
-    // download the PDF (temporarily Chrome-only)
-    //         pdfMake.createPdf(docDefinition).download('optionalName.pdf');
+//    function gotFSforRead(fileSystem) {
+//      alert("On va lire");
+//      fileSystem.root.getFile("epcr.pdf", null, gotFileEntryRead, fail);
+//    }
+//
+//    function gotFileEntryRead(fileEntry) {
+//      fileEntry.file(gotFileRead, fail);
+//    }
+//
+//    function gotFileRead(file) {
+//      readFile(file);
+//    }
+//
+//    function readFile(file) {
+//      var reader = new FileReader();
+//      reader.onloadend = function (evt) {
+//        alert("Read file");
+//      };
+//      alert(reader.readAsDataURL(file));
+//      window.open("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" , '_blank', 'location=yes');
+//    }
+//
+//    function fail(error) {
+//      console.log(error.code);
+//    };
+//
+//    function gotFS(fileSystem) {
+//      fileSystem.root.getFile("epcr.pdf", {
+//        create: true,
+//        exclusive: false
+//      }, gotFileEntry, fail);
+//    }
+//
+//    function gotFileEntry(fileEntry) {
+//      fileEntry.createWriter(gotFileWriter, fail);
+//    }
+//
+//    function gotFileWriter(writer) {
+//      var doc = new jsPDF();
+//      doc.setFontSize(14);
+//      doc.text(20, 20, 'Hello world!');
+//      writer.onwrite = function (evt) {
+//        alert("on a fini");
+//        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
+//      }
+//      writer.write(doc.output());
+//    }
+//
+//    //    function onDeviceReady() {
+//    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+//    //    }
   }
 })
 

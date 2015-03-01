@@ -18,6 +18,7 @@
   "cordovaPlugins": [
     "https://github.com/brodysoft/Cordova-SQLitePlugin",
     "org.apache.cordova.camera",
-    "./engine/cordova-crosswalk-engine-c0.6.2"
+    "./engine/cordova-crosswalk-engine-c0.6.2",
+    "org.apache.cordova.file"
   ]
 }
