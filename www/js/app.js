@@ -974,6 +974,21 @@ angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.services', 'customDir
         templateUrl: 'templates/export-options.html',
         controller: 'ExportCtrl',
         resolve: {
+          settings: function (Records) {
+            return Records.get('settings', 1);
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.export-html', {
+    url: '/report/:reportId/export-html',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/export-html.html',
+        controller: 'ExportHtmlCtrl',
+        resolve: {
           report: function ($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
           }

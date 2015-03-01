@@ -1839,7 +1839,46 @@ angular.module('ePCR.controllers', [])
   }
 })
 
-.controller('ExportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
+.controller('ExportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, $state, exportTableDefinition) {
+
+  var defaults = {
+    short_report: true,
+    patient_info: true,
+    vitals: true,
+    vitals_charts: true,
+    chief_complaint: true,
+    patient_hx: true,
+    exam: true,
+    procedures: true,
+    signatures: true,
+    call_info: true,
+    narrative: true,
+    code: true
+  }
+
+
+  $scope.mySettings = {
+    "export": settings.export ? JSON.parse(settings.export) : defaults
+  }
+  console.log($scope.mySettings.export);
+
+
+  $scope.export = function () {
+    var set = {};
+    set.export = JSON.stringify($scope.mySettings.export);
+    console.log(set);
+    db.update("settings", set, {
+      'id': 1
+    }).then(function () {
+      console.log("Updated Settings");
+      $state.go('tab.export-html', {
+        "reportId": $stateParams.reportId
+      });
+    });
+  }
+})
+
+.controller('ExportHtmlCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
   var getTableArray = function (records, tableName) {
     var tableRecords = [];
@@ -1870,19 +1909,6 @@ angular.module('ePCR.controllers', [])
     return tableRecords;
   };
 
-  $scope.short_report = true;
-  $scope.patient_info = true;
-  $scope.vitals = true;
-  $scope.vitals_charts = true;
-  $scope.chief_complaint = true;
-  $scope.patient_hx = true;
-  $scope.exam = true;
-  $scope.procedures = true;
-  $scope.signatures = true;
-  $scope.call_info = true;
-  $scope.narrative = true;
-  $scope.code = true;
-
   Records.all('vitals', $stateParams.reportId)
     .then(function (records) {
       $scope.vitalsRecords = records;
@@ -1906,117 +1932,17 @@ angular.module('ePCR.controllers', [])
         })
     });
 
-  $scope.export = function () {
-        var doc = new jsPDF();
-        doc.text(20, 20, 'Hello world!');
-        doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
-        doc.addPage();
-        doc.text(20, 20, 'Do you like that?');
-    //    var specialElementHandlers = {
-    //      '#editor': function (element, renderer) {
-    //        return true;
-    //      }
-    //    };
-    //    var body = angular.element(document).find('body');
-    //    doc.fromHTML(body, 15, 15, {
-    //      'width': 170,
-    //      'elementHandlers': specialElementHandlers
-    //    });
-        var pdfOutput = doc.output('datauri');
-    console.log(pdfOutput);
-    window.open(pdfOutput , '_blank', 'location=yes');
-    //        window.open(pdfOutput);
-    //        alert(">>>" + pdfOutput);
-    //
-    //    function win(file) {
-    //      var reader = new FileReader();
-    //      reader.onloadend = function (evt) {
-    //        console.log("read success");
-    //        console.log(evt.target.result);
-    //      };
-    //      reader.readAsDataURL(pdfOutput);
-    //    };
-    //
-    //    function gotFS(fileSystem) {
-    //      fileSystem.root.getFile(pdfOutput, null, gotFileEntry, fail);
-    //    }
-    //
-    //    function gotFileEntry(fileEntry) {
-    //      fileEntry.file(gotFile, fail);
-    //    }
-    //
-    //    function readDataUrl(file) {
-    //      var reader = new FileReader();
-    //      reader.onloadend = function (evt) {
-    //        alert("Read as data URL");
-    //        console.log(evt.target.result);
-    //      };
-    //      reader.readAsDataURL(file);
-    //    }
-    //
-    //    function gotFile(file) {
-    //      readDataUrl(file);
-    //    }
-    //
-    //    var fail = function (error) {
-    //      console.log(error.code);
-    //    };
-    //
-    //    function onDeviceReady() {
-    //        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-    //      }
+  var body = angular.element(document.getElementById('exportContainer'));
+  body.append("<h4>Patient Care Report</h4>");
+  body.append("<span>" + new Date() + "</span>");
 
-//    function gotFSforRead(fileSystem) {
-//      alert("On va lire");
-//      fileSystem.root.getFile("epcr.pdf", null, gotFileEntryRead, fail);
-//    }
-//
-//    function gotFileEntryRead(fileEntry) {
-//      fileEntry.file(gotFileRead, fail);
-//    }
-//
-//    function gotFileRead(file) {
-//      readFile(file);
-//    }
-//
-//    function readFile(file) {
-//      var reader = new FileReader();
-//      reader.onloadend = function (evt) {
-//        alert("Read file");
-//      };
-//      alert(reader.readAsDataURL(file));
-//      window.open("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==" , '_blank', 'location=yes');
-//    }
-//
-//    function fail(error) {
-//      console.log(error.code);
-//    };
-//
-//    function gotFS(fileSystem) {
-//      fileSystem.root.getFile("epcr.pdf", {
-//        create: true,
-//        exclusive: false
-//      }, gotFileEntry, fail);
-//    }
-//
-//    function gotFileEntry(fileEntry) {
-//      fileEntry.createWriter(gotFileWriter, fail);
-//    }
-//
-//    function gotFileWriter(writer) {
-//      var doc = new jsPDF();
-//      doc.setFontSize(14);
-//      doc.text(20, 20, 'Hello world!');
-//      writer.onwrite = function (evt) {
-//        alert("on a fini");
-//        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
-//      }
-//      writer.write(doc.output());
-//    }
-//
-//    //    function onDeviceReady() {
-//    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-//    //    }
+  $scope.print = function () {
+    window.plugin.printer.isServiceAvailable(
+      function (isAvailable) {
+        alert(isAvailable ? 'Service is available' : 'Service NOT available');
+      }
+    );
+    //    window.plugin.printer.print(body);
   }
 })
 

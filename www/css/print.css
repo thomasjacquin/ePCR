@@ -1,0 +1,7 @@
+@media only print {
+  body {
+    background: blue;
+    color: red;
+    font-size: 40px;
+  }
+}
