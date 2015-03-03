@@ -22,12 +22,16 @@
     <script src="lib/angles/angles.js"></script>
     <script src="lib/signature_pad/signature_pad.js"></script>
     <script src='lib/raphael/raphael.js'></script>
-    <script src='lib/jspdf/dist/jspdf.min.js'></script>
+    <script src='lib/jspdf/dist/jspdf.debug.js'></script>
+    <script src='lib/jspdf-table-plugin/jspdf.plugin.table.js'></script>
+    <script src='lib/pdfmake/build/pdfmake.js'></script>
+    <script src='lib/pdfmake/build/vfs_fonts.js'></script>
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
 
     <!-- your app's js -->
+    <script src="js/html2canvas.js"></script>
     <script src="js/app.js"></script>
     <script src="js/factories.js"></script>
     <script src="js/directives.js"></script>
@@ -36,8 +40,6 @@
     <script src="js/config.js"></script>
     <script src="js/database-functions.js"></script>
     <script src="js/body-map.js"></script>
-    <script src="js/pdf.js"></script>
-    <script src="js/pdf.worker.js"></script>
   </head>
   <body ng-app="ePCR">
     <!--

@@ -1880,39 +1880,33 @@ angular.module('ePCR.controllers', [])
 
 .controller('ExportHtmlCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
-  var getTable = function (records, tableName, tableNameReadable) {
+  var getTableArray = function (records, tableName) {
     var tableRecords = [];
 
-    var html = "<h5><strong>" + tableNameReadable + "</strong></h5>";
+    var header = [];
+    angular.forEach(exportTableDefinition[tableName], function (definition, field) {
+      header.push(definition.name);
+    });
 
-    if (Object.size(records) != 0) {
-      html += "<table><thead><tr>";
+    tableRecords.push(header);
+
+    for (index in records) {
+      var row = [];
       angular.forEach(exportTableDefinition[tableName], function (definition, field) {
-        html += "<th>" + definition.name + "</th>";
+        var value = records[index][field] || '';
+        if (value == 'true')
+          value = 'Yes';
+        else if (value == 'false')
+          value = '';
+        if (records[index][definition.unit]) {
+          value += ' ' + records[index][definition.unit];
+        }
+        row.push(String(value));
       });
-      html += "</tr></thead><tbody>";
-
-      for (index in records) {
-        html += "<tr>";
-        angular.forEach(exportTableDefinition[tableName], function (definition, field) {
-          var value = records[index][field] || '';
-          if (value == 'true')
-            value = 'Yes';
-          else if (value == 'false')
-            value = '';
-          if (records[index][definition.unit]) {
-            value += ' ' + records[index][definition.unit];
-          }
-          html += "<td>" + String(value) + "</td>";
-        });
-        html += "</tr>";
-      }
-      html += "</tbody></table>";
-    } else {
-      html += "no records";
+      tableRecords.push(row);
     }
 
-    return html;
+    return tableRecords;
   };
 
   Records.all('vitals', $stateParams.reportId)
@@ -1933,74 +1927,154 @@ angular.module('ePCR.controllers', [])
               Records.get('settings', 1)
                 .then(function (record) {
                   $scope.settingsRecord = record;
-                  fillReport();
                 })
             })
         })
     });
 
-  function fillReport() {
-    $scope.body = angular.element(document.getElementById('exportContainer'));
-    $scope.body.append("<h4><strong>Patient Care Report</strong></h4>");
-    $scope.body.append("<span>" + new Date() + "</span>");
-    $scope.body.append("<h5><strong>Patient Details<strong></span>");
-    $scope.body.append("<strong>First Name: </strong>" + report.first_name + "</br>");
-    $scope.body.append("<strong>Last Name: </strong>" + report.last_name + "</br>");
-    $scope.body.append("<strong>Date of birth: </strong>" + report.date_of_birth + "</br>");
-    $scope.body.append("<strong>Gender: </strong>" + report.gender + "</br>");
-    $scope.body.append("<strong>Weight: </strong>" + report.weight + "" + report.weight_unit + "</br>");
-    $scope.body.append("<strong>Street: </strong>" + report.address_street + "</br>");
-    $scope.body.append("<strong>City: </strong>" + report.address_city + "</br>");
-    $scope.body.append("<strong>Province: </strong>" + report.address_province + "</br>");
-    $scope.body.append("<strong>Telephone (home): </strong>" + report.phone_home + "</br>");
-    $scope.body.append("<strong>Telephone (work): </strong>" + report.phone_work + "</br>");
-    $scope.body.append("<strong>Telephone (cell): </strong>" + report.phone_cell + "</br>");
-    $scope.body.append("<strong>Insurance: </strong>" + report.insurance + "</br>");
-    $scope.body.append("<strong>MRN: </strong>" + report.mrn + "</br>");
-    $scope.body.append("<strong>Next of kin: </strong>" + report.next_of_kin + " (" + report.next_of_kin_phone + ")</br>");
-
-    $scope.body.append(getTable($scope.vitalsRecords, 'vitals', 'Vitals'));
-    $scope.body.append(getTable($scope.neuroRecords, 'neuro', 'Neuro'));
-    $scope.body.append(getTable($scope.basicAirwayRecords, 'airway_basic', 'Basic Airway'));
-  }
-
-
-  $scope.email = function () {
-
-//    var doc = new jsPDF();
-//    doc.text(20, 20, 'Hello world!');
-//    doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
-//    doc.addPage();
-//    doc.text(20, 20, 'Do you not like that test2?');
-//
-//    var res = doc.output('datauri');
-
-    cordova.plugins.email.isAvailable(
-      function (isAvailable) {
-        if (isAvailable) {
-          //          alert("email available");
-          cordova.plugins.email.open({
-            to: $scope.settingsRecord.send_report_to,
-            subject: 'Patient Care Report',
-            body: $scope.body[0].innerHTML,
-            isHTML: true
-          })
-        } else {
-          //          alert("email not available");
+  var docDefinition = {
+    content: [
+      {
+        text: 'Patient Care Report',
+        style: 'header'
+        },
+           'By Thomas Jacquin',
+//        {
+//			image: $scope.settingsRecord.photo,
+//		},
+      {
+        text: 'Patient Info',
+        style: 'section_heading'
+        },
+      {
+        text: 'Patient Name: ' + report.first_name + ' ' + report.last_name,
+        style: "defaultStyle"
+        },
+      {
+        text: 'Patient History',
+        style: 'section_heading'
+        },
+      {
+        text: 'Vitals',
+        style: 'section_heading'
+        },
+      {
+        style: 'tableExample',
+        table: {
+          headerRows: 1,
+          body: getTableArray($scope.vitalsRecords, 'vitals')
         }
+        },
+      {
+        text: 'Chief Complaint',
+        style: 'section_heading'
+        },
+      {
+        text: 'Exam',
+        style: 'section_heading'
+        },
+      {
+        text: 'Neuro',
+        style: 'section_heading'
+        },
+      {
+        style: 'tableExample',
+        table: {
+          headerRows: 1,
+          body: getTableArray($scope.neuroRecords, 'neuro')
+        }
+        },
+      {
+        text: 'Procedures',
+        style: 'section_heading'
+        },
+      {
+        text: 'Basic Airway',
+        style: 'section_heading'
+        },
+      {
+        style: 'tableExample',
+        table: {
+          headerRows: 1,
+          body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
+        }
+        },
+      {
+        text: 'Signatures',
+        style: 'section_heading'
+        },
+      {
+        text: 'Call Info',
+        style: 'section_heading'
+        },
+      {
+        text: 'Narrative',
+        style: 'section_heading'
+        },
+      {
+        text: 'CPR',
+        style: 'section_heading'
+        },
+         ],
+
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true
+      },
+      section_heading: {
+        margin: [0, 20, 0, 0],
+        fontSize: 12,
+        bold: true
+      },
+      tableExample: {
+        fontSize: 8,
+        margin: [0, 5, 0, 0]
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 13,
+        color: 'black'
+      },
+      defaultStyle: {
+        fontSize: 10
       }
-    );
+    }
+  };
+  console.log(docDefinition);
+
+  var pdfBlob = null;
+
+  function fail(error) {
+    console.log(error.code);
+  };
+
+  function gotFS(fileSystem) {
+    fileSystem.root.getFile("thomas-test.pdf", {
+      create: true,
+      exclusive: false
+    }, gotFileEntry, fail);
   }
 
-  $scope.print = function () {
-    window.plugin.printer.isAvailable(
-      function (isAvailable) {
-        //        alert(isAvailable ? 'Service is available' : 'Service NOT available');
-        cordova.plugins.printer.print($scope.body[0].innerHTML, 'Patient Care Report.html', function () {
-          //          alert('printing finished');
-        });
-      }
-    );
+  function gotFileEntry(fileEntry) {
+    fileEntry.createWriter(gotFileWriter, fail);
+  }
+
+  function gotFileWriter(writer) {
+    writer.onwrite = function (evt) {
+      alert("on a fini");
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
+    }
+    writer.write(pdfBlob);
+  }
+
+  $scope.download = function () {
+      // open the PDF in a new window
+      pdfMake.createPdf(docDefinition).getBase64(function(base64){
+        pdfBlob = atob(base64.replace("////",""));
+        console.log(pdfBlob);
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+      });
   }
 })
 
