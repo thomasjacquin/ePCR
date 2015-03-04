@@ -2069,12 +2069,21 @@ angular.module('ePCR.controllers', [])
   }
 
   $scope.download = function () {
+    pdfMake.fonts = {
+        Roboto: {
+          normal: 'OpenSans-Regular.ttf',
+          bold: 'OpenSans-Regular.ttf',
+          italics: 'OpenSans-Regular.ttf',
+          bolditalics: 'OpenSans-Regular.ttf'
+        }
+      }
+    //pdfMake.createPdf(docDefinition).open();
       // open the PDF in a new window
-      pdfMake.createPdf(docDefinition).getBase64(function(base64){
-        pdfBlob = atob(base64.replace("////",""));
-        console.log(pdfBlob);
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-      });
+    pdfMake.createPdf(docDefinition).getBase64(function (base64) {
+      pdfBlob = atob(base64.replace("////", ""));
+      console.log(pdfBlob);
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    });
   }
 })
 
