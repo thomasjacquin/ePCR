@@ -1181,7 +1181,7 @@ angular.module('ePCR.config', [])
         "substance": {
           "type": "TEXT"
         },
-        "other": {
+        "substance_other": {
           "type": "TEXT"
         },
         "created": {
@@ -2343,7 +2343,7 @@ in_out: {
     },
     substance: {
       name: "Substance",
-      substance_other: "other"
+      other: "substance_other"
     }
   },
   ecg: {
@@ -2382,7 +2382,7 @@ in_out: {
     created: {
       name: "Date"
     },
-    narrative: {
+    narration: {
       name: "Narrative"
     }
   },

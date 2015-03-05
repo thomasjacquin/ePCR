@@ -1,10 +1,10 @@
-angular.module('ePCR.controllers', [])
 
-.controller('DashCtrl', function ($scope, reports) {
+
+function DashCtrl($scope, reports) {
   $scope.reportsNumber = Object.size(reports);
-})
+}
 
-.controller('ReportsCtrl', function ($scope, $q, $webSql, DB_CONFIG, reports) {
+function ReportsCtrl($scope, $q, $webSql, DB_CONFIG, reports) {
 
   $scope.reports = reports;
   $scope.showDelete = false;
@@ -37,9 +37,9 @@ angular.module('ePCR.controllers', [])
         delete $scope.reports[reportId];
       })
   }
-})
+}
 
-.controller('ReportDetailCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, report, $window, Records) {
+function ReportDetailCtrl($scope, $stateParams, $webSql, DB_CONFIG, report, $window, Records) {
 
   $scope.report = report;
   $scope.reportId = $stateParams.reportId;
@@ -64,9 +64,9 @@ angular.module('ePCR.controllers', [])
   $scope.code = function () {
     $window.location = '#/tab/report/' + $stateParams.reportId + '/code';
   }
-})
+}
 
-.controller('PersonalInfoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function PersonalInfoCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.personal = {
     "first_name": report.first_name,
@@ -98,9 +98,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('VitalsChartCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals, exportTableDefinition) {
+function VitalsChartCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals, exportTableDefinition) {
 
   var xAxis = [],
     data = {};
@@ -198,10 +198,9 @@ angular.module('ePCR.controllers', [])
   $scope.changeVital = function () {
     $scope.chart.datasets[0].data = data[$scope.vitalSelected.serie];
   }
+}
 
-})
-
-.controller('VitalsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
+function VitalsCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, vitals) {
   $scope.vitalsEntry = vitals;
 
   $scope.vitals = {
@@ -235,9 +234,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('ChiefComplaintCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, chiefComplaint) {
+function ChiefComplaintCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, chiefComplaint) {
 
   $scope.pertinentList = [];
   $scope.primaryComplaint = chiefComplaint.primary;
@@ -277,9 +276,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('PatientHistoryCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function PatientHistoryCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.showDelete = false;
 
@@ -331,9 +330,9 @@ angular.module('ePCR.controllers', [])
       console.log("Updated report: Patient History");
     });
   }
-})
+}
 
-.controller('AllergiesCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, allergies) {
+function AllergiesCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, allergies) {
 
   $scope.allergiesList = [];
 
@@ -366,9 +365,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('HomeMedicationsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, homeMedications) {
+function HomeMedicationsCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, homeMedications) {
 
   var existingMedications = report.hx_medications;
   var medicationsList = [];
@@ -422,9 +421,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('ConditionsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, medicalConditions) {
+function ConditionsCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, medicalConditions) {
 
   var existingConditions = report.hx_conditions;
   var conditionsList = [];
@@ -479,9 +478,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('ExamCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
+function ExamCtrl($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
   $scope.reportId = $stateParams.reportId;
 
@@ -489,9 +488,9 @@ angular.module('ePCR.controllers', [])
     .then(function (neuroRecords) {
       $scope.neuroNumber = Object.size(neuroRecords);
     })
-})
+}
 
-.controller('NeuroCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, neuro) {
+function NeuroCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, neuro) {
   $scope.neuroEntry = neuro;
 
   $scope.neuro = {
@@ -529,9 +528,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('AbcCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
+function AbcCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
 
   $scope.activeButton = 1;
 
@@ -594,9 +593,9 @@ angular.module('ePCR.controllers', [])
         $window.history.back();
     });
   }
-})
+}
 
-.controller('TraumaCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, report) {
+function TraumaCtrl($scope, $stateParams, $webSql, DB_CONFIG, report) {
   $scope.report = report;
   $scope.reportId = $stateParams.reportId;
 
@@ -617,9 +616,9 @@ angular.module('ePCR.controllers', [])
       console.log("Updated trauma");
     });
   }
-})
+}
 
-.controller('TraumaAutoCtrl', function ($scope, $stateParams, $window, $webSql, DB_CONFIG, report) {
+function TraumaAutoCtrl($scope, $stateParams, $window, $webSql, DB_CONFIG, report) {
 
   $scope.auto = {
     "trauma_auto_vehicle": report.trauma_auto_vehicle,
@@ -650,9 +649,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('TraumaPenetratingCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+function TraumaPenetratingCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
 
   $scope.bodyPartsList = [];
   $scope.penetrating = {
@@ -692,9 +691,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('TraumaBluntCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+function TraumaBluntCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
 
   $scope.bodyPartsList = [];
   $scope.blunt = {
@@ -733,9 +732,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('TraumaFallCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
+function TraumaFallCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts) {
 
   $scope.bodyPartsList = [];
   $scope.fall = {
@@ -778,9 +777,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('TraumaBurnCtrl', function ($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts, body_parts_area, $timeout) {
+function TraumaBurnCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, report, bodyParts, body_parts_area, $timeout) {
 
   var bodySvg = null;
   $scope.bodyPartsList = [];
@@ -900,9 +899,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('GiCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function GiCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.gi = {
     "gi_soft": report.gi_soft == 'true',
@@ -939,9 +938,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('GuCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function GuCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
 
   $scope.gu = {
@@ -965,9 +964,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('GynCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
+function GynCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report) {
 
 
   $scope.gyn = {
@@ -1017,9 +1016,9 @@ angular.module('ePCR.controllers', [])
         $window.history.back();
     });
   }
-})
+}
 
-.controller('FieldDeliveryCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
+function FieldDeliveryCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, $ionicModal, report) {
 
   apgarSum = function (obj) {
     var sum = 0;
@@ -1091,9 +1090,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('MuscularCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, bodyParts, muscularInjuries) {
+function MuscularCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, bodyParts, muscularInjuries) {
 
   $scope.categories = [];
   var groupsShown = [];
@@ -1162,9 +1161,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('ProceduresCtrl', function ($scope, $webSql, $stateParams, DB_CONFIG, report, Records) {
+function ProceduresCtrl($scope, $webSql, $stateParams, DB_CONFIG, report, Records) {
   $scope.report = report;
   $scope.reportId = $stateParams.reportId;
 
@@ -1200,9 +1199,9 @@ angular.module('ePCR.controllers', [])
             })
         })
     });
-})
+}
 
-.controller('AirwayCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
+function AirwayCtrl($scope, $stateParams, $webSql, DB_CONFIG, report, Records) {
   $scope.report = report;
   $scope.reportId = $stateParams.reportId;
 
@@ -1228,9 +1227,9 @@ angular.module('ePCR.controllers', [])
             })
         })
     });
-})
+}
 
-.controller('BasicAirwayCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function BasicAirwayCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
 
   $scope.basic = {
@@ -1251,9 +1250,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('InvasiveAirwayCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function InvasiveAirwayCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
   $scope.report = report;
 
   $scope.invasive = {
@@ -1277,10 +1276,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('VentilatorCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
-
+function VentilatorCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
   $scope.ventilator = {
     "control": procedure.control,
@@ -1313,9 +1311,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('CpapBipapCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function CpapBipapCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
 
   $scope.cpap = {
@@ -1336,9 +1334,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('SuctionCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function SuctionCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
 
   $scope.suction = {
@@ -1358,9 +1356,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('IvIoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function IvIoCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
   $scope.ivio = {
     "site": procedure.site,
@@ -1382,9 +1380,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('SplintingCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function SplintingCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
   $scope.splinting = {
     "location": procedure.location,
@@ -1407,9 +1405,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('MedicationCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure, homeMedications) {
+function MedicationCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure, homeMedications) {
 
   $scope.medication_list = procedure.medication_type == 'Generic' ? homeMedications.generic.list : homeMedications.brand.list;
   if ($scope.medication_list[0] != "Other")
@@ -1450,9 +1448,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('SpinalCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function SpinalCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.spinal = {
     "spinal_manual": report.spinal_manual == 'true',
@@ -1474,9 +1472,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('InOutCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function InOutCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
 
   $scope.inOut = {
@@ -1496,9 +1494,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('EcgCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
+function EcgCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, procedure) {
 
 
   $scope.ecg = {
@@ -1543,9 +1541,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('SignaturesCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function SignaturesCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
   $scope.activeButton = 1;
   $scope.canvasWidth = window.innerWidth - 80;
@@ -1637,9 +1635,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('CallInfoCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe, settings) {
+function CallInfoCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, $state, report, ppe, settings) {
 
   $scope.ppeList = [];
 
@@ -1714,9 +1712,9 @@ angular.module('ePCR.controllers', [])
         $window.history.back();
     });
   }
-})
+}
 
-.controller('NoTransportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
+function NoTransportCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report) {
 
 
   $scope.noTransport = {
@@ -1740,9 +1738,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('NarrativeCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, narrative) {
+function NarrativeCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, narrative) {
   $scope.narrativeEntry = narrative;
 
   $scope.narrativeEntry = {
@@ -1760,9 +1758,9 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
+}
 
-.controller('CodeListCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, codeList) {
+function CodeListCtrl($scope, $stateParams, $webSql, DB_CONFIG, codeList) {
   $scope.codeList = codeList;
   $scope.showDelete = false;
 
@@ -1779,9 +1777,9 @@ angular.module('ePCR.controllers', [])
         delete $scope.codeList[itemId];
       });
   }
-})
+}
 
-.controller('CodeCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, codeList, $window) {
+function CodeCtrl($scope, $stateParams, $webSql, DB_CONFIG, codeList, $window) {
   $scope.timer = 0;
   $scope.timerId = 0;
 
@@ -1837,9 +1835,9 @@ angular.module('ePCR.controllers', [])
         console.log("Updated Code");
       });
   }
-})
+}
 
-.controller('ExportCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, $state, exportTableDefinition) {
+function ExportCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, $state, exportTableDefinition) {
 
   var defaults = {
     short_report: true,
@@ -1876,10 +1874,9 @@ angular.module('ePCR.controllers', [])
       });
     });
   }
-})
+}
 
-.controller('ExportHtmlCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
-
+function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
   var BINARY_ARR = null;
   var currentfileEntry = null;
@@ -1906,6 +1903,9 @@ angular.module('ePCR.controllers', [])
           value = '';
         if (records[index][definition.unit]) {
           value += ' ' + records[index][definition.unit];
+        }
+        if (records[index][definition.other]) {
+           value = records[index][definition.other];
         }
         row.push(String(value));
       });
@@ -2263,9 +2263,9 @@ angular.module('ePCR.controllers', [])
     }
     //  
   }
-})
+}
 
-.controller('ListCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, list, urlData, $state) {
+function ListCtrl($scope, $stateParams, $webSql, DB_CONFIG, list, urlData, $state) {
   $scope.list = list;
   $scope.reportId = $stateParams.reportId;
   $scope.showDelete = false;
@@ -2296,9 +2296,9 @@ angular.module('ePCR.controllers', [])
       $state.go(urlData.newRecordState, params);
     });
   }
-})
+}
 
-.controller('SettingsCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, CameraFactory, $ionicModal) {
+function SettingsCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, settings, CameraFactory, $ionicModal) {
   $scope.settings = settings;
   $scope.activeButton = 1;
   $scope.addPartner = {
@@ -2383,8 +2383,7 @@ angular.module('ePCR.controllers', [])
       $window.history.back();
     });
   }
-})
-
+}
 
 function deleteDatebase($webSql, DB_CONFIG) {
 
@@ -2430,3 +2429,53 @@ Object.size = function (obj) {
   }
   return size;
 }
+
+angular.module('ePCR.controllers', [])
+.controller('DashCtrl', DashCtrl)
+.controller('ReportsCtrl', ReportsCtrl)
+.controller('ReportDetailCtrl', ReportDetailCtrl)
+.controller('PersonalInfoCtrl', PersonalInfoCtrl)
+.controller('VitalsChartCtrl', VitalsChartCtrl)
+.controller('VitalsCtrl', VitalsCtrl)
+.controller('ChiefComplaintCtrl', ChiefComplaintCtrl)
+.controller('PatientHistoryCtrl', PatientHistoryCtrl)
+.controller('AllergiesCtrl', AllergiesCtrl)
+.controller('HomeMedicationsCtrl', HomeMedicationsCtrl)
+.controller('ConditionsCtrl', ConditionsCtrl)
+.controller('ExamCtrl', ExamCtrl)
+.controller('NeuroCtrl', NeuroCtrl)
+.controller('AbcCtrl',  AbcCtrl)
+.controller('TraumaCtrl', TraumaCtrl)
+.controller('TraumaAutoCtrl', TraumaAutoCtrl)
+.controller('TraumaPenetratingCtrl', TraumaPenetratingCtrl)
+.controller('TraumaBluntCtrl', TraumaBluntCtrl)
+.controller('TraumaFallCtrl', TraumaFallCtrl)
+.controller('TraumaBurnCtrl', TraumaBurnCtrl)
+.controller('GiCtrl', GiCtrl)
+.controller('GuCtrl', GuCtrl)
+.controller('GynCtrl', GynCtrl)
+.controller('FieldDeliveryCtrl', FieldDeliveryCtrl)
+.controller('MuscularCtrl', MuscularCtrl)
+.controller('ProceduresCtrl', ProceduresCtrl)
+.controller('AirwayCtrl', AirwayCtrl)
+.controller('BasicAirwayCtrl', BasicAirwayCtrl)
+.controller('InvasiveAirwayCtrl', InvasiveAirwayCtrl)
+.controller('VentilatorCtrl', VentilatorCtrl)
+.controller('CpapBipapCtrl', CpapBipapCtrl)
+.controller('SuctionCtrl', SuctionCtrl)
+.controller('IvIoCtrl', IvIoCtrl)
+.controller('SplintingCtrl', SplintingCtrl)
+.controller('MedicationCtrl', MedicationCtrl)
+.controller('SpinalCtrl', SpinalCtrl)
+.controller('InOutCtrl', InOutCtrl)
+.controller('EcgCtrl', EcgCtrl)
+.controller('SignaturesCtrl', SignaturesCtrl)
+.controller('CallInfoCtrl', CallInfoCtrl)
+.controller('NoTransportCtrl', NoTransportCtrl)
+.controller('NarrativeCtrl', NarrativeCtrl)
+.controller('CodeListCtrl', CodeListCtrl)
+.controller('CodeCtrl', CodeCtrl)
+.controller('ExportCtrl', ExportCtrl)
+.controller('ExportHtmlCtrl', ExportHtmlCtrl)
+.controller('ListCtrl', ListCtrl)
+.controller('SettingsCtrl', SettingsCtrl);
