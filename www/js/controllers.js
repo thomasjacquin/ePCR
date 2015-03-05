@@ -1483,7 +1483,7 @@ angular.module('ePCR.controllers', [])
     "direction": procedure.direction,
     "volume": procedure.volume,
     "substance": procedure.substance,
-    "other": procedure.other,
+    "substance_other": procedure.substance_other,
   };
   console.log($scope.inOut);
 
@@ -1880,9 +1880,15 @@ angular.module('ePCR.controllers', [])
 
 .controller('ExportHtmlCtrl', function ($scope, $stateParams, $webSql, DB_CONFIG, $window, report, Records, exportTableDefinition) {
 
+
+  var BINARY_ARR = null;
+  var currentfileEntry = null;
+
+  $scope.docDefinition = {};
+
   var getTableArray = function (records, tableName) {
     var tableRecords = [];
-
+    console.log(records);
     var header = [];
     angular.forEach(exportTableDefinition[tableName], function (definition, field) {
       header.push(definition.name);
@@ -1924,166 +1930,338 @@ angular.module('ePCR.controllers', [])
               $scope.basicAirwayRecords = records;
             })
             .then(function () {
-              Records.get('settings', 1)
-                .then(function (record) {
-                  $scope.settingsRecord = record;
+              Records.all('airway_ventilator', $stateParams.reportId)
+                .then(function (records) {
+                  $scope.ventilatorRecords = records;
+                })
+                .then(function () {
+                  Records.all('airway_cpap_bipap', $stateParams.reportId)
+                    .then(function (records) {
+                      $scope.cpapRecords = records;
+                    })
+                    .then(function () {
+                      Records.all('airway_suction', $stateParams.reportId)
+                        .then(function (records) {
+                          $scope.suctionRecords = records;
+                        })
+                        .then(function () {
+                          Records.all('narrative', $stateParams.reportId)
+                            .then(function (records) {
+                              $scope.narrativeRecords = records;
+                            })
+                            .then(function () {
+                              Records.all('iv_io', $stateParams.reportId)
+                                .then(function (records) {
+                                  $scope.ivIoRecords = records;
+                                })
+                                .then(function () {
+                                  Records.all('splinting', $stateParams.reportId)
+                                    .then(function (records) {
+                                      $scope.splintingRecords = records;
+                                    })
+                                    .then(function () {
+                                      Records.all('medication', $stateParams.reportId)
+                                        .then(function (records) {
+                                          $scope.medicationRecords = records;
+                                        })
+                                        .then(function () {
+                                          Records.all('in_out', $stateParams.reportId)
+                                            .then(function (records) {
+                                              $scope.inOutRecords = records;
+                                            })
+                                            .then(function () {
+                                              Records.all('ecg', $stateParams.reportId)
+                                                .then(function (records) {
+                                                  $scope.ecgRecords = records;
+                                                })
+                                                .then(function () {
+                                                  Records.all('code', $stateParams.reportId)
+                                                    .then(function (records) {
+                                                      $scope.cprRecords = records;
+                                                    })
+                                                    .then(function () {
+                                                      Records.get('settings', 1)
+                                                        .then(function (record) {
+                                                          $scope.settingsRecord = record;
+                                                          fillDocDefinition();
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
                 })
             })
         })
     });
 
-  var docDefinition = {
-    content: [
-      {
-        text: 'Patient Care Report',
-        style: 'header'
+
+  fillDocDefinition = function () {
+    $scope.docDefinition = {
+      content: [
+        {
+          text: 'Patient Care Report',
+          style: 'header'
         },
-           'By Thomas Jacquin',
+           'By ' + $scope.settingsRecord.first_name + " " + $scope.settingsRecord.last_name,
 //        {
 //			image: $scope.settingsRecord.photo,
 //		},
-      {
-        text: 'Patient Info',
-        style: 'section_heading'
+        {
+          text: 'Patient Info',
+          style: 'section_heading'
         },
-      {
-        text: 'Patient Name: ' + report.first_name + ' ' + report.last_name,
-        style: "defaultStyle"
+        {
+          text: 'Patient Name: ' + report.first_name + ' ' + report.last_name,
+          style: "defaultStyle"
         },
-      {
-        text: 'Patient History',
-        style: 'section_heading'
+        {
+          text: 'Patient History',
+          style: 'section_heading'
         },
-      {
-        text: 'Vitals',
-        style: 'section_heading'
+        {
+          text: 'Vitals',
+          style: 'section_heading'
         },
-      {
-        style: 'tableExample',
-        table: {
-          headerRows: 1,
-          body: getTableArray($scope.vitalsRecords, 'vitals')
-        }
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.vitalsRecords, 'vitals')
+          }
         },
-      {
-        text: 'Chief Complaint',
-        style: 'section_heading'
+        {
+          text: 'Chief Complaint',
+          style: 'section_heading'
         },
-      {
-        text: 'Exam',
-        style: 'section_heading'
+        {
+          text: 'Exam',
+          style: 'section_heading'
         },
-      {
-        text: 'Neuro',
-        style: 'section_heading'
+        {
+          text: 'Neuro',
+          style: 'section_heading'
         },
-      {
-        style: 'tableExample',
-        table: {
-          headerRows: 1,
-          body: getTableArray($scope.neuroRecords, 'neuro')
-        }
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.neuroRecords, 'neuro')
+          }
         },
-      {
-        text: 'Procedures',
-        style: 'section_heading'
+        {
+          text: 'Procedures',
+          style: 'section_heading'
         },
-      {
-        text: 'Basic Airway',
-        style: 'section_heading'
+        {
+          text: 'Basic Airway',
+          style: 'section_heading'
         },
-      {
-        style: 'tableExample',
-        table: {
-          headerRows: 1,
-          body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
-        }
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
+          }
         },
-      {
-        text: 'Signatures',
-        style: 'section_heading'
+        {
+          text: 'Invasive Airway',
+          style: 'section_heading'
+      },
+        {
+          text: 'Ventilator',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.ventilatorRecords, 'airway_ventilator')
+          }
+      },
+        {
+          text: 'CPAP/BiPAP',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.cpapRecords, 'airway_cpap_bipap')
+          }
+      },
+        {
+          text: 'Suction',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.suctionRecords, 'airway_suction')
+          }
+      },
+        {
+          text: 'IV/IO',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.ivIoRecords, 'iv_io')
+          }
+      },
+         {
+          text: 'Splinting/Dressing',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.splintingRecords, 'splinting')
+          }
+      },
+        {
+          text: 'Medication',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.medicationRecords, 'medication')
+          }
+      },
+         {
+          text: 'Spinal Motion Restriction',
+          style: 'section_heading'
+      },
+         {
+          text: 'In/Out',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.inOutRecords, 'in_out')
+          }
+      },
+         {
+          text: 'ECG',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.ecgRecords, 'ecg')
+          }
+      },
+        {
+          text: 'Signatures',
+          style: 'section_heading'
         },
-      {
-        text: 'Call Info',
-        style: 'section_heading'
+        {
+          text: 'Call Info',
+          style: 'section_heading'
         },
-      {
-        text: 'Narrative',
-        style: 'section_heading'
+        {
+          text: 'Narrative',
+          style: 'section_heading'
+      },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.narrativeRecords, 'narrative')
+          }
+      },
+        {
+          text: 'CPR',
+          style: 'section_heading'
         },
-      {
-        text: 'CPR',
-        style: 'section_heading'
-        },
+        {
+          style: 'tableExample',
+          table: {
+            headerRows: 1,
+            body: getTableArray($scope.cprRecords, 'code')
+          }
+      }
          ],
 
-    styles: {
-      header: {
-        fontSize: 22,
-        bold: true
-      },
-      section_heading: {
-        margin: [0, 20, 0, 0],
-        fontSize: 12,
-        bold: true
-      },
-      tableExample: {
-        fontSize: 8,
-        margin: [0, 5, 0, 0]
-      },
-      tableHeader: {
-        bold: true,
-        fontSize: 13,
-        color: 'black'
-      },
-      defaultStyle: {
-        fontSize: 10
+      styles: {
+        header: {
+          fontSize: 22,
+          bold: true
+        },
+        section_heading: {
+          margin: [0, 20, 0, 0],
+          fontSize: 12,
+          bold: true
+        },
+        tableExample: {
+          fontSize: 8,
+          margin: [0, 5, 0, 0]
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black'
+        },
+        defaultStyle: {
+          fontSize: 10
+        }
       }
-    }
-  };
-  console.log(docDefinition);
-
-  var pdfBlob = null;
+    };
+    console.log($scope.docDefinition);
+  }
 
   function fail(error) {
     console.log(error.code);
   };
 
   function gotFS(fileSystem) {
-    fileSystem.root.getFile("thomas-test.pdf", {
+    var fileName = report.first_name + " " + report.last_name + ".pdf";
+    fileSystem.root.getFile(fileName, {
       create: true,
       exclusive: false
     }, gotFileEntry, fail);
   }
 
   function gotFileEntry(fileEntry) {
+    currentfileEntry = fileEntry;
     fileEntry.createWriter(gotFileWriter, fail);
   }
 
   function gotFileWriter(writer) {
     writer.onwrite = function (evt) {
-      alert("on a fini");
+      $scope.downloading = false;
+      alert("The report was saved on your device");
+      alert(JSON.parse(currentfileEntry));
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
     }
-    writer.write(pdfBlob);
+    writer.write(BINARY_ARR);
   }
 
   $scope.download = function () {
-    pdfMake.fonts = {
-        Roboto: {
-          normal: 'OpenSans-Regular.ttf',
-          bold: 'OpenSans-Regular.ttf',
-          italics: 'OpenSans-Regular.ttf',
-          bolditalics: 'OpenSans-Regular.ttf'
-        }
-      }
-    //pdfMake.createPdf(docDefinition).open();
-      // open the PDF in a new window
-    pdfMake.createPdf(docDefinition).getBase64(function (base64) {
-      pdfBlob = atob(base64.replace("////", ""));
-      console.log(pdfBlob);
-      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-    });
+    $scope.downloading = true;
+    if (!window.cordova) {
+      pdfMake.createPdf($scope.docDefinition).open();
+    } else {
+      pdfMake.createPdf($scope.docDefinition).getBuffer(function (buffer) {
+        var UTF8_STR = new Uint8Array(buffer); // Convert to UTF-8...                
+        BINARY_ARR = UTF8_STR.buffer; // Convert to Binary...
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+      });
+    }
+    //  
   }
 })
 

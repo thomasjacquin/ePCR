@@ -1,18 +1,12 @@
-<ion-nav-bar class="androidpaintfix">
-</ion-nav-bar>
-  <ion-view view-title="Report">
-  <ion-nav-buttons side="secondary">
-      <button class="button button-clear" ng-click="download()">
-         <i class="icon ion-share balanced"></i> Download
-      </button>
-<!--
-      <button class="button button-clear" ng-click="print()">
-         <i class="icon ion-share balanced"></i> Print
-      </button>
--->
-    </ion-nav-buttons>
+<ion-view view-title="Report">
   <ion-content class="padding">
-    <div id="exportContainer" style="overflow:auto">
+    <div style="width: 250px; margin: auto; margin-top: 100px">
+      <button id="export-button" ng-click="download()" class="balanced-bg" ng-class="{'active': downloading}">
+        <div>
+          <i class="icon ion-archive"></i>
+        </div>
+        <div>Download</div>
+      </button>
     </div>
   </ion-content>
 </ion-view>

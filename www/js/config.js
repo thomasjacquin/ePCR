@@ -2099,6 +2099,9 @@ angular.module('ePCR.config', [])
     }
   },
   neuro: {
+        created: {
+      name: "Date"
+    },
     avpu: {
       name: "AVPU"
     },
@@ -2131,6 +2134,9 @@ angular.module('ePCR.config', [])
     }
   },
   airway_basic: {
+        created: {
+      name: "Date"
+    },
     oxygen_volume: {
       name: "Volume"
     },
@@ -2148,6 +2154,244 @@ angular.module('ePCR.config', [])
     },
     airway_rate: {
       name: "Rate"
+    }
+  },
+  airway_ventilator: {
+    created: {
+      name: "Date"
+    },
+    control: {
+      name: "Control"
+    },
+    mode: {
+      name: "Mode"
+    },
+    rate: {
+      name: "Rate"
+    },
+    tidal_volume: {
+      name: "Tidal V."
+    },
+    inspiration_time: {
+      name: "Insp. Time"
+    },
+    inspiration_ratio: {
+      name: "Insp. ratio"
+    },
+    expiration_ratio: {
+      name: "Exp. ratio"
+    },
+    fio2: {
+      name: "FiO2"
+    },
+    peep: {
+      name: "Peep"
+    },
+    sensitivity: {
+      name: "Sensitivity"
+    },
+    expiration_pressure: {
+      name: "Exp. P"
+    },
+    expiration_tidal_volume: {
+      name: "Exp. Tidal P"
+    },
+    max_inspiration_pressure: {
+      name: "Max Insp. P"
+    },
+    plateau_pressure: {
+      name: "Plateau P"
+    },
+    pressure_support: {
+      name: "P Support"
+    },
+    high_pressure_limit: {
+      name: "High P lim"
+    },
+    low_pressure_limit: {
+      name: "Low P lim"
+    },
+    low_min_volume: {
+      name: "Low min V"
+    }
+  },
+    airway_cpap_bipap: {
+    created: {
+      name: "Date"
+    },
+    device: {
+      name: "Device"
+    },
+    size: {
+      name: "Size"
+    },
+    fio2: {
+      name: "FiO2"
+    },
+    peep: {
+      name: "PEEP"
+    },
+    pressure: {
+      name: "Pressure"
+    }
+  },
+  airway_suction: {
+    created: {
+      name: "Date"
+    },
+    duration: {
+      name: "Duration"
+    },
+    amount: {
+      name: "Amount"
+    },
+    tip: {
+      name: "Tip"
+    },
+    size: {
+      name: "Size"
+    }
+  },
+  iv_io: {
+    created: {
+      name: "Date"
+    },
+    site: {
+      name: "Site"
+    },
+    side: {
+      name: "Side"
+    },
+    gauge: {
+      name: "Gauge"
+    },
+    successful: {
+      name: "Success"
+    },
+    fluid: {
+      name: "Fluid",
+      other: "fluid_other"
+    }
+  },
+  splinting: {
+    created: {
+      name: "Date"
+    },
+    location: {
+      name: "Location"
+    },
+    side: {
+      name: "Side"
+    },
+    sensation_prior: {
+      name: "Sensation Prior"
+    },
+    sensation_post: {
+      name: "Sensation Post"
+    },
+    traction_applied: {
+      name: "Traction"
+    },
+    splinting_type: {
+      name: "Type",
+      other: "splinting_type_other"
+    },
+    position_found: {
+      name: "Position Found",
+      other: "position_found_other"
+    }
+  },
+  medication: {
+    created: {
+      name: "Date"
+    },
+    medication_type: {
+      name: "Type"
+    },
+    medication: {
+      name: "Medication",
+      other: "medication_other"
+    },
+    dose: {
+      name: "Dose",
+      unit: "dose_unit"
+    },
+    route: {
+      name: "Route",
+      other: "route_other"
+    },
+    indication: {
+      name: "Indication"
+    },
+    administrated: {
+      name: "Administrated",
+      other: "administrated_other"
+    },
+    same_dose: {
+      name: "Same dose"
+    },
+  },
+in_out: {
+    created: {
+      name: "Date"
+    },
+    direction: {
+      name: "Direction"
+    },
+    volume: {
+      name: "Volume"
+    },
+    substance: {
+      name: "Substance",
+      substance_other: "other"
+    }
+  },
+  ecg: {
+    created: {
+      name: "Date"
+    },
+    leads_nb: {
+      name: "Leads"
+    },
+    rhythm: {
+      name: "Rhythm"
+    },
+    regular: {
+      name: "Regular"
+    },
+    bbb: {
+      name: "BBB",
+    },
+    bbb_side: {
+      name: "BBB Side",
+    },
+    st_elevation_list: {
+      name: "Elevation",
+    },
+    st_depression_list: {
+      name: "Depression",
+    },
+    pacs: {
+      name: "PACS",
+    },
+    PVCS: {
+      name: "PVCS",
+    }
+  },
+  narrative: {
+    created: {
+      name: "Date"
+    },
+    narrative: {
+      name: "Narrative"
+    }
+  },
+  code: {
+    time: {
+      name: "Time"
+    },
+    code: {
+      name: "Code"
     }
   }
 })

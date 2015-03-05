@@ -114,23 +114,23 @@ h4.list-detail {
   }
 }
 
-#exportContainer table,
-#exportContainer table th,
-#exportContainer table tr,
-#exportContainer table tr td {
-  border: 1px solid black;
+#export-button {
+  color: white;
+  height: 250px;
+  width: 250px;
+  border-radius: 150px;
+  text-align: center;
+  border: none
 }
 
-#exportContainer table tr td,
-#exportContainer table th{
-  padding: 3px;
+#export-button i {
+  font-size: 150px;
+  line-height: 150px
 }
 
-#exportContainer table th{
-  font-weight: bold;
-}
-
-.androidpaintfix {
--webkit-transform: translate3d(0,0,0);
-transform: translate3d(0, 0, 0);
+#export-button.active,
+#export-button.activated{
+  border-color: #28a54c;
+  background-color: #28a54c;
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
 }
