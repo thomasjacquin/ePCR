@@ -1,5 +1,3 @@
-
-
 function DashCtrl($scope, reports) {
   $scope.reportsNumber = Object.size(reports);
 }
@@ -1905,7 +1903,7 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           value += ' ' + records[index][definition.unit];
         }
         if (records[index][definition.other]) {
-           value = records[index][definition.other];
+          value = records[index][definition.other];
         }
         row.push(String(value));
       });
@@ -2016,8 +2014,42 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           style: 'section_heading'
         },
         {
-          text: 'Patient Name: ' + report.first_name + ' ' + report.last_name,
-          style: "defaultStyle"
+          columns: [
+            {
+              text: [
+                {
+                  text: "Name: " + report.first_name + ' ' + report.last_name + '\n' + report.gender + ", " + report.weight + report.weight_unit + '\n',
+                  style: "defaultStyle"
+                },
+                {
+                  text: "Born " + moment(report.date_of_birth).format('MMM D, YYYY') + " (" + (moment().year() - moment(report.date_of_birth).year()) + " years old)\n",
+                  style: "defaultStyle"
+                },
+              ]
+            },
+            {
+              text: [
+                {
+                  text:  'SIN: ' + report.insurance + '\nMRN: ' + report.mrn + '\n' + report.address_street + '\n' + report.address_city + ' ' + report.address_province + '\n',
+                  style: "defaultStyle"
+                }
+              ]
+            },
+            {
+              text: [
+                {
+                  text: 'Home Phone #: ' + report.phone_home + '\n' +
+                  'Cell Phone #: ' + report.phone_cell + '\n' +
+                  'Work Phone #: ' + report.phone_work + '\n' +
+                  'Next of Kin: ' + report.next_of_kin + '\n' +
+                  'Next of Kin Phone #: ' + report.next_of_kin_phone + '\n',
+                  style: "defaultStyle"
+                }
+              ]
+            }
+          ],
+          // optional space between columns
+          columnGap: 10
         },
         {
           text: 'Patient History',
@@ -2116,7 +2148,7 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.ivIoRecords, 'iv_io')
           }
       },
-         {
+        {
           text: 'Splinting/Dressing',
           style: 'section_heading'
       },
@@ -2138,11 +2170,11 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.medicationRecords, 'medication')
           }
       },
-         {
+        {
           text: 'Spinal Motion Restriction',
           style: 'section_heading'
       },
-         {
+        {
           text: 'In/Out',
           style: 'section_heading'
       },
@@ -2153,7 +2185,7 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.inOutRecords, 'in_out')
           }
       },
-         {
+        {
           text: 'ECG',
           style: 'section_heading'
       },
@@ -2431,51 +2463,51 @@ Object.size = function (obj) {
 }
 
 angular.module('ePCR.controllers', [])
-.controller('DashCtrl', DashCtrl)
-.controller('ReportsCtrl', ReportsCtrl)
-.controller('ReportDetailCtrl', ReportDetailCtrl)
-.controller('PersonalInfoCtrl', PersonalInfoCtrl)
-.controller('VitalsChartCtrl', VitalsChartCtrl)
-.controller('VitalsCtrl', VitalsCtrl)
-.controller('ChiefComplaintCtrl', ChiefComplaintCtrl)
-.controller('PatientHistoryCtrl', PatientHistoryCtrl)
-.controller('AllergiesCtrl', AllergiesCtrl)
-.controller('HomeMedicationsCtrl', HomeMedicationsCtrl)
-.controller('ConditionsCtrl', ConditionsCtrl)
-.controller('ExamCtrl', ExamCtrl)
-.controller('NeuroCtrl', NeuroCtrl)
-.controller('AbcCtrl',  AbcCtrl)
-.controller('TraumaCtrl', TraumaCtrl)
-.controller('TraumaAutoCtrl', TraumaAutoCtrl)
-.controller('TraumaPenetratingCtrl', TraumaPenetratingCtrl)
-.controller('TraumaBluntCtrl', TraumaBluntCtrl)
-.controller('TraumaFallCtrl', TraumaFallCtrl)
-.controller('TraumaBurnCtrl', TraumaBurnCtrl)
-.controller('GiCtrl', GiCtrl)
-.controller('GuCtrl', GuCtrl)
-.controller('GynCtrl', GynCtrl)
-.controller('FieldDeliveryCtrl', FieldDeliveryCtrl)
-.controller('MuscularCtrl', MuscularCtrl)
-.controller('ProceduresCtrl', ProceduresCtrl)
-.controller('AirwayCtrl', AirwayCtrl)
-.controller('BasicAirwayCtrl', BasicAirwayCtrl)
-.controller('InvasiveAirwayCtrl', InvasiveAirwayCtrl)
-.controller('VentilatorCtrl', VentilatorCtrl)
-.controller('CpapBipapCtrl', CpapBipapCtrl)
-.controller('SuctionCtrl', SuctionCtrl)
-.controller('IvIoCtrl', IvIoCtrl)
-.controller('SplintingCtrl', SplintingCtrl)
-.controller('MedicationCtrl', MedicationCtrl)
-.controller('SpinalCtrl', SpinalCtrl)
-.controller('InOutCtrl', InOutCtrl)
-.controller('EcgCtrl', EcgCtrl)
-.controller('SignaturesCtrl', SignaturesCtrl)
-.controller('CallInfoCtrl', CallInfoCtrl)
-.controller('NoTransportCtrl', NoTransportCtrl)
-.controller('NarrativeCtrl', NarrativeCtrl)
-.controller('CodeListCtrl', CodeListCtrl)
-.controller('CodeCtrl', CodeCtrl)
-.controller('ExportCtrl', ExportCtrl)
-.controller('ExportHtmlCtrl', ExportHtmlCtrl)
-.controller('ListCtrl', ListCtrl)
-.controller('SettingsCtrl', SettingsCtrl);
+  .controller('DashCtrl', DashCtrl)
+  .controller('ReportsCtrl', ReportsCtrl)
+  .controller('ReportDetailCtrl', ReportDetailCtrl)
+  .controller('PersonalInfoCtrl', PersonalInfoCtrl)
+  .controller('VitalsChartCtrl', VitalsChartCtrl)
+  .controller('VitalsCtrl', VitalsCtrl)
+  .controller('ChiefComplaintCtrl', ChiefComplaintCtrl)
+  .controller('PatientHistoryCtrl', PatientHistoryCtrl)
+  .controller('AllergiesCtrl', AllergiesCtrl)
+  .controller('HomeMedicationsCtrl', HomeMedicationsCtrl)
+  .controller('ConditionsCtrl', ConditionsCtrl)
+  .controller('ExamCtrl', ExamCtrl)
+  .controller('NeuroCtrl', NeuroCtrl)
+  .controller('AbcCtrl', AbcCtrl)
+  .controller('TraumaCtrl', TraumaCtrl)
+  .controller('TraumaAutoCtrl', TraumaAutoCtrl)
+  .controller('TraumaPenetratingCtrl', TraumaPenetratingCtrl)
+  .controller('TraumaBluntCtrl', TraumaBluntCtrl)
+  .controller('TraumaFallCtrl', TraumaFallCtrl)
+  .controller('TraumaBurnCtrl', TraumaBurnCtrl)
+  .controller('GiCtrl', GiCtrl)
+  .controller('GuCtrl', GuCtrl)
+  .controller('GynCtrl', GynCtrl)
+  .controller('FieldDeliveryCtrl', FieldDeliveryCtrl)
+  .controller('MuscularCtrl', MuscularCtrl)
+  .controller('ProceduresCtrl', ProceduresCtrl)
+  .controller('AirwayCtrl', AirwayCtrl)
+  .controller('BasicAirwayCtrl', BasicAirwayCtrl)
+  .controller('InvasiveAirwayCtrl', InvasiveAirwayCtrl)
+  .controller('VentilatorCtrl', VentilatorCtrl)
+  .controller('CpapBipapCtrl', CpapBipapCtrl)
+  .controller('SuctionCtrl', SuctionCtrl)
+  .controller('IvIoCtrl', IvIoCtrl)
+  .controller('SplintingCtrl', SplintingCtrl)
+  .controller('MedicationCtrl', MedicationCtrl)
+  .controller('SpinalCtrl', SpinalCtrl)
+  .controller('InOutCtrl', InOutCtrl)
+  .controller('EcgCtrl', EcgCtrl)
+  .controller('SignaturesCtrl', SignaturesCtrl)
+  .controller('CallInfoCtrl', CallInfoCtrl)
+  .controller('NoTransportCtrl', NoTransportCtrl)
+  .controller('NarrativeCtrl', NarrativeCtrl)
+  .controller('CodeListCtrl', CodeListCtrl)
+  .controller('CodeCtrl', CodeCtrl)
+  .controller('ExportCtrl', ExportCtrl)
+  .controller('ExportHtmlCtrl', ExportHtmlCtrl)
+  .controller('ListCtrl', ListCtrl)
+  .controller('SettingsCtrl', SettingsCtrl);
