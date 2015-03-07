@@ -888,6 +888,7 @@ function TraumaBurnCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, repor
 
   $scope.save = function () {
     $scope.burn.trauma_burn_body_parts = JSON.stringify(bodyPartsInvolved);
+    $scope.burn.trauma_burn_total_surface = $scope.totalSurface;
 
     $scope.burn.trauma_burn_assessed = true;
     db.update("report", $scope.burn, {
@@ -1882,6 +1883,7 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
   $scope.docDefinition = {};
 
   var getTableArray = function (records, tableName) {
+    
     var tableRecords = [];
     var header = [];
     angular.forEach(exportTableDefinition[tableName], function (definition, field) {
@@ -2084,7 +2086,7 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
               text: [
                 {text: 'Chief Complaint\n', style: 'section_heading'},
                 {text: 'Primary: ', style: 'label'},
-                {text: safe(report.chief_complaint) + '\n', style: "defaultStyle"},
+                {text: safe(report.primary_complaint) + '\n', style: "defaultStyle"},
                 {text: 'Secondary: ', style: 'label'},
                 {text: safe(report.secondary_complaint) + '\n', style: "defaultStyle"},
                 {text: 'Symptoms: ', style: 'label'},
@@ -2269,7 +2271,146 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             ],
           style: "defaultStyle"
         },
-        {text: 'Procedures', style: 'section_heading'},
+        {text: 'Trauma Burn', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Method: ', style: 'label'},
+              safe(report.trauma_burn_method) + '\n',
+              {text: 'Body Type: ', style: 'label'},
+              safe(report.trauma_burn_body_type) + '\n',
+              {text: 'Total Surface Burn: ', style: 'label'},
+              safe(report.trauma_burn_total_surface) + '%\n',
+              {text: 'Details: ', style: 'label'},
+              safe(report.trauma_burn_body_parts) + '\n',
+            ],
+          style: "defaultStyle"
+        },
+        {text: 'Gastrointestinal', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Abdomen is soft: ', style: 'label'},
+              safe(report.gi_soft) + '\n',
+              {text: 'Abdomen is flat: ', style: 'label'},
+              safe(report.gi_flat) + '\n',
+              {text: 'Abdomen non distended: ', style: 'label'},
+              safe(report.gi_non_distended) + '\n',
+              {text: 'Abdomen non tender: ', style: 'label'},
+              safe(report.gi_non_tender) + '\n',
+              {text: 'Rebound: ', style: 'label'},
+              safe(report.gi_rebound) + '\n',
+              {text: 'Location of pain: ', style: 'label'},
+              safe(report.gi_pain_location) + '\n',
+              {text: 'Last BM: ', style: 'label'},
+              safe(report.gi_last_bm) + '\n',
+              {text: 'Last OI: ', style: 'label'},
+              safe(report.gi_loi) + '\n',
+            ],
+          style: "defaultStyle"
+        },
+        {text: 'Genitourinary', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Pain: ', style: 'label'},
+              safe(report.gu_pain) + '\n',
+              {text: 'Frequency: ', style: 'label'},
+              safe(report.gu_frequency) + '\n',
+              {text: 'Hematuria: ', style: 'label'},
+              safe(report.gu_hematuria) + '\n',
+              {text: 'Incontinence: ', style: 'label'},
+              safe(report.gu_incontinence) + '\n',
+              {text: 'Bladder Distention: ', style: 'label'},
+              safe(report.gu_bladder_distention) + '\n',
+              {text: 'Urinary Urgency: ', style: 'label'},
+              safe(report.gu_urinary_urgency) + '\n',
+              {text: 'Last Void: ', style: 'label'},
+              safe(report.gu_last_void) + '\n'
+            ],
+          style: "defaultStyle"
+        },
+        {text: 'Obstetric/Gynecology', style: 'section_heading'},
+        {
+          columns: [
+            {
+              text: [
+                {text: 'Gravid: ', style: 'label'},
+                safe(report.gyn_gravid) + '\n',
+                {text: 'Term: ', style: 'label'},
+                safe(report.gyn_term) + '\n',
+                {text: 'Para: ', style: 'label'},
+                safe(report.gyn_para) + '\n',
+                {text: 'Abortia: ', style: 'label'},
+                safe(report.gyn_abortia) + '\n',
+                {text: 'Live: ', style: 'label'},
+                safe(report.gyn_live) + '\n',
+                {text: 'Last Menstruation: ', style: 'label'},
+                safe(report.gyn_last_menstruation) + '\n',
+                {text: 'Vaginal Discharge: ', style: 'label'},
+                safe(report.gyn_discharge) + ' ' + safe(report.gyn_substance) + '\n',
+                {text: 'Pregnant: ', style: 'label'},
+                safe(report.gyn_pregnant) + '\n',
+                {text: 'EDC: ', style: 'label'},
+                safe(report.gyn_pregnant) + '\n',
+                {text: 'Gestation is known: ', style: 'label'},
+                safe(report.gyn_gestation_known) + ' ' + safe(report.gyn_gest_weeks) + 'weeks\n',
+              ]
+            },
+            {
+              text: [
+                {text: 'Membranes Intact: ', style: 'label'},
+                safe(report.gyn_membrane_intact) + ' ' + safe(report.gyn_fluid) + '\n',
+                {text: 'Babies expected: ', style: 'label'},
+                safe(report.gyn_expected_babies) + '\n',
+                {text: 'Fetal Movement: ', style: 'label'},
+                safe(report.gyn_fetal_mvmt) + '\n',
+                {text: 'Last Movement: ', style: 'label'},
+                safe(report.gyn_last_mvmt) + '\n',
+                {text: 'Movements per hour: ', style: 'label'},
+                safe(report.gyn_mvmt_per_hr) + '\n',
+                {text: 'Contractions: ', style: 'label'},
+                safe(report.gyn_contraction_duration) + '\n',
+                {text: 'Contraction Duration: ', style: 'label'},
+                safe(report.gyn_contraction_duration) + ' seconds\n',
+                {text: 'Contraction Separation: ', style: 'label'},
+                safe(report.gyn_contraction_separation) + ' seconds\n',
+                {text: 'Peripheral Edema: ', style: 'label'},
+                safe(report.peripheral_edema)  + ' ' + safe(report.peripheral_edema_location) + ' ' + safe(report.peripheral_edema_severity) + "\n",
+              ],
+            }
+          ],
+          style: "defaultStyle"
+        },
+        {text: 'Field Delivery', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Presentation: ', style: 'label'},
+              safe(report.field_delivery_presentation) + '\n',
+              {text: 'Delivery Time: ', style: 'label'},
+              safe(report.field_delivery_time) + '\n',
+              {text: 'Meconium: ', style: 'label'},
+              safe(report.field_delivery_meconium) + '\n',
+              {text: 'Cord cut at: ', style: 'label'},
+              safe(report.field_delivery_cord_cut_length) + '\n',
+              {text: 'APGAR 1 min: ', style: 'label'},
+              safe(report.field_delivery_apgar1) + '\n',
+              {text: 'APGAR 5 min: ', style: 'label'},
+              safe(report.field_delivery_apgar5) + '\n',
+              {text: 'Stimulation Required: ', style: 'label'},
+              safe(report.field_delivery_stimulation) + ' ' + safe(report.field_delivery_stimulation_type) + '\n',
+              {text: 'Placenta Delivery: ', style: 'label'},
+              safe(report.field_delivery_placenta) + safe(report.field_delivery_placenta_time) + '\n',
+              {text: 'Placenta Intact: ', style: 'label'},
+              safe(report.field_delivery_placenta_intact) + '\n',
+            ],
+          style: "defaultStyle"
+        },
+        {text: 'Muscular/Skeletal', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Symptoms: ', style: 'label'},
+              safe(report.muscular_complaint) + '\n',
+            ],
+          style: "defaultStyle"
+        },
         {text: 'Basic Airway', style: 'section_heading'},
         {
           style: 'tableExample',
@@ -2279,6 +2420,25 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           }
         },
         {text: 'Invasive Airway', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Airway Secured: ', style: 'label'},
+              safe(report.invasive_airway_secured) + '\n',
+              {text: 'Device: ', style: 'label'},
+              safe(report.invasive_airway_device) + '\n',
+              {text: 'Size: ', style: 'label'},
+              safe(report.invasive_airway_size) + '\n',
+              {text: 'Cuffed: ', style: 'label'},
+              safe(report.invasive_airway_cuffed) + '\n',
+              {text: 'Technique: ', style: 'label'},
+              safe(report.invasive_airway_technique) + '\n',
+              {text: 'Distance: ', style: 'label'},
+              safe(report.invasive_airway_distance) + '\n',
+              {text: 'Attempts: ', style: 'label'},
+              safe(report.invasive_airway_attempts) + '\n',
+            ],
+          style: "defaultStyle"
+        },
         {text: 'Ventilator', style: 'section_heading'},
         {
           style: 'tableExample',
@@ -2328,6 +2488,23 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           }
         },
         {text: 'Spinal Motion Restriction', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Manual C-Spine: ', style: 'label'},
+              safe(report.spinal_manual) + '\n',
+              {text: 'C-Collar: ', style: 'label'},
+              safe(report.spinal_c_collar) + '\n',
+              {text: 'Size: ', style: 'label'},
+              safe(report.spinal_collar_size) + '\n',
+              {text: 'Back board: ', style: 'label'},
+              safe(report.spinal_backboard) + '\n',
+              {text: 'Transferred by: ', style: 'label'},
+              safe(report.spinal_transferred_by) + '\n',
+              {text: 'Secured with: ', style: 'label'},
+              safe(report.spinal_secured_with) + '\n',
+            ],
+          style: "defaultStyle"
+        },
         {text: 'In/Out', style: 'section_heading'},
         {
           style: 'tableExample',
@@ -2345,7 +2522,85 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           }
         },
         {text: 'Signatures', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Practitioner: ', style: 'label'},
+              safe(report.signature_practitioner_name) + '\n',
+              {text: 'Patient: ', style: 'label'},
+              safe(report.signature_patient_name) + '\n',
+              {text: 'Patient no signature reason: ', style: 'label'},
+              safe(report.no_signature_reason) + '\n',
+              {text: 'Hosital Representative: ', style: 'label'},
+              safe(report.signature_hospital_name) + '\n',
+              {text: 'Witness: ', style: 'label'},
+              safe(report.signature_witness_name) + '\n',
+            ],
+          style: "defaultStyle"
+        },
         {text: 'Call Info', style: 'section_heading'},
+        {
+          columns: [
+            {
+              text: [
+                {text: 'Attendant 1: ', style: 'label'},
+                safe(report.call_info_attendant1) + '\n',
+                {text: 'Attendant 2: ', style: 'label'},
+                safe(report.call_info_attendant2) + '\n',
+                {text: 'Driver: ', style: 'label'},
+                safe(report.call_info_driver) + '\n',
+                {text: 'Unit #: ', style: 'label'},
+                safe(report.call_info_unit_nb) + '\n',
+                {text: 'Run #: ', style: 'label'},
+                safe(report.call_info_run_nb) + '\n',
+                {text: 'Respond to: ', style: 'label'},
+                safe(report.call_info_respond_to) + '\n',
+                {text: 'Milage Start: ', style: 'label'},
+                safe(report.call_info_milage_start) + '\n',
+                {text: 'Milage End: ', style: 'label'},
+                safe(report.call_info_milage_end) + '\n',
+                {text: 'Code en route: ', style: 'label'},
+                safe(report.call_info_code_en_route) + '\n',
+                {text: 'Code return: ', style: 'label'},
+                safe(report.call_info_code_return) + '\n',
+                {text: 'Transported to: ', style: 'label'},
+                safe(report.call_info_transported_to) + '\n',
+                {text: 'Transport position: ', style: 'label'},
+                safe(report.call_info_transported_position) + '\n',
+              ],
+              style: "defaultStyle"
+            },
+            {
+              text: [
+                {text: 'Time Notified: ', style: 'label'},
+                safe(report.call_info_time) + '\n',
+                {text: 'PPE: ', style: 'label'},
+                safe(report.call_info_ppe) + '\n',
+                {text: 'Determinant: ', style: 'label'},
+                safe(report.call_info_determinant) + '\n',
+                {text: 'Assistance given by: ', style: 'label'},
+                safe(report.call_info_assistance) + '\n',
+              ],
+              style: "defaultStyle"
+            },
+            {
+              text: [
+                {text: 'Patient Mentally Capable: ', style: 'label'},
+                safe(report.no_transport_mentally_capable) + '\n',
+                {text: 'Patient Should be Transported: ', style: 'label'},
+                safe(report.no_transport_should_transport) + '\n',
+                {text: 'Patient was informed of risks of no transport: ', style: 'label'},
+                safe(report.no_transport_risk_informed) + '\n',
+                {text: 'Reason for refusal: ', style: 'label'},
+                safe(report.no_transport_reason) + '\n',
+                {text: 'Patient left with: ', style: 'label'},
+                safe(report.no_transport_left_with) + '\n',
+                {text: 'Consult with: ', style: 'label'},
+                safe(report.no_transport_consult_with) + '\n',
+              ],
+              style: "defaultStyle"
+            }
+          ]
+        },
         {text: 'Narrative', style: 'section_heading'},
         {
           style: 'tableExample',
@@ -2619,7 +2874,7 @@ function safe(field, alternativeField) {
   }
   if (field == 'true')
     return 'Yes'
-  if (field == 'False')
+  if (field == 'false')
     return 'No'
   return field;
 }
