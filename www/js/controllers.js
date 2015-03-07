@@ -1883,7 +1883,6 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
 
   var getTableArray = function (records, tableName) {
     var tableRecords = [];
-    console.log(records);
     var header = [];
     angular.forEach(exportTableDefinition[tableName], function (definition, field) {
       header.push(definition.name);
@@ -2002,63 +2001,101 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
     $scope.docDefinition = {
       content: [
         {
-          text: 'Patient Care Report',
-          style: 'header'
+          columns: [
+            {
+              text: [
+                {text: 'Patient Care Report\n', style: 'header'},
+                {text: 'Report date: ' + moment().format('MMM D, YYYY'), style: 'medium_text'},
+              ]
+            },
+            {
+              text: [
+                'By ' + $scope.settingsRecord.first_name + " " + $scope.settingsRecord.last_name + '\n',
+                {
+                  text: $scope.settingsRecord.position + ' in ' + $scope.settingsRecord.work_place + '\n' + 'ID: ' + $scope.settingsRecord.identification,
+                  style: "medium_text"
+                }
+              ],
+              alignment: 'right'
+            }
+          ]
         },
-           'By ' + $scope.settingsRecord.first_name + " " + $scope.settingsRecord.last_name,
-//        {
-//			image: $scope.settingsRecord.photo,
-//		},
-        {
-          text: 'Patient Info',
-          style: 'section_heading'
-        },
+        {text: 'Patient Info', style: 'section_heading'},
         {
           columns: [
             {
               text: [
-                {
-                  text: "Name: " + report.first_name + ' ' + report.last_name + '\n' + report.gender + ", " + report.weight + report.weight_unit + '\n',
-                  style: "defaultStyle"
-                },
-                {
-                  text: "Born " + moment(report.date_of_birth).format('MMM D, YYYY') + " (" + (moment().year() - moment(report.date_of_birth).year()) + " years old)\n",
-                  style: "defaultStyle"
-                },
-              ]
+                {text: 'Name: ', style: 'label'},
+                report.first_name + ' ' + report.last_name + '\n',
+                {text: 'Gender: ', style: 'label'},
+                report.gender + "\n",
+                {text: 'Weight: ', style: 'label'},
+                report.weight + report.weight_unit + '\n',
+                {text: 'D.o.B: ', style: 'label'},
+                moment(report.date_of_birth).format('MMM D, YYYY') + " (" + (moment().year() - moment(report.date_of_birth).year()) + " y. old)\n",
+                {text: 'Next of Kin: ', style: 'label'},
+                report.next_of_kin + '\n',
+              ],
+              style: "defaultStyle"
             },
             {
               text: [
-                {
-                  text:  'SIN: ' + report.insurance + '\nMRN: ' + report.mrn + '\n' + report.address_street + '\n' + report.address_city + ' ' + report.address_province + '\n',
-                  style: "defaultStyle"
-                }
-              ]
+                {text: 'SIN: ', style: 'label'},
+                report.insurance + '\n',
+                {text: 'MRN: ', style: 'label'},
+                report.mrn + '\n',
+                {text: 'Address: ', style: 'label'},
+                report.address_street + '\n' + report.address_city + ' ' + report.address_province + '\n',
+              ],
+              style: "defaultStyle"
             },
             {
               text: [
-                {
-                  text: 'Home Phone #: ' + report.phone_home + '\n' +
-                  'Cell Phone #: ' + report.phone_cell + '\n' +
-                  'Work Phone #: ' + report.phone_work + '\n' +
-                  'Next of Kin: ' + report.next_of_kin + '\n' +
-                  'Next of Kin Phone #: ' + report.next_of_kin_phone + '\n',
-                  style: "defaultStyle"
-                }
-              ]
+                {text: 'Home Phone #: ', style: 'label'},
+                report.phone_home + '\n',
+                {text: 'Cell Phone #: ', style: 'label'},
+                report.phone_cell + '\n',
+                {text: 'Work Phone #: ', style: 'label'},
+                report.phone_work + '\n',
+                {text: 'Next of Kin Phone #: ', style: 'label'},
+                report.next_of_kin_phone + '\n',
+              ],
+              style: "defaultStyle"
             }
           ],
           // optional space between columns
           columnGap: 10
         },
         {
-          text: 'Patient History',
-          style: 'section_heading'
+          columns: [
+            {
+              text: [
+                {text: 'Patient History\n', style: 'section_heading'},
+                {text: 'Allergies: ', style: 'label'},
+                {text: safe(report.patient_hx) + '\n', style: "defaultStyle"},
+                {text: 'Conditions: ', style: 'label'},
+                {text: safe(report.patient_hx) + '\n', style: "defaultStyle"},
+                {text: 'Medications: ', style: 'label'},
+                {text: safe(report.patient_hx) + '\n', style: "defaultStyle"}
+              ],
+              style: 'margin'
+            },
+            {
+              text: [
+                {text: 'Chief Complaint\n', style: 'section_heading'},
+                {text: 'Primary: ', style: 'label'},
+                {text: safe(report.chief_complaint) + '\n', style: "defaultStyle"},
+                {text: 'Secondary: ', style: 'label'},
+                {text: safe(report.secondary_complaint) + '\n', style: "defaultStyle"},
+                {text: 'Symptoms: ', style: 'label'},
+                {text: safe(report.pertinent) + '\n', style: "defaultStyle"}
+              ],
+              style: 'margin'
+            }
+          ],
+          style: 'margin'
         },
-        {
-          text: 'Vitals',
-          style: 'section_heading'
-        },
+        {text: 'Vitals', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
@@ -2066,18 +2103,8 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.vitalsRecords, 'vitals')
           }
         },
-        {
-          text: 'Chief Complaint',
-          style: 'section_heading'
-        },
-        {
-          text: 'Exam',
-          style: 'section_heading'
-        },
-        {
-          text: 'Neuro',
-          style: 'section_heading'
-        },
+        {text: 'Exam', style: 'section_heading'},
+        {text: 'Neuro', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
@@ -2085,14 +2112,8 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.neuroRecords, 'neuro')
           }
         },
-        {
-          text: 'Procedures',
-          style: 'section_heading'
-        },
-        {
-          text: 'Basic Airway',
-          style: 'section_heading'
-        },
+        {text: 'Procedures', style: 'section_heading'},
+        {text: 'Basic Airway', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
@@ -2100,133 +2121,91 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             body: getTableArray($scope.basicAirwayRecords, 'airway_basic')
           }
         },
-        {
-          text: 'Invasive Airway',
-          style: 'section_heading'
-      },
-        {
-          text: 'Ventilator',
-          style: 'section_heading'
-      },
+        {text: 'Invasive Airway', style: 'section_heading'},
+        {text: 'Ventilator', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.ventilatorRecords, 'airway_ventilator')
           }
-      },
-        {
-          text: 'CPAP/BiPAP',
-          style: 'section_heading'
-      },
+        },
+        {text: 'CPAP/BiPAP', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.cpapRecords, 'airway_cpap_bipap')
           }
-      },
-        {
-          text: 'Suction',
-          style: 'section_heading'
-      },
+        },
+        {text: 'Suction', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.suctionRecords, 'airway_suction')
           }
-      },
-        {
-          text: 'IV/IO',
-          style: 'section_heading'
-      },
+        },
+        {text: 'IV/IO', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.ivIoRecords, 'iv_io')
           }
-      },
-        {
-          text: 'Splinting/Dressing',
-          style: 'section_heading'
-      },
+        },
+        {text: 'Splinting/Dressing', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.splintingRecords, 'splinting')
           }
-      },
-        {
-          text: 'Medication',
-          style: 'section_heading'
-      },
+        },
+        {text: 'Medication', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.medicationRecords, 'medication')
           }
-      },
-        {
-          text: 'Spinal Motion Restriction',
-          style: 'section_heading'
-      },
-        {
-          text: 'In/Out',
-          style: 'section_heading'
-      },
+        },
+        {text: 'Spinal Motion Restriction', style: 'section_heading'},
+        {text: 'In/Out', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.inOutRecords, 'in_out')
           }
-      },
-        {
-          text: 'ECG',
-          style: 'section_heading'
-      },
+        },
+        {text: 'ECG', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.ecgRecords, 'ecg')
           }
-      },
-        {
-          text: 'Signatures',
-          style: 'section_heading'
         },
-        {
-          text: 'Call Info',
-          style: 'section_heading'
-        },
-        {
-          text: 'Narrative',
-          style: 'section_heading'
-      },
+        {text: 'Signatures', style: 'section_heading'},
+        {text: 'Call Info', style: 'section_heading'},
+        {text: 'Narrative', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.narrativeRecords, 'narrative')
           }
-      },
-        {
-          text: 'CPR',
-          style: 'section_heading'
         },
+        {text: 'CPR', style: 'section_heading'},
         {
           style: 'tableExample',
           table: {
             headerRows: 1,
             body: getTableArray($scope.cprRecords, 'code')
           }
-      }
-         ],
+        }
+      ],
 
       styles: {
         header: {
@@ -2234,8 +2213,17 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           bold: true
         },
         section_heading: {
-          margin: [0, 20, 0, 0],
+          margin: [0, 15, 0, 0],
           fontSize: 12,
+          bold: true
+        },
+        medium_text: {
+          margin: [0, 0, 0, 5],
+          fontSize: 10
+        },
+        label: {
+          margin: [0, 0, 0, 5],
+          fontSize: 10,
           bold: true
         },
         tableExample: {
@@ -2246,6 +2234,9 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
           bold: true,
           fontSize: 13,
           color: 'black'
+        },
+        margin: {
+          margin: [0, 10, 0, 0]
         },
         defaultStyle: {
           fontSize: 10
@@ -2460,6 +2451,16 @@ Object.size = function (obj) {
     if (obj.hasOwnProperty(key)) size++;
   }
   return size;
+}
+
+function safe(field, alternativeField) {
+  if (field == 'Other') {
+    return alternativeField;
+  }
+  if (!field || field == 'undefined') {
+    return 'not filled'
+  }
+  return field;
 }
 
 angular.module('ePCR.controllers', [])
