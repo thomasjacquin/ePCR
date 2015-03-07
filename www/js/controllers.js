@@ -2186,6 +2186,89 @@ function ExportHtmlCtrl($scope, $stateParams, $webSql, DB_CONFIG, $window, repor
             }
           ]
         },
+        {text: 'Trauma Auto', style: 'section_heading'},
+        {
+          columns: [
+            {
+              text: [
+                {text: 'Vehicle: ', style: 'label'},
+                safe(report.trauma_auto_vehicle) + '\n',
+                {text: 'Seat: ', style: 'label'},
+                safe(report.trauma_auto_seat) + "\n",
+                {text: 'Airbag Deployed: ', style: 'label'},
+                safe(report.trauma_auto_airbag) + "\n",
+                {text: 'Safety Belt: ', style: 'label'},
+                safe(report.trauma_auto_seatbelt) + "\n",
+                {text: 'Helmet: ', style: 'label'},
+                safe(report.trauma_auto_helmet) + "\n",
+              ],
+              style: "defaultStyle"
+            },{
+              text: [
+              {
+                text: 'Leathers: ', style: 'label'},
+                safe(report.trauma_auto_leathers) + "\n",
+                {text: 'Nb of Occupants: ', style: 'label'},
+                safe(report.trauma_auto_nb_occupants) + "\n",
+                {text: 'Speed: ', style: 'label'},
+                safe(report.trauma_auto_vehicle_speed) + ' ' + safe(report.trauma_auto_speed_unit) + "\n",
+                {text: 'Pt removed by: ', style: 'label'},
+                safe(report.trauma_auto_removed_by) + "\n",
+                {text: 'Details given by: ', style: 'label'},
+                safe(report.trauma_auto_details_per) + "\n",
+              ],
+              style: "defaultStyle"
+            }
+          ]
+        },
+        {text: 'Trauma Penetrating', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Assault: ', style: 'label'},
+              safe(report.trauma_penetrating_assault) + '\n',
+              {text: 'Mechanism of Injury: ', style: 'label'},
+              safe(report.trauma_penetrating_moi) + "\n",
+              {text: 'Velocity: ', style: 'label'},
+              safe(report.trauma_penetrating_velocity) + "\n",
+              {text: 'Bleeding: ', style: 'label'},
+              safe(report.trauma_penetrating_bleeding) + ' ' + safe(report.trauma_penetrating_controlled) + "\n",
+              {text: 'Systems Involved: ', style: 'label'},
+              safe(report.trauma_penetrating_body_parts) + "\n",
+            ],
+            style: "defaultStyle"
+        },
+        {text: 'Trauma Blunt', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Assault: ', style: 'label'},
+              safe(report.trauma_blunt_assault) + '\n',
+              {text: 'Mechanism of Injury: ', style: 'label'},
+              safe(report.trauma_blunt_moi) + "\n",
+              {text: 'Bleeding: ', style: 'label'},
+              safe(report.trauma_blunt_bleeding) + ' ' + safe(report.trauma_blunt_controlled) + "\n",
+              {text: 'Systems Involved: ', style: 'label'},
+              safe(report.trauma_blunt_body_parts) + "\n",
+            ],
+          style: "defaultStyle"
+        },
+        {text: 'Trauma Fall', style: 'section_heading'},
+        {
+          text: [
+              {text: 'Assault: ', style: 'label'},
+              safe(report.trauma_fall_assault) + '\n',
+              {text: 'Distance: ', style: 'label'},
+              safe(report.trauma_fall_distance) + ' ' +  safe(report.trauma_fall_distance_unit) + "\n",
+              {text: 'Surface: ', style: 'label'},
+              safe(report.trauma_fall_surface) + '\n',
+              {text: 'Loss of Consciousness: ', style: 'label'},
+              safe(report.trauma_fall_loss_of_c) + ' ' + safe(report.trauma_fall_loss_of_c_time) + 'min\n',
+              {text: 'Bleeding: ', style: 'label'},
+              safe(report.trauma_fall_bleeding) + ' ' + safe(report.trauma_fall_controlled) + "\n",
+              {text: 'Systems Involved: ', style: 'label'},
+              safe(report.trauma_fall_body_parts) + "\n",
+            ],
+          style: "defaultStyle"
+        },
         {text: 'Procedures', style: 'section_heading'},
         {text: 'Basic Airway', style: 'section_heading'},
         {
@@ -2532,8 +2615,12 @@ function safe(field, alternativeField) {
     return alternativeField;
   }
   if (!field || field == 'undefined') {
-    return 'not filled'
+    return ''
   }
+  if (field == 'true')
+    return 'Yes'
+  if (field == 'False')
+    return 'No'
   return field;
 }
 
