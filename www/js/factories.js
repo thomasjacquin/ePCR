@@ -1,4 +1,4 @@
-angular.module('customFactories', [])
+angular.module('ePCR.factories', [])
 
 .factory('CameraFactory', ['$q', function($q) {
 

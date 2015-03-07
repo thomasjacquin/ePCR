@@ -1,4 +1,4 @@
-angular.module('customDirectives', [])
+angular.module('ePCR.directives', [])
 
 .directive('goClick', function ($location) {
   return function (scope, element, attrs) {

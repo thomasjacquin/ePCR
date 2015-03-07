@@ -1,4 +1,4 @@
-angular.module("database", ['angular-websql', 'ePCR.config'])
+angular.module("ePCR.database", ['angular-websql', 'ePCR.schema'])
 
 .factory('database', function($webSql, DB_CONFIG) {
   
