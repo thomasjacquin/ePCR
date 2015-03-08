@@ -991,6 +991,9 @@ angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.consta
         resolve: {
           report: function ($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
+          },
+          settings: function (Records) {
+            return Records.get('settings', 1);
           }
         }
       }

@@ -1836,7 +1836,7 @@ function CodeCtrl($scope, $stateParams, codeList, $window) {
   }
 }
 
-function ExportCtrl($scope, $stateParams, $window, settings, $state, exportTableDefinition) {
+function ExportCtrl($scope, $stateParams, $window, settings, $state) {
 
   var defaults = {
     short_report: true,
