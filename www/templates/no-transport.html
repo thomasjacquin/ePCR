@@ -38,31 +38,30 @@
         <ion-item class="item-input item-select">
           <span class="input-label">Reason for refusal</span>
           <select ng-model="noTransport.no_transport_reason">
-              <option value="0">Other</option>
-              <option value="1">Pt arranging own transport</option>
-              <option value="2">Pt feels no transport necessary</option>
-              <option value="3">inadequate funds</option>
-              <option value="4">no treatment required</option>
+              <option>Other</option>
+              <option>Pt arranging own transport</option>
+              <option>Pt feels no transport necessary</option>
+              <option>inadequate funds</option>
+              <option>no treatment required</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="noTransport.no_transport_reason == 0">
+        <ion-item class="item-input" ng-show="noTransport.no_transport_reason == 'Other'">
           <span class="input-label">Other reason</span>
           <input type="text" ng-model="noTransport.no_transport_reason_other" placeholder="Other">
         </ion-item>
         <ion-item class="item-input item-select">
           <span class="input-label">Patient left with</span>
           <select ng-model="noTransport.no_transport_left_with">
-              <option value="0">Other</option>
-              <option value="1">Patient left with</option>
-              <option value="2">Family</option>
-              <option value="3">Friends</option>
-              <option value="4">Police</option>
-              <option value="5">Family for POV transported</option>
-              <option value="6">Friends for POV transport</option>
-              <option value="7">Police for transport</option>
+              <option>Other</option>
+              <option>Family</option>
+              <option>Friends</option>
+              <option>Police</option>
+              <option>Family for POV transported</option>
+              <option>Friends for POV transport</option>
+              <option>Police for transport</option>
           </select>
         </ion-item>
-        <ion-item class="item-input" ng-show="noTransport.no_transport_left_with == 0">
+        <ion-item class="item-input" ng-show="noTransport.no_transport_left_with == 'Other'">
           <span class="input-label">Left With</span>
           <input type="text" ng-model="noTransport.no_transport_left_with_other" placeholder="Other">
         </ion-item>

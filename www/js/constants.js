@@ -798,10 +798,12 @@ angular.module('ePCR.constants', [])
       name: "Suspect Stroke"
     },
     facial_droop: {
-      name: "Facial Droop"
+      name: "Facial Droop",
+      side: "facial_droop_side"
     },
     arm_drift: {
-      name: "Arm Drift"
+      name: "Arm Drift",
+      side: "arm_drift_side"
     },
     speech: {
       name: "Speech"

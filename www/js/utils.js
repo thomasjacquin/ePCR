@@ -71,7 +71,10 @@ Object.size = function (obj) {
 }
 
 function safe(field, alternativeField) {
-  if (field == 'Other') {
+  if (alternativeField && field == 'Other') {
+    return alternativeField;
+  }
+  if (alternativeField && field == 'true' && (alternativeField == 'Left' || alternativeField == 'Right')) {
     return alternativeField;
   }
   if (!field || field == 'undefined') {
