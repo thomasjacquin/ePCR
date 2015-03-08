@@ -1,4 +1,4 @@
-function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, exportTableDefinition) {
+function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, seatsMap, exportTableDefinition) {
 
   var BINARY_ARR = null;
   var currentfileEntry = null;
@@ -177,9 +177,9 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       },
         {
           text: [
-          'By ' + $scope.settingsRecord.first_name + " " + $scope.settingsRecord.last_name + '\n',
+          'By ' + safe($scope.settingsRecord.first_name) + " " + safe($scope.settingsRecord.last_name) + '\n',
             {
-              text: $scope.settingsRecord.position + ' in ' + $scope.settingsRecord.work_place + '\n' + 'ID: ' + $scope.settingsRecord.identification,
+              text: safe($scope.settingsRecord.position) + ' in ' + safe($scope.settingsRecord.work_place) + '\n' + 'ID: ' + safe($scope.settingsRecord.identification),
               style: "medium_text"
           }
         ],
@@ -198,17 +198,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
               text: 'Name: ',
               style: 'label'
           },
-                report.first_name + ' ' + report.last_name + '\n',
+                safe(report.first_name) + ' ' + safe(report.last_name) + '\n',
             {
               text: 'Gender: ',
               style: 'label'
           },
-                report.gender + "\n",
+                safe(report.gender) + "\n",
             {
               text: 'Weight: ',
               style: 'label'
           },
-                report.weight + report.weight_unit + '\n',
+                safe(report.weight) + safe(report.weight_unit) + '\n',
             {
               text: 'D.o.B: ',
               style: 'label'
@@ -218,7 +218,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
               text: 'Next of Kin: ',
               style: 'label'
           },
-                report.next_of_kin + '\n',
+                safe(report.next_of_kin) + '\n',
               ],
           style: "defaultStyle"
             },
@@ -228,17 +228,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
               text: 'SIN: ',
               style: 'label'
           },
-                report.insurance + '\n',
+                safe(report.insurance) + '\n',
             {
               text: 'MRN: ',
               style: 'label'
           },
-                report.mrn + '\n',
+                safe(report.mrn) + '\n',
             {
               text: 'Address: ',
               style: 'label'
           },
-                report.address_street + '\n' + report.address_city + ' ' + report.address_province + '\n',
+                safe(report.address_street) + '\n' + safe(report.address_city) + ' ' + safe(report.address_province) + '\n',
               ],
           style: "defaultStyle"
             },
@@ -248,22 +248,22 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
               text: 'Home Phone #: ',
               style: 'label'
           },
-                report.phone_home + '\n',
+                safe(report.phone_home) + '\n',
             {
               text: 'Cell Phone #: ',
               style: 'label'
           },
-                report.phone_cell + '\n',
+                safe(report.phone_cell) + '\n',
             {
               text: 'Work Phone #: ',
               style: 'label'
           },
-                report.phone_work + '\n',
+                safe(report.phone_work) + '\n',
             {
               text: 'Next of Kin Phone #: ',
               style: 'label'
           },
-                report.next_of_kin_phone + '\n',
+                safe(report.next_of_kin_phone) + '\n',
               ],
           style: "defaultStyle"
             }
@@ -284,7 +284,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: 'label'
                 },
         {
-          text: safe(report.patient_hx) + '\n',
+          text: JSONtoString(safe(report.hx_allergies)) + '\n',
           style: "defaultStyle"
                 },
         {
@@ -292,7 +292,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: 'label'
                 },
         {
-          text: safe(report.patient_hx) + '\n',
+          text: JSONtoString(safe(report.hx_conditions)) + '\n',
           style: "defaultStyle"
                 },
         {
@@ -300,7 +300,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: 'label'
                 },
         {
-          text: safe(report.patient_hx) + '\n',
+          text: JSONtoString(safe(report.hx_medications)) + '\n',
           style: "defaultStyle"
                 }
               ],
@@ -336,7 +336,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: 'label'
                 },
         {
-          text: safe(report.pertinent) + '\n',
+          text: JSONtoString(safe(report.pertinent)) + '\n',
           style: "defaultStyle"
                 }
               ],
@@ -536,7 +536,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         text: 'Seat: ',
         style: 'label'
       },
-      safe(report.trauma_auto_seat) + "\n",
+      report.trauma_auto_seat ? safe(seatsMap[report.trauma_auto_seat].name) : '' + "\n",
     ];
 
     var vehicle = report.trauma_auto_vehicle;
@@ -626,7 +626,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Systems Involved: ',
           style: 'label'
             },
-              safe(report.trauma_penetrating_body_parts) + "\n",
+              JSONtoString(safe(report.trauma_penetrating_body_parts)) + "\n",
             ],
       style: "defaultStyle"
     }
@@ -654,7 +654,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Systems Involved: ',
           style: 'label'
             },
-              safe(report.trauma_blunt_body_parts) + "\n",
+              JSONtoString(safe(report.trauma_blunt_body_parts)) + "\n",
             ],
       style: "defaultStyle"
     }
@@ -692,7 +692,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Systems Involved: ',
           style: 'label'
             },
-              safe(report.trauma_fall_body_parts) + "\n",
+              JSONtoString(safe(report.trauma_fall_body_parts)) + "\n",
             ],
       style: "defaultStyle"
     }
@@ -720,7 +720,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Details: ',
           style: 'label'
             },
-              safe(report.trauma_burn_body_parts) + '\n',
+              JSONtoString(safe(report.trauma_burn_body_parts)) + '\n',
             ],
       style: "defaultStyle"
     }

@@ -70,19 +70,39 @@ Object.size = function (obj) {
   return size;
 }
 
+function JSONtoString(str){
+  str = str == "" ? null : str;
+  var obj = JSON.parse(str);
+  var stringArray = [];
+  angular.forEach(obj, function(val, ind){
+    stringArray.push(val);
+  });
+  return stringArray.join(', ');
+}
+
+function burnsToString(str){
+  return str;
+}
+
 function safe(field, alternativeField) {
+  
   if (alternativeField && field == 'Other') {
     return alternativeField;
   }
+  
   if (alternativeField && field == 'true' && (alternativeField == 'Left' || alternativeField == 'Right')) {
     return alternativeField;
   }
+  
   if (!field || field == 'undefined') {
     return ''
   }
+  
   if (field == 'true')
     return 'Yes'
+    
   if (field == 'false')
     return 'No'
+    
   return field;
 }

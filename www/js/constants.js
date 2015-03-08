@@ -1200,4 +1200,43 @@ in_out: {
     right_foot_front: 1.75,
     right_foot_back: 1.75
   }
+})
+
+.constant('seatsMap', {
+    car1: {
+      name: "Driver"
+    },
+    car2: {
+      name: "Front Right"
+    },
+    car3: {
+      name: "Middle Left"
+    },
+    car4: {
+      name: "Middle Right"
+    },
+    car5: {
+      name: "Rear Left"
+    },
+    car6: {
+      name: "Rear Right"
+    },
+    truck1: {
+      name: "Driver"
+    },
+    truck2: {
+      name: "Front center"
+    },
+    truck3: {
+      name: "Front Right"
+    },
+    motorcycle1: {
+      name: "Driver"
+    },
+    motorcycle2: {
+      name: "Passenger"
+    },
+    motorcycle3: {
+      name: "Side Passenger"
+    }
 });

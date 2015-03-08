@@ -281,9 +281,9 @@ function PatientHistoryCtrl($scope, $stateParams, $window, report) {
   $scope.showDelete = false;
 
   $scope.patientHistory = {
-    "hx_allergies": report.hx_allergies ? report.hx_allergies.split(',') : [],
-    "hx_conditions": report.hx_conditions ? report.hx_conditions.split(',') : [],
-    "hx_medications": report.hx_medications ? report.hx_medications.split(',') : [],
+    "hx_allergies": report.hx_allergies ? JSON.parse(report.hx_allergies) : [],
+    "hx_conditions": report.hx_conditions ? JSON.parse(report.hx_conditions) : [],
+    "hx_medications": report.hx_medications ? JSON.parse(report.hx_medications) : [],
   };
   console.log($scope.patientHistory);
 
@@ -321,8 +321,13 @@ function PatientHistoryCtrl($scope, $stateParams, $window, report) {
 
   $scope.save = function () {
     console.log($scope.patientHistory);
+    var patientHx = {
+      "hx_allergies": JSON.stringify($scope.patientHistory.hx_allergies),
+      "hx_conditions": JSON.stringify($scope.patientHistory.hx_conditions),
+      "hx_medications": JSON.stringify($scope.patientHistory.hx_medications),
+    };
 
-    db.update("report", $scope.patientHistory, {
+    db.update("report", $scope.patientHx, {
       'id': $stateParams.reportId
     }).then(function () {
       console.log("Updated report: Patient History");
@@ -354,7 +359,7 @@ function AllergiesCtrl($scope, $stateParams, $window, report, allergies) {
 
 
     db.update("report", {
-      "hx_allergies": selected,
+      "hx_allergies": JSON.stringify(selected),
       "patient_hx_assessed": true
     }, {
       'id': $stateParams.reportId
@@ -410,7 +415,7 @@ function HomeMedicationsCtrl($scope, $stateParams, $window, report, homeMedicati
 
 
     db.update("report", {
-      "hx_medications": selected,
+      "hx_medications": JSON.stringify(selected),
       "patient_hx_assessed": true
     }, {
       'id': $stateParams.reportId
@@ -467,7 +472,7 @@ function ConditionsCtrl($scope, $stateParams, $window, report, medicalConditions
 
 
     db.update("report", {
-      "hx_conditions": selected,
+      "hx_conditions": JSON.stringify(selected),
       "patient_hx_assessed": true
     }, {
       'id': $stateParams.reportId
