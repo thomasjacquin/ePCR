@@ -65,7 +65,7 @@ function ReportDetailCtrl($scope, $stateParams, report, $window, Records) {
 }
 
 function PersonalInfoCtrl($scope, $stateParams, $window, report) {
-
+  
   $scope.personal = {
     "first_name": report.first_name,
     "last_name": report.last_name,

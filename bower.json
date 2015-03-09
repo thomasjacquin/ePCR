@@ -7,6 +7,7 @@
   "dependencies": {
     "angular-route": "~1.3.10",
     "angles": "*",
-    "pdfjs-bower": "~1.0.233"
+    "angular-datepicker": "~1.0.3",
+    "eonasdan-bootstrap-datetimepicker": "~4.7.14"
   }
 }

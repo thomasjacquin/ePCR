@@ -159,9 +159,12 @@
         <span class="input-label">Nb of Occupants</span>
         <input type="number" ng-model="auto.trauma_auto_nb_occupants" placeholder="# of Occupants">
       </ion-item>
-      <ion-item class="item-input item-select">
+      <ion-item class="item-input">
         <span class="input-label">Speed</span>
-        <input type="number" ng-model="auto.trauma_auto_vehicle_speed" placeholder="# of Occupants">
+        <input type="number" ng-model="auto.trauma_auto_vehicle_speed" placeholder="Speed">
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Speed Unit</span>
         <select ng-model="auto.trauma_auto_speed_unit">
           <option value="0">kph</option>
           <option value="1">mph</option>

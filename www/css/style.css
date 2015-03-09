@@ -134,3 +134,14 @@ h4.list-detail {
   background-color: #28a54c;
   box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.1);
 }
+
+input[type='text'],
+input[type='number'],
+input[type='date'],
+input[type='time'],
+input[type='select'],
+input[type='email'],
+input[type='tel']
+{
+  background: #FAFAFA;
+}

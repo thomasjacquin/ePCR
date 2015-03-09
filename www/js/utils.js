@@ -84,6 +84,16 @@ function muscularToString(str){
   return stringArray.join('; ');
 }
 
+function TimesToString(str){
+  str = str == "" ? null : str;
+  var obj = JSON.parse(str);
+  var stringArray = [];
+  angular.forEach(obj, function(val, ind){
+    stringArray.push(ind + ': ' + val);
+  });
+  return stringArray.join(', ');
+}
+
 function apgarToString(str){
   str = str == "" ? null : str;
   if (str != null) {

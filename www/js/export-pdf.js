@@ -1086,6 +1086,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: 'label'
             },
               safe(report.signature_practitioner_name) + '\n',
+//        {
+//	        image: 'practitionerSignature',
+//	        width: 300
+//		},
         {
           text: 'Patient: ',
           style: 'label'
@@ -1182,20 +1186,20 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'Time Notified: ',
+              text: 'Times: ',
               style: 'label'
                 },
-                safe(report.call_info_time) + '\n',
+                TimesToString(safe(report.call_info_time)) + '\n',
             {
               text: 'PPE: ',
               style: 'label'
                 },
-                safe(report.call_info_ppe) + '\n',
+                JSONtoString(safe(report.call_info_ppe)) + '\n',
             {
               text: 'Determinant: ',
               style: 'label'
                 },
-                safe(report.call_info_determinant) + '\n',
+                JSONtoString(safe(report.call_info_determinant)) + '\n',
             {
               text: 'Assistance given by: ',
               style: 'label'
@@ -1240,12 +1244,13 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: "defaultStyle"
             }
           ],
-      style: "defaultStyle"
+      style: "defaultStyle",
+      columnGap: 10
     }
   }
 
   fillDocDefinition = function () {
-
+console.log(report.signature_practitioner);
     var content = [
         header(),
         include('patient_info', heading('Patient Info')),
@@ -1302,7 +1307,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('signatures', heading('Signatures')),
         include('signatures', signatures()),
         include('call_info', heading('Call Info')),
-        include('signatures', signatures()),
+        include('call_info', callInfo()),
         include('narrative', heading('Narrative')),
         include('narrative', table($scope.narrativeRecords, 'narrative')),
         include('code', heading('CPR')),
@@ -1311,7 +1316,9 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
 
     $scope.docDefinition = {
       content: content,
-
+//      images: {
+//        practitionerSignature: report.signature_practitioner
+//      },
       styles: {
         header: {
           fontSize: 22,
