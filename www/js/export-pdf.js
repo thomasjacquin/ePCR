@@ -1078,40 +1078,90 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     }
   }
 
-  function signatures() {
+  function signatures1() {
     return {
-      text: [
+      columns: [
         {
-          text: 'Practitioner: ',
-          style: 'label'
+          text: [
+            {
+              text: 'Practitioner: ',
+              style: 'label'
             },
-              safe(report.signature_practitioner_name) + '\n',
-//        {
-//	        image: 'practitionerSignature',
-//	        width: 300
-//		},
+              safe(report.signature_practitioner_name) + '\n'
+          ],
+          style: "defaultStyle"
+        },
         {
-          text: 'Patient: ',
-          style: 'label'
+          text: [
+            {
+              text: 'Patient: ',
+              style: 'label'
             },
               safe(report.signature_patient_name) + '\n',
-        {
-          text: 'Patient no signature reason: ',
-          style: 'label'
+            {
+              text: 'No sig. reason: ',
+              style: 'label'
             },
-              safe(report.no_signature_reason) + '\n',
+              safe(report.no_signature_reason) + '\n'
+          ],
+          style: "defaultStyle"
+        },
         {
-          text: 'Hosital Representative: ',
-          style: 'label'
+          text: [
+            {
+              text: 'Hosital Representative: ',
+              style: 'label'
             },
-              safe(report.signature_hospital_name) + '\n',
+              safe(report.signature_hospital_name) + '\n'
+            ],
+          style: "defaultStyle"
+        },
         {
-          text: 'Witness: ',
-          style: 'label'
+          text: [
+            {
+              text: 'Witness: ',
+              style: 'label'
             },
               safe(report.signature_witness_name) + '\n',
             ],
-      style: "defaultStyle"
+          style: "defaultStyle"
+        }
+      ]
+    }
+  }
+  
+  function signatures2() {
+    return {
+      columns: [
+         {
+            image: 'practitionerSignature',
+			width: 200,
+            height: 100
+          },
+//         {
+//            image: 'patientSignature',
+//            width: 200
+//          },
+//         {
+//            image: 'hospitalSignature',
+//            width: 200
+//          },
+//         {
+//            image: 'witnessSignature',
+//            width: 200
+//          }
+      ]
+    }
+  }
+    function signatures3() {
+    return {
+      columns: [
+         {
+            image: 'patientSignature',
+            width: 200,
+			height: 100,
+          }
+      ]
     }
   }
 
@@ -1250,7 +1300,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   fillDocDefinition = function () {
-console.log(report.signature_practitioner);
+    console.log(report.signature_practitioner);
     var content = [
         header(),
         include('patient_info', heading('Patient Info')),
@@ -1304,21 +1354,26 @@ console.log(report.signature_practitioner);
         include('procedures', table($scope.inOutRecords, 'in_out')),
         include('procedures', heading('ECG')),
         include('procedures', table($scope.ecgRecords, 'ecg')),
-        include('signatures', heading('Signatures')),
-        include('signatures', signatures()),
         include('call_info', heading('Call Info')),
         include('call_info', callInfo()),
         include('narrative', heading('Narrative')),
         include('narrative', table($scope.narrativeRecords, 'narrative')),
         include('code', heading('CPR')),
-        include('code', table($scope.cprRecords, 'code'))
+        include('code', table($scope.cprRecords, 'code')),
+        include('signatures', heading('Signatures')),
+        include('signatures', signatures1()),
+        include('signatures', signatures2()),
+//        include('signatures', signatures3())
       ];
 
     $scope.docDefinition = {
       content: content,
-//      images: {
-//        practitionerSignature: report.signature_practitioner
-//      },
+      images: {
+        practitionerSignature: report.signature_practitioner,
+        patientSignature: report.signature_patient,
+        hospitalSignature: report.signature_hospital,
+        witnessSignature: report.signature_witness
+      },
       styles: {
         header: {
           fontSize: 22,
@@ -1396,6 +1451,5 @@ console.log(report.signature_practitioner);
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
       });
     }
-    //  
   }
 }
