@@ -1844,7 +1844,7 @@ function CodeCtrl($scope, $stateParams, codeList, $window) {
 function ExportCtrl($scope, $stateParams, $window, settings, $state) {
 
   var defaults = {
-    short_report: true,
+//    short_report: true,
     patient_info: true,
     vitals: true,
     vitals_charts: true,

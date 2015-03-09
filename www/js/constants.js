@@ -1202,6 +1202,56 @@ in_out: {
   }
 })
 
+.constant('body_parts_names', {
+  head_front: "Face",
+  head_back: "Head back",
+  chest: "Chest",
+  abdomen: "Abdomen",
+  upper_back: "Upper back",
+  lower_back: "Lower back",
+  groin: "Groin",
+  left_arm_front: "Left arm front",
+  left_arm_back: "Left arm back",
+  right_arm_front: "Right arm front",
+  right_arm_back: "Right arm back",
+  left_leg_front: "Left leg front",
+  left_leg_back: "Left leg back",
+  right_leg_front: "Right leg Front",
+  right_leg_back: "Right leg back",
+  neck_front: "Throat",
+  neck_back: "Nape",
+  back: "Back",
+  left_buttock: "Left buttock",
+  right_buttock: "Right buttock",
+  groin: "Groin",
+  left_forearm_front: "Left forearm front",
+  left_forearm_back: "Left forearm back",
+  left_hand_front: "Left hand front",
+  left_hand_back: "Left hand back",
+  right_forearm_front: "Right forearm front",
+  right_forearm_back: "Right forearm back",
+  right_hand_front: "Right palm",
+  right_hand_back: "Right hand back",
+  left_upper_leg_front: "Left thigh front",
+  left_upper_leg_back: "Left thigh back",
+  left_lower_leg_front: "Left lower leg front",
+  left_lower_leg_back: "Left calf",
+  left_foot_front: "Left foot front",
+  left_foot_back: "Left foot back",
+  right_upper_leg_front: "Right thigh front",
+  right_upper_leg_back: "Right thigh back",
+  right_lower_leg_front: "Right lower leg front",
+  right_lower_leg_back: "Right calf",
+  right_foot_front: "Right foot front",
+  right_foot_back: "Right foot back"
+})
+
+.constant('burnDegrees', {
+  First: "Superficial Erythema",
+  Second: "PTL",
+  Third: "FTL"
+})
+  
 .constant('seatsMap', {
     car1: {
       name: "Driver"

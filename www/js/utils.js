@@ -70,6 +70,33 @@ Object.size = function (obj) {
   return size;
 }
 
+function muscularToString(str){
+  str = str == "" ? null : str;
+  var obj = JSON.parse(str);
+  var stringArray = [];
+  angular.forEach(obj, function(val, ind){
+    var symptoms = [];
+    angular.forEach(val, function(symptom, index){
+      symptoms.push(symptom);
+    });
+    stringArray.push(ind + ': ' + symptoms.join(', '));
+  });
+  return stringArray.join('; ');
+}
+
+function apgarToString(str){
+  str = str == "" ? null : str;
+  if (str != null) {
+    var obj = JSON.parse(str);
+    var sum = 0;
+    for (key in obj) {
+      sum += parseInt(obj[key]);
+    };
+    return sum + ' ' + str.replace('{','(').replace('}',')').replace(/"/g,'').replace(/,/g,', ');
+  } else
+    return "";
+}
+
 function JSONtoString(str){
   str = str == "" ? null : str;
   var obj = JSON.parse(str);
@@ -80,8 +107,14 @@ function JSONtoString(str){
   return stringArray.join(', ');
 }
 
-function burnsToString(str){
-  return str;
+function burnsToString(str, body_parts_names, burnDegrees){
+  str = str == "" ? null : str;
+  var obj = JSON.parse(str);
+  var stringArray = [];
+  angular.forEach(obj, function(val, ind){
+    stringArray.push(body_parts_names[ind] + ': ' + burnDegrees[val]);
+  });
+  return stringArray.join(', ');
 }
 
 function safe(field, alternativeField) {

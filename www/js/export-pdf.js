@@ -1,4 +1,4 @@
-function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, seatsMap, exportTableDefinition) {
+function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, seatsMap, body_parts_names, burnDegrees, exportTableDefinition) {
 
   var BINARY_ARR = null;
   var currentfileEntry = null;
@@ -151,12 +151,15 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   function table(rec, tableName) {
-    return {
+    return Object.size(rec) != 0 ? {
       style: 'tableExample',
       table: {
         headerRows: 1,
         body: getTableArray(rec, tableName)
       }
+    } : {
+      text: 'No Records',
+      style: 'defaultStyle'
     }
   }
 
@@ -720,7 +723,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Details: ',
           style: 'label'
             },
-              JSONtoString(safe(report.trauma_burn_body_parts)) + '\n',
+              burnsToString(safe(report.trauma_burn_body_parts), body_parts_names, burnDegrees) + '\n',
             ],
       style: "defaultStyle"
     }
@@ -955,12 +958,12 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'APGAR 1 min: ',
           style: 'label'
             },
-              safe(report.field_delivery_apgar1) + '\n',
+              apgarToString(safe(report.field_delivery_apgar1)) + '\n',
         {
           text: 'APGAR 5 min: ',
           style: 'label'
             },
-              safe(report.field_delivery_apgar5) + '\n',
+              apgarToString(safe(report.field_delivery_apgar5)) + '\n',
         {
           text: 'Stimulation Required: ',
           style: 'label'
@@ -988,7 +991,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Symptoms: ',
           style: 'label'
             },
-              safe(report.muscular_complaint) + '\n',
+              muscularToString(safe(report.muscular_complaint)) + '\n',
             ],
       style: "defaultStyle"
     }
