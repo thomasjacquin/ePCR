@@ -127,6 +127,13 @@ function burnsToString(str, body_parts_names, burnDegrees){
   return stringArray.join(', ');
 }
 
+function safeImage(base64Img){
+  if (base64Img == "")
+    return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=";
+  else
+    return base64Img;
+}
+
 function safe(field, alternativeField) {
   
   if (alternativeField && field == 'Other') {

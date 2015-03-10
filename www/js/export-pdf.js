@@ -1092,40 +1092,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: "defaultStyle"
         },
         {
-          text: [
-            {
-              text: 'Patient: ',
-              style: 'label'
-            },
-              safe(report.signature_patient_name) + '\n',
-            {
-              text: 'No sig. reason: ',
-              style: 'label'
-            },
-              safe(report.no_signature_reason) + '\n'
-          ],
-          style: "defaultStyle"
-        },
-        {
-          text: [
-            {
-              text: 'Hosital Representative: ',
-              style: 'label'
-            },
-              safe(report.signature_hospital_name) + '\n'
-            ],
-          style: "defaultStyle"
-        },
-        {
-          text: [
-            {
-              text: 'Witness: ',
-              style: 'label'
-            },
-              safe(report.signature_witness_name) + '\n',
-            ],
-          style: "defaultStyle"
-        }
+            image: safeImage(report.signature_practitioner),
+			height: 75,
+            width: 250
+          }
       ]
     }
   }
@@ -1134,32 +1104,62 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     return {
       columns: [
          {
-            image: 'practitionerSignature',
-			width: 200,
-            height: 100
-          },
-//         {
-//            image: 'patientSignature',
-//            width: 200
-//          },
-//         {
-//            image: 'hospitalSignature',
-//            width: 200
-//          },
-//         {
-//            image: 'witnessSignature',
-//            width: 200
-//          }
+          text: [
+            {
+              text: 'Patient: ',
+              style: 'label'
+            },
+              safe(report.signature_patient_name) + ' ' + safe(report.no_signature_reason) + '\n',
+          ],
+          style: "defaultStyle"
+        },
+         {
+            image: safeImage(report.signature_patient),
+            height: 75,
+            width: 250
+          }
       ]
     }
   }
     function signatures3() {
     return {
       columns: [
+        {
+          text: [
+            {
+              text: 'Hosital Representative: ',
+              style: 'label'
+            },
+              safe(report.signature_hospital_name) + '\n'
+          ],
+          style: "defaultStyle"
+        },
          {
-            image: 'patientSignature',
-            width: 200,
-			height: 100,
+            image: safeImage(report.signature_hospital),
+            height: 75,
+            width: 250
+          }
+      ]
+    }
+  }
+  
+  function signatures4() {
+    return {
+      columns: [
+                {
+          text: [
+            {
+              text: 'Witness: ',
+              style: 'label'
+            },
+              safe(report.signature_witness_name) + '\n',
+          ],
+          style: "defaultStyle"
+        },
+         {
+            image: safeImage(report.signature_witness),
+            height: 75,
+            width: 250
           }
       ]
     }
@@ -1363,17 +1363,12 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('signatures', heading('Signatures')),
         include('signatures', signatures1()),
         include('signatures', signatures2()),
-//        include('signatures', signatures3())
+        include('signatures', signatures3()),
+        include('signatures', signatures4())
       ];
 
     $scope.docDefinition = {
       content: content,
-      images: {
-        practitionerSignature: report.signature_practitioner,
-        patientSignature: report.signature_patient,
-        hospitalSignature: report.signature_hospital,
-        witnessSignature: report.signature_witness
-      },
       styles: {
         header: {
           fontSize: 22,
