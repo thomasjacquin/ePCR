@@ -37,15 +37,8 @@
            </div>
          </label>
         </ion-item>
-        <ion-item class="item-toggle">
-         Vitals
-         <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="mySettings.export.vitals">
-           <div class="track">
-             <div class="handle"></div>
-           </div>
-         </label>
-        </ion-item>
+        
+<!--
         <ion-item class="item-toggle" ng-show="vitals">
          Vitals Charts
          <label class="toggle toggle-balanced">
@@ -55,6 +48,7 @@
            </div>
          </label>
         </ion-item>
+-->
         <ion-item class="item-toggle">
          Chief Comlpaint
          <label class="toggle toggle-balanced">
@@ -74,6 +68,15 @@
          </label>
         </ion-item>
         <ion-item class="item-toggle">
+         Vitals
+         <label class="toggle toggle-balanced">
+           <input type="checkbox" ng-model="mySettings.export.vitals">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+        </ion-item>
+        <ion-item class="item-toggle">
          Exam
          <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="mySettings.export.exam">
@@ -86,15 +89,6 @@
          Procedures
          <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="mySettings.export.procedures">
-           <div class="track">
-             <div class="handle"></div>
-           </div>
-         </label>
-        </ion-item>
-        <ion-item class="item-toggle">
-         Signatures
-         <label class="toggle toggle-balanced">
-           <input type="checkbox" ng-model="mySettings.export.signatures">
            <div class="track">
              <div class="handle"></div>
            </div>
@@ -122,6 +116,15 @@
          Code Summary
          <label class="toggle toggle-balanced">
            <input type="checkbox" ng-model="mySettings.export.code">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+        </ion-item>
+        <ion-item class="item-toggle">
+         Signatures
+         <label class="toggle toggle-balanced">
+           <input type="checkbox" ng-model="mySettings.export.signatures">
            <div class="track">
              <div class="handle"></div>
            </div>

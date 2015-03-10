@@ -1089,7 +1089,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             },
               safe(report.signature_practitioner_name) + '\n'
           ],
-          style: "defaultStyle"
+          style: "defaultStyle",
+          width: 200
         },
         {
             image: safeImage(report.signature_practitioner),
@@ -1111,7 +1112,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             },
               safe(report.signature_patient_name) + ' ' + safe(report.no_signature_reason) + '\n',
           ],
-          style: "defaultStyle"
+          style: "defaultStyle",
+          width: 200
         },
          {
             image: safeImage(report.signature_patient),
@@ -1121,7 +1123,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       ]
     }
   }
-    function signatures3() {
+  
+  function signatures3() {
     return {
       columns: [
         {
@@ -1132,7 +1135,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             },
               safe(report.signature_hospital_name) + '\n'
           ],
-          style: "defaultStyle"
+          style: "defaultStyle",
+          width: 200
         },
          {
             image: safeImage(report.signature_hospital),
@@ -1154,7 +1158,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             },
               safe(report.signature_witness_name) + '\n',
           ],
-          style: "defaultStyle"
+          style: "defaultStyle",
+          width: 200
         },
          {
             image: safeImage(report.signature_witness),

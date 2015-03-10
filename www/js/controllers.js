@@ -1553,8 +1553,9 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
   $scope.canvasWidth = window.innerWidth - 80;
   $scope.canvasHeight = ($scope.canvasWidth / 3) < 200 ? ($scope.canvasWidth / 3) : 250;
 
-  var signaturePads = [];
-  var storedSignatures = [];
+  var signaturePad = null;
+  var draftSignatures = [];
+  var savedSignatures = [];
 
   function wireCanvas() {
     var tab = $scope.activeButton;
@@ -1579,24 +1580,33 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     canvas.width = $scope.canvasWidth;
     canvas.height = $scope.canvasHeight;
 
-    signaturePad = signaturePads[tab] || new SignaturePad(canvas, {
+    signaturePad = new SignaturePad(canvas, {
       penColor: "rgb(66, 133, 244)",
       maxWidth: 1.5
     });
-    signaturePads[tab] = signaturePad;
-    signaturePad.fromDataURL(storedSignatures[tab] || "");
+    
+    // Load Signature if it exists in DB
+    if (savedSignatures[tab] != ""){
+      draftSignatures[tab] = savedSignatures[tab];
+    }
+    // If draft Signature exists, load it
+    if (draftSignatures[tab]){
+      signaturePad.fromDataURL(draftSignatures[tab]);
+    }
 
     clearButton.addEventListener("click", function (event) {
       signaturePad.clear();
+      draftSignatures[$scope.activeButton] = "";
+//      savedSignatures[$scope.activeButton] = "";
     });
 
   }
 
   // Load Signatures
-  storedSignatures[1] = report.signature_practitioner;
-  storedSignatures[2] = report.signature_patient;
-  storedSignatures[3] = report.signature_hospital;
-  storedSignatures[4] = report.signature_witness;
+  savedSignatures[1] = report.signature_practitioner;
+  savedSignatures[2] = report.signature_patient;
+  savedSignatures[3] = report.signature_hospital;
+  savedSignatures[4] = report.signature_witness;
 
   wireCanvas();
 
@@ -1620,15 +1630,28 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
   console.log($scope.signatures);
 
   $scope.switchTab = function (tab) {
+    draftSignatures[$scope.activeButton] = signaturePad.toDataURL();
     $scope.activeButton = tab;
     wireCanvas();
   }
+  
+  function saveSignature(nb){
+    if(!draftSignatures[nb] || draftSignatures[nb] == ""){
+      if (savedSignatures[nb] && savedSignatures[nb] != ""){
+        return savedSignatures[nb];
+      } else 
+        return "";
+    } else
+      return draftSignatures[nb];
+  }
 
   $scope.save = function () {
-    $scope.signatures.signature_practitioner = signaturePads[1] ? signaturePads[1].toDataURL() : "";
-    $scope.signatures.signature_patient = signaturePads[2] ? signaturePads[2].toDataURL() : "";
-    $scope.signatures.signature_hospital = signaturePads[3] ? signaturePads[3].toDataURL() : "";
-    $scope.signatures.signature_witness = signaturePads[4] ? signaturePads[4].toDataURL() : "";
+    // Save current signature
+    draftSignatures[$scope.activeButton] = signaturePad.toDataURL();
+    $scope.signatures.signature_practitioner = saveSignature(1);
+    $scope.signatures.signature_patient = saveSignature(2);
+    $scope.signatures.signature_hospital = saveSignature(3);
+    $scope.signatures.signature_witness = saveSignature(4);
 
 
     $scope.signatures.signature_assessed = true;
