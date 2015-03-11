@@ -143,11 +143,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     return $scope.mySettings.export[section] ? object : '';
   }
 
-  function heading(title) {
-    return {
+  function heading(rec, title) {
+    return Object.size(rec) != 0 ? {
       text: title,
       style: 'section_heading'
-    }
+    } : ""
   }
 
   function table(rec, tableName) {
@@ -157,10 +157,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         headerRows: 1,
         body: getTableArray(rec, tableName)
       }
-    } : {
-      text: 'No Records',
-      style: 'defaultStyle'
-    }
+    } : ""
   }
 
   function header() {
@@ -199,6 +196,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
+              text: 'Patient Info\n',
+              style: 'section_heading'
+                },
+            {
               text: 'Name: ',
               style: 'label'
           },
@@ -229,7 +230,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'SIN: ',
+              text: '\nSIN: ',
               style: 'label'
           },
                 safe(report.insurance) + '\n',
@@ -249,7 +250,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'Home Phone #: ',
+              text: '\nHome Phone #: ',
               style: 'label'
           },
                 safe(report.phone_home) + '\n',
@@ -854,7 +855,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Last OI: ',
           style: 'label'
             },
-              safe(report.gi_loi) + '\n',
+              safe(report.gi_loi) + '\n\n',
             ],
       style: "defaultStyle"
     }
@@ -901,7 +902,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Last Void: ',
           style: 'label'
             },
-              safe(report.gu_last_void) + '\n'
+              safe(report.gu_last_void) + '\n\n'
             ],
       style: "defaultStyle"
     }
@@ -1210,6 +1211,15 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     }
     else return "";
   }
+  
+  function signaturesHeader(){
+    if (report.signature_assessed)
+      return {
+        text: 'section_heading\n',
+        style: 'section_heading'
+      } 
+    else return "";
+  }
 
   function signatures1() {
     if (report.signature_assessed)
@@ -1318,7 +1328,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'Call Info\n',
+              text: '\nCall Info\n',
               style: 'section_heading'
                 },
             {
@@ -1387,7 +1397,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'Times: ',
+              text: '\nTimes: ',
               style: 'label'
                 },
                 TimesToString(safe(report.call_info_time)) + '\n',
@@ -1412,7 +1422,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         {
           text: [
             {
-              text: 'Patient Mentally Capable: ',
+              text: '\nPatient Mentally Capable: ',
               style: 'label'
                 },
                 safe(report.no_transport_mentally_capable) + '\n',
@@ -1452,15 +1462,14 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   fillDocDefinition = function () {
-    console.log(report.signature_practitioner);
     var content = [
         header(),
-        include('patient_info', heading('Patient Info')),
+        '\n',
         include('patient_info', patientInfo()),
         hxAndChief(),
-        include('vitals', heading('Vitals')),
+        include('vitals', heading($scope.vitalsRecords, 'Vitals')),
         include('vitals', table($scope.vitalsRecords, 'vitals')),
-        include('exam', heading('Neuro', 'neuro')),
+        include('exam', heading($scope.neuroRecords, 'Neuro')),
         include('exam', table($scope.neuroRecords, 'neuro')),
         include('exam', abc()),
         include('exam', traumaAuto()),
@@ -1470,32 +1479,32 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('exam', gyn()),
         include('exam', fieldDelivery()),
         include('exam', muscular()),
-        include('procedures', heading('Basic Airway')),
+        include('procedures', heading($scope.basicAirwayRecords, 'Basic Airway')),
         include('procedures', table($scope.basicAirwayRecords, 'airway_basic')),
         include('procedures', invasiveAirway()),
-        include('procedures', heading('Ventilator')),
+        include('procedures', heading($scope.ventilatorRecords, 'Ventilator')),
         include('procedures', table($scope.ventilatorRecords, 'airway_ventilator')),
-        include('procedures', heading('CPAP/BiPAP')),
+        include('procedures', heading($scope.cpapRecords, 'CPAP/BiPAP')),
         include('procedures', table($scope.cpapRecords, 'airway_cpap_bipap')),
-        include('procedures', heading('Suction')),
+        include('procedures', heading($scope.suctionRecords, 'Suction')),
         include('procedures', table($scope.suctionRecords, 'airway_suction')),
-        include('procedures', heading('IV/IO')),
+        include('procedures', heading($scope.ivIoRecords, 'IV/IO')),
         include('procedures', table($scope.ivIoRecords, 'iv_io')),
-        include('procedures', heading('Splinting/Dressing')),
+        include('procedures', heading($scope.splintingRecords, 'Splinting/Dressing')),
         include('procedures', table($scope.splintingRecords, 'splinting')),
-        include('procedures', heading('Medication')),
+        include('procedures', heading($scope.medicationRecords, 'Medication')),
         include('procedures', table($scope.medicationRecords, 'medication')),
         include('procedures', spinal()),
-        include('procedures', heading('In/Out')),
+        include('procedures', heading($scope.inOutRecords, 'In/Out')),
         include('procedures', table($scope.inOutRecords, 'in_out')),
-        include('procedures', heading('ECG')),
+        include('procedures', heading($scope.ecgRecords, 'ECG')),
         include('procedures', table($scope.ecgRecords, 'ecg')),
         include('call_info', callInfo()),
-        include('narrative', heading('Narrative')),
+        include('narrative', heading($scope.narrativeRecords, 'Narrative')),
         include('narrative', table($scope.narrativeRecords, 'narrative')),
-        include('code', heading('CPR')),
+        include('code', heading($scope.cprRecords, 'CPR')),
         include('code', table($scope.cprRecords, 'code')),
-        include('signatures', heading('Signatures')),
+        include('signatures', signaturesHeader()),
         include('signatures', signatures1()),
         include('signatures', signatures2()),
         include('signatures', signatures3()),
@@ -1540,7 +1549,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         }
       }
     };
-    console.log($scope.docDefinition);
+//    console.log($scope.docDefinition);
   }
 
   function fail(error) {
