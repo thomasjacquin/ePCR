@@ -90,9 +90,10 @@
           </div>
         </label>
       </ion-item>
-      <ion-item class="item-input">
+      <ion-item >
         <span class="input-label">Last BM</span>
-        <input type="date" ng-model="gi.gi_last_bm">
+<!--        <input type="date" ng-model="gi.gi_last_bm">-->
+        <input type="text" date-time="" ng-model="gi.gi_last_bm" required="true" view="hours" partial="true" class="ng-scope ng-pristine ng-invalid ng-invalid-required">
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Last OI</span>

@@ -1215,7 +1215,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   function signaturesHeader(){
     if (report.signature_assessed)
       return {
-        text: 'section_heading\n',
+        text: 'Signatures\n',
         style: 'section_heading'
       } 
     else return "";
