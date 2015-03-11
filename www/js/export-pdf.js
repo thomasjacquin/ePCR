@@ -193,6 +193,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   function patientInfo() {
+    if (report.patient_info_assessed)
     return {
       columns: [
         {
@@ -272,7 +273,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             }
           ],
       columnGap: 10
-    };
+    }
+    else return "";
   }
 
   function patientHistory() {
@@ -349,23 +351,30 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
 
   function hxAndChief() {
     var array = [];
-    if ($scope.mySettings.export.patient_hx)
+    if ($scope.mySettings.export.patient_hx && report.patient_hx_assessed == 'true')
       array.push(include('patient_hx', patientHistory()));
-    if ($scope.mySettings.export.chief_complaint)
+    if ($scope.mySettings.export.chief_complaint && report.chief_complaint_assessed == 'true')
       array.push(include('chief_complaint', chiefComplaint()));
 
-    array = array.length == 0 ? [""] : array;
-    return {
-      columns: array,
-      style: 'margin'
-    }
+    if (array.length != 0)
+      return {
+        columns: array,
+        style: 'margin'
+      }
+      else
+        return "";
   }
 
   function abc() {
+    if (report.abc_assessed){
     return {
       columns: [
         {
           text: [
+            {
+              text: 'ABC\n',
+              style: 'section_heading'
+                },
             {
               text: 'Open & Patent: ',
               style: 'label'
@@ -525,7 +534,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           style: "defaultStyle"
             }
           ]
-    }
+    }} else return "";
   }
 
   function vehicleSpecific() {
@@ -568,12 +577,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   function traumaAuto() {
+    if (report.trauma_auto_assessed)
     return {
       columns: [
-        {
+          {
+          text: 'Trauma Auto\n',
+          style: 'section_heading'
+                },
+          {
           text: vehicleSpecific(),
           style: "defaultStyle"
-            }, {
+          }, {
           text: [
             {
               text: 'Nb of Occupants: ',
@@ -600,11 +614,16 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             }
           ]
     }
+    else return "";
   }
 
   function traumaPenetrating() {
     return {
       text: [
+        {
+          text: 'Trauma Penetrating\n',
+          style: 'section_heading'
+                },
         {
           text: 'Assault: ',
           style: 'label'
@@ -639,6 +658,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     return {
       text: [
         {
+          text: 'Trauma Blunt\n',
+          style: 'section_heading'
+                },
+        {
           text: 'Assault: ',
           style: 'label'
             },
@@ -666,6 +689,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   function traumaFall() {
     return {
       text: [
+        {
+          text: 'Trauma Fall\n',
+          style: 'section_heading'
+                },
         {
           text: 'Assault: ',
           style: 'label'
@@ -705,6 +732,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     return {
       text: [
         {
+          text: 'Trauma Burn\n',
+          style: 'section_heading'
+                },
+        {
           text: 'Method: ',
           style: 'label'
             },
@@ -728,10 +759,62 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       style: "defaultStyle"
     }
   }
+  
+  function trauma(){
+    var array = [];
+    if (report.trauma_penetrating_assessed == 'true')
+      array.push(include('exam', traumaPenetrating()));
+    if (report.trauma_blunt_assessed == 'true')
+      array.push(include('exam', traumaBlunt()));
+    if (report.trauma_fall_assessed == 'true')
+      array.push(include('exam', traumaFall()));
+    if (report.trauma_burn_assessed == 'true')
+      array.push(include('exam', traumaBurn()));
+    
+    return array;
+  }
+  
+  function traumaPart1(){
+    var line = [];
+    var t = trauma();
+    if (t.length > 0)
+      line.push(t[0]);
+    if (t.length > 1)
+      line.push(t[1]);
+    
+    if (line.length != 0)
+      return {
+        columns: line,
+        style: 'margin'
+      }
+      else
+        return "";
+  }
+  
+  function traumaPart2(){
+    var line = [];
+    var t = trauma();
+    if (t.length > 2)
+      line.push(t[2]);
+    if (t.length > 3)
+      line.push(t[3]);
+    
+    if (line.length != 0)
+      return {
+        columns: line,
+        style: 'margin'
+      }
+      else
+        return "";
+  }
 
   function gastrointestinal() {
     return {
       text: [
+        {
+          text: 'Gastrointestinal\n',
+          style: 'section_heading'
+                },
         {
           text: 'Abdomen is soft: ',
           style: 'label'
@@ -781,6 +864,10 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     return {
       text: [
         {
+          text: 'Genitourinary\n',
+          style: 'section_heading'
+                },
+        {
           text: 'Pain: ',
           style: 'label'
             },
@@ -819,12 +906,33 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       style: "defaultStyle"
     }
   }
+  
+  function giGu(){
+    var array = [];
+    if (report.gi_assessed == 'true')
+      array.push(include('exam', gastrointestinal()));
+    if (report.gu_assessed == 'true')
+      array.push(include('exam', genitourinary()));
+
+   if (array.length != 0)
+      return {
+        columns: array,
+        style: 'margin'
+      }
+      else
+        return "";
+  }
 
   function gyn() {
+    if (report.gyn_assessed)
     return {
       columns: [
         {
           text: [
+            {
+              text: 'Obstetric/Gynecology\n',
+              style: 'section_heading'
+                },
             {
               text: 'Gravid: ',
               style: 'label'
@@ -929,11 +1037,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           ],
       style: "defaultStyle"
     }
+    else return "";
   }
 
   function fieldDelivery() {
+    if (report.field_delivery_assessed)
     return {
       text: [
+        {
+          text: 'Field Delivery\n',
+          style: 'section_heading'
+            },
         {
           text: 'Presentation: ',
           style: 'label'
@@ -982,11 +1096,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             ],
       style: "defaultStyle"
     }
+    else return "";
   }
 
   function muscular() {
+    if (report.muscular_assessed)
     return {
       text: [
+        {
+          text: 'Muscular/Skeletal\n',
+          style: 'section_heading'
+            },
         {
           text: 'Symptoms: ',
           style: 'label'
@@ -995,11 +1115,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             ],
       style: "defaultStyle"
     }
+    else return "";
   }
 
   function invasiveAirway() {
+    if (report.invasive_airway_assessed)
     return {
       text: [
+        {
+          text: 'Invasive Airway\n',
+          style: 'section_heading'
+            },
         {
           text: 'Airway Secured: ',
           style: 'label'
@@ -1038,11 +1164,17 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             ],
       style: "defaultStyle"
     }
+    else return "";
   }
 
   function spinal() {
+    if (report.spinal_assessed)
     return {
       text: [
+        {
+          text: 'Spinal Motion Restriction\n',
+          style: 'section_heading'
+            },
         {
           text: 'Manual C-Spine: ',
           style: 'label'
@@ -1076,9 +1208,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
             ],
       style: "defaultStyle"
     }
+    else return "";
   }
 
   function signatures1() {
+    if (report.signature_assessed)
     return {
       columns: [
         {
@@ -1099,9 +1233,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           }
       ]
     }
+    else return "";
   }
   
   function signatures2() {
+    if (report.signature_assessed)
     return {
       columns: [
          {
@@ -1122,9 +1258,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           }
       ]
     }
+    else return "";
   }
   
   function signatures3() {
+    if (report.signature_assessed)
     return {
       columns: [
         {
@@ -1145,9 +1283,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           }
       ]
     }
+    else return "";
   }
   
   function signatures4() {
+    if (report.signature_assessed)
     return {
       columns: [
                 {
@@ -1168,13 +1308,19 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           }
       ]
     }
+    else return "";
   }
 
   function callInfo() {
+    if (report.call_info_assessed)
     return {
       columns: [
         {
           text: [
+            {
+              text: 'Call Info\n',
+              style: 'section_heading'
+                },
             {
               text: 'Attendant 1: ',
               style: 'label'
@@ -1302,6 +1448,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       style: "defaultStyle",
       columnGap: 10
     }
+    else return "";
   }
 
   fillDocDefinition = function () {
@@ -1315,31 +1462,16 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('vitals', table($scope.vitalsRecords, 'vitals')),
         include('exam', heading('Neuro', 'neuro')),
         include('exam', table($scope.neuroRecords, 'neuro')),
-        include('exam', heading('ABC', 'abc')),
         include('exam', abc()),
-        include('exam', heading('Trauma Auto')),
         include('exam', traumaAuto()),
-        include('exam', heading('Trauma Penetrating')),
-        include('exam', traumaPenetrating()),
-        include('exam', heading('Trauma Blunt')),
-        include('exam', traumaBlunt()),
-        include('exam', heading('Trauma Fall')),
-        include('exam', traumaFall()),
-        include('exam', heading('Trauma Burn')),
-        include('exam', traumaBurn()),
-        include('exam', heading('Gastrointestinal')),
-        include('exam', gastrointestinal()),
-        include('exam', heading('Genitourinary')),
-        include('exam', genitourinary()),
-        include('exam', heading('Obstetric/Gynecology')),
+        traumaPart1(),
+        traumaPart2(),
+        giGu(),
         include('exam', gyn()),
-        include('exam', heading('Field Delivery')),
         include('exam', fieldDelivery()),
-        include('exam', heading('Muscular/Skeletal')),
         include('exam', muscular()),
         include('procedures', heading('Basic Airway')),
         include('procedures', table($scope.basicAirwayRecords, 'airway_basic')),
-        include('procedures', heading('Invasive Airway')),
         include('procedures', invasiveAirway()),
         include('procedures', heading('Ventilator')),
         include('procedures', table($scope.ventilatorRecords, 'airway_ventilator')),
@@ -1353,13 +1485,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('procedures', table($scope.splintingRecords, 'splinting')),
         include('procedures', heading('Medication')),
         include('procedures', table($scope.medicationRecords, 'medication')),
-        include('procedures', heading('Spinal Motion Restriction')),
         include('procedures', spinal()),
         include('procedures', heading('In/Out')),
         include('procedures', table($scope.inOutRecords, 'in_out')),
         include('procedures', heading('ECG')),
         include('procedures', table($scope.ecgRecords, 'ecg')),
-        include('call_info', heading('Call Info')),
         include('call_info', callInfo()),
         include('narrative', heading('Narrative')),
         include('narrative', table($scope.narrativeRecords, 'narrative')),
@@ -1433,8 +1563,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   function gotFileWriter(writer) {
     writer.onwrite = function (evt) {
       $scope.downloading = false;
-      alert("The report was saved on your device");
-      alert(JSON.parse(currentfileEntry));
+      alert("The report was saved on you device");
+      alert(JSON.stringify(currentfileEntry));
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
     }
     writer.write(BINARY_ARR);
