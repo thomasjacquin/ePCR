@@ -24,9 +24,12 @@
           <span class="input-label">Other</span>
           <input type="text" ng-model="medication.medication_other" placeholder="Medication other">
         </ion-item>
-        <ion-item class="item-input item-select">
+        <ion-item class="item-input">
           <span class="input-label">Dose</span>
           <input type="text" ng-model="medication.dose" placeholder="Dose">
+        </ion-item>
+        <ion-item class="item-input item-select">
+          <span class="input-label">Dose Unit</span>
           <select ng-model="medication.dose_unit">
               <option>mg</option>
               <option>mcg</option>

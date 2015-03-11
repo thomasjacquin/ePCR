@@ -15,12 +15,6 @@
         <i class="icon ion-checkmark-round balanced" ng-show="report.patient_info_assessed" style="font-size: 25px"></i>
       </a>
 
-      <a class="item item-icon-left item-icon-right" ui-sref="tab.vitals-list({reportId: reportId})">
-        <i class="icon icon-i-cardiology"></i>
-        Vitals
-        <span class="badge badge-balanced">{{vitalsNumber}}</span>
-      </a>
-
       <a class="item item-icon-left item-icon-right" ui-sref="tab.chief-complaint({reportId: reportId})">
         <i class="icon ion-sad-outline"></i>
         Chief Complaint
@@ -31,6 +25,12 @@
         <i class="icon flaticon-clinic2"></i>
         Patient History
         <i class="icon ion-checkmark-round balanced" ng-show="report.patient_hx_assessed" style="font-size: 25px"></i>
+      </a>
+      
+      <a class="item item-icon-left item-icon-right" ui-sref="tab.vitals-list({reportId: reportId})">
+        <i class="icon icon-i-cardiology"></i>
+        Vitals
+        <span class="badge badge-balanced">{{vitalsNumber}}</span>
       </a>
 
       <a class="item item-icon-left item-icon-right" ui-sref="tab.exam({reportId: reportId})">

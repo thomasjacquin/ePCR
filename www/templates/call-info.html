@@ -1,189 +1,191 @@
 <ion-nav-bar>
 </ion-nav-bar>
-  <ion-view view-title="Call Info">
+<ion-view view-title="Call Info">
   <ion-nav-buttons side="secondary">
-      <button class="button button-positive" ng-click="noTransport()">
-         No Transport
-      </button>
-      <button class="button button-clear" ng-click="save(true)">
-         <i class="icon ion-ios-checkmark-outline"></i> Save
-      </button>
-    </ion-nav-buttons>
+    <button class="button button-positive" ng-click="noTransport()">
+      No Transport
+    </button>
+    <button class="button button-clear" ng-click="save(true)">
+      <i class="icon ion-ios-checkmark-outline"></i> Save
+    </button>
+  </ion-nav-buttons>
   <ion-content class="padding">
     <ion-list>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Attendant 1</span>
-          <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant1">
-          </select>
-        </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_attendant1 == 'Other'">
-          <span class="input-label">Other</span>
-          <input type="text" ng-model="form.call_info_attendant1_other" placeholder="Other">
-        </ion-item>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Attendant 2</span>
-          <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant2">
-          </select>
-        </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_attendant2 == 'Other'">
-          <span class="input-label">Other</span>
-          <input type="text" ng-model="call.call_info_attendant2_other" placeholder="Other">
-        </ion-item>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Driver</span>
-          <select ng-model="call.call_info_driver">
-              <option>Other</option>
-              <option>Nurse</option>
-              <option>Medic</option>
-          </select>
-        </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_driver == 'Other'">
-          <span class="input-label">Other</span>
-          <input type="text" ng-model="call.call_info_driver_other" placeholder="Other">
-        </ion-item>
-        <ion-item class="item-input">
-           <span class="input-label">Unit #</span>
-            <input type="text" ng-model="call.call_info_unit_nb" placeholder="Unit #">
-            <span class="input-label">Run #</span>
-            <input type="text" ng-model="call.call_info_run_nb" placeholder="Run #">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Respond to</span>
-          <input type="text" ng-model="call.call_info_respond_to" placeholder="Respond to">
-        </ion-item>
-      </ion-list>
-      <br>
-      <ion-list>
-        <ion-item class="item-divider">
-          Milage
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Start</span>
-          <input type="text" ng-model="call.call_info_milage_start" placeholder="Start">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">End</span>
-          <input type="text" ng-model="call.call_info_milage_end" placeholder="End">
-        </ion-item>
-      <ion-list>
-      <br>
-      </ion-list>
-        <ion-item class="item-divider">
-          Code
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">En Route</span>
-          <input type="text" ng-model="call.call_info_code_en_route" placeholder="En Route">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Return</span>
-          <input type="text" ng-model="call.call_info_code_return" placeholder="Return">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Transported to</span>
-          <input type="text" ng-model="call.call_info_transported_to" placeholder="Transported to">
-        </ion-item>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Transport position</span>
-          <select ng-model="call.call_info_transported_position">
-              <option>Sitting</option>
-              <option>Semi-Sitting</option>
-              <option>Prone</option>
-              <option>Supine</option>
-              <option>Fowlers</option>
-              <option>Semi-Fowlers</option>
-              <option>Position of comfort</option>
-          </select>
-        </ion-item>
-      </ion-list>
-      <br>
-      <ion-list>
-        <ion-item class="item-divider">
-          Time
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Notified</span>
-          <input type="text" ng-model="call.call_info_time['notified']" placeholder="Notified">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">En Route</span>
-          <input type="text" ng-model="call.call_info_time['en_route']" placeholder="En Route">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">On Scene</span>
-          <input type="text" ng-model="call.call_info_time['on_scene']" placeholder="On Scene">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Depart Scene</span>
-          <input type="text" ng-model="call.call_info_time['depart_scene']" placeholder="Depart Scene">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Destination</span>
-          <input type="text" ng-model="call.call_info_time['destination']" placeholder="Destination">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Transfer</span>
-          <input type="text" ng-model="call.call_info_time['transfer']" placeholder="Transfer">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Back in service</span>
-          <input type="text" ng-model="call.call_info_time['back_service']" placeholder="Back in service">
-        </ion-item>
-        <ion-item class="item-input">
-          <span class="input-label">Patient contact</span>
-          <input type="text" ng-model="call.call_info_time['patient_contact']" placeholder="Patient contact">
-        </ion-item>
-      </ion-list>
-      <br>
-      <ion-list>
-        <ion-item class="item-divider">
-          PPE Used
-        </ion-item>
-        <ion-checkbox ng-repeat="equipment in ppeList" ng-model="equipment.checked" ng-checked="equipment.checked">
-          {{equipment.text}}
-       </ion-checkbox>
-      </ion-list>
-      <br>
-      <ion-list>
-        <ion-item class="item-divider">
-          Determinant
-        </ion-item>
-        <ion-item class="item-input">
-            <div class="col">
-              <input type="text" ng-model="call.call_info_determinant['1']" placeholder="#">
-            </div>
-            <div class="col">
-              <select ng-model="call.call_info_determinant['2']">
-                  <option>A</option>
-                  <option>B</option>
-                  <option>C</option>
-                  <option>D</option>
-                  <option>E</option>
-                  <option>Omega</option>
-              </select>
-            </div>
-            <div class="col">
-              <input type="text" ng-model="call.call_info_determinant['3']" placeholder="#">
-            </div>
-        </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Attendant 1</span>
+        <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant1">
+        </select>
+      </ion-item>
+      <ion-item class="item-input" ng-show="call.call_info_attendant1 == 'Other'">
+        <span class="input-label">Other</span>
+        <input type="text" ng-model="form.call_info_attendant1_other" placeholder="Other">
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Attendant 2</span>
+        <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_attendant2">
+        </select>
+      </ion-item>
+      <ion-item class="item-input" ng-show="call.call_info_attendant2 == 'Other'">
+        <span class="input-label">Other</span>
+        <input type="text" ng-model="call.call_info_attendant2_other" placeholder="Other">
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Driver</span>
+        <select ng-model="call.call_info_driver">
+          <option>Other</option>
+          <option>Nurse</option>
+          <option>Medic</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-input" ng-show="call.call_info_driver == 'Other'">
+        <span class="input-label">Other</span>
+        <input type="text" ng-model="call.call_info_driver_other" placeholder="Other">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Unit #</span>
+        <input type="text" ng-model="call.call_info_unit_nb" placeholder="Unit #">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Run #</span>
+        <input type="text" ng-model="call.call_info_run_nb" placeholder="Run #">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Respond to</span>
+        <input type="text" ng-model="call.call_info_respond_to" placeholder="Respond to">
+      </ion-item>
     </ion-list>
     <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        Milage
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Start</span>
+        <input type="text" ng-model="call.call_info_milage_start" placeholder="Start">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">End</span>
+        <input type="text" ng-model="call.call_info_milage_end" placeholder="End">
+      </ion-item>
       <ion-list>
-        <ion-item class="item-divider">
-          Assistance
-        </ion-item>
-        <ion-item class="item-input item-select">
-          <span class="input-label">Assistance given by</span>
-          <select ng-model="call.call_info_assistance">
-              <option>Police</option>
-              <option>Firefighter</option>
-              <option>Other</option>
-          </select>
-        </ion-item>
-        <ion-item class="item-input" ng-show="call.call_info_assistance == 'Other'">
-          <span class="input-label">Other</span>
-          <input type="text" ng-model="call.call_info_assistance_other" placeholder="Other">
-        </ion-item>
+        <br>
       </ion-list>
+      <ion-item class="item-divider">
+        Code
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">En Route</span>
+        <input type="text" ng-model="call.call_info_code_en_route" placeholder="En Route">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Return</span>
+        <input type="text" ng-model="call.call_info_code_return" placeholder="Return">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Transported to</span>
+        <input type="text" ng-model="call.call_info_transported_to" placeholder="Transported to">
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Transport position</span>
+        <select ng-model="call.call_info_transported_position">
+          <option>Sitting</option>
+          <option>Semi-Sitting</option>
+          <option>Prone</option>
+          <option>Supine</option>
+          <option>Fowlers</option>
+          <option>Semi-Fowlers</option>
+          <option>Position of comfort</option>
+        </select>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        Time
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Notified</span>
+        <input type="text" ng-model="call.call_info_time['notified']" placeholder="Notified">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">En Route</span>
+        <input type="text" ng-model="call.call_info_time['en_route']" placeholder="En Route">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">On Scene</span>
+        <input type="text" ng-model="call.call_info_time['on_scene']" placeholder="On Scene">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Depart Scene</span>
+        <input type="text" ng-model="call.call_info_time['depart_scene']" placeholder="Depart Scene">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Destination</span>
+        <input type="text" ng-model="call.call_info_time['destination']" placeholder="Destination">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Transfer</span>
+        <input type="text" ng-model="call.call_info_time['transfer']" placeholder="Transfer">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Back in service</span>
+        <input type="text" ng-model="call.call_info_time['back_service']" placeholder="Back in service">
+      </ion-item>
+      <ion-item class="item-input">
+        <span class="input-label">Patient contact</span>
+        <input type="text" ng-model="call.call_info_time['patient_contact']" placeholder="Patient contact">
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        PPE Used
+      </ion-item>
+      <ion-checkbox ng-repeat="equipment in ppeList" ng-model="equipment.checked" ng-checked="equipment.checked">
+        {{equipment.text}}
+      </ion-checkbox>
+    </ion-list>
+    <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        Determinant
+      </ion-item>
+      <ion-item class="item-input">
+        <div class="col">
+          <input type="text" ng-model="call.call_info_determinant['1']" placeholder="#">
+        </div>
+        <div class="col">
+          <select ng-model="call.call_info_determinant['2']">
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+            <option>D</option>
+            <option>E</option>
+            <option>Omega</option>
+          </select>
+        </div>
+        <div class="col">
+          <input type="text" ng-model="call.call_info_determinant['3']" placeholder="#">
+        </div>
+      </ion-item>
+    </ion-list>
+    <br>
+    <ion-list>
+      <ion-item class="item-divider">
+        Assistance
+      </ion-item>
+      <ion-item class="item-input item-select">
+        <span class="input-label">Assistance given by</span>
+        <select ng-model="call.call_info_assistance">
+          <option>Police</option>
+          <option>Firefighter</option>
+          <option>Other</option>
+        </select>
+      </ion-item>
+      <ion-item class="item-input" ng-show="call.call_info_assistance == 'Other'">
+        <span class="input-label">Other</span>
+        <input type="text" ng-model="call.call_info_assistance_other" placeholder="Other">
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

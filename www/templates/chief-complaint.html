@@ -9,7 +9,7 @@
   <ion-content class="padding">
     <div class="list">
         <label class="item item-input item-select">
-          <span class="input-label">Primary Chief Complaint</span>
+          <span class="input-label">Primary</span>
           <select ng-options="item for item in primaryComplaint" ng-model="binding.primary_complaint">
             </select>
         </label>
@@ -18,13 +18,13 @@
           <input type="text" ng-model="binding.primary_complaint_other">
         </label>
          <label class="item item-input">
-          <span class="input-label">Secondary Chief Complaint</span>
+          <span class="input-label">Secondary</span>
           <input type="text" ng-model="binding.secondary_complaint">
         </label>
       </div>
       <ul class="list">
         <li class="item item-divider">
-          Pertinent +/-
+          Symptoms
         </li>
         <ion-checkbox ng-repeat="pertinent in pertinentList" ng-model="pertinent.checked" ng-checked="pertinent.checked">
           {{pertinent.text}}

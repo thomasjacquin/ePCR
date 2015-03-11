@@ -75,25 +75,34 @@
              </div>
           </label>
         </ion-item>
-        <label class="item item-input item-select">
+        <label class="item item-input">
           <span class="input-label">BGL</span>
           <input type="number" ng-model="vitals.bgl" placeholder="BGL">
+        </label>
+        <label class="item item-input item-select text-select">
+          <span class="input-label">BGL Unit</span>
           <select ng-model="vitals.bgl_unit">
               <option>mmol/L</option>
               <option>mg/dL</option>
           </select>
         </label>
-        <label class="item item-input item-select">
+        <label class="item item-input">
           <span class="input-label">ETCO2</span>
           <input type="number" ng-model="vitals.etco2" placeholder="ETCO2">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">ETCO2 Unit</span>
           <select ng-model="vitals.etco2_unit">
               <option>%</option>
               <option>mmHg</option>
           </select>
         </label>
-        <label class="item item-input item-select">
+        <label class="item item-input">
           <span class="input-label">Temperature</span>
           <input type="number" ng-model="vitals.temp" placeholder="Temperature">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Temperature Unit</span>
           <select ng-model="vitals.temp_unit">
               <option>C</option>
               <option>F</option>

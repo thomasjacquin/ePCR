@@ -1,4 +1,4 @@
-angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.services', 'customDirectives', 'customFactories', 'angular-websql', 'database', 'ePCR.config', 'ngRoute', 'angles'])
+angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.constants', 'ePCR.services', 'ePCR.directives', 'ePCR.factories', 'ePCR.database', 'angular-websql', 'ngRoute', 'angles'])
 
 .run(function ($ionicPlatform, database) {
   $ionicPlatform.ready(function () {
@@ -974,8 +974,26 @@ angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.services', 'customDir
         templateUrl: 'templates/export-options.html',
         controller: 'ExportCtrl',
         resolve: {
+          settings: function (Records) {
+            return Records.get('settings', 1);
+          }
+        }
+      }
+    }
+  })
+  
+  .state('tab.export-pdf', {
+    url: '/report/:reportId/export-pdf',
+    views: {
+      'tab-reports': {
+        templateUrl: 'templates/export-pdf.html',
+        controller: 'ExportPdfCtrl',
+        resolve: {
           report: function ($stateParams, Reports) {
             return Reports.get($stateParams.reportId)
+          },
+          settings: function (Records) {
+            return Records.get('settings', 1);
           }
         }
       }

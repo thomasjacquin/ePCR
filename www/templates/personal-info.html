@@ -30,9 +30,12 @@
               <option>Female</option>
           </select>
         </label>
-        <label class="item item-input item-select">
+        <label class="item item-input">
           <span class="input-label">Weight</span>
-          <input type="number" ng-model="personal.weight" style="width:50px">
+          <input type="number" ng-model="personal.weight">
+        </label>
+        <label class="item item-input item-select">
+          <span class="input-label">Weight Unit</span>
           <select ng-model="personal.weight_unit">
               <option selected>kg</option>
               <option>lb</option>
