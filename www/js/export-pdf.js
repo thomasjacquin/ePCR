@@ -1365,11 +1365,11 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('narrative', table($scope.narrativeRecords, 'narrative')),
         include('code', heading('CPR')),
         include('code', table($scope.cprRecords, 'code')),
-//        include('signatures', heading('Signatures')),
-//        include('signatures', signatures1()),
-//        include('signatures', signatures2()),
-//        include('signatures', signatures3()),
-//        include('signatures', signatures4())
+        include('signatures', heading('Signatures')),
+        include('signatures', signatures1()),
+        include('signatures', signatures2()),
+        include('signatures', signatures3()),
+        include('signatures', signatures4())
       ];
 
     $scope.docDefinition = {
