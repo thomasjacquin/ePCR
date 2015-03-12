@@ -1289,4 +1289,27 @@ in_out: {
     motorcycle3: {
       name: "Side Passenger"
     }
+})
+
+.constant('gastroMap', {
+    right_hypochondriac: "Right hypochondriac",
+    epigastric: "Epigastric",
+    left_hypochondriac: "Left hypochondriac",
+    right_lumbar: "Right lumbar",
+    umbilical: "Umbilical",
+    left_lumbar: "Left Lumbar",
+    right_iliac: "Right iliac",
+    hypogastric: "Hypogastric",
+    left_iliac: "Left iliac"
+})
+
+.constant('timesString', {
+    notified: "Notified",
+    en_route: "En Route",
+    on_scene: "On Scene",
+    depart_scene: "Depart Scene",
+    destination: "Destination",
+    transfer: "Transfer",
+    back_service: "Back in Service",
+    patient_contact: "Patient Contact",
 });

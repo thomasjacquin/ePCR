@@ -31,10 +31,7 @@
       </ion-item>
       <ion-item class="item-input item-select">
         <span class="input-label">Driver</span>
-        <select ng-model="call.call_info_driver">
-          <option>Other</option>
-          <option>Nurse</option>
-          <option>Medic</option>
+        <select ng-options="attendant for attendant in attendantsList" ng-model="call.call_info_driver">
         </select>
       </ion-item>
       <ion-item class="item-input" ng-show="call.call_info_driver == 'Other'">
@@ -105,35 +102,34 @@
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Notified</span>
-        <input type="text" ng-model="call.call_info_time['notified']" placeholder="Notified">
+        <my-date-time-picker placeholder="Time Notified" title="Time Notified" ng-model="call.call_info_time['notified']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">En Route</span>
-        <input type="text" ng-model="call.call_info_time['en_route']" placeholder="En Route">
+        <my-date-time-picker placeholder="En Route" title="En Route" ng-model="call.call_info_time['en_route']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">On Scene</span>
-        <input type="text" ng-model="call.call_info_time['on_scene']" placeholder="On Scene">
+        <my-date-time-picker placeholder="On Scene" title="On Scene" ng-model="call.call_info_time['on_scene']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Depart Scene</span>
-        <input type="text" ng-model="call.call_info_time['depart_scene']" placeholder="Depart Scene">
+        <my-date-time-picker placeholder="Depart Scene" title="Depart Scene" ng-model="call.call_info_time['depart_scene']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Destination</span>
-        <input type="text" ng-model="call.call_info_time['destination']" placeholder="Destination">
+        <my-date-time-picker placeholder="Destination" title="Destination" ng-model="call.call_info_time['destination']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Transfer</span>
-        <input type="text" ng-model="call.call_info_time['transfer']" placeholder="Transfer">
+        <my-date-time-picker placeholder="Transfer" title="Transfer" ng-model="call.call_info_time['transfer']" class="text-input" />
       </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Back in service</span>
-        <input type="text" ng-model="call.call_info_time['back_service']" placeholder="Back in service">
-      </ion-item>
+        <my-date-time-picker placeholder="Back in Service" title="Back in Service" ng-model="call.call_info_time['back_service']" class="text-input" /> </ion-item>
       <ion-item class="item-input">
         <span class="input-label">Patient contact</span>
-        <input type="text" ng-model="call.call_info_time['patient_contact']" placeholder="Patient contact">
+        <my-date-time-picker placeholder="Patient Contact" title="Patient Contact" ng-model="call.call_info_time['patient_contact']" class="text-input" />
       </ion-item>
     </ion-list>
     <br>

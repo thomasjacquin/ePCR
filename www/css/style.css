@@ -145,3 +145,11 @@ input[type='tel']
 {
   background: #FAFAFA;
 }
+
+.popup-container .popup {
+  width: auto;
+}
+
+.text-input {
+  width: 100%;
+}

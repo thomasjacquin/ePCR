@@ -84,14 +84,14 @@ function muscularToString(str){
   return stringArray.join('; ');
 }
 
-function TimesToString(str){
+function TimesToString(str, timesString){
   str = str == "" ? null : str;
   var obj = JSON.parse(str);
   var stringArray = [];
   angular.forEach(obj, function(val, ind){
-    stringArray.push(ind + ': ' + val);
+    stringArray.push(timesString[ind] + ': ' + val);
   });
-  return stringArray.join(', ');
+  return stringArray.join('\n');
 }
 
 function apgarToString(str){
@@ -125,6 +125,15 @@ function burnsToString(str, body_parts_names, burnDegrees){
     stringArray.push(body_parts_names[ind] + ': ' + burnDegrees[val]);
   });
   return stringArray.join(', ');
+}
+
+function gastroPainToString(str, gastroMap){
+  var gastro = str.split(',');
+  var out = [];
+  for (part in gastro){
+    out.push(gastroMap[gastro[part]]);
+  }
+  return out.join(', ');
 }
 
 function safeImage(base64Img){

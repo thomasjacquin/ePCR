@@ -92,7 +92,7 @@
       </ion-item>
       <ion-item class="item-input" ng-show="!gyn.gyn_membrane_intact">
         <span class="input-label">Rupture time</span>
-        <input type="time" ng-model="gyn.gyn_time_ruptured">
+        <my-date-time-picker placeholder="Rupture Time" title="Rupture Time" ng-model="gyn.gyn_time_ruptured" class="text-input" />
       </ion-item>
       <ion-item class="item-input" ng-show="!gyn.gyn_membrane_intact">
         <span class="input-label">Fluid</span>
@@ -113,7 +113,7 @@
       </ion-item>
       <ion-item class="item-input" ng-show="gyn.gyn_fetal_mvmt">
         <span class="input-label">Last movement</span>
-        <input type="time" ng-model="gyn.gyn_last_mvmt">
+        <my-date-time-picker placeholder="Last Movement" title="Last Movement" ng-model="gyn.gyn_last_mvmt" class="text-input" />
       </ion-item>
       <ion-item class="item-input" ng-show="gyn.gyn_fetal_mvmt">
         <span class="input-label">Movements per hour</span>

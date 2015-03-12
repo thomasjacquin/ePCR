@@ -1,4 +1,4 @@
-function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, seatsMap, body_parts_names, burnDegrees, exportTableDefinition) {
+function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings, seatsMap, body_parts_names, burnDegrees, gastroMap, timesString, exportTableDefinition) {
 
   var BINARY_ARR = null;
   var currentfileEntry = null;
@@ -190,90 +190,91 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   function patientInfo() {
-    if (report.patient_info_assessed)
-    return {
-      columns: [
-        {
-          text: [
-            {
-              text: 'Patient Info\n',
-              style: 'section_heading'
+    if (report.patient_info_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Patient Info\n',
+                style: 'section_heading'
                 },
-            {
-              text: 'Name: ',
-              style: 'label'
+              {
+                text: 'Name: ',
+                style: 'label'
           },
                 safe(report.first_name) + ' ' + safe(report.last_name) + '\n',
-            {
-              text: 'Gender: ',
-              style: 'label'
+              {
+                text: 'Gender: ',
+                style: 'label'
           },
                 safe(report.gender) + "\n",
-            {
-              text: 'Weight: ',
-              style: 'label'
+              {
+                text: 'Weight: ',
+                style: 'label'
           },
                 safe(report.weight) + safe(report.weight_unit) + '\n',
-            {
-              text: 'D.o.B: ',
-              style: 'label'
+              {
+                text: 'D.o.B: ',
+                style: 'label'
           },
                 moment(report.date_of_birth).format('MMM D, YYYY') + " (" + (moment().year() - moment(report.date_of_birth).year()) + " y. old)\n",
-            {
-              text: 'Next of Kin: ',
-              style: 'label'
+              {
+                text: 'Next of Kin: ',
+                style: 'label'
           },
                 safe(report.next_of_kin) + '\n',
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             },
-        {
-          text: [
-            {
-              text: '\nSIN: ',
-              style: 'label'
+          {
+            text: [
+              {
+                text: '\nSIN: ',
+                style: 'label'
           },
                 safe(report.insurance) + '\n',
-            {
-              text: 'MRN: ',
-              style: 'label'
+              {
+                text: 'MRN: ',
+                style: 'label'
           },
                 safe(report.mrn) + '\n',
-            {
-              text: 'Address: ',
-              style: 'label'
+              {
+                text: 'Address: ',
+                style: 'label'
           },
                 safe(report.address_street) + '\n' + safe(report.address_city) + ' ' + safe(report.address_province) + '\n',
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             },
-        {
-          text: [
-            {
-              text: '\nHome Phone #: ',
-              style: 'label'
+          {
+            text: [
+              {
+                text: '\nHome Phone #: ',
+                style: 'label'
           },
                 safe(report.phone_home) + '\n',
-            {
-              text: 'Cell Phone #: ',
-              style: 'label'
+              {
+                text: 'Cell Phone #: ',
+                style: 'label'
           },
                 safe(report.phone_cell) + '\n',
-            {
-              text: 'Work Phone #: ',
-              style: 'label'
+              {
+                text: 'Work Phone #: ',
+                style: 'label'
           },
                 safe(report.phone_work) + '\n',
-            {
-              text: 'Next of Kin Phone #: ',
-              style: 'label'
+              {
+                text: 'Next of Kin Phone #: ',
+                style: 'label'
           },
                 safe(report.next_of_kin_phone) + '\n',
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             }
           ],
-      columnGap: 10
+        columnGap: 10
+      } 
     }
     else return "";
   }
@@ -357,185 +358,186 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
     if ($scope.mySettings.export.chief_complaint && report.chief_complaint_assessed == 'true')
       array.push(include('chief_complaint', chiefComplaint()));
 
-    if (array.length != 0)
+    if (array.length != 0){
       return {
         columns: array,
         style: 'margin'
       }
-      else
-        return "";
+    } else
+      return "";
   }
 
   function abc() {
-    if (report.abc_assessed){
-    return {
-      columns: [
-        {
-          text: [
-            {
-              text: 'ABC\n',
-              style: 'section_heading'
+    if (report.abc_assessed) {
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'ABC\n',
+                style: 'section_heading'
                 },
-            {
-              text: 'Open & Patent: ',
-              style: 'label'
+              {
+                text: 'Open & Patent: ',
+                style: 'label'
                 },
                 safe(report.open_patent) + '\n',
-            {
-              text: 'Tracheal Dev.: ',
-              style: 'label'
+              {
+                text: 'Tracheal Dev.: ',
+                style: 'label'
                 },
                 safe(report.tracheal_deviation, report.tracheal_deviation_side) + "\n",
-            {
-              text: 'Interventions: ',
-              style: 'label'
+              {
+                text: 'Interventions: ',
+                style: 'label'
                 },
                 safe(report.interventions) + "\n",
-            {
-              text: 'Breathing Type: ',
-              style: 'label'
+              {
+                text: 'Breathing Type: ',
+                style: 'label'
                 },
                 safe(report.breathing_type) + "\n",
-            {
-              text: 'Laboured: ',
-              style: 'label'
+              {
+                text: 'Laboured: ',
+                style: 'label'
                 },
                 safe(report.breathing_laboured) + "\n",
-            {
-              text: 'Effective: ',
-              style: 'label'
+              {
+                text: 'Effective: ',
+                style: 'label'
                 },
                 safe(report.breathing_effective) + "\n",
-            {
-              text: 'Accessory Muscle: ',
-              style: 'label'
+              {
+                text: 'Accessory Muscle: ',
+                style: 'label'
                 },
                 safe(report.accessory_muscle) + "\n",
-            {
-              text: 'Nasal Flare: ',
-              style: 'label'
+              {
+                text: 'Nasal Flare: ',
+                style: 'label'
                 },
                 safe(report.nasal_flare) + "\n",
-            {
-              text: 'Cough: ',
-              style: 'label'
+              {
+                text: 'Cough: ',
+                style: 'label'
                 },
                 safe(report.cough) + "\n",
-            {
-              text: 'Cough Productive: ',
-              style: 'label'
+              {
+                text: 'Cough Productive: ',
+                style: 'label'
                 },
                 safe(report.cough_productive) + "\n",
-            {
-              text: 'Subcut.Emphysema: ',
-              style: 'label'
+              {
+                text: 'Subcut.Emphysema: ',
+                style: 'label'
                 },
                 safe(report.subcutaneous_emphysema) + "\n",
-            {
-              text: 'Flailed Chest: ',
-              style: 'label'
+              {
+                text: 'Flailed Chest: ',
+                style: 'label'
                 },
                 safe(report.flailed_chest, report.flailed_chest_side) + "\n",
-            {
-              text: 'Suspect Pneumothorax: ',
-              style: 'label'
+              {
+                text: 'Suspect Pneumothorax: ',
+                style: 'label'
                 },
                 safe(report.suspect_pneumothorax) + "\n",
-            {
-              text: 'Suspect Hemothorax: ',
-              style: 'label'
+              {
+                text: 'Suspect Hemothorax: ',
+                style: 'label'
                 },
                 safe(report.suspect_hemothorax) + "\n",
-            {
-              text: 'CTAx4: ',
-              style: 'label'
+              {
+                text: 'CTAx4: ',
+                style: 'label'
                 },
                 safe(report.suspect_hemothorax) + "\n",
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             },
-        {
-          text: [
-            {
-              text: 'Upper Left Sound: ',
-              style: 'label'
+          {
+            text: [
+              {
+                text: 'Upper Left Sound: ',
+                style: 'label'
                 },
                 safe(report.lung_ul_sound) + "\n",
-            {
-              text: 'Upper Right Sound: ',
-              style: 'label'
+              {
+                text: 'Upper Right Sound: ',
+                style: 'label'
                 },
                 safe(report.lung_ur_sound) + "\n",
-            {
-              text: 'Lower Left Sound: ',
-              style: 'label'
+              {
+                text: 'Lower Left Sound: ',
+                style: 'label'
                 },
                 safe(report.lung_ll_sound) + "\n",
-            {
-              text: 'Lower Right Sound: ',
-              style: 'label'
+              {
+                text: 'Lower Right Sound: ',
+                style: 'label'
                 },
                 safe(report.lung_lr_sound) + "\n",
-            {
-              text: 'Pulse Location: ',
-              style: 'label'
+              {
+                text: 'Pulse Location: ',
+                style: 'label'
                 },
                 safe(report.pulse_location) + '\n',
-            {
-              text: 'Pulse Quality: ',
-              style: 'label'
+              {
+                text: 'Pulse Quality: ',
+                style: 'label'
                 },
                 safe(report.pulse_quality) + "\n",
-            {
-              text: 'Pulse is Regular: ',
-              style: 'label'
+              {
+                text: 'Pulse is Regular: ',
+                style: 'label'
                 },
                 safe(report.pulse_regular) + "\n",
-            {
-              text: 'JVD: ',
-              style: 'label'
+              {
+                text: 'JVD: ',
+                style: 'label'
                 },
                 safe(report.jvd) + "\n",
-            {
-              text: 'Capillary Refill: ',
-              style: 'label'
+              {
+                text: 'Capillary Refill: ',
+                style: 'label'
                 },
                 safe(report.cap_refill) + "\n",
-            {
-              text: 'Skin Color: ',
-              style: 'label'
+              {
+                text: 'Skin Color: ',
+                style: 'label'
                 },
                 safe(report.skin_color) + "\n",
-            {
-              text: 'Skin Temperature: ',
-              style: 'label'
+              {
+                text: 'Skin Temperature: ',
+                style: 'label'
                 },
                 safe(report.skin_temperature) + "\n",
-            {
-              text: 'Skin Condition: ',
-              style: 'label'
+              {
+                text: 'Skin Condition: ',
+                style: 'label'
                 },
                 safe(report.skin_condition) + "\n",
-            {
-              text: 'Heart Tones: ',
-              style: 'label'
+              {
+                text: 'Heart Tones: ',
+                style: 'label'
                 },
                 safe(report.heart_tones) + "\n",
-            {
-              text: 'Heart Tones Quality: ',
-              style: 'label'
+              {
+                text: 'Heart Tones Quality: ',
+                style: 'label'
                 },
                 safe(report.heart_tones_quality) + "\n",
-            {
-              text: 'Peripheral Edema: ',
-              style: 'label'
+              {
+                text: 'Peripheral Edema: ',
+                style: 'label'
                 },
                 safe(report.peripheral_edema) + ' ' + safe(report.peripheral_edema_location) + ' ' + safe(report.peripheral_edema_severity) + "\n",
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             }
           ]
-    }} else return "";
+      }
+    } else return "";
   }
 
   function vehicleSpecific() {
@@ -578,44 +580,44 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   }
 
   function traumaAuto() {
-    if (report.trauma_auto_assessed)
-    return {
-      columns: [
+    if (report.trauma_auto_assessed){
+      return {
+        columns: [
           {
-          text: 'Trauma Auto\n',
-          style: 'section_heading'
+            text: 'Trauma Auto\n',
+            style: 'section_heading'
                 },
           {
-          text: vehicleSpecific(),
-          style: "defaultStyle"
+            text: vehicleSpecific(),
+            style: "defaultStyle"
           }, {
-          text: [
-            {
-              text: 'Nb of Occupants: ',
-              style: 'label'
+            text: [
+              {
+                text: 'Nb of Occupants: ',
+                style: 'label'
                 },
                 safe(report.trauma_auto_nb_occupants) + "\n",
-            {
-              text: 'Speed: ',
-              style: 'label'
+              {
+                text: 'Speed: ',
+                style: 'label'
                 },
                 safe(report.trauma_auto_vehicle_speed) + ' ' + safe(report.trauma_auto_speed_unit) + "\n",
-            {
-              text: 'Pt removed by: ',
-              style: 'label'
+              {
+                text: 'Pt removed by: ',
+                style: 'label'
                 },
                 safe(report.trauma_auto_removed_by) + "\n",
-            {
-              text: 'Details given by: ',
-              style: 'label'
+              {
+                text: 'Details given by: ',
+                style: 'label'
                 },
                 safe(report.trauma_auto_details_per) + "\n",
               ],
-          style: "defaultStyle"
+            style: "defaultStyle"
             }
           ]
-    }
-    else return "";
+      } 
+    } else return "";
   }
 
   function traumaPenetrating() {
@@ -760,8 +762,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       style: "defaultStyle"
     }
   }
-  
-  function trauma(){
+
+  function trauma() {
     var array = [];
     if (report.trauma_penetrating_assessed == 'true')
       array.push(include('exam', traumaPenetrating()));
@@ -771,42 +773,42 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       array.push(include('exam', traumaFall()));
     if (report.trauma_burn_assessed == 'true')
       array.push(include('exam', traumaBurn()));
-    
+
     return array;
   }
-  
-  function traumaPart1(){
+
+  function traumaPart1() {
     var line = [];
     var t = trauma();
     if (t.length > 0)
       line.push(t[0]);
     if (t.length > 1)
       line.push(t[1]);
-    
-    if (line.length != 0)
+
+    if (line.length != 0){
       return {
         columns: line,
         style: 'margin'
-      }
-      else
-        return "";
+      } 
+    } else
+      return "";
   }
-  
-  function traumaPart2(){
+
+  function traumaPart2() {
     var line = [];
     var t = trauma();
     if (t.length > 2)
       line.push(t[2]);
     if (t.length > 3)
       line.push(t[3]);
-    
-    if (line.length != 0)
+
+    if (line.length != 0){
       return {
         columns: line,
         style: 'margin'
       }
-      else
-        return "";
+    } else
+      return "";
   }
 
   function gastrointestinal() {
@@ -845,7 +847,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           text: 'Location of pain: ',
           style: 'label'
             },
-              safe(report.gi_pain_location) + '\n',
+              safe(gastroPainToString(report.gi_pain_location, gastroMap)) + '\n',
         {
           text: 'Last BM: ',
           style: 'label'
@@ -907,562 +909,584 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
       style: "defaultStyle"
     }
   }
-  
-  function giGu(){
+
+  function giGu() {
     var array = [];
     if (report.gi_assessed == 'true')
       array.push(include('exam', gastrointestinal()));
     if (report.gu_assessed == 'true')
       array.push(include('exam', genitourinary()));
 
-   if (array.length != 0)
+    if (array.length != 0){
       return {
         columns: array,
         style: 'margin'
       }
-      else
-        return "";
+    } else
+      return "";
   }
 
   function gyn() {
-    if (report.gyn_assessed)
-    return {
-      columns: [
-        {
-          text: [
-            {
-              text: 'Obstetric/Gynecology\n',
-              style: 'section_heading'
+    if (report.gyn_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Obstetric/Gynecology\n',
+                style: 'section_heading'
                 },
-            {
-              text: 'Gravid: ',
-              style: 'label'
+              {
+                text: 'Gravid: ',
+                style: 'label'
                 },
                 safe(report.gyn_gravid) + '\n',
-            {
-              text: 'Term: ',
-              style: 'label'
+              {
+                text: 'Term: ',
+                style: 'label'
                 },
                 safe(report.gyn_term) + '\n',
-            {
-              text: 'Para: ',
-              style: 'label'
+              {
+                text: 'Para: ',
+                style: 'label'
                 },
                 safe(report.gyn_para) + '\n',
-            {
-              text: 'Abortia: ',
-              style: 'label'
+              {
+                text: 'Abortia: ',
+                style: 'label'
                 },
                 safe(report.gyn_abortia) + '\n',
-            {
-              text: 'Live: ',
-              style: 'label'
+              {
+                text: 'Live: ',
+                style: 'label'
                 },
                 safe(report.gyn_live) + '\n',
-            {
-              text: 'Last Menstruation: ',
-              style: 'label'
+              {
+                text: 'Last Menstruation: ',
+                style: 'label'
                 },
                 safe(report.gyn_last_menstruation) + '\n',
-            {
-              text: 'Vaginal Discharge: ',
-              style: 'label'
+              {
+                text: 'Vaginal Discharge: ',
+                style: 'label'
                 },
                 safe(report.gyn_discharge) + ' ' + safe(report.gyn_substance) + '\n',
-            {
-              text: 'Pregnant: ',
-              style: 'label'
+              {
+                text: 'Pregnant: ',
+                style: 'label'
                 },
                 safe(report.gyn_pregnant) + '\n',
-            {
-              text: 'EDC: ',
-              style: 'label'
+              {
+                text: 'EDC: ',
+                style: 'label'
                 },
                 safe(report.gyn_pregnant) + '\n',
-            {
-              text: 'Gestation is known: ',
-              style: 'label'
+              {
+                text: 'Gestation is known: ',
+                style: 'label'
                 },
                 safe(report.gyn_gestation_known) + ' ' + report.gyn_gestation_known == 'true' ? safe(report.gyn_gest_weeks) + ' weeks' : '' + '\n',
               ]
             },
-        {
-          text: [
-            {
-              text: 'Membranes Intact: ',
-              style: 'label'
+          {
+            text: [
+              {
+                text: 'Membranes Intact: ',
+                style: 'label'
                 },
                 safe(report.gyn_membrane_intact) + ' ' + safe(report.gyn_fluid) + '\n',
-            {
-              text: 'Babies expected: ',
-              style: 'label'
+              {
+                text: 'Babies expected: ',
+                style: 'label'
                 },
                 safe(report.gyn_expected_babies) + '\n',
-            {
-              text: 'Fetal Movement: ',
-              style: 'label'
+              {
+                text: 'Fetal Movement: ',
+                style: 'label'
                 },
                 safe(report.gyn_fetal_mvmt) + '\n',
-            {
-              text: 'Last Movement: ',
-              style: 'label'
+              {
+                text: 'Last Movement: ',
+                style: 'label'
                 },
                 safe(report.gyn_last_mvmt) + '\n',
-            {
-              text: 'Movements per hour: ',
-              style: 'label'
+              {
+                text: 'Movements per hour: ',
+                style: 'label'
                 },
                 safe(report.gyn_mvmt_per_hr) + '\n',
-            {
-              text: 'Contractions: ',
-              style: 'label'
+              {
+                text: 'Contractions: ',
+                style: 'label'
                 },
                 safe(report.gyn_contraction_duration) + '\n',
-            {
-              text: 'Contraction Duration: ',
-              style: 'label'
+              {
+                text: 'Contraction Duration: ',
+                style: 'label'
                 },
                 safe(report.gyn_contraction_duration) + ' seconds\n',
-            {
-              text: 'Contraction Separation: ',
-              style: 'label'
+              {
+                text: 'Contraction Separation: ',
+                style: 'label'
                 },
                 safe(report.gyn_contraction_separation) + ' seconds\n',
-            {
-              text: 'Peripheral Edema: ',
-              style: 'label'
+              {
+                text: 'Peripheral Edema: ',
+                style: 'label'
                 },
                 safe(report.peripheral_edema) + ' ' + safe(report.peripheral_edema_location) + ' ' + safe(report.peripheral_edema_severity) + "\n",
               ],
             }
           ],
-      style: "defaultStyle"
+        style: "defaultStyle"
+      }
     }
     else return "";
   }
 
   function fieldDelivery() {
-    if (report.field_delivery_assessed)
-    return {
-      text: [
-        {
-          text: 'Field Delivery\n',
-          style: 'section_heading'
+    if (report.field_delivery_assessed) {
+      return {
+        text: [
+          {
+            text: 'Field Delivery\n',
+            style: 'section_heading'
             },
-        {
-          text: 'Presentation: ',
-          style: 'label'
+          {
+            text: 'Presentation: ',
+            style: 'label'
             },
               safe(report.field_delivery_presentation) + '\n',
-        {
-          text: 'Delivery Time: ',
-          style: 'label'
+          {
+            text: 'Delivery Time: ',
+            style: 'label'
             },
               safe(report.field_delivery_time) + '\n',
-        {
-          text: 'Meconium: ',
-          style: 'label'
+          {
+            text: 'Meconium: ',
+            style: 'label'
             },
               safe(report.field_delivery_meconium) + '\n',
-        {
-          text: 'Cord cut at: ',
-          style: 'label'
+          {
+            text: 'Cord cut at: ',
+            style: 'label'
             },
               safe(report.field_delivery_cord_cut_length) + '\n',
-        {
-          text: 'APGAR 1 min: ',
-          style: 'label'
+          {
+            text: 'APGAR 1 min: ',
+            style: 'label'
             },
               apgarToString(safe(report.field_delivery_apgar1)) + '\n',
-        {
-          text: 'APGAR 5 min: ',
-          style: 'label'
+          {
+            text: 'APGAR 5 min: ',
+            style: 'label'
             },
               apgarToString(safe(report.field_delivery_apgar5)) + '\n',
-        {
-          text: 'Stimulation Required: ',
-          style: 'label'
+          {
+            text: 'Stimulation Required: ',
+            style: 'label'
             },
               safe(report.field_delivery_stimulation) + ' ' + safe(report.field_delivery_stimulation_type) + '\n',
-        {
-          text: 'Placenta Delivery: ',
-          style: 'label'
+          {
+            text: 'Placenta Delivery: ',
+            style: 'label'
             },
               safe(report.field_delivery_placenta) + safe(report.field_delivery_placenta_time) + '\n',
-        {
-          text: 'Placenta Intact: ',
-          style: 'label'
+          {
+            text: 'Placenta Intact: ',
+            style: 'label'
             },
               safe(report.field_delivery_placenta_intact) + '\n',
             ],
-      style: "defaultStyle"
-    }
-    else return "";
+        style: "defaultStyle"
+      }
+    } else return "";
   }
 
   function muscular() {
-    if (report.muscular_assessed)
-    return {
-      text: [
-        {
-          text: 'Muscular/Skeletal\n',
-          style: 'section_heading'
+    if (report.muscular_assessed){
+      return {
+        text: [
+          {
+            text: 'Muscular/Skeletal\n',
+            style: 'section_heading'
             },
-        {
-          text: 'Symptoms: ',
-          style: 'label'
+          {
+            text: 'Symptoms: ',
+            style: 'label'
             },
               muscularToString(safe(report.muscular_complaint)) + '\n',
             ],
-      style: "defaultStyle"
+        style: "defaultStyle"
+      }
     }
-    else return "";
+      else return "";
   }
 
   function invasiveAirway() {
-    if (report.invasive_airway_assessed)
-    return {
-      text: [
-        {
-          text: 'Invasive Airway\n',
-          style: 'section_heading'
+    if (report.invasive_airway_assessed){
+      return {
+        text: [
+          {
+            text: 'Invasive Airway\n',
+            style: 'section_heading'
             },
-        {
-          text: 'Airway Secured: ',
-          style: 'label'
+          {
+            text: 'Airway Secured: ',
+            style: 'label'
             },
               safe(report.invasive_airway_secured) + '\n',
-        {
-          text: 'Device: ',
-          style: 'label'
+          {
+            text: 'Device: ',
+            style: 'label'
             },
               safe(report.invasive_airway_device) + '\n',
-        {
-          text: 'Size: ',
-          style: 'label'
+          {
+            text: 'Size: ',
+            style: 'label'
             },
               safe(report.invasive_airway_size) + '\n',
-        {
-          text: 'Cuffed: ',
-          style: 'label'
+          {
+            text: 'Cuffed: ',
+            style: 'label'
             },
               safe(report.invasive_airway_cuffed) + '\n',
-        {
-          text: 'Technique: ',
-          style: 'label'
+          {
+            text: 'Technique: ',
+            style: 'label'
             },
               safe(report.invasive_airway_technique) + '\n',
-        {
-          text: 'Distance: ',
-          style: 'label'
+          {
+            text: 'Distance: ',
+            style: 'label'
             },
               safe(report.invasive_airway_distance) + '\n',
-        {
-          text: 'Attempts: ',
-          style: 'label'
+          {
+            text: 'Attempts: ',
+            style: 'label'
             },
               safe(report.invasive_airway_attempts) + '\n',
             ],
-      style: "defaultStyle"
-    }
-    else return "";
+        style: "defaultStyle"
+      } 
+    } else return "";
   }
 
   function spinal() {
-    if (report.spinal_assessed)
-    return {
-      text: [
-        {
-          text: 'Spinal Motion Restriction\n',
-          style: 'section_heading'
+    if (report.spinal_assessed){
+      return {
+        text: [
+          {
+            text: 'Spinal Motion Restriction\n',
+            style: 'section_heading'
             },
-        {
-          text: 'Manual C-Spine: ',
-          style: 'label'
+          {
+            text: 'Manual C-Spine: ',
+            style: 'label'
             },
               safe(report.spinal_manual) + '\n',
-        {
-          text: 'C-Collar: ',
-          style: 'label'
+          {
+            text: 'C-Collar: ',
+            style: 'label'
             },
               safe(report.spinal_c_collar) + '\n',
-        {
-          text: 'Size: ',
-          style: 'label'
+          {
+            text: 'Size: ',
+            style: 'label'
             },
               safe(report.spinal_collar_size) + '\n',
-        {
-          text: 'Back board: ',
-          style: 'label'
+          {
+            text: 'Back board: ',
+            style: 'label'
             },
               safe(report.spinal_backboard) + '\n',
-        {
-          text: 'Transferred by: ',
-          style: 'label'
+          {
+            text: 'Transferred by: ',
+            style: 'label'
             },
               safe(report.spinal_transferred_by) + '\n',
-        {
-          text: 'Secured with: ',
-          style: 'label'
+          {
+            text: 'Secured with: ',
+            style: 'label'
             },
               safe(report.spinal_secured_with) + '\n',
             ],
-      style: "defaultStyle"
-    }
-    else return "";
+        style: "defaultStyle"
+      } 
+    } else return "";
   }
-  
-  function signaturesHeader(){
-    if (report.signature_assessed)
+
+  function signaturesHeader() {
+    if (report.signature_assessed){
       return {
         text: 'Signatures\n',
         style: 'section_heading'
-      } 
-    else return "";
+      }
+    } else return "";
   }
 
   function signatures1() {
-    if (report.signature_assessed)
-    return {
-      columns: [
-        {
-          text: [
-            {
-              text: 'Practitioner: ',
-              style: 'label'
+    if (report.signature_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Practitioner: ',
+                style: 'label'
             },
               safe(report.signature_practitioner_name) + '\n'
           ],
-          style: "defaultStyle",
-          width: 200
+            style: "defaultStyle",
+            width: 200
         },
-        {
+          {
             image: safeImage(report.signature_practitioner),
-			height: 75,
+            height: 75,
             width: 250
           }
       ]
-    }
-    else return "";
+      }
+    }else return "";
   }
-  
+
   function signatures2() {
-    if (report.signature_assessed)
-    return {
-      columns: [
-         {
-          text: [
-            {
-              text: 'Patient: ',
-              style: 'label'
+    if (report.signature_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Patient: ',
+                style: 'label'
             },
               safe(report.signature_patient_name) + ' ' + safe(report.no_signature_reason) + '\n',
           ],
-          style: "defaultStyle",
-          width: 200
+            style: "defaultStyle",
+            width: 200
         },
-         {
+          {
             image: safeImage(report.signature_patient),
             height: 75,
             width: 250
           }
       ]
-    }
-    else return "";
+      }
+    } else return "";
   }
-  
+
   function signatures3() {
-    if (report.signature_assessed)
-    return {
-      columns: [
-        {
-          text: [
-            {
-              text: 'Hosital Representative: ',
-              style: 'label'
+    if (report.signature_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Hosital Representative: ',
+                style: 'label'
             },
               safe(report.signature_hospital_name) + '\n'
           ],
-          style: "defaultStyle",
-          width: 200
+            style: "defaultStyle",
+            width: 200
         },
-         {
+          {
             image: safeImage(report.signature_hospital),
             height: 75,
             width: 250
           }
       ]
+      }
     }
     else return "";
   }
-  
+
   function signatures4() {
-    if (report.signature_assessed)
-    return {
-      columns: [
-                {
-          text: [
-            {
-              text: 'Witness: ',
-              style: 'label'
+    if (report.signature_assessed){
+      return {
+        columns: [
+          {
+            text: [
+              {
+                text: 'Witness: ',
+                style: 'label'
             },
               safe(report.signature_witness_name) + '\n',
           ],
-          style: "defaultStyle",
-          width: 200
+            style: "defaultStyle",
+            width: 200
         },
-         {
+          {
             image: safeImage(report.signature_witness),
             height: 75,
             width: 250
           }
       ]
-    }
-    else return "";
+      }
+    } else return "";
   }
 
   function callInfo() {
-    if (report.call_info_assessed)
     return {
-      columns: [
+      text: [
         {
-          text: [
-            {
-              text: '\nCall Info\n',
-              style: 'section_heading'
+          text: 'Call Info\n',
+          style: 'section_heading'
                 },
-            {
-              text: 'Attendant 1: ',
-              style: 'label'
+        {
+          text: 'Attendant 1: ',
+          style: 'label'
                 },
                 safe(report.call_info_attendant1, report.call_info_attendant1_other) + '\n',
-            {
-              text: 'Attendant 2: ',
-              style: 'label'
+        {
+          text: 'Attendant 2: ',
+          style: 'label'
                 },
                 safe(report.call_info_attendant2, report.call_info_attendant2_other) + '\n',
-            {
-              text: 'Driver: ',
-              style: 'label'
+        {
+          text: 'Driver: ',
+          style: 'label'
                 },
                 safe(report.call_info_driver, report.call_info_driver_other) + '\n',
-            {
-              text: 'Unit #: ',
-              style: 'label'
+        {
+          text: 'Unit #: ',
+          style: 'label'
                 },
                 safe(report.call_info_unit_nb) + '\n',
-            {
-              text: 'Run #: ',
-              style: 'label'
+        {
+          text: 'Run #: ',
+          style: 'label'
                 },
                 safe(report.call_info_run_nb) + '\n',
-            {
-              text: 'Respond to: ',
-              style: 'label'
+        {
+          text: 'Respond to: ',
+          style: 'label'
                 },
                 safe(report.call_info_respond_to) + '\n',
-            {
-              text: 'Milage Start: ',
-              style: 'label'
+        {
+          text: 'Milage Start: ',
+          style: 'label'
                 },
                 safe(report.call_info_milage_start) + '\n',
-            {
-              text: 'Milage End: ',
-              style: 'label'
+        {
+          text: 'Milage End: ',
+          style: 'label'
                 },
                 safe(report.call_info_milage_end) + '\n',
-            {
-              text: 'Code en route: ',
-              style: 'label'
+        {
+          text: 'Code en route: ',
+          style: 'label'
                 },
                 safe(report.call_info_code_en_route) + '\n',
-            {
-              text: 'Code return: ',
-              style: 'label'
+        {
+          text: 'Code return: ',
+          style: 'label'
                 },
                 safe(report.call_info_code_return) + '\n',
-            {
-              text: 'Transported to: ',
-              style: 'label'
+        {
+          text: 'Transported to: ',
+          style: 'label'
                 },
                 safe(report.call_info_transported_to) + '\n',
-            {
-              text: 'Transport position: ',
-              style: 'label'
+        {
+          text: 'Transport position: ',
+          style: 'label'
                 },
                 safe(report.call_info_transported_position) + '\n',
-              ],
-          style: "defaultStyle"
-            },
+      ],
+      style: "defaultStyle",
+      width: 150
+  }
+}
+
+  function callInfoTimes() {
+    return {
+      text: [
         {
-          text: [
-            {
-              text: '\nTimes: ',
-              style: 'label'
-                },
-                TimesToString(safe(report.call_info_time)) + '\n',
-            {
-              text: 'PPE: ',
-              style: 'label'
+          text: '\nTimes:\n',
+          style: 'label'
+            },
+            safe(TimesToString(report.call_info_time, timesString)) + '\n',
+        {
+          text: '\nPPE: ',
+          style: 'label'
                 },
                 JSONtoString(safe(report.call_info_ppe)) + '\n',
-            {
-              text: 'Determinant: ',
-              style: 'label'
+        {
+          text: 'Determinant: ',
+          style: 'label'
                 },
                 JSONtoString(safe(report.call_info_determinant)) + '\n',
-            {
-              text: 'Assistance given by: ',
-              style: 'label'
+        {
+          text: 'Assistance given by: ',
+          style: 'label'
                 },
                 safe(report.call_info_assistance, report.call_info_assistance_other) + '\n',
-              ],
-          style: "defaultStyle"
-            },
+      ],
+      style: "defaultStyle",
+      width: 200
+  }
+}
+
+  function noTransport() {
+  return {
+      text: [
         {
-          text: [
-            {
-              text: '\nPatient Mentally Capable: ',
-              style: 'label'
+          text: '\nPatient Mentally Capable: ',
+          style: 'label'
                 },
                 safe(report.no_transport_mentally_capable) + '\n',
-            {
-              text: 'Patient Should be Transported: ',
-              style: 'label'
+        {
+          text: 'Patient Should be Transported: ',
+          style: 'label'
                 },
                 safe(report.no_transport_should_transport) + '\n',
-            {
-              text: 'Patient was informed of risks of no transport: ',
-              style: 'label'
+        {
+          text: 'Patient was informed of risks of no transport: ',
+          style: 'label'
                 },
                 safe(report.no_transport_risk_informed) + '\n',
-            {
-              text: 'Reason for refusal: ',
-              style: 'label'
+        {
+          text: 'Reason for refusal: ',
+          style: 'label'
                 },
                 safe(report.no_transport_reason, report.no_transport_reason_other) + '\n',
-            {
-              text: 'Patient left with: ',
-              style: 'label'
+        {
+          text: 'Patient left with: ',
+          style: 'label'
                 },
                 safe(report.no_transport_left_with, report.no_transport_left_with_other) + '\n',
-            {
-              text: 'Consult with: ',
-              style: 'label'
+        {
+          text: 'Consult with: ',
+          style: 'label'
                 },
                 safe(report.no_transport_consult_with) + '\n',
               ],
-          style: "defaultStyle"
-            }
-          ],
-      style: "defaultStyle",
-      columnGap: 10
+      style: "defaultStyle"
     }
-    else return "";
-  }
+}
 
-  fillDocDefinition = function () {
-    var content = [
+  function callTransport() {
+    var array = [];
+    if ($scope.mySettings.export.call_info && report.call_info_assessed == 'true'){
+      array.push(include('call_info', callInfo()));
+      array.push(include('call_info', callInfoTimes()));
+    }
+    if ($scope.mySettings.export.call_info && report.no_transport_assessed == 'true')
+      array.push(include('call_info', noTransport()));
+
+    if (array.length != 0)
+      return {
+        columns: array,
+        style: 'margin'
+      } 
+    else return "";
+}
+
+
+
+fillDocDefinition = function () {
+  var content = [
         header(),
         '\n',
         include('patient_info', patientInfo()),
@@ -1499,7 +1523,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('procedures', table($scope.inOutRecords, 'in_out')),
         include('procedures', heading($scope.ecgRecords, 'ECG')),
         include('procedures', table($scope.ecgRecords, 'ecg')),
-        include('call_info', callInfo()),
+        include('call_info', callTransport()),
         include('narrative', heading($scope.narrativeRecords, 'Narrative')),
         include('narrative', table($scope.narrativeRecords, 'narrative')),
         include('code', heading($scope.cprRecords, 'CPR')),
@@ -1511,84 +1535,84 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
         include('signatures', signatures4())
       ];
 
-    $scope.docDefinition = {
-      content: content,
-      styles: {
-        header: {
-          fontSize: 22,
-          bold: true
-        },
-        section_heading: {
-          margin: [0, 15, 0, 0],
-          fontSize: 12,
-          bold: true
-        },
-        medium_text: {
-          margin: [0, 0, 0, 5],
-          fontSize: 10
-        },
-        label: {
-          margin: [0, 0, 0, 5],
-          fontSize: 10,
-          bold: true
-        },
-        tableExample: {
-          fontSize: 8,
-          margin: [0, 5, 0, 0]
-        },
-        tableHeader: {
-          bold: true,
-          fontSize: 13,
-          color: 'black'
-        },
-        margin: {
-          margin: [0, 10, 0, 0]
-        },
-        defaultStyle: {
-          fontSize: 10
-        }
+  $scope.docDefinition = {
+    content: content,
+    styles: {
+      header: {
+        fontSize: 22,
+        bold: true
+      },
+      section_heading: {
+        margin: [0, 15, 0, 0],
+        fontSize: 12,
+        bold: true
+      },
+      medium_text: {
+        margin: [0, 0, 0, 5],
+        fontSize: 10
+      },
+      label: {
+        margin: [0, 0, 0, 5],
+        fontSize: 10,
+        bold: true
+      },
+      tableExample: {
+        fontSize: 8,
+        margin: [0, 5, 0, 0]
+      },
+      tableHeader: {
+        bold: true,
+        fontSize: 13,
+        color: 'black'
+      },
+      margin: {
+        margin: [0, 10, 0, 0]
+      },
+      defaultStyle: {
+        fontSize: 10
       }
-    };
-//    console.log($scope.docDefinition);
-  }
-
-  function fail(error) {
-    console.log(error.code);
+    }
   };
+  //    console.log($scope.docDefinition);
+}
 
-  function gotFS(fileSystem) {
-    var fileName = report.first_name + " " + report.last_name + ".pdf";
-    fileSystem.root.getFile(fileName, {
-      create: true,
-      exclusive: false
-    }, gotFileEntry, fail);
-  }
+function fail(error) {
+  console.log(error.code);
+};
 
-  function gotFileEntry(fileEntry) {
-    currentfileEntry = fileEntry;
-    fileEntry.createWriter(gotFileWriter, fail);
-  }
+function gotFS(fileSystem) {
+  var fileName = report.first_name + " " + report.last_name + ".pdf";
+  fileSystem.root.getFile(fileName, {
+    create: true,
+    exclusive: false
+  }, gotFileEntry, fail);
+}
 
-  function gotFileWriter(writer) {
-    writer.onwrite = function (evt) {
-      $scope.downloading = false;
-      alert("The report was saved on you device");
-      alert(JSON.stringify(currentfileEntry));
-      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
-    }
-    writer.write(BINARY_ARR);
-  }
+function gotFileEntry(fileEntry) {
+  currentfileEntry = fileEntry;
+  fileEntry.createWriter(gotFileWriter, fail);
+}
 
-  $scope.download = function () {
-    $scope.downloading = true;
-    if (!window.cordova) {
-      pdfMake.createPdf($scope.docDefinition).open();
-    } else {
-      pdfMake.createPdf($scope.docDefinition).getBuffer(function (buffer) {
-        var UTF8_STR = new Uint8Array(buffer); // Convert to UTF-8...                
-        BINARY_ARR = UTF8_STR.buffer; // Convert to Binary...
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-      });
-    }
+function gotFileWriter(writer) {
+  writer.onwrite = function (evt) {
+    $scope.downloading = false;
+    alert("The report was saved on you device");
+    alert(JSON.stringify(currentfileEntry));
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
   }
+  writer.write(BINARY_ARR);
+}
+
+$scope.download = function () {
+  $scope.downloading = true;
+  if (!window.cordova) {
+    pdfMake.createPdf($scope.docDefinition).open();
+  } else {
+    pdfMake.createPdf($scope.docDefinition).getBuffer(function (buffer) {
+      var UTF8_STR = new Uint8Array(buffer); // Convert to UTF-8...                
+      BINARY_ARR = UTF8_STR.buffer; // Convert to Binary...
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    });
+  }
+}
 }

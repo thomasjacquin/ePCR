@@ -907,13 +907,15 @@ function TraumaBurnCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, repor
 
 function GiCtrl($scope, $stateParams, $window, report) {
 
+  var map = (report.gi_pain_location != "" && report.gi_pain_location != undefined) ? report.gi_pain_location : [];
+  
   $scope.gi = {
     "gi_soft": report.gi_soft == 'true',
     "gi_flat": report.gi_flat == 'true',
     "gi_non_distended": report.gi_non_distended == 'true',
     "gi_non_tender": report.gi_non_tender == 'true',
     "gi_rebound": report.gi_rebound == 'true',
-    "gi_pain_location": JSON.parse(report.gi_pain_location) || [],
+    "gi_pain_location": map,
     "gi_obese": report.gi_obese == 'true',
     "gi_last_bm": report.gi_last_bm,
     "gi_loi": report.gi_loi,
