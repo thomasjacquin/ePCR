@@ -23,6 +23,7 @@
     "https://github.com/katzer/cordova-plugin-printer.git",
     "https://github.com/katzer/cordova-plugin-printer.git#network-printer",
     "https://github.com/katzer/cordova-plugin-email-composer.git",
-    "https://github.com/katzer/cordova-plugin-printer.git#google-cloud-print"
+    "https://github.com/katzer/cordova-plugin-printer.git#google-cloud-print",
+    "https://github.com/apache/cordova-plugin-splashscreen.git"
   ]
 }

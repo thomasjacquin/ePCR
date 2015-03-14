@@ -144,6 +144,8 @@ input[type='email'],
 input[type='tel']
 {
   background: #FAFAFA;
+  text-indent: 5px;
+  margin-right: 10px;
 }
 
 .popup-container .popup {
@@ -152,4 +154,8 @@ input[type='tel']
 
 .text-input {
   width: 100%;
+}
+
+.scroll-content {
+  background-color: #eee;
 }
