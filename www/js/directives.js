@@ -64,4 +64,4 @@ angular.module('ePCR.directives', [])
       }; //scope.popup();
     }
   };
-})
+});

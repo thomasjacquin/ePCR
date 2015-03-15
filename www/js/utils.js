@@ -136,8 +136,12 @@ function gastroPainToString(str, gastroMap){
   return out.join(', ');
 }
 
+function defined(field){
+  return (field != "" && field != 'undefined' && field != undefined && field != null);
+}
+
 function safeImage(base64Img){
-  if (base64Img == "")
+  if (!defined(base64Img))
     return "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVQYV2NgYAAAAAMAAWgmWQ0AAAAASUVORK5CYII=";
   else
     return base64Img;

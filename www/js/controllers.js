@@ -65,7 +65,7 @@ function ReportDetailCtrl($scope, $stateParams, report, $window, Records) {
 }
 
 function PersonalInfoCtrl($scope, $stateParams, $window, report) {
-  
+
   $scope.personal = {
     "first_name": report.first_name,
     "last_name": report.last_name,
@@ -908,7 +908,7 @@ function TraumaBurnCtrl($scope, $stateParams, $webSql, $window, DB_CONFIG, repor
 function GiCtrl($scope, $stateParams, $window, report) {
 
   var map = (report.gi_pain_location != "" && report.gi_pain_location != undefined) ? report.gi_pain_location : [];
-  
+
   $scope.gi = {
     "gi_soft": report.gi_soft == 'true',
     "gi_flat": report.gi_flat == 'true',
@@ -1586,20 +1586,20 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
       penColor: "rgb(66, 133, 244)",
       maxWidth: 1.5
     });
-    
+
     // Load Signature if it exists in DB
-    if (savedSignatures[tab] != ""){
+    if (savedSignatures[tab] != "") {
       draftSignatures[tab] = savedSignatures[tab];
     }
     // If draft Signature exists, load it
-    if (draftSignatures[tab]){
+    if (draftSignatures[tab]) {
       signaturePad.fromDataURL(draftSignatures[tab]);
     }
 
     clearButton.addEventListener("click", function (event) {
       signaturePad.clear();
       draftSignatures[$scope.activeButton] = "";
-//      savedSignatures[$scope.activeButton] = "";
+      //      savedSignatures[$scope.activeButton] = "";
     });
 
   }
@@ -1636,12 +1636,12 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     $scope.activeButton = tab;
     wireCanvas();
   }
-  
-  function saveSignature(nb){
-    if(!draftSignatures[nb] || draftSignatures[nb] == ""){
-      if (savedSignatures[nb] && savedSignatures[nb] != ""){
+
+  function saveSignature(nb) {
+    if (!draftSignatures[nb] || draftSignatures[nb] == "") {
+      if (savedSignatures[nb] && savedSignatures[nb] != "") {
         return savedSignatures[nb];
-      } else 
+      } else
         return "";
     } else
       return draftSignatures[nb];
@@ -1869,7 +1869,7 @@ function CodeCtrl($scope, $stateParams, codeList, $window) {
 function ExportCtrl($scope, $stateParams, $window, settings, $state) {
 
   var defaults = {
-//    short_report: true,
+    //    short_report: true,
     patient_info: true,
     vitals: true,
     vitals_charts: true,
@@ -1939,45 +1939,59 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
 
 function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $ionicModal) {
   $scope.settings = settings;
+  $scope.canvas = null;
   $scope.activeButton = 1;
   $scope.addPartner = {
     name: ""
   };
 
   $scope.form = {
-    "first_name": $scope.settings.first_name,
-    "last_name": $scope.settings.last_name,
-    "identification": $scope.settings.identification,
-    "position": $scope.settings.position,
-    "work_place": $scope.settings.work_place,
-    "send_report_to": $scope.settings.send_report_to,
-    "photo": $scope.settings.photo
+    "first_name": settings.first_name,
+    "last_name": settings.last_name,
+    "identification": settings.identification,
+    "position": settings.position,
+    "work_place": settings.work_place,
+    "send_report_to": settings.send_report_to,
+    "photoUrl": settings.photoUrl,
+    "photoBase64": settings.photoBase64
   };
 
-  $scope.partners = $scope.settings.partners ? JSON.parse($scope.settings.partners) : [],
+//  alert("Dans la bdd" + $scope.photoBase64);
 
-    $scope.getPhoto = function (fromCamera) {
-      var options = {
-        quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI,
-        sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
-        allowEdit: true,
-        encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 600,
-        targetHeight: 600,
-        correctOrientation: true,
-        cameraDirection: Camera.Direction.FRONT
-      };
-      CameraFactory.getPicture(options).then(function (imageURI) {
-        console.log(imageURI);
-        $scope.form.photo = imageURI;
-      }, function (err) {
+  $scope.partners = settings.partners ? JSON.parse(settings.partners) : [];
+
+  $scope.getPhoto = function (fromCamera) {
+    var options = {
+      quality: 30,
+      destinationType: Camera.DestinationType.FILE_URL,
+      sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
+      allowEdit: true,
+      encodingType: Camera.EncodingType.JPEG,
+      targetWidth: 600,
+      targetHeight: 600,
+      correctOrientation: true,
+      cameraDirection: Camera.Direction.FRONT
+    };
+    CameraFactory.getPicture(options).then(function (imageURI) {
+        $scope.canvas = document.getElementById("profileCanvas");
+        var ctx = $scope.canvas.getContext("2d");
+        var img = document.getElementById("profilePicture");
+        angular.element(img).bind("load", function (e) {
+          $scope.canvas.height = img.height;
+          $scope.canvas.width = img.width;
+          ctx.drawImage(img, 0, 0);
+          $scope.form.photoBase64 = $scope.canvas.toDataURL(imageURI || 'image/png');
+        });
+        $scope.form.photoUrl = imageURI;
+      },
+      function (err) {
         console.err(err);
       });
-    };
+  };
 
   $scope.removePhoto = function () {
-    $scope.form.photo = '';
+    $scope.form.photoUrl = '';
+    $scope.form.photoBase64 = safeImage(null);
   }
 
   $scope.switchTab = function (tab) {

@@ -1247,7 +1247,10 @@ angular.module('ePCR.schema', [])
         "partners": {
           "type": "TEXT"
         },
-        "photo": {
+        "photoUrl": {
+          "type": "TEXT"
+        },
+        "photoBase64": {
           "type": "TEXT"
         }
       }

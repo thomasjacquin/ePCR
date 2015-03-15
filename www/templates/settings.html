@@ -46,14 +46,17 @@
         <span class="input-label">Work Place</span>
         <input type="text" ng-model="form.work_place">
       </ion-item>
+<!--
       <ion-item class="item-input">
         <span class="input-label">Email reports to</span>
         <input type="email" ng-model="form.send_report_to">
       </ion-item>
+-->
     </ion-list>
     <div ng-show="activeButton == 2">
       <div class="row">
-        <img ng-src="{{form.photo}}" ng-show="form.photo" style="width: 100%">
+        <img id="profilePicture" ng-src="{{form.photoUrl}}" ng-show="form.photoUrl" style="max-width: 100%" />
+        <canvas id="profileCanvas" style="display:none"/>
       </div>
       <div class="row">
         <div class="col">

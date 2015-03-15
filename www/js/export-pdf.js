@@ -6,7 +6,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
   $scope.mySettings = {
     "export": settings.export ? JSON.parse(settings.export) : defaults
   }
-  console.log($scope.mySettings.export);
+//  alert("defined:" + defined(settings.photoBase64));
+//  alert("photo:" + safeImage(settings.photoBase64));
 
   $scope.docDefinition = {};
 
@@ -175,8 +176,8 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           },
         ]
       },
-        {
-          text: [
+      {
+        text: [
           'By ' + safe($scope.settingsRecord.first_name) + " " + safe($scope.settingsRecord.last_name) + '\n',
             {
               text: safe($scope.settingsRecord.position) + ' in ' + safe($scope.settingsRecord.work_place) + '\n' + 'ID: ' + safe($scope.settingsRecord.identification),
@@ -184,8 +185,15 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           }
         ],
           alignment: 'right'
+      },
+      {
+        image: safeImage(settings.photoBase64),
+        height: defined(settings.photoBase64) ? 60 : 0,
+        width: defined(settings.photoBase64) ? 60 : 0,
+        alignment: 'right'
       }
-    ]
+    ],
+      columnGap: 10
     }
   }
 
