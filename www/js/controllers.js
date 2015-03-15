@@ -1962,13 +1962,13 @@ function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $i
 
   $scope.getPhoto = function (fromCamera) {
     var options = {
-      quality: 30,
+      quality: 50,
       destinationType: Camera.DestinationType.FILE_URL,
       sourceType: fromCamera ? Camera.PictureSourceType.CAMERA : Camera.PictureSourceType.PHOTOLIBRARY,
       allowEdit: true,
       encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 600,
-      targetHeight: 600,
+      targetWidth: 300,
+      targetHeight: 300,
       correctOrientation: true,
       cameraDirection: Camera.Direction.FRONT
     };
