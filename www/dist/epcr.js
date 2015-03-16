@@ -2541,7 +2541,7 @@ function VitalsChartCtrl($scope, $stateParams, $window, vitals, exportTableDefin
   var xAxis = [],
     data = {};
 
-  $scope.chartsHeight = "height:" + (window.innerHeight - 160) + "px";
+  $scope.chartsHeight = "height:" + (window.innerHeight - 160) + "px; background-color: white";
 
   $scope.vitalSelected = {
     serie: "hr"
@@ -2571,18 +2571,6 @@ function VitalsChartCtrl($scope, $stateParams, $window, vitals, exportTableDefin
     {
       code: "resp",
       name: "Respiration"
-    },
-    {
-      code: "level_of_c",
-      name: "Consciousness"
-    },
-    {
-      code: "left_eye",
-      name: "Left Eye Diameter"
-    },
-    {
-      code: "right_eye",
-      name: "Right Eye Diameter"
     },
     {
       code: "bgl",

@@ -158,4 +158,8 @@ input[type='tel']
 
 .scroll-content {
   background-color: #eee;
+  background-image: url(../img/heart.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100px;
 }
