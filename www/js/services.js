@@ -14,7 +14,7 @@ angular.module('ePCR.services', [])
         for(var i=0; i < results.rows.length; i++){
             reports[results.rows.item(i).id] = results.rows.item(i);
         }
-        console.dir(reports);
+//        console.dir(reports);
         dfd.resolve(reports);
       });
       return dfd.promise;

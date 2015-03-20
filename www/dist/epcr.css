@@ -8433,7 +8433,7 @@ textarea {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 6px 15px 5px 16px;
+  padding: 6px 0 5px 16px;
 }
 
 .item-input input {
@@ -18948,7 +18948,7 @@ textarea {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 6px 15px 5px 16px;
+  padding: 6px 0 5px 16px;
 }
 
 .item-input input {

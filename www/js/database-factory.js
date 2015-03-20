@@ -1,6 +1,6 @@
 angular.module("ePCR.database", ['angular-websql', 'ePCR.schema'])
 
-.factory('database', function($webSql, DB_CONFIG) {
+.factory('database', function($webSql, DB_CONFIG, $state) {
   
   return {
     create: function() {
@@ -13,6 +13,7 @@ angular.module("ePCR.database", ['angular-websql', 'ePCR.schema'])
       // Create Settings record
       db.insert('settings', {"first_name":""}).then(function(results) {
         console.log("Initialized Settings record");
+        $state.go('tab.dash');
       });
     }
   }

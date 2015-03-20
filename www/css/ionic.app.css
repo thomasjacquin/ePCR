@@ -5162,7 +5162,7 @@ input, button, select, textarea {
   align-items: center;
   position: relative;
   overflow: hidden;
-  padding: 6px 15px 5px 16px; }
+  padding: 6px 0 5px 16px; }
   .item-input input {
     -webkit-border-radius: 0;
     border-radius: 0;

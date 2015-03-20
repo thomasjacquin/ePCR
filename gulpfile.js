@@ -13,7 +13,7 @@ var paths = {
   sass: ['./scss/**/*.scss']
 };
 
-gulp.task('default', ['sass', 'concat-css', 'minify-css', 'concat-js']);
+gulp.task('default', ['sass']);
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -27,24 +27,24 @@ gulp.task('sass', function(done) {
     .on('end', done);
 });
 
-gulp.task('concat-css', function () {
-  gulp.src('./www/css/*.css')
-    .pipe(concatCss("epcr.css"))
-    .pipe(gulp.dest('./www/dist/'));
-});
-
-gulp.task('minify-css', function() {
-  return gulp.src('./www/dist/epcr.css')
-    .pipe(minifyCss({keepBreaks:true}))
-    .pipe(rename('epcr.min.css'))
-    .pipe(gulp.dest('./www/dist/'))
-});
-
-gulp.task('concat-js', function() {
-  return gulp.src('./www/js/*.js')
-    .pipe(concat('epcr.js'))
-    .pipe(gulp.dest('./www/dist/'));
-});
+//gulp.task('concat-css', function () {
+//  gulp.src('./www/css/*.css')
+//    .pipe(concatCss("epcr.css"))
+//    .pipe(gulp.dest('./www/dist/'));
+//});
+//
+//gulp.task('minify-css', function() {
+//  return gulp.src('./www/dist/epcr.css')
+//    .pipe(minifyCss({keepBreaks:true}))
+//    .pipe(rename('epcr.min.css'))
+//    .pipe(gulp.dest('./www/dist/'))
+//});
+//
+//gulp.task('concat-js', function() {
+//  return gulp.src('./www/js/*.js')
+//    .pipe(concat('epcr.js'))
+//    .pipe(gulp.dest('./www/dist/'));
+//});
 
 //gulp.task('minify-js', function() {
 //  gulp.src('./www/dist/epcr.js')
