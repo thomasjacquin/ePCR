@@ -1605,8 +1605,6 @@ function gotFileWriter(writer) {
   writer.onwrite = function (evt) {
     $scope.downloading = false;
     alert(currentfileEntry.name + " was saved on you device");
-//    alert(JSON.stringify(currentfileEntry));
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFSforRead, fail);
   }
   writer.write(BINARY_ARR);
 }

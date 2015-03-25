@@ -1927,104 +1927,76 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
 
 function ExportJsonCtrl($scope, $q, reports, Records) {
   $scope.reportsList = [];
-  $scope.selected = [];
-  $scope.reportsObjects = [];
 
   angular.forEach(reports, function (report, index) {
     $scope.reportsList.push(report);
   });
 
   $scope.export = function () {
+    $scope.selected = [];
+    $scope.reportsObjects = [];
     $scope.reportsList.forEach(function (value, index) {
       if (value.checked) {
         $scope.selected.push(value);
         var reportId = value.id;
         var report = {};
         report.report = value;
+        var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
 
-        Records.all('vitals', reportId)
-          .then(function (records) {
-            report.vitals = records;
-          })
-          .then(function () {
-            Records.all('neuro', reportId)
+        function getRecordsForTable() {
+          if (listOfTables.length > 0) {
+            var table = listOfTables.splice(0, 1);
+            Records.all(table, reportId)
               .then(function (records) {
-                report.neuro = records;
+                report[table] = records;
               })
               .then(function () {
-                Records.all('airway_basic', reportId)
-                  .then(function (records) {
-                    report.airway_basic = records;
-                  })
-                  .then(function () {
-                    Records.all('airway_ventilator', reportId)
-                      .then(function (records) {
-                        report.airway_ventilator = records;
-                      })
-                      .then(function () {
-                        Records.all('airway_cpap_bipap', reportId)
-                          .then(function (records) {
-                            report.airway_cpap_bipap = records;
-                          })
-                          .then(function () {
-                            Records.all('airway_suction', reportId)
-                              .then(function (records) {
-                                report.airway_suction = records;
-                              })
-                              .then(function () {
-                                Records.all('narrative', reportId)
-                                  .then(function (records) {
-                                    report.narrative = records;
-                                  })
-                                  .then(function () {
-                                    Records.all('iv_io', reportId)
-                                      .then(function (records) {
-                                        report.iv_io = records;
-                                      })
-                                      .then(function () {
-                                        Records.all('splinting', reportId)
-                                          .then(function (records) {
-                                            report.splinting = records;
-                                          })
-                                          .then(function () {
-                                            Records.all('medication', reportId)
-                                              .then(function (records) {
-                                                report.medication = records;
-                                              })
-                                              .then(function () {
-                                                Records.all('in_out', reportId)
-                                                  .then(function (records) {
-                                                    report.in_out = records;
-                                                  })
-                                                  .then(function () {
-                                                    Records.all('ecg', reportId)
-                                                      .then(function (records) {
-                                                        report.ecg = records;
-                                                      })
-                                                      .then(function () {
-                                                        Records.all('code', reportId)
-                                                          .then(function (records) {
-                                                            report.code = records;
-                                                            $scope.reportsObjects.push(report);                                                                               if (index == $scope.selected.length) {
-                                                              console.log(JSON.stringify($scope.reportsObjects));
-                                                            }
-                                                          })
-                                                      })
-                                                  })
-                                              })
-                                          })
-                                      })
-                                  })
-                              })
-                          })
-                      })
-                  })
-              })
-          });
+                getRecordsForTable();
+              });
+          } else {
+            $scope.reportsObjects.push(report);
+            if (index == $scope.selected.length -1) {
+              writeJsonFile(JSON.stringify($scope.reportsObjects));
+            }
+          }
+        }
+        getRecordsForTable();
       }
     });
   }
+}
+      
+function writeJsonFile(jsonString){
+  function fail(error) {
+    console.log(error.code);
+  };
 
+  function gotFS(fileSystem) {
+    var date = new Date();
+    var fileName = moment(date).format('YYYY-MM-DD') + ".epcr";
+    fileSystem.root.getFile(fileName, {
+      create: true,
+      exclusive: false
+    }, gotFileEntry, fail);
+  }
+
+  function gotFileEntry(fileEntry) {
+    currentfileEntry = fileEntry;
+    fileEntry.createWriter(gotFileWriter, fail);
+  }
+
+  function gotFileWriter(writer) {
+    writer.onwrite = function (evt) {
+      alert(currentfileEntry.name + " was saved on you device");
+    }
+    writer.write(jsonString);
+  }
+
+  if (!window.cordova) {
+    console.log(jsonString);
+  } else {
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+  }
 }
 
 function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $ionicModal) {
