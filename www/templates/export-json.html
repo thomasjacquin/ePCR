@@ -1,0 +1,16 @@
+<ion-nav-bar>
+</ion-nav-bar>
+  <ion-view view-title="Export Reports">
+    <ion-nav-buttons side="secondary">
+      <button class="button button-clear" ng-click="export()">
+         <i class="icon ion-ios-checkmark-outline"></i> Export
+      </button>
+    </ion-nav-buttons>
+  <ion-content>
+    <div class="list">
+       <ion-checkbox ng-repeat="report in reportsList" ng-model="report.checked" ng-checked="reprot.checked">
+          {{report.first_name}} {{report.last_name}}
+       </ion-checkbox>
+    </div>
+  </ion-content>
+</ion-view>
