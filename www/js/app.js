@@ -999,6 +999,21 @@ angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.consta
       }
     }
   })
+  
+  .state('tab.export-json', {
+    url: '/export-json',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/export-json.html',
+        controller: 'ExportJsonCtrl',
+        resolve: {
+            reports: function (Reports) {
+              return Reports.all();
+            }
+          }
+      }
+    }
+  })
 
   .state('tab.settings', {
     url: '/settings',

@@ -1925,6 +1925,20 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
   }
 }
 
+function ExportJsonCtrl($scope, $q, reports) {
+  $scope.reportsList = [];
+  console.log(reports);
+  
+  angular.forEach(reports, function(report, index){
+    console.log(report);
+    $scope.reportsList.push(report);
+  });
+  
+  $scope.export = function (reportId) {
+    alert("blah");
+  }
+}
+
 function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $ionicModal) {
   $scope.settings = settings;
   $scope.canvas = null;
@@ -2073,5 +2087,6 @@ angular.module('ePCR.controllers', [])
   .controller('CodeCtrl', CodeCtrl)
   .controller('ExportCtrl', ExportCtrl)
   .controller('ExportPdfCtrl', ExportPdfCtrl)
+  .controller('ExportJsonCtrl', ExportJsonCtrl)
   .controller('ListCtrl', ListCtrl)
   .controller('SettingsCtrl', SettingsCtrl);
