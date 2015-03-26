@@ -1945,6 +1945,8 @@ function ExportJsonCtrl($scope, $q, reports, Records) {
         $scope.selected.push(value);
         var reportId = value.id;
         var report = {};
+        delete value['$$hashKey'];
+        delete value['checked'];
         report.report = value;
         var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
 
@@ -1953,6 +1955,8 @@ function ExportJsonCtrl($scope, $q, reports, Records) {
             var table = listOfTables.splice(0, 1);
             Records.all(table, reportId)
               .then(function (records) {
+                delete records['$$hashKey'];
+                delete records['checked'];
                 report[table] = records;
               })
               .then(function () {
@@ -2018,7 +2022,9 @@ function writeJsonFile(jsonString) {
   }
 }
 
-function ImportJsonCtrl() {
+function ImportJsonCtrl($scope) {
+    
+  $scope.import = function(){
     if (!window.cordova) {
       console.log("Only works on Devices");
     } else {
@@ -2041,7 +2047,7 @@ function ImportJsonCtrl() {
     function readAsText(file) {
         var reader = new FileReader();
         reader.onloadend = function(evt) {
-            importSql(JSON.parse(evt.target.result));
+          importSql(evt.target.result);
         };
         reader.readAsText(file);
     }
@@ -2049,12 +2055,24 @@ function ImportJsonCtrl() {
     function fail(error) {
         console.log(error.code);
     }
+  }
   
-  function importSql(reports){
+  function importSql(reportsString){
+    var reports = JSON.parse(reportsString);
+    var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
     reports.forEach(function(report, index){
-      db.insert('report', report).then(function (results) {
-        console.log(results.insertId);
-        // TODO: add the other ones
+      delete report.report.id;
+      db.insert('report', report.report).then(function (results) {
+        listOfTables.forEach(function(table){
+          var records = report[table];
+          records.forEach(function(rec){
+            delete rec.id;
+            rec.report_id = results.insertId;
+            db.insert(table, rec).then(function (results) {
+              console.log("Added record to " + table);
+            });
+          });
+        });
       });
     });
   } 
