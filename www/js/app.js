@@ -1,4 +1,4 @@
-angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.constants', 'ePCR.services', 'ePCR.directives', 'ePCR.factories', 'ePCR.database', 'angular-websql', 'ngRoute', 'angles', 'ui.bootstrap.datetimepicker'])
+angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.constants', 'ePCR.services', 'ePCR.directives', 'ePCR.factories', 'ePCR.database', 'angular-websql', 'ngRoute', 'angles', 'ui.bootstrap.datetimepicker', 'ngCordova'])
 
 .run(function ($ionicPlatform, database) {
   $ionicPlatform.ready(function () {
@@ -1011,6 +1011,16 @@ angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.consta
               return Reports.all();
             }
           }
+      }
+    }
+  })
+  
+  .state('tab.import-json', {
+    url: '/import-json',
+    views: {
+      'tab-dash': {
+        templateUrl: 'templates/import-json.html',
+        controller: 'ImportJsonCtrl'
       }
     }
   })

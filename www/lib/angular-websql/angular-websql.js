@@ -131,6 +131,9 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
 								if (typeof g[e]["primary"] !== "undefined") {
 									a += " PRIMARY KEY"
 								}
+                                if (typeof g[e]["unique"] !== "undefined") {
+									a += " UNIQUE"
+								}
 								if (typeof g[e]["auto_increment"] !== "undefined") {
 									a += " AUTOINCREMENT"
 								}

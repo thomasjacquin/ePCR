@@ -23,12 +23,17 @@ function ReportsCtrl($scope, $q, reports) {
 
   $scope.deleteReport = function (reportId) {
     var promises = [];
+    var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
+    
     promises.push(db.del("report", {
       "id": reportId
     }));
-    promises.push(db.del("vitals", {
-      "report_id": reportId
-    }));
+    listOfTables.forEach(function(table, index){
+      promises.push(db.del(table, {
+        "report_id": reportId
+      }));
+    })
+   
     $q.all(promises)
       .then(function () {
         console.log("Report deleted successfully");
@@ -1955,7 +1960,7 @@ function ExportJsonCtrl($scope, $q, reports, Records) {
               });
           } else {
             $scope.reportsObjects.push(report);
-            if (index == $scope.selected.length -1) {
+            if (index == $scope.selected.length - 1) {
               writeJsonFile(JSON.stringify($scope.reportsObjects));
             }
           }
@@ -1965,15 +1970,15 @@ function ExportJsonCtrl($scope, $q, reports, Records) {
     });
   }
 }
-      
-function writeJsonFile(jsonString){
+
+function writeJsonFile(jsonString) {
   function fail(error) {
     console.log(error.code);
   };
 
   function gotFS(fileSystem) {
     var date = new Date();
-    var fileName = moment(date).format('YYYY-MM-DD') + ".epcr";
+    var fileName = "reports.epcr";
     fileSystem.root.getFile(fileName, {
       create: true,
       exclusive: false
@@ -1988,6 +1993,20 @@ function writeJsonFile(jsonString){
   function gotFileWriter(writer) {
     writer.onwrite = function (evt) {
       alert(currentfileEntry.name + " was saved on you device");
+      window.plugins.socialsharing.shareViaEmail(
+        'Message',
+        'Subject',
+        ['to@person.com'],
+        null, // CC
+        null, // BCC
+        [currentfileEntry.nativeURL], // FILES
+        function(){
+          alert("Message Sent successfully");
+        },
+        function(e){
+          alert(e);
+        }
+      );
     }
     writer.write(jsonString);
   }
@@ -1997,6 +2016,48 @@ function writeJsonFile(jsonString){
   } else {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
   }
+}
+
+function ImportJsonCtrl() {
+    if (!window.cordova) {
+      console.log("Only works on Devices");
+    } else {
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    }
+
+    function gotFS(fileSystem) {
+        fileSystem.root.getFile("reports.epcr", null, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+      console.log(JSON.stringify(fileEntry));
+        fileEntry.file(gotFile, fail);
+    }
+
+    function gotFile(file){
+        readAsText(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+            importSql(JSON.parse(evt.target.result));
+        };
+        reader.readAsText(file);
+    }
+
+    function fail(error) {
+        console.log(error.code);
+    }
+  
+  function importSql(reports){
+    reports.forEach(function(report, index){
+      db.insert('report', report).then(function (results) {
+        console.log(results.insertId);
+        // TODO: add the other ones
+      });
+    });
+  } 
 }
 
 function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $ionicModal) {
@@ -2146,5 +2207,6 @@ angular.module('ePCR.controllers', [])
   .controller('ExportCtrl', ExportCtrl)
   .controller('ExportPdfCtrl', ExportPdfCtrl)
   .controller('ExportJsonCtrl', ExportJsonCtrl)
+  .controller('ImportJsonCtrl', ImportJsonCtrl)
   .controller('ListCtrl', ListCtrl)
   .controller('SettingsCtrl', SettingsCtrl);
