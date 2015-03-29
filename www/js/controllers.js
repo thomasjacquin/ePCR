@@ -2063,6 +2063,7 @@ function ImportJsonCtrl($scope) {
     reports.forEach(function(report, index){
       delete report.report.id;
       db.insert('report', report.report).then(function (results) {
+        alert("Imported " + report.report.first_name + " " + report.report.last_name);
         listOfTables.forEach(function(table){
           var records = report[table];
           records.forEach(function(rec){
