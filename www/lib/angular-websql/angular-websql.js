@@ -13,7 +13,7 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
                   var db;
                     if (window.cordova) {
                       //device
-                      db = window.sqlitePlugin.openDatabase({ name: dbName, location: 1 });      
+                      db = window.sqlitePlugin.openDatabase({ name: dbName, location:1 });
                     }else{
                       //browser
                       db = window.openDatabase(dbName, version, desc, size);
