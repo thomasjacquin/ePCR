@@ -1600,11 +1600,21 @@ function gotFileEntry(fileEntry) {
   currentfileEntry = fileEntry;
   fileEntry.createWriter(gotFileWriter, fail);
 }
+    
+function gotFile(file){
+    var reader = new FileReader();
+    reader.onloadend = function(evt) {
+        window.plugins.socialsharing.share(null, currentfileEntry.name, evt.target.result, null);
 
+    };
+    reader.readAsDataURL(file);
+}
+    
 function gotFileWriter(writer) {
   writer.onwrite = function (evt) {
     $scope.downloading = false;
-    alert(currentfileEntry.name + " was saved on you device");
+    alert(currentfileEntry.name + " was saved on your device");
+    currentfileEntry.file(gotFile, fail);
   }
   writer.write(BINARY_ARR);
 }
