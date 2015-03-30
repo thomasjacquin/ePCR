@@ -13,7 +13,7 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
                   var db;
                     if (window.cordova) {
                       //device
-                      db = window.sqlitePlugin.openDatabase({ name: dbName });      
+                      db = window.sqlitePlugin.openDatabase({ name: dbName, location:1 });
                     }else{
                       //browser
                       db = window.openDatabase(dbName, version, desc, size);
@@ -130,6 +130,9 @@ angular.module("angular-websql", []).factory("$webSql", ["$q",
 								}
 								if (typeof g[e]["primary"] !== "undefined") {
 									a += " PRIMARY KEY"
+								}
+                                if (typeof g[e]["unique"] !== "undefined") {
+									a += " UNIQUE"
 								}
 								if (typeof g[e]["auto_increment"] !== "undefined") {
 									a += " AUTOINCREMENT"

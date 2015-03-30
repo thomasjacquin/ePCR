@@ -23,12 +23,17 @@ function ReportsCtrl($scope, $q, reports) {
 
   $scope.deleteReport = function (reportId) {
     var promises = [];
+    var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
+    
     promises.push(db.del("report", {
       "id": reportId
     }));
-    promises.push(db.del("vitals", {
-      "report_id": reportId
-    }));
+    listOfTables.forEach(function(table, index){
+      promises.push(db.del(table, {
+        "report_id": reportId
+      }));
+    })
+   
     $q.all(promises)
       .then(function () {
         console.log("Report deleted successfully");
@@ -1576,7 +1581,7 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     });
 
     // Load Signature if it exists in DB
-    if (savedSignatures[tab] != "") {
+    if (savedSignatures[tab] && savedSignatures[tab] != "") {
       draftSignatures[tab] = savedSignatures[tab];
     }
     // If draft Signature exists, load it
@@ -1587,7 +1592,6 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     clearButton.addEventListener("click", function (event) {
       signaturePad.clear();
       draftSignatures[$scope.activeButton] = "";
-      //      savedSignatures[$scope.activeButton] = "";
     });
 
   }
@@ -1925,6 +1929,155 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
   }
 }
 
+function ExportJsonCtrl($scope, $q, reports, Records) {
+  $scope.reportsList = [];
+
+  angular.forEach(reports, function (report, index) {
+    $scope.reportsList.push(report);
+  });
+
+  $scope.export = function () {
+    $scope.selected = [];
+    $scope.reportsObjects = [];
+    $scope.reportsList.forEach(function (value, index) {
+      if (value.checked) {
+        $scope.selected.push(value);
+        var reportId = value.id;
+        var report = {};
+        delete value['$$hashKey'];
+        delete value['checked'];
+        report.report = value;
+        var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
+
+        function getRecordsForTable() {
+          if (listOfTables.length > 0) {
+            var table = listOfTables.splice(0, 1);
+            Records.all(table, reportId)
+              .then(function (records) {
+                delete records['$$hashKey'];
+                delete records['checked'];
+                report[table] = records;
+              })
+              .then(function () {
+                getRecordsForTable();
+              });
+          } else {
+            $scope.reportsObjects.push(report);
+            if (index == $scope.selected.length - 1) {
+              writeJsonFile(JSON.stringify($scope.reportsObjects));
+            }
+          }
+        }
+        getRecordsForTable();
+      }
+    });
+  }
+}
+
+function writeJsonFile(jsonString) {
+  function fail(error) {
+    console.log(error.code);
+  };
+
+  function gotFS(fileSystem) {
+    var date = new Date();
+    var fileName = "reports.epcr";
+    fileSystem.root.getFile(fileName, {
+      create: true,
+      exclusive: false
+    }, gotFileEntry, fail);
+  }
+
+  function gotFileEntry(fileEntry) {
+    currentfileEntry = fileEntry;
+    fileEntry.createWriter(gotFileWriter, fail);
+  }
+
+  function gotFileWriter(writer) {
+    writer.onwrite = function (evt) {
+      alert(currentfileEntry.name + " was saved on you device");
+      window.plugins.socialsharing.shareViaEmail(
+        'Message',
+        'Subject',
+        ['to@person.com'],
+        null, // CC
+        null, // BCC
+        [currentfileEntry.nativeURL], // FILES
+        function(){
+          alert("Message Sent successfully");
+        },
+        function(e){
+          alert(e);
+        }
+      );
+    }
+    writer.write(jsonString);
+  }
+
+  if (!window.cordova) {
+    console.log(jsonString);
+  } else {
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+  }
+}
+
+function ImportJsonCtrl($scope) {
+    
+  $scope.import = function(){
+    if (!window.cordova) {
+      console.log("Only works on Devices");
+    } else {
+      window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
+    }
+
+    function gotFS(fileSystem) {
+        fileSystem.root.getFile("reports.epcr", null, gotFileEntry, fail);
+    }
+
+    function gotFileEntry(fileEntry) {
+      console.log(JSON.stringify(fileEntry));
+        fileEntry.file(gotFile, fail);
+    }
+
+    function gotFile(file){
+        readAsText(file);
+    }
+
+    function readAsText(file) {
+        var reader = new FileReader();
+        reader.onloadend = function(evt) {
+          importSql(evt.target.result);
+        };
+        reader.readAsText(file);
+    }
+
+    function fail(error) {
+        console.log(error.code);
+    }
+  }
+  
+  function importSql(reportsString){
+    var reports = JSON.parse(reportsString);
+    var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
+    reports.forEach(function(report, index){
+      delete report.report.id;
+      db.insert('report', report.report).then(function (results) {
+        alert("Imported " + report.report.first_name + " " + report.report.last_name);
+        listOfTables.forEach(function(table){
+          var records = report[table];
+          records.forEach(function(rec){
+            delete rec.id;
+            rec.report_id = results.insertId;
+            db.insert(table, rec).then(function (results) {
+              console.log("Added record to " + table);
+            });
+          });
+        });
+      });
+    });
+  } 
+}
+
 function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $ionicModal) {
   $scope.settings = settings;
   $scope.canvas = null;
@@ -1943,8 +2096,6 @@ function SettingsCtrl($scope, $stateParams, $window, settings, CameraFactory, $i
     "photoUrl": settings.photoUrl,
     "photoBase64": settings.photoBase64
   };
-
-//  alert("Dans la bdd" + $scope.photoBase64);
 
   $scope.partners = settings.partners ? JSON.parse(settings.partners) : [];
 
@@ -2073,5 +2224,7 @@ angular.module('ePCR.controllers', [])
   .controller('CodeCtrl', CodeCtrl)
   .controller('ExportCtrl', ExportCtrl)
   .controller('ExportPdfCtrl', ExportPdfCtrl)
+  .controller('ExportJsonCtrl', ExportJsonCtrl)
+  .controller('ImportJsonCtrl', ImportJsonCtrl)
   .controller('ListCtrl', ListCtrl)
   .controller('SettingsCtrl', SettingsCtrl);

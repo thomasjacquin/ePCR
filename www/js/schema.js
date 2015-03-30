@@ -1224,7 +1224,8 @@ angular.module('ePCR.schema', [])
           "auto_increment": true
         },
         "first_name": {
-          "type": "TEXT"
+          "type": "TEXT",
+          "unique": true
         },
         "last_name": {
           "type": "TEXT"
