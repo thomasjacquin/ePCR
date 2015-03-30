@@ -1581,7 +1581,7 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     });
 
     // Load Signature if it exists in DB
-    if (savedSignatures[tab] != "") {
+    if (savedSignatures[tab] && savedSignatures[tab] != "") {
       draftSignatures[tab] = savedSignatures[tab];
     }
     // If draft Signature exists, load it
@@ -1592,7 +1592,6 @@ function SignaturesCtrl($scope, $stateParams, $window, report) {
     clearButton.addEventListener("click", function (event) {
       signaturePad.clear();
       draftSignatures[$scope.activeButton] = "";
-      //      savedSignatures[$scope.activeButton] = "";
     });
 
   }
