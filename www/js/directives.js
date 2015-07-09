@@ -22,7 +22,7 @@ angular.module('ePCR.directives', [])
     }
 })
 
-.directive('myDateTimePicker', function ($ionicPopup) {
+.directive('myDateTimePicker', function () {
   return {
     restrict: 'E',
     template: '<input class="my-date-time-picker" type="text" readonly="readonly" ng-model="dateModel" ng-click="openModal()" placeholder="{{placeholder}}">',
@@ -32,71 +32,102 @@ angular.module('ePCR.directives', [])
       'placeholder': '@'
     },
     controller : function($scope, $filter, $ionicModal) {
-      $scope.tmp = {};
-      $scope.myTime = new Date();
-      $scope.newDate = new Date();
-       $scope.dateOptions = {
-          formatYear: 'yy',
-          startingDay: 1
+
+      $ionicModal.fromTemplateUrl('templates/shared/date-time-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+        
+        $scope.currentDate = new Date();
+        $scope.title = $scope.title;
+
+        $scope.datePickerCallback = function (val) {
+            if(typeof(val)==='undefined'){      
+                console.log('Date not selected');
+            }else{
+                console.log('Selected date is : ', val);
+            }
         };
+        
+        var d = new Date(), e = new Date(d);
+        var sSinceMidnight = (((e - d.setHours(0,0,0,0))/60000).toFixed(0))*60;
+        $scope.slots = {epochTime: sSinceMidnight, format: 12, step: 1};
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
-
-      $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.opened = true;
+        $scope.timePickerCallback = function (val) {
+          if (typeof (val) === 'undefined') {
+            console.log('Time not selected');
+          } else {
+            console.log('Selected time is : ', val);    // `val` will contain the selected time in epoch
+          }
+        };
+      });
+      $scope.openModal = function() {
+        $scope.modal.show();
+      };
+      $scope.save = function() {
+        $scope.modal.hide();
+      };
+      $scope.closeModal = function() {
+        $scope.modal.hide();
+      };
+      //Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      // Execute action on hide modal
+      $scope.$on('modal.hidden', function() {
+        // Execute action
+      });
+      // Execute action on remove modal
+      $scope.$on('modal.removed', function() {
+        // Execute action
+      });
+    }
   };
+})
 
-        
-        $ionicModal.fromTemplateUrl('templates/shared/date-time-modal.html', {
-          scope: $scope,
-          animation: 'slide-in-up'
-        }).then(function(modal) {
-          $scope.myTime = new Date();
-          $scope.modal = modal;
-        });
-        $scope.openModal = function() {
-          $scope.modal.show();
-        };
-        $scope.closeModal = function() {
-          $scope.modal.hide();
-        };
-        //Cleanup the modal when we're done with it!
-        $scope.$on('$destroy', function() {
-          $scope.modal.remove();
-        });
-        // Execute action on hide modal
-        $scope.$on('modal.hidden', function() {
-          // Execute action
-        });
-        // Execute action on remove modal
-        $scope.$on('modal.removed', function() {
-          // Execute action
-        });
-        
+.directive('standardTimeMeridian', function() {
+  return {
+    restrict: 'AE',
+    replace: true,
+    scope: {
+      etime: '=etime'
+    },
+    template: "<strong>{{stime}}</strong>",
+    link: function(scope, elem, attrs) {
 
-//        $scope.pop = $ionicPopup.show({
-//          template: '',
-//          title: $scope.title,
-//          scope: $scope,
-//          buttons: [
-//            {text: 'Cancel'},
-//            {
-//              text: '<b>Choose</b>',
-//              type: 'button-positive',
-//              onTap: function(e) {
-//                //$scope.$apply(function() { //error: apply already in progress
-//                  $scope.dateModel = $scope.tmp.newDate;
-//                  $scope.formatted_datetime = $filter('date')($scope.tmp.newDate, 'medium');
-//                //});
-//              }
-//            } //second button
-//          ] //buttons array
-//        }); //ionicpopup.show
-//      }; //scope.popup();
+      scope.stime = epochParser(scope.etime, 'time');
+
+      function prependZero(param) {
+        if (String(param).length < 2) {
+          return "0" + String(param);
+        }
+        return param;
+      }
+
+      function epochParser(val, opType) {
+        if (val === null) {
+          return "00:00";
+        } else {
+          var meridian = ['AM', 'PM'];
+
+          if (opType === 'time') {
+            var hours = parseInt(val / 3600);
+            var minutes = (val / 60) % 60;
+            var hoursRes = hours > 12 ? (hours - 12) : hours;
+
+            var currentMeridian = meridian[parseInt(hours / 12)];
+
+            return (prependZero(hoursRes) + ":" + prependZero(minutes) + " " + currentMeridian);
+          }
+        }
+      }
+
+      scope.$watch('etime', function(newValue, oldValue) {
+        scope.stime = epochParser(scope.etime, 'time');
+      });
+
     }
   };
 });

@@ -1,4 +1,20 @@
-angular.module('ePCR', ['ionic', 'ePCR.controllers', 'ePCR.schema', 'ePCR.constants', 'ePCR.services', 'ePCR.directives', 'ePCR.factories', 'ePCR.database', 'angular-websql', 'ngRoute', 'angles', 'ui.bootstrap', 'ngCordova'])
+angular.module('ePCR', [
+  'ionic',
+  'ePCR.controllers',
+  'ePCR.schema',
+  'ePCR.constants',
+  'ePCR.services',
+  'ePCR.directives',
+  'ePCR.factories',
+  'ePCR.database',
+  'angular-websql',
+  'ngRoute',
+  'angles',
+  'ui.bootstrap',
+  'ngCordova',
+  'ionic-datepicker',
+  'ionic-timepicker'
+])
 
 .run(function ($ionicPlatform, database) {
   $ionicPlatform.ready(function () {

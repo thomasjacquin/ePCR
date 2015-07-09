@@ -148,9 +148,12 @@ input[type='tel']
   margin-right: 10px;
 }
 
-.popup-container .popup {
-  width: auto;
+
+.popup-container .popup .row {
+  margin-right: 0px;
+  margin-left: 0px;
 }
+
 
 .text-input {
   width: 100%;
