@@ -38,27 +38,32 @@ angular.module('ePCR.directives', [])
         animation: 'slide-in-up'
       }).then(function(modal) {
         $scope.modal = modal;
+        $scope.title = $scope.title;
         
         $scope.currentDate = new Date();
-        $scope.title = $scope.title;
-
         $scope.datePickerCallback = function (val) {
             if(typeof(val)==='undefined'){      
                 console.log('Date not selected');
             }else{
                 console.log('Selected date is : ', val);
+                $scope.selectedDate = val;
             }
         };
         
-        var d = new Date(), e = new Date(d);
-        var sSinceMidnight = (((e - d.setHours(0,0,0,0))/60000).toFixed(0))*60;
-        $scope.slots = {epochTime: sSinceMidnight, format: 12, step: 1};
+        var d = moment();
+        d.set('hour', 0);
+        d.set('minute', 0);
+        d.set('second', 0);
+        var now = moment();
+        var roundedTime = ((now.diff(d, 'seconds'))/60).toFixed(0)*60;
+        console.log(roundedTime);
+        $scope.slots = {epochTime: roundedTime, format: 12, step: 1};
 
         $scope.timePickerCallback = function (val) {
           if (typeof (val) === 'undefined') {
             console.log('Time not selected');
           } else {
-            console.log('Selected time is : ', val);    // `val` will contain the selected time in epoch
+            console.log('Selected time is : ', val);
           }
         };
       });
@@ -66,6 +71,19 @@ angular.module('ePCR.directives', [])
         $scope.modal.show();
       };
       $scope.save = function() {
+        var date = $scope.selectedDate || $scope.currentDate;
+        console.log(date);
+        var d = moment(date);
+        d.set('hour', 0);
+        d.set('minute', 0);
+        d.set('second', 0);
+//        console.log(moment(d).valueOf()/1000);
+//        console.log($scope.slots.epochTime);
+        var result = moment(d).valueOf()/1000 + $scope.slots.epochTime;
+//        console.log(result);
+        var formattedResult = moment.unix(result).format('MMM Do YYYY, hh:mm A');
+//        console.log(formattedResult);
+        $scope.dateModel = formattedResult;
         $scope.modal.hide();
       };
       $scope.closeModal = function() {
