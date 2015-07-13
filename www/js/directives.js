@@ -32,6 +32,30 @@ angular.module('ePCR.directives', [])
       'placeholder': '@'
     },
     controller : function($scope, $filter, $ionicModal) {
+      
+      function midnight(date){
+          var d = date ? moment(date) : moment();
+          d.set('hour', 0);
+          d.set('minute', 0);
+          d.set('second', 0);
+          return d;
+        }
+      
+        function parseDate(dateString){
+          if (dateString){
+            var parsed = moment($scope.dateModel, "MMM Do YYYY, hh:mm A");
+            return new Date(parsed);
+          } else {
+            return new Date();
+          } 
+        }
+        
+        function parseTime(dateString){
+          var d = dateString ? midnight(parseDate(dateString)) : midnight();
+          var now = dateString ? moment(parseDate(dateString)) : moment();
+          var roundedTime = ((now.diff(d, 'seconds'))/60).toFixed(0)*60;
+          return {epochTime: roundedTime, format: 12, step: 1};
+        }
 
       $ionicModal.fromTemplateUrl('templates/shared/date-time-modal.html', {
         scope: $scope,
@@ -39,8 +63,10 @@ angular.module('ePCR.directives', [])
       }).then(function(modal) {
         $scope.modal = modal;
         $scope.title = $scope.title;
+        $scope.initialDate = $scope.dateModel;
+        $scope.currentDate = parseDate($scope.dateModel);
+        $scope.slots = parseTime($scope.dateModel);
         
-        $scope.currentDate = new Date();
         $scope.datePickerCallback = function (val) {
             if(typeof(val)==='undefined'){      
                 console.log('Date not selected');
@@ -50,42 +76,32 @@ angular.module('ePCR.directives', [])
             }
         };
         
-        var d = moment();
-        d.set('hour', 0);
-        d.set('minute', 0);
-        d.set('second', 0);
-        var now = moment();
-        var roundedTime = ((now.diff(d, 'seconds'))/60).toFixed(0)*60;
-        console.log(roundedTime);
-        $scope.slots = {epochTime: roundedTime, format: 12, step: 1};
-
         $scope.timePickerCallback = function (val) {
           if (typeof (val) === 'undefined') {
             console.log('Time not selected');
           } else {
-            console.log('Selected time is : ', val);
+            console.log('Selected time is : ', val);    // `val` will contain the selected time in epoch
           }
         };
       });
+      
       $scope.openModal = function() {
         $scope.modal.show();
       };
+      
       $scope.save = function() {
         var date = $scope.selectedDate || $scope.currentDate;
-        console.log(date);
-        var d = moment(date);
-        d.set('hour', 0);
-        d.set('minute', 0);
-        d.set('second', 0);
-//        console.log(moment(d).valueOf()/1000);
-//        console.log($scope.slots.epochTime);
+        var d = midnight(date);
         var result = moment(d).valueOf()/1000 + $scope.slots.epochTime;
-//        console.log(result);
-        var formattedResult = moment.unix(result).format('MMM Do YYYY, hh:mm A');
-//        console.log(formattedResult);
-        $scope.dateModel = formattedResult;
+        $scope.dateModel = moment.unix(result).format('MMM Do YYYY, hh:mm A');
         $scope.modal.hide();
       };
+      
+      $scope.clear = function() {
+        $scope.dateModel = $scope.initialDate;
+        $scope.modal.hide();
+      };
+      
       $scope.closeModal = function() {
         $scope.modal.hide();
       };
