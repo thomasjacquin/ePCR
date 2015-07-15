@@ -1,0 +1,24 @@
+<ion-modal-view style="height:325px">
+    <ion-header-bar>
+      <h1 class="title">{{title}}</h1>
+    </ion-header-bar>
+    <ion-content>
+    <div class="list">
+      <label class="item">
+        <ionic-datepicker idate="currentDate" disablepreviousdates="false"  disablefuturedates="false" callback="datePickerCallback" title="title">
+          <button class="button button-block button-positive"> {{ currentDate | date:'dd - MMMM - yyyy' }} </button>
+        </ionic-datepicker>
+      </label>
+      <label class="item">
+        <ionic-timepicker etime="slots.epochTime" format="slots.format" step="slots.step" callback="timePickerCallback">    
+          <button class="button button-block button-positive"> <standard-time-meridian etime='slots.epochTime'></standard-time-meridian> </button>
+        </ionic-timepicker>
+      </label>
+      <div class="item">
+        <button class="button button-balanced" ng-click="save()">Ok</button>
+        <button class="button button-assertive" ng-click="clear()">Clear</button>
+        <button class="button button-link" ng-click="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </ion-content>
+</ion-modal-view>
