@@ -15,6 +15,7 @@
   <preference name="BackupWebStorage" value="none" />
   <preference name="SplashScreen" value="screen" />
   <preference name="SplashScreenDelay" value="10000" />
+  <preference name="LoadUrlTimeoutValue" value="30000" />
   <preference name="iosPersistentFileLocation" value="Library" />
   <feature name="StatusBar">
     <param name="ios-package" value="CDVStatusBar" onload="true" />
@@ -90,9 +91,5 @@
   <feature name="Splashscreen">
     <param name="id" value="org.apache.cordova.splashscreen" />
     <param name="url" value="https://github.com/apache/cordova-plugin-splashscreen.git#:." />
-  </feature>
-  <feature name="Crosswalk Engine">
-    <param name="id" value="org.crosswalk.engine" />
-    <param name="installPath" value="engine/cordova-crosswalk-engine-c0.6.2" />
   </feature>
 </widget>
