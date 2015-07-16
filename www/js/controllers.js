@@ -1974,7 +1974,7 @@ function ExportJsonCtrl($scope, $q, reports, Records) {
   }
 }
 
-function writeJsonFile(jsonString) {
+function writeJsonFile(jsonString, $http) {
   function fail(error) {
     console.log(error.code);
   };
@@ -2013,8 +2013,17 @@ function writeJsonFile(jsonString) {
     }
     writer.write(jsonString);
   }
+  
+  function getFileFromServer(){
+    var form = $('<form method="POST" action="php/serveFile.php">');
+    form.append($('<input type="hidden" name="jsonString" value="' + jsonString.replace(/"/g, '&quot;') + '">'));
+
+    $('body').append(form);
+    form.submit();
+  }
 
   if (!window.cordova) {
+    getFileFromServer();
     console.log(jsonString);
   } else {
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
