@@ -2031,10 +2031,27 @@ function writeJsonFile(jsonString, $http) {
 }
 
 function ImportJsonCtrl($scope) {
+  
+  $scope.importJsonString = "";
+  
+  $scope.readFileContent = function(){
+    var file = event.target.files[0];
+    var output = "";
+    if(file) { 
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $scope.importJsonString = e.target.result;
+          console.log($scope.importJsonString);
+        };
+        reader.readAsText(file);
+    }      
+    return true;
+  }
     
   $scope.import = function(){
+    
     if (!window.cordova) {
-      console.log("Only works on Devices");
+      importSql($scope.importJsonString);
     } else {
       window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
     }
@@ -2074,7 +2091,7 @@ function ImportJsonCtrl($scope) {
         alert("Imported " + report.report.first_name + " " + report.report.last_name);
         listOfTables.forEach(function(table){
           var records = report[table];
-          records.forEach(function(rec){
+          angular.forEach(records, function(key, rec){
             delete rec.id;
             rec.report_id = results.insertId;
             db.insert(table, rec).then(function (results) {

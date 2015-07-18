@@ -22,6 +22,16 @@ angular.module('ePCR.directives', [])
     }
 })
 
+app.directive('customOnChange', function() {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      var onChangeHandler = scope.$eval(attrs.customOnChange);
+      element.bind('change', onChangeHandler);
+    }
+  };
+})
+
 .directive('myDateTimePicker', function () {
   return {
     restrict: 'E',
