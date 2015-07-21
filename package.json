@@ -17,14 +17,12 @@
   },
   "cordovaPlugins": [
     "https://github.com/brodysoft/Cordova-SQLitePlugin",
-    "org.apache.cordova.camera",
-    "./engine/cordova-crosswalk-engine-c0.6.2",
-    "org.apache.cordova.file",
-    "https://github.com/apache/cordova-plugin-splashscreen.git",
     "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
-    "cordova-plugin-crosswalk-webview",
     "cordova-plugin-whitelist",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-file",
+    "cordova-plugin-camera",
+    "cordova-plugin-splashscreen",
+    "org.apache.cordova.splashscreen"
   ],
   "cordovaPlatforms": [
     "android"

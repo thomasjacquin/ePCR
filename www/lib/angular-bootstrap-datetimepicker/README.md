@@ -1,4 +1,4 @@
-# Angular bootstrap date & time picker version: 0.3.8
+# Angular bootstrap date & time picker version: 0.3.13
 ================================
 
 Native AngularJS datetime picker directive styled by Twitter Bootstrap 3
@@ -6,8 +6,11 @@ Native AngularJS datetime picker directive styled by Twitter Bootstrap 3
 [![MIT License][license-image]][license-url]
 [![Build Status](https://travis-ci.org/dalelotts/angular-bootstrap-datetimepicker.png?branch=master)](https://travis-ci.org/dalelotts/angular-bootstrap-datetimepicker)
 [![devDependency Status](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker/dev-status.png)](https://david-dm.org/dalelotts/angular-bootstrap-datetimepicker#info=devDependencies)
-[![Code Climate](https://codeclimate.com/github/dalelotts/angular-bootstrap-datetimepicker.png)](https://codeclimate.com/github/dalelotts/angular-bootstrap-datetimepicker)
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/dalelotts/angular-bootstrap-datetimepicker/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+[![PayPal donate button](http://img.shields.io/paypal/donate.png?color=yellow)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F3FX5W6S2U4BW&lc=US&item_name=Dale%20Lotts&item_number=angular%2dbootstrap%2ddatetimepicker&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted "Donate one-time to this project using Paypal")
+<a href="https://twitter.com/intent/tweet?original_referer=https%3A%2F%2Fabout.twitter.com%2Fresources%2Fbuttons&amp;text=Check%20out%20this%20%23AngularJS%20directive%20that%20makes%20it%20dead%20simple%20for%20users%20to%20select%20dates%20%26%20times&amp;tw_p=tweetbutton&amp;url=https%3A%2F%2Fgithub.com%2Fdalelotts%2Fangular-bootstrap-datetimepicker&amp;via=dalelotts" target="_blank">
+  <img src="http://jpillora.com/github-twitter-button/img/tweet.png"></img>
+</a>
+
 
 [Home / demo page](http://dalelotts.github.io/angular-bootstrap-datetimepicker/)
 
@@ -44,14 +47,15 @@ optional:
  * bootstrap's dropdown component (`dropdowns.less`)
 
 #Testing
-We use karma and jshint to ensure the quality of the code. The easiest way to run these checks is to use grunt:
+We use karma and jshint to ensure the quality of the code. The easiest way to run these checks is to use gulp:
 
 ```
-npm install -g grunt-cli
 npm install
+npm test
 ```
 
-The karma task will try to open Chrome as a browser in which to run the tests. Make sure this is available or change the configuration in test\test.config.js
+The karma task will try to open Chrome as a browser in which to run the tests.
+Make sure Chrome is available or change the browsers setting in karma.config.js
 
 #Usage
 We use bower for dependency management. Add
@@ -127,7 +131,8 @@ The following parameters are supplied by this directive :
 
 ```
 DateObject {
-    dateValue: Number - UTC time value of this date object - same as moment.valueOf() or Date.getTime(). It does NOT contain time zone information so take that into account when comparing to other dates.
+    utcDateValue: Number - UTC time value of this date object. It does NOT contain time zone information so take that into account when comparing to other dates (or use localDateValue function).
+    localDateValue: FUNCTION that returns a Number - local time value of this date object - same as moment.valueOf() or Date.getTime().
     display: String - the way this value will be displayed on the calendar.
     active: true | false | undefined - indicates that date object is part of the model value.
     selectable: true | false | undefined - indicates that date value is selectable by the user.
@@ -259,7 +264,8 @@ the drop-down is toggled closed after the user selectes a date/time.
 
 ## I18N
 
-All internationalization is handled by Moment.js, see Moment's documention for details.
+All internationalization is handled by Moment.js, see Moment's documentation for details.
+In most cases, all that is needed is a call to ```moment.locale(String)```
 
 # Screenshots
 
@@ -313,3 +319,4 @@ Support this project and other work by Dale Lotts via [gittip][gittip-dalelotts]
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
+

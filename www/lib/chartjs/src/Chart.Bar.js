@@ -19,6 +19,12 @@
 		//Number - Width of the grid lines
 		scaleGridLineWidth : 1,
 
+		//Boolean - Whether to show horizontal lines (except X axis)
+		scaleShowHorizontalLines: true,
+
+		//Boolean - Whether to show vertical lines (except Y axis)
+		scaleShowVerticalLines: true,
+
 		//Boolean - If there is a stroke on each bar
 		barShowStroke : true,
 
@@ -104,18 +110,16 @@
 				this.datasets.push(datasetObject);
 
 				helpers.each(dataset.data,function(dataPoint,index){
-					if (helpers.isNumber(dataPoint)){
-						//Add a new point for each piece of data, passing any required data to draw.
-						datasetObject.bars.push(new this.BarClass({
-							value : dataPoint,
-							label : data.labels[index],
-							datasetLabel: dataset.label,
-							strokeColor : dataset.strokeColor,
-							fillColor : dataset.fillColor,
-							highlightFill : dataset.highlightFill || dataset.fillColor,
-							highlightStroke : dataset.highlightStroke || dataset.strokeColor
-						}));
-					}
+					//Add a new point for each piece of data, passing any required data to draw.
+					datasetObject.bars.push(new this.BarClass({
+						value : dataPoint,
+						label : data.labels[index],
+						datasetLabel: dataset.label,
+						strokeColor : dataset.strokeColor,
+						fillColor : dataset.fillColor,
+						highlightFill : dataset.highlightFill || dataset.fillColor,
+						highlightStroke : dataset.highlightStroke || dataset.strokeColor
+					}));
 				},this);
 
 			},this);
@@ -208,6 +212,8 @@
 				font : helpers.fontString(this.options.scaleFontSize, this.options.scaleFontStyle, this.options.scaleFontFamily),
 				lineWidth : this.options.scaleLineWidth,
 				lineColor : this.options.scaleLineColor,
+				showHorizontalLines : this.options.scaleShowHorizontalLines,
+				showVerticalLines : this.options.scaleShowVerticalLines,
 				gridLineWidth : (this.options.scaleShowGridLines) ? this.options.scaleGridLineWidth : 0,
 				gridLineColor : (this.options.scaleShowGridLines) ? this.options.scaleGridLineColor : "rgba(0,0,0,0)",
 				padding : (this.options.showScale) ? 0 : (this.options.barShowStroke) ? this.options.barStrokeWidth : 0,
@@ -230,19 +236,17 @@
 		addData : function(valuesArray,label){
 			//Map the values array for each of the datasets
 			helpers.each(valuesArray,function(value,datasetIndex){
-					if (helpers.isNumber(value)){
-						//Add a new point for each piece of data, passing any required data to draw.
-						this.datasets[datasetIndex].bars.push(new this.BarClass({
-							value : value,
-							label : label,
-							x: this.scale.calculateBarX(this.datasets.length, datasetIndex, this.scale.valuesCount+1),
-							y: this.scale.endPoint,
-							width : this.scale.calculateBarWidth(this.datasets.length),
-							base : this.scale.endPoint,
-							strokeColor : this.datasets[datasetIndex].strokeColor,
-							fillColor : this.datasets[datasetIndex].fillColor
-						}));
-					}
+				//Add a new point for each piece of data, passing any required data to draw.
+				this.datasets[datasetIndex].bars.push(new this.BarClass({
+					value : value,
+					label : label,
+					x: this.scale.calculateBarX(this.datasets.length, datasetIndex, this.scale.valuesCount+1),
+					y: this.scale.endPoint,
+					width : this.scale.calculateBarWidth(this.datasets.length),
+					base : this.scale.endPoint,
+					strokeColor : this.datasets[datasetIndex].strokeColor,
+					fillColor : this.datasets[datasetIndex].fillColor
+				}));
 			},this);
 
 			this.scale.addXLabel(label);
@@ -279,13 +283,15 @@
 			//Draw all the bars for each dataset
 			helpers.each(this.datasets,function(dataset,datasetIndex){
 				helpers.each(dataset.bars,function(bar,index){
-					bar.base = this.scale.endPoint;
-					//Transition then draw
-					bar.transition({
-						x : this.scale.calculateBarX(this.datasets.length, datasetIndex, index),
-						y : this.scale.calculateY(bar.value),
-						width : this.scale.calculateBarWidth(this.datasets.length)
-					}, easingDecimal).draw();
+					if (bar.hasValue()){
+						bar.base = this.scale.endPoint;
+						//Transition then draw
+						bar.transition({
+							x : this.scale.calculateBarX(this.datasets.length, datasetIndex, index),
+							y : this.scale.calculateY(bar.value),
+							width : this.scale.calculateBarWidth(this.datasets.length)
+						}, easingDecimal).draw();
+					}
 				},this);
 
 			},this);
