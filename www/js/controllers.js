@@ -212,7 +212,7 @@ function VitalsCtrl($scope, $stateParams, $window, vitals) {
     "temp_unit": vitals.temp_unit,
     "etco2": vitals.etco2,
     "etco2_unit": vitals.etco2_unit,
-    "pain": vitals.pain || 0,
+    "pain": vitals.pain || 0
   };
 
   console.log($scope.vitals);
@@ -1903,7 +1903,7 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
 
   $scope.toggleDelete = function () {
     $scope.showDelete = !$scope.showDelete;
-  }
+  };
 
   $scope.deleteItem = function (itemId) {
 
@@ -1913,7 +1913,7 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
       .then(function () {
         delete $scope.list[itemId];
       });
-  }
+  };
 
   $scope.addItem = function () {
 

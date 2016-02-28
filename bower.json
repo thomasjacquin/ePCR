@@ -2,7 +2,7 @@
   "name": "ePCR",
   "private": "true",
   "devDependencies": {
-    "ionic": "driftyco/ionic-bower#1.0.0-beta.14",
+    "ionic": "driftyco/ionic-bower#1.2.0",
     "platform": "~1.3.0",
     "angular-bootstrap": "~0.13.0",
     "ionic-timepicker": "~0.2.0"
@@ -20,6 +20,6 @@
     "ionic-datepicker": "~0.4.0"
   },
   "resolutions": {
-    "angular": "1.3.10"
+    "angular": "1.4.3"
   }
 }

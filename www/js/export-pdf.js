@@ -1290,7 +1290,7 @@ function ExportPdfCtrl($scope, $stateParams, $window, report, Records, settings,
           {
             text: [
               {
-                text: 'Hosital Representative: ',
+                text: 'Hospital Representative: ',
                 style: 'label'
             },
               safe(report.signature_hospital_name) + '\n'
