@@ -29,7 +29,7 @@ angular.module('ePCR', [
     }
 
     //Creation of the database
-    database.create();
+      database.create();
   });
 })
 
@@ -66,7 +66,7 @@ angular.module('ePCR', [
         controller: 'DashCtrl',
         resolve: {
             reports: function (Reports) {
-              return Reports.all();
+//              return Reports.all();
             }
           }
       }

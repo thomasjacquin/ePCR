@@ -16,13 +16,16 @@
     "shelljs": "^0.3.0"
   },
   "cordovaPlugins": [
-    "https://github.com/brodysoft/Cordova-SQLitePlugin",
     "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
     "cordova-plugin-whitelist",
     "cordova-plugin-file",
     "cordova-plugin-camera",
     "cordova-plugin-splashscreen",
-    "org.apache.cordova.splashscreen"
+    "cordova-plugin-sqlite",
+    "cordova-plugin-whitelist@^1.2.1",
+    "cordova-plugin-file@^4.1.1",
+    "cordova-plugin-camera@^2.1.0",
+    "cordova-plugin-splashscreen@^3.2.0"
   ],
   "cordovaPlatforms": [
     "android"
