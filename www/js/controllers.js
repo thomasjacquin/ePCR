@@ -1938,6 +1938,7 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
     });
 
     function generateData(callback) {
+        var guid = UUID.generate();
         $scope.selected = [];
         $scope.reportsObjects = [];
         $scope.reportsList.forEach(function (value, index) {
@@ -1957,6 +1958,9 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
                             .then(function (records) {
                                 delete records['$$hashKey'];
                                 delete records['checked'];
+                                angular.forEach(records, function(record){
+                                    record.guid = guid;
+                                });
                                 report[table] = records;
                             })
                             .then(function () {
@@ -1980,6 +1984,12 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
             generateData(function () {
                 $http.post(settings.send_report_to, {reports: $scope.reportsObjects}).then(function (res) {
                     console.log(res.data);
+                    if (res.data.success){
+                        var alertPopup = $ionicPopup.alert({
+                            title: 'Success',
+                            template: 'Your reports have been posted successfully'
+                        });
+                    }
                 });
             });
         } else {

@@ -17,7 +17,8 @@
     "angular-websql": "~1.0.2",
     "angular-ui-router": "~0.2.13",
     "bootstrap": "~3.3.2",
-    "ionic-datepicker": "~0.4.0"
+    "ionic-datepicker": "~0.4.0",
+    "uuid.js": "~3.3.0"
   },
   "resolutions": {
     "angular": "1.4.3",
