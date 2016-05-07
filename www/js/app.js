@@ -11,23 +11,12 @@ angular.module('ePCR', [
   'ngRoute',
   'angles',
   'ui.bootstrap',
-  'ngCordova',
   'ionic-datepicker',
   'ionic-timepicker'
 ])
 
 .run(function ($ionicPlatform, database) {
   $ionicPlatform.ready(function () {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleDefault();
-    }
-
     //Creation of the database
     database.create();
   });
@@ -46,6 +35,7 @@ angular.module('ePCR', [
   $ionicConfigProvider.navBar.positionPrimaryButtons("left");
   $ionicConfigProvider.navBar.positionSecondaryButtons("right");
   $ionicConfigProvider.form.checkbox("circle");
+  $ionicConfigProvider.scrolling.jsScrolling(true);
 
   $stateProvider
 
@@ -1025,7 +1015,10 @@ angular.module('ePCR', [
         resolve: {
             reports: function (Reports) {
               return Reports.all();
-            }
+            },
+			settings: function (Records) {
+				return Records.get('settings', 1);
+			}
           }
       }
     }

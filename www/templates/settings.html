@@ -16,43 +16,48 @@
       <a class="button" ng-class="{'active' : activeButton == 3}" ng-click="switchTab(3)">Partners</a>
     </div>
     <br>
-    <ion-list ng-show="activeButton == 1">
-      <ion-item class="item-divider">
-        User Info
-      </ion-item>
-      <ion-item class="item-input">
-        <span class="input-label">First Name</span>
-        <input type="text" ng-model="form.first_name">
-      </ion-item>
-      <ion-item class="item-input">
-        <span class="input-label">Last Name</span>
-        <input type="text" ng-model="form.last_name">
-      </ion-item>
-      <ion-item class="item-input">
-        <span class="input-label">Identification</span>
-        <input type="text" ng-model="form.identification">
-      </ion-item>
-      <ion-item class="item-input item-select">
-        <span class="input-label">Position</span>
-        <select ng-model="form.position">
-          <option>Paramedic</option>
-          <option>Nurse</option>
-          <option>Medic</option>
-          <option>EMT</option>
-          <option>Firefighter</option>
-        </select>
-      </ion-item>
-      <ion-item class="item-input">
-        <span class="input-label">Work Place</span>
-        <input type="text" ng-model="form.work_place">
-      </ion-item>
-<!--
-      <ion-item class="item-input">
-        <span class="input-label">Email reports to</span>
-        <input type="email" ng-model="form.send_report_to">
-      </ion-item>
--->
-    </ion-list>
+    <div class="list card" ng-show="activeButton == 1">
+            <div class="item item-divider">
+                User Info
+            </div>
+            <div class="item item-input">
+                <span class="input-label">First Name</span>
+                <input type="text" ng-model="form.first_name">
+            </div>
+            <div class="item item-input">
+                <span class="input-label">Last Name</span>
+                <input type="text" ng-model="form.last_name">
+            </div>
+            <div class="item item-input">
+                <span class="input-label">Identification</span>
+                <input type="text" ng-model="form.identification">
+            </div>
+            <div class="item item-input item-select">
+                <span class="input-label">Position</span>
+                <select ng-model="form.position">
+                    <option>Paramedic</option>
+                    <option>Nurse</option>
+                    <option>Medic</option>
+                    <option>EMT</option>
+                    <option>Firefighter</option>
+                </select>
+            </div>
+            <div class="item item-input">
+                <span class="input-label">Work Place</span>
+                <input type="text" ng-model="form.work_place">
+            </div>
+        </div>
+
+        <div class="list card" ng-show="activeButton == 1">
+            <div class="item item-divider">
+                Upload Reports to
+            </div>
+            <div class="item item-input">
+                <span class="input-label">POST Url</span>
+                <input type="text" ng-model="form.send_report_to">
+            </div>
+        </div>
+		
     <div ng-show="activeButton == 2">
       <div class="row">
         <img id="profilePicture" ng-src="{{form.photoUrl}}" ng-show="form.photoUrl" style="max-width: 300px; max-height:300px" />

@@ -1929,49 +1929,89 @@ function ListCtrl($scope, $stateParams, list, urlData, $state) {
   }
 }
 
-function ExportJsonCtrl($scope, $q, reports, Records) {
+function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, Records) {
   $scope.reportsList = [];
 
   angular.forEach(reports, function (report, index) {
     $scope.reportsList.push(report);
   });
+  
+  function generateData(callback) {
+		var guid = UUID.generate();
+        $scope.selected = [];
+        $scope.reportsObjects = [];
+        $scope.reportsList.forEach(function (value, index) {
+            if (value.checked) {
+                $scope.selected.push(value);
+                var reportId = value.id;
+                var report = {};
+                delete value['$$hashKey'];
+                delete value['checked'];
+                report.report = value;
+                var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
 
-  $scope.export = function () {
-    $scope.selected = [];
-    $scope.reportsObjects = [];
-    $scope.reportsList.forEach(function (value, index) {
-      if (value.checked) {
-        $scope.selected.push(value);
-        var reportId = value.id;
-        var report = {};
-        delete value['$$hashKey'];
-        delete value['checked'];
-        report.report = value;
-        var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
-
-        function getRecordsForTable() {
-          if (listOfTables.length > 0) {
-            var table = listOfTables.splice(0, 1);
-            Records.all(table, reportId)
-              .then(function (records) {
-                delete records['$$hashKey'];
-                delete records['checked'];
-                report[table] = records;
-              })
-              .then(function () {
+                function getRecordsForTable() {
+                    if (listOfTables.length > 0) {
+                        var table = listOfTables.splice(0, 1);
+                        Records.all(table, reportId)
+                            .then(function (records) {
+                                delete records['$$hashKey'];
+                                delete records['checked'];
+								angular.forEach(records, function(record){
+									record.guid = guid;
+								});
+                                report[table] = records;
+                            })
+                            .then(function () {
+                                getRecordsForTable();
+                            });
+                    } else {
+                        $scope.reportsObjects.push(report);
+                        if (index == $scope.selected.length - 1) {
+                            callback();
+                        }
+                    }
+                }
                 getRecordsForTable();
-              });
-          } else {
-            $scope.reportsObjects.push(report);
-            if (index == $scope.selected.length - 1) {
-              writeJsonFile(JSON.stringify($scope.reportsObjects));
             }
-          }
+        });
+    }
+
+    $scope.postJson = function () {
+        if (settings.send_report_to != undefined && settings.send_report_to != ''){
+            generateData(function () {
+                $http.post(settings.send_report_to, {reports: $scope.reportsObjects}).then(function (res) {
+                    console.log(res.data);
+					var alertPopup = $ionicPopup.alert({
+						title: 'Reports Sent',
+						template: 'Your reports have been posted successfully'
+					});
+                },
+				function(error){
+					var alertPopup = $ionicPopup.alert({
+						title: 'Error',
+						template: "There was an error. Please verify the POST url in your settings"
+					});
+				});
+            });
+        } else {
+            var alertPopup = $ionicPopup.alert({
+                title: 'POST Url not set',
+                template: 'Please set a POST Url in your user settings'
+            });
+
+            alertPopup.then(function(res) {
+                $state.go('tab.settings');
+            });
         }
-        getRecordsForTable();
-      }
-    });
-  }
+
+    };
+
+    $scope.export = function () {
+        generateData(function () {
+            writeJsonFile(JSON.stringify($scope.reportsObjects));
+        });
+    }
 }
 
 function writeJsonFile(jsonString, $http) {
@@ -2091,8 +2131,9 @@ function ImportJsonCtrl($scope) {
         alert("Imported " + report.report.first_name + " " + report.report.last_name);
         listOfTables.forEach(function(table){
           var records = report[table];
-          angular.forEach(records, function(key, rec){
+          angular.forEach(records, function(rec, key){
             delete rec.id;
+			delete rec.guid;
             rec.report_id = results.insertId;
             db.insert(table, rec).then(function (results) {
               console.log("Added record to " + table);
