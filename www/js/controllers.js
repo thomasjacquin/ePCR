@@ -1948,19 +1948,18 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
             localStorage.setItem("guid", guid);
         }
 
+        var counter = 0;
+        $scope.selected = [];
+        $scope.reportsObjects = [];
+
         $scope.reportsList.forEach(function (value) {
             if (value.checked) {
                 $scope.selected.push(value);
             }
         });
 
-        var counter = 0;
-
-        $scope.selected = [];
-        $scope.reportsObjects = [];
         $scope.reportsList.forEach(function (value) {
             if (value.checked) {
-                $scope.selected.push(value);
                 var reportId = value.id;
                 var report = {};
                 delete value['$$hashKey'];
