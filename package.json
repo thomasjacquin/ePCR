@@ -26,16 +26,16 @@
     "cordova-plugin-file",
     "cordova-plugin-camera",
     "cordova-plugin-splashscreen",
-    "cordova-plugin-sqlite",
     "cordova-plugin-whitelist@^1.2.1",
     "cordova-plugin-file@^4.1.1",
     "cordova-plugin-camera@^2.1.0",
     "cordova-plugin-splashscreen@^3.2.0",
     "ionic-plugin-keyboard",
-    "cordova-plugin-device"
+    "cordova-plugin-device",
+    "cordova-plugin-sqlite-2"
   ],
   "cordovaPlatforms": [
-    "android",
-    "ios"
+    "ios",
+    "android"
   ]
 }
