@@ -1942,9 +1942,16 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
 
         $scope.selected = [];
         $scope.reportsObjects = [];
-        $scope.reportsList.forEach(function (value, index) {
+
+        $scope.reportsList.forEach(function (value) {
             if (value.checked) {
                 $scope.selected.push(value);
+            }
+        });
+
+        var counter = 0;
+        $scope.reportsList.forEach(function (value, index) {
+            if (value.checked) {
                 var reportId = value.id;
                 var report = {};
                 delete value['$$hashKey'];
@@ -1969,7 +1976,8 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
                             });
                     } else {
                         $scope.reportsObjects.push(report);
-                        if (index == $scope.selected.length - 1) {
+                        counter++;
+                        if ($scope.selected.length == counter) {
                             callback();
                         }
                     }
