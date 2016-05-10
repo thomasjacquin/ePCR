@@ -1938,7 +1938,8 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
     });
 
     function generateData(callback) {
-        var guid = UUID.generate();
+        var guid = device.uuid;
+
         $scope.selected = [];
         $scope.reportsObjects = [];
         $scope.reportsList.forEach(function (value, index) {
