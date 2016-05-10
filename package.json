@@ -24,7 +24,8 @@
     "https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin.git",
     "cordova-plugin-crosswalk-webview",
     "cordova-plugin-whitelist",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-device"
   ],
   "cordovaPlatforms": [
     "android"
