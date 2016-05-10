@@ -1948,10 +1948,17 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
             localStorage.setItem("guid", guid);
         }
 
+        $scope.reportsList.forEach(function (value) {
+            if (value.checked) {
+                $scope.selected.push(value);
+            }
+        });
+
+        var counter = 0;
 
         $scope.selected = [];
         $scope.reportsObjects = [];
-        $scope.reportsList.forEach(function (value, index) {
+        $scope.reportsList.forEach(function (value) {
             if (value.checked) {
                 $scope.selected.push(value);
                 var reportId = value.id;
@@ -1979,7 +1986,8 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
                             });
                     } else {
                         $scope.reportsObjects.push(report);
-                        if (index == $scope.selected.length - 1) {
+                        counter++;
+                        if ($scope.selected.length == counter) {
                             callback();
                         }
                     }
