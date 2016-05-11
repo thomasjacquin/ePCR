@@ -32,10 +32,11 @@
     "cordova-plugin-splashscreen@^3.2.0",
     "ionic-plugin-keyboard",
     "cordova-plugin-device",
-    "cordova-plugin-sqlite-2"
+    "cordova-plugin-sqlite",
+    "ionic-plugin-keyboard@~1.0.8",
+    "cordova-plugin-device@~1.1.2"
   ],
   "cordovaPlatforms": [
-    "ios",
     "android"
   ]
 }
