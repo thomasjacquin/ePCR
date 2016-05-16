@@ -13,7 +13,8 @@ angular.module('ePCR', [
     'ui.bootstrap',
     'ngCordova',
     'ionic-datepicker',
-    'ionic-timepicker'
+    'ionic-timepicker',
+    'angular-loading-bar'
 ])
 
     .run(function ($ionicPlatform, database) {
@@ -36,6 +37,10 @@ angular.module('ePCR', [
     .config(function ($compileProvider) {
         $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
     })
+
+    .config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = false;
+    }])
 
     .config(function ($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
 

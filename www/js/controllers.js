@@ -1956,6 +1956,7 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
                 var report = {};
                 delete value['$$hashKey'];
                 delete value['checked'];
+                value.guid = guid;
                 report.report = value;
                 var listOfTables = ['vitals', 'neuro', 'airway_basic', 'airway_ventilator', 'airway_cpap_bipap', 'airway_suction', 'narrative', 'iv_io', 'splinting', 'medication', 'in_out', 'ecg', 'code'];
 
