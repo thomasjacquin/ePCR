@@ -42,6 +42,10 @@ angular.module('ePCR', [
         cfpLoadingBarProvider.includeSpinner = false;
     }])
 
+    .config(['$httpProvider', function($httpProvider) {
+        $httpProvider.defaults.timeout = 300000;
+    }])
+
     .config(function ($stateProvider, $ionicConfigProvider, $urlRouterProvider) {
 
         $ionicConfigProvider.views.maxCache(0);

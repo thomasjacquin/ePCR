@@ -1994,12 +1994,17 @@ function ExportJsonCtrl($scope, $http, $state, reports, settings, $ionicPopup, R
             generateData(function () {
                 $http.post(settings.send_report_to, {reports: $scope.reportsObjects}).then(function (res) {
                     console.log(res.data);
-                    if (res.data.success){
-                        var alertPopup = $ionicPopup.alert({
+                    if (res.data.success) {
+                        $ionicPopup.alert({
                             title: 'Success',
                             template: 'Your reports have been posted successfully'
                         });
                     }
+                }, function(error){
+                    $ionicPopup.alert({
+                        title: 'Error',
+                        template: error.data
+                    });
                 });
             });
         } else {

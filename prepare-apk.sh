@@ -1,0 +1,2 @@
+#!/bin/bash
+rm -rf platforms/android/build/outputs/apk/ && ionic build --release android && jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk alias_name && ~/dev/android-sdk-linux/build-tools/23.0.2/zipalign -v 4 ~/dev/epcr/platforms/android/build/outputs/apk/android-release-unsigned.apk ~/dev/epcr/platforms/android/build/outputs/apk/epcr.apk
